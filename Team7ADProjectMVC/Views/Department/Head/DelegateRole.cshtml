@@ -1,0 +1,157 @@
+﻿@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "Delegate Acting Department-Head";
+}
+
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
+</script>
+
+<div class="row">
+    <div class="col-lg-4 col-xs-12">
+        Choose Employee:<div>
+            <select id="lecturerId" name="lecturerId"
+                    class="selectpicker show-tick form-control"
+                    data-live-search="true" required>
+                <option>Find by ID or Name</option>
+                <c:foreach var="lecturer" items="${lecturerList}">
+                    <option data-subtext="Edwin Representative">
+                        E001
+                    </option>
+                    <option data-subtext="Joe Employee">
+                        E002
+                    </option>
+                    <option data-subtext="Linda Employee">
+                        E003
+                    </option>
+
+                    <option data-subtext="Edwin Representative">
+                        E004
+                    </option>
+                    <option data-subtext="Edwin Representative">E005</option>
+                </c:foreach>
+            </select>
+        </div>
+
+    </div>
+</div>
+
+<form>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    Start Date:
+                    <div style="overflow:hidden;">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div id="datetimepicker1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+                <td>
+                    <br />
+                    <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <br />
+                </td>
+                <td>
+                    End Date:
+                    <div style="overflow:hidden;">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div id="datetimepicker2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+        <br />
+        <br />
+
+
+
+        <div>
+            <h5>
+
+                Start Date: <label id="startDate"> </label><br />
+                End Date: <label id="endDate"> </label><br /><br />
+
+
+                <input type="checkbox" >Approve Requisition<br>
+                <input type="checkbox">Change Collection Point<br>
+                <input type="checkbox">View Requisiton <br />
+                <input type="checkbox">Make Requisition<br>
+                <input type="checkbox">Delegate Role<br />
+                <input type="checkbox">View Collection Details<br />
+
+                <br />
+                <br />
+
+            </h5>
+        </div>
+        @*<%--<div>Actual End Date:</div>
+
+
+            <div class='col-sm-2'>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker5'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />--%>*@
+        @*<%--                Approved By:<asp:TextBox ID="TextBox1" runat="server" Height="16px" Width="141px"></asp:TextBox>
+            <br />
+            Approved Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1/5/2017<br />
+            <br />
+            <br />--%>*@
+        <button type="button" class="btn btn-success btn-lg">
+            Delegate
+        </button>
+
+        <button type="button" class="btn btn-danger btn-lg">
+            Terminate
+        </button>
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            inline: true,
+            sideBySide: false
+        });
+        $('#datetimepicker2').datetimepicker({
+            inline: true,
+            sideBySide: false
+        });
+
+        $("#datetimepicker1").on("dp.change", function (date, e) {
+            console.log($('#datetimepicker1').data("DateTimePicker").date());
+            $('#startDate').html($('#datetimepicker1').data("DateTimePicker").date().toString());
+        });
+
+        $("#datetimepicker2").on("dp.change", function (date, e) {
+            console.log($('#datetimepicker2').data("DateTimePicker").date());
+            $('#endDate').html($('#datetimepicker2').data("DateTimePicker").date().toString());
+        });
+    });
+</script>
+
+

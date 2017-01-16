@@ -338,16 +338,17 @@ CREATE TABLE PurchaseOrder
 PurchaseOrderId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 OrderDate DATE,
 DeliveredDate DATE,
-EmployeeId INT,
+OrderedBy INT,
+ReceivedBy INT,
 AuthorizedBy INT,
 AuthorizedDate DATE
 CONSTRAINT PurchaseOrderEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
 )
 
 INSERT INTO PurchaseOrder
-VALUES ('2016-12-30','2017-01-02',3,10,'2017-12-30'),
-		('2016-12-31','2017-01-04',2,10,'2017-01-04'),
-		('2016-01-06','2017-01-10',2,10,'2017-01-10');
+VALUES ('2016-12-30','2017-01-02',3,2,10,'2017-12-30'),
+		('2016-12-31','2017-01-04',2,2,10,'2017-01-04'),
+		('2016-01-06','2017-01-10',2,3,10,'2017-01-10');
 
 -------------------------------------------------- Retrieval ----------------------------------------
 CREATE TABLE Retrieval
@@ -405,12 +406,13 @@ DisbursementDetailId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 DisbursementListId INT,
 RequisitionDetailId INT,
 Quantity INT,
+Remark VARCHAR(250),
 CONSTRAINT DisbursementListId FOREIGN KEY (DisbursementListId) REFERENCES DisbursementList (DisbursementListId),
 CONSTRAINT RequisitionDetailId FOREIGN KEY (RequisitionDetailId) REFERENCES RequisitionDetail (RequisitionDetailId)
 )
 
 INSERT INTO DisbursementDetail
-VALUES (1,1,10),(1,2,10),(1,3,10);
+VALUES (1,1,10,''),(1,2,10,''),(1,3,10,'');
 
 -------------------------------------------------- Delivery ----------------------------------------
 CREATE TABLE Delivery

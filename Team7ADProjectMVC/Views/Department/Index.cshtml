@@ -1,9 +1,8 @@
-﻿@model IEnumerable<Team7ADProjectMVC.Requisition>
-
-@{
-    Page.Title = "View All Employees";
+﻿@{
     Layout = "~/_Layout1.cshtml";
+    Page.Title = "My Home Page";
 }
+
 
 <div class="container-fluid">
     <div class="row">
@@ -97,55 +96,29 @@
                                 #
                             </th>
                             <th>
-                                Employee
-                            </th>
-                            @*<th>
-                                Request Date
+                                Product
                             </th>
                             <th>
-                                Request
-                            </th>*@
+                                Payment Taken
+                            </th>
+                            <th>
+                                Status
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @*@foreach (var StockCard in Model)
-                        {
-                            <tr class="clickable-row" data-href="InventoryItem/@StockCard.ItemNo">
-                                <td>@StockCard.ItemNo</td>
-                                <td>@StockCard.Description</td>
-
-                            </tr>
-                        }*@
-
-                        @*@foreach (Category c in ViewBag.Cat)
-                        {
-                            <option value="@c.CategoryId">@c.CategoryName</option>
-                        }*@
-                        @foreach (var item in ViewBag.Cat)
-                                {
-                                    <tr>
-                                        <td>
-                                            @item.RequisitionId
-                                        </td>
-                                        <td>
-                                            @item.EmployeeId
-                                        </td>
-                                    </tr>
-                                }
-
-
-                        @*<tr>
+                        <tr>
                             <td>
                                 1
                             </td>
                             <td>
-                                E001 Edwin
+                                TB - Monthly
                             </td>
                             <td>
                                 01/04/2012
                             </td>
                             <td>
-                                Request
+                                Default
                             </td>
                         </tr>
                         <tr class="active">
@@ -153,13 +126,13 @@
                                 1
                             </td>
                             <td>
-                                E002 Linda
+                                TB - Monthly
                             </td>
                             <td>
                                 01/04/2012
                             </td>
                             <td>
-                                Request
+                                Approved
                             </td>
                         </tr>
                         <tr class="active">
@@ -167,13 +140,13 @@
                                 2
                             </td>
                             <td>
-                                E003 Sandi
+                                TB - Monthly
                             </td>
                             <td>
                                 02/04/2012
                             </td>
                             <td>
-                                Request
+                                Declined
                             </td>
                         </tr>
                         <tr class="active">
@@ -181,13 +154,13 @@
                                 3
                             </td>
                             <td>
-                                E004 Gogul
+                                TB - Monthly
                             </td>
                             <td>
                                 03/04/2012
                             </td>
                             <td>
-                                Request
+                                Pending
                             </td>
                         </tr>
                         <tr class="active">
@@ -195,15 +168,15 @@
                                 4
                             </td>
                             <td>
-                                E007 Joe
+                                TB - Monthly
                             </td>
                             <td>
                                 04/04/2012
                             </td>
                             <td>
-                                Request
+                                Call in to confirm
                             </td>
-                        </tr>*@
+                        </tr>
                     </tbody>
                 </table>
 

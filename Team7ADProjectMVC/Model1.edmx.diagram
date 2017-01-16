@@ -21,7 +21,7 @@
         <EntityTypeShape EntityType="ProjectModel.Permission" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.PurchaseDetail" Width="1.5" PointX="10.5" PointY="29.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.PurchaseOrder" Width="1.5" PointX="5.25" PointY="16.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectModel.Requisition" Width="1.5" PointX="5.25" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Requisition" Width="1.5" PointX="5.125" PointY="20" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.RequisitionDetail" Width="1.5" PointX="7.5" PointY="20" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.Retrieval" Width="1.5" PointX="5.25" PointY="23.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.Role" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />

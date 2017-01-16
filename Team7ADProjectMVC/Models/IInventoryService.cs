@@ -19,5 +19,7 @@ namespace Team7ADProjectMVC.Models
         List<Supplier> GetAllSuppliers();
 
         void AddItem(Inventory inventory);
+
+        void UpdateInventory(Inventory inventory);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,13 @@ namespace Team7ADProjectMVC.Models
         {
             return db.Inventories.Find(id);
         }
+        public void AddItem(Inventory inventory)
+        {
+            db.Inventories.Add(inventory);
+            db.SaveChanges();
+        }
+
+
 
         public List<Category> GetAllCategories()
         {
@@ -38,10 +46,11 @@ namespace Team7ADProjectMVC.Models
             return (suppliers.ToList());
         }
 
-        public void AddItem(Inventory inventory)
+        public void UpdateInventory(Inventory inventory)
         {
-            db.Inventories.Add(inventory);
+            db.Entry(inventory).State = EntityState.Modified;
             db.SaveChanges();
         }
+
     }
 }

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Team7ADProjectMVC.Models
 {
-    interface IStoreService
+    interface IInventoryService
     {
-        
         List<Inventory> ReturnAllInventory();
 
         List<Category> ReturnAllCategories();
+
+        Inventory FindById(String id);
     }
 }

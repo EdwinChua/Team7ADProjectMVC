@@ -280,8 +280,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\IStoreService.cs" />
-    <Compile Include="Models\StoreService.cs" />
+    <Compile Include="Models\IInventoryService.cs" />
+    <Compile Include="Models\InventoryService.cs" />
     <Compile Include="Permission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

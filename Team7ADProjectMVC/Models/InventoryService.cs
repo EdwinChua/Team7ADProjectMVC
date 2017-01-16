@@ -5,9 +5,14 @@ using System.Web;
 
 namespace Team7ADProjectMVC.Models
 {
-    public class StoreService : IStoreService
+    public class InventoryService : IInventoryService
     {
         ProjectEntities db = new ProjectEntities();
+
+        public Inventory FindById(string id)
+        {
+            return db.Inventories.Find(id);
+        }
 
         public List<Category> ReturnAllCategories()
         {

@@ -9,12 +9,11 @@ namespace Team7ADProjectMVC.TestControllers
 {
     public class StoreController : Controller
     {
-        ProjectEntities db = new ProjectEntities();
-        private IStoreService storeSvc;
+        private IInventoryService inventorySvc;
 
         public StoreController()
         {
-            storeSvc = new StoreService();
+            inventorySvc = new InventoryService();
         }
 
         // GET: Store
@@ -25,18 +24,15 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult Inventory()
         {
-            //var inventories = db.Inventories;
-            //var categories = db.Categories;
-            
-            var inventories = storeSvc.ReturnAllInventory();
-            var categories = storeSvc.ReturnAllCategories();
+            var inventories = inventorySvc.ReturnAllInventory();
+            var categories = inventorySvc.ReturnAllCategories();
             ViewBag.Cat = categories.ToList();
             return View("ViewInventory",inventories);
         }
 
         public ActionResult InventoryItem(String id)
         {
-            Inventory inventory = db.Inventories.Find(id);
+            Inventory inventory = inventorySvc.FindById(id);
             if (inventory == null)
             {
                 return HttpNotFound();

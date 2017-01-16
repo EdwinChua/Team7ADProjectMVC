@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Team7ADProjectMVC.Requisition>
+
+@{
     Page.Title = "View All Employees";
     Layout = "~/_Layout1.cshtml";
 }
@@ -97,16 +99,42 @@
                             <th>
                                 Employee
                             </th>
-                            <th>
+                            @*<th>
                                 Request Date
                             </th>
                             <th>
                                 Request
-                            </th>
+                            </th>*@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        @*@foreach (var StockCard in Model)
+                        {
+                            <tr class="clickable-row" data-href="InventoryItem/@StockCard.ItemNo">
+                                <td>@StockCard.ItemNo</td>
+                                <td>@StockCard.Description</td>
+
+                            </tr>
+                        }*@
+
+                        @*@foreach (Category c in ViewBag.Cat)
+                        {
+                            <option value="@c.CategoryId">@c.CategoryName</option>
+                        }*@
+                        @foreach (var item in ViewBag.Cat)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.RequisitionId
+                                        </td>
+                                        <td>
+                                            @item.EmployeeId
+                                        </td>
+                                    </tr>
+                                }
+
+
+                        @*<tr>
                             <td>
                                 1
                             </td>
@@ -175,7 +203,7 @@
                             <td>
                                 Request
                             </td>
-                        </tr>
+                        </tr>*@
                     </tbody>
                 </table>
 

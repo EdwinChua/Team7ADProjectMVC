@@ -1,166 +1,168 @@
-﻿@{
+﻿@model Team7ADProjectMVC.Inventory
+
+@{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Create New Stock Card";
 }
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <form role="form">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <label for="inputForItemCode">
-                                Category
-                            </label>
-                        </div>
-                        <div class="col-lg-3">
-                            <select id="cateogry" name="category"
-                                    class="selectpicker show-tick form-control"
-                                    data-live-search="true" required>
-                                <option></option>
-                                <option>Clip</option>
-                                <option>Envelope</option>
-                                <option>File</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <label for="inputForItemDescription">
-                                Item Description
-                            </label>
-                        </div>
-                        <div class="col-lg-3">
-                            <input class="form-control" id="inputForItemDescription" type="text" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <label for="inputForBinNumber">
-                                Bin#
-                            </label>
-                        </div>
-                        <div class="col-lg-3">
-                            <input class="form-control" id="inputForBinNumber" type="text" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <label for="uom">
-                                UOM
-                            </label>
-                        </div>
-                        <div class="col-lg-3">
-                            <select id="uom" name="uom"
-                                    class="selectpicker show-tick form-control"
-                                    data-live-search="true" required>
-                                <option></option>
-                                <option>Dozen</option>
-                                <option>Each</option>
-                                <option>Set</option>
-                                <option>Box </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <label for="sup">
-                                Supplier 1
-                            </label>
-                        </div>
-                        <div class="col-lg-3">
-                            <select id="sup" name="sup"
-                                    class="selectpicker show-tick form-control"
-                                    data-live-search="true" required>
-                                <option></option>
-                                <option>BANES</option>
-                                <option>CHEP</option>
-                                <option>ALPHA</option>
-                                <option>OK</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <label for="sup">
-                                Supplier 2
-                            </label>
-                        </div>
-                        <div class="col-lg-3">
-                            <select id="sup" name="sup"
-                                    class="selectpicker show-tick form-control"
-                                    data-live-search="true" required>
-                                <option></option>
-                                <option>BANES</option>
-                                <option>CHEP</option>
-                                <option>ALPHA</option>
-                                <option>OK</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <label for="sup">
-                                Supplier 3
-                            </label>
-                        </div>
-                        <div class="col-lg-3">
-                            <select id="sup" name="sup"
-                                    class="selectpicker show-tick form-control"
-                                    data-live-search="true" required>
-                                <option></option>
-                                <option>BANES</option>
-                                <option>CHEP</option>
-                                <option>ALPHA</option>
-                                <option>OK</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <label for="rlevel">
-                                Reorder Level
-                            </label>
-                        </div>
-                        <div class="col-lg-3">
-                            <input class="form-control" id="rlevel" type="number" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <label for="rqty">
-                                Reorder Qty
-                            </label>
-                        </div>
-                        <div class="col-lg-3">
-                            <input class="form-control" id="rqty" type="number" />
-                        </div>
-                    </div>
-                </div>
-                <button class="btn btn-primary">
-                    Create
-                </button>
-                <button class="btn btn-danger">
-                    Cancel
-                </button>
-            </form>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.ItemNo, "Item No.", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.ItemNo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ItemNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.CategoryId, "Category Id", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.MeasurementId, "Unit of Measurement", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("MeasurementId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MeasurementId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.ReorderLevel, "Reorder Level", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.ReorderLevel, new { htmlAttributes = new { @class = "form-control", @value = "0" } })
+                @Html.ValidationMessageFor(model => model.ReorderLevel, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.ReorderQuantity, "Reorder Quantity", htmlAttributes: new { @class = "control -label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.ReorderQuantity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReorderQuantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" data-val="true" data-val-number="The field Quantity must be a number." id="Quantity" name="Quantity" type="number" value="0" readonly>
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.HoldQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" data-val="true" data-val-number="The field HoldQuantity must be a number." id="HoldQuantity" name="HoldQuantity" type="number" value="0" readonly>
+                @Html.ValidationMessageFor(model => model.HoldQuantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.SupplierId1, "Supplier 1", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("SupplierId1", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SupplierId1, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Price1, "Supplier 1 Price", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Price1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.SupplierId2, "Supplier 2", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("SupplierId2", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SupplierId2, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Price2, "Supplier 2 Price", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Price2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.SupplierId3, "Supplier 3", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("SupplierId3", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SupplierId3, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Price3, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Price3, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price3, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
         </div>
     </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

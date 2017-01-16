@@ -8,16 +8,24 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-2"><label>Category</label></div><div class="col-lg-1">@Html.DisplayFor(model => model.Category.CategoryName)</div>
+        <div class="col-lg-2"><label>Category</label></div><div class="col-lg-5">@Html.DisplayFor(model => model.Category.CategoryName)</div>
     </div>
     <div class="row">
-        <div class="col-lg-2"><label>Bin No.</label></div><div class="col-lg-1">@Html.DisplayFor(model => model.BinNo)</div>
+        <div class="col-lg-2"><label>Bin No.</label></div><div class="col-lg-5">@Html.DisplayFor(model => model.BinNo)</div>
     </div>
     <div class="row">
-        <div class="col-lg-2"><label>Unit of Measure</label></div><div class="col-lg-1">@Html.DisplayFor(model => model.Measurement.UnitOfMeasurement)</div>
+        <div class="col-lg-2"><label>Unit of Measure</label></div><div class="col-lg-5">@Html.DisplayFor(model => model.Measurement.UnitOfMeasurement)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"><label>Quantity</label></div><div class="col-lg-5">@Html.DisplayFor(model => model.Quantity) (On Hold: @Html.DisplayFor(model => model.HoldQuantity))</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"><label>Reorder Level</label></div><div class="col-lg-5">@Html.DisplayFor(model => model.ReorderLevel) (Reorder quantity: @Html.DisplayFor(model => model.ReorderQuantity))</div>
     </div>
 
-
+           
+    
+   
 
     <div>
         <h3>Stock Movements</h3>

@@ -8,10 +8,16 @@ namespace Team7ADProjectMVC.Models
 {
     interface IInventoryService
     {
-        List<Inventory> ReturnAllInventory();
+        List<Inventory> GetAllInventory();
 
-        List<Category> ReturnAllCategories();
+        List<Category> GetAllCategories();
 
         Inventory FindById(String id);
+
+        List<Measurement> GetAllMeasurements();
+
+        List<Supplier> GetAllSuppliers();
+
+        void AddItem(Inventory inventory);
     }
 }

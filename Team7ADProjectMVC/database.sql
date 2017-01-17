@@ -455,13 +455,14 @@ VALUES
 
 -------------------------------------- Stock Card View ----------------------------------------
 CREATE VIEW StockCard AS
-SELECT a.AdjustmentDate AS [Date], e.EmployeeName AS [Dept/Supplier], '-' + CAST(ad.Quantity AS VARCHAR(100)) As AdjustedQuantity, i.ItemNo, i.Description FROM AdjustmentDetail ad
+
+SELECT ISNULL(a.AdjustmentDate,'1900-01-01') AS [Date], e.EmployeeName AS [Dept/Supplier], '-' + CAST(ad.Quantity AS VARCHAR(100)) As AdjustedQuantity, i.ItemNo, i.Description FROM AdjustmentDetail ad
 INNER JOIN Adjustment a on a.AdjustmentId = ad.AdjustmentId
 INNER JOIN Employee e on e.EmployeeId = a.EmployeeId
 INNER JOIN Inventory i on i.ItemNo = ad.ItemNo
 
 UNION
-SELECT dl.DeliveryDate AS [Date], d.DepartmentName , '-' + CAST(dd.Quantity AS VARCHAR(100)) As DeliveredQuantity, rd.ItemNo, i.Description FROM DisbursementDetail dd
+SELECT ISNULL(dl.DeliveryDate,'1900-01-01') AS [Date], d.DepartmentName , '-' + CAST(dd.Quantity AS VARCHAR(100)) As DeliveredQuantity, rd.ItemNo, i.Description FROM DisbursementDetail dd
 LEFT JOIN RequisitionDetail rd on rd.RequisitionId = dd.RequisitionDetailId
 INNER JOIN DisbursementList dl on dl.DisbursementListId = dd.DisbursementListId
 INNER JOIN Department d on d.DepartmentId = dl.DepartmentId
@@ -469,7 +470,7 @@ INNER JOIN Inventory i on i.ItemNo = rd.ItemNo
 WHERE Dl.DeliveryDate <> '1900-01-01'
 
 UNION
-SELECT po.OrderDate AS [Date], s.SupplierName,'+' + CAST(pd.Quantity AS VARCHAR(100)) As ReceiveedQuantity, i.ItemNo, i.Description FROM PurchaseDetail pd
+SELECT ISNULL(po.OrderDate,'1900-01-01') AS [Date], s.SupplierName,'+' + CAST(pd.Quantity AS VARCHAR(100)) As ReceiveedQuantity, i.ItemNo, i.Description FROM PurchaseDetail pd
 INNER JOIN PurchaseOrder po on po.PurchaseOrderId = pd.PurchaseOrderId
 INNER JOIN Inventory i on i.ItemNo = pd.ItemNo
 INNER JOIN Supplier s on s.SupplierId = po.SupplierId

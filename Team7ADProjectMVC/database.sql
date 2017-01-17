@@ -135,15 +135,15 @@ INSERT INTO CollectionPoints
 VALUES ('University Hospital','11:00 am',1)
 
 INSERT INTO Department
-VALUES ('ENGL','English Department','Mrs Pamela Kow','874 2234','892 2234','Prof Ezra Pound',1,1)
+VALUES ('ENGL','English Department','Mrs Pamela Kow','874 2234','892 2234','Prof Ezra Pound',1,11)
 INSERT INTO Department
-VALUES ('CPSC','Computer Science','Mr. Wee Kian Fatt','890 1235','892 1457','Dr. Soh Kian Wee',1,1)
+VALUES ('CPSC','Computer Science','Mr. Wee Kian Fatt','890 1235','892 1457','Dr. Soh Kian Wee',1,12)
 INSERT INTO Department
-VALUES ('COMM','Commerce Department','MrMohd. Azman','874 1284','892 1256','Dr. Chia Leow Bee',1,1)
+VALUES ('COMM','Commerce Department','MrMohd. Azman','874 1284','892 1256','Dr. Chia Leow Bee',1,13)
 INSERT INTO Department
-VALUES ('REGR','Registrar Department','Ms Helen Ho','890 1266','892 1465','Mrs Low Kway Boo',1,1)
+VALUES ('REGR','Registrar Department','Ms Helen Ho','890 1266','892 1465','Mrs Low Kway Boo',1,14)
 INSERT INTO Department
-VALUES ('ZOOL','Zoology Department','Mr. Peter Tan Ah Meng','890 1266','892 1465','Prof Tan',1,1)
+VALUES ('ZOOL','Zoology Department','Mr. Peter Tan Ah Meng','890 1266','892 1465','Prof Tan',1,15)
 INSERT INTO Department
 VALUES ('STO','STORE','Mr. Dino Thunder','890 6656','891 9912','Mr. Sander',1,1)
 
@@ -338,17 +338,19 @@ CREATE TABLE PurchaseOrder
 PurchaseOrderId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 OrderDate DATE,
 DeliveredDate DATE,
+SupplierId INT,
 OrderedBy INT,
 ReceivedBy INT,
 AuthorizedBy INT,
-AuthorizedDate DATE
-CONSTRAINT PurchaseOrderEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
+AuthorizedDate DATE,
+CONSTRAINT PurchaseOrderOrderedBy FOREIGN KEY(OrderedBy) REFERENCES Employee(EmployeeId),
+CONSTRAINT PurchaseOrderReceivedBy FOREIGN KEY(ReceivedBy) REFERENCES Employee(EmployeeId)
 )
 
 INSERT INTO PurchaseOrder
-VALUES ('2016-12-30','2017-01-02',3,2,10,'2017-12-30'),
-		('2016-12-31','2017-01-04',2,2,10,'2017-01-04'),
-		('2016-01-06','2017-01-10',2,3,10,'2017-01-10');
+VALUES ('2016-12-30','2017-01-02',1,3,2,10,'2017-12-30'),
+		('2016-12-31','2017-01-04',1,2,2,10,'2017-01-04'),
+		('2016-01-06','2017-01-10',1,2,3,10,'2017-01-10');
 
 -------------------------------------------------- Retrieval ----------------------------------------
 CREATE TABLE Retrieval
@@ -372,15 +374,15 @@ PurchaseOrderId INT,
 ItemNo VARCHAR(50),
 Quantity INT,
 Price DECIMAL(8,2),
-SupplierId INT,
 Amount INT,
+SupplierId INT,
 CONSTRAINT PurchaseDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(ItemNo),
-CONSTRAINT SupplierId FOREIGN KEY(SupplierId) REFERENCES Supplier(SupplierId),
+CONSTRAINT PurchaseDetailSupplierId FOREIGN KEY(SupplierId) REFERENCES Supplier(SupplierId),
 )
 
 INSERT INTO PurchaseDetail
-VALUES (1,'C001',100, 2,1,200), (1,'E001',100, 0.5,1,50), 
-		(2,'C002',100, 2.2,1,220),(2,'F020',100, 0.8,1,80);
+VALUES (1,'C001',100, 2,200,1), (1,'E001',100, 0.5,50,1), 
+		(2,'C002',100, 2.2,220,1),(2,'F020',100, 0.8,80,1);
 
 -------------------------------------------------- DisbursementList ----------------------------------------
 CREATE TABLE DisbursementList
@@ -389,6 +391,7 @@ DisbursementListId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 RetrievalId INT,
 DepartmentId INT,
 OrderedDate DATE,
+DeliveryDate DATE,
 CollectionPointId INT,
 [Status] VARCHAR(50),
 CONSTRAINT RetrievalId FOREIGN KEY (RetrievalId) REFERENCES Retrieval (RetrievalId),
@@ -396,8 +399,8 @@ CONSTRAINT DisbursementListDepartmentId FOREIGN KEY (DepartmentId) REFERENCES De
 CONSTRAINT DisbursementListCollectionPointId FOREIGN KEY (CollectionPointId) REFERENCES CollectionPoints (CollectionPointId)
 )
 
-INSERT INTO DisbursementList(RetrievalId, DepartmentId, OrderedDate,CollectionPointId)
-VALUES	(1, 4, '2017-01-03', 1);--,(1, 4, '2017-01-14', 2),(1, 4, '2017-01-15', 5); 
+INSERT INTO DisbursementList(RetrievalId, DepartmentId,  OrderedDate, DeliveryDate, CollectionPointId, [Status])
+VALUES	(1, 4, '2017-01-03', '2017-01-05', 1, '');--,(1, 4, '2017-01-14', 2),(1, 4, '2017-01-15', 5); 
 
 -------------------------------------------------- DisbursementDetail ----------------------------------------
 CREATE TABLE DisbursementDetail
@@ -449,3 +452,25 @@ VALUES
 ('E001',100,'',1),
 ('C002',100,'',2),
 ('F020',100,'',2);
+
+-------------------------------------- Stock Card View ----------------------------------------
+
+SELECT a.AdjustmentDate AS [Date], e.EmployeeName AS [Dept/Supplier], '-' + CAST(ad.Quantity AS VARCHAR(100)) As AdjustedQuantity, i.ItemNo, i.Description FROM AdjustmentDetail ad
+INNER JOIN Adjustment a on a.AdjustmentId = ad.AdjustmentId
+INNER JOIN Employee e on e.EmployeeId = a.EmployeeId
+INNER JOIN Inventory i on i.ItemNo = ad.ItemNo
+
+UNION
+SELECT dl.DeliveryDate AS [Date], d.DepartmentName , '-' + CAST(dd.Quantity AS VARCHAR(100)) As DeliveredQuantity, rd.ItemNo, i.Description FROM DisbursementDetail dd
+LEFT JOIN RequisitionDetail rd on rd.RequisitionId = dd.RequisitionDetailId
+INNER JOIN DisbursementList dl on dl.DisbursementListId = dd.DisbursementListId
+INNER JOIN Department d on d.DepartmentId = dl.DepartmentId
+INNER JOIN Inventory i on i.ItemNo = rd.ItemNo
+WHERE Dl.DeliveryDate <> '1900-01-01'
+
+UNION
+SELECT po.OrderDate AS [Date], s.SupplierName,'+' + CAST(pd.Quantity AS VARCHAR(100)) As ReceiveedQuantity, i.ItemNo, i.Description FROM PurchaseDetail pd
+INNER JOIN PurchaseOrder po on po.PurchaseOrderId = pd.PurchaseOrderId
+INNER JOIN Inventory i on i.ItemNo = pd.ItemNo
+INNER JOIN Supplier s on s.SupplierId = po.SupplierId
+ORDER BY i.ItemNo

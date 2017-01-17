@@ -289,6 +289,8 @@
     </Compile>
     <Compile Include="Models\DisbursementService\DisbursementService.cs" />
     <Compile Include="Models\DisbursementService\IDisbursementService.cs" />
+    <Compile Include="Models\InventoryAdjustmentService\IInventoryAdjustmentService.cs" />
+    <Compile Include="Models\InventoryAdjustmentService\InventoryAdjustmentService.cs" />
     <Compile Include="Models\InventoryService\IInventoryService.cs" />
     <Compile Include="Models\InventoryService\InventoryService.cs" />
     <Compile Include="Permission.cs">

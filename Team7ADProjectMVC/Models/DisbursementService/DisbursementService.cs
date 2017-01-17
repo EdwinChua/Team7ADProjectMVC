@@ -16,6 +16,12 @@ namespace Team7ADProjectMVC.Models
             return (disbursementList.ToList());
         }
 
+        public DisbursementList GetDisbursementById(string id)
+        {
+            //TODO: Linda 
+            throw new NotImplementedException();
+        }
+
         public List<DisbursementList> GetDisbursementsBySearchCriteria(Department department, string status)
         {
             var queryResults = from d in db.DisbursementLists
@@ -24,6 +30,12 @@ namespace Team7ADProjectMVC.Models
                                 orderby d.OrderedDate
                                 select d;
             return (queryResults.ToList());
+        }
+
+        public void UpdateDisbursementList(DisbursementList disbursementList)
+        {
+            //TODO: Linda 
+            throw new NotImplementedException();
         }
     }
 }

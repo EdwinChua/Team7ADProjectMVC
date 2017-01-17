@@ -382,6 +382,7 @@
     <Content Include="Views\TESTRequisitions\Details.cshtml" />
     <Content Include="Views\TESTRequisitions\Edit.cshtml" />
     <Content Include="Views\TESTRequisitions\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutD.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

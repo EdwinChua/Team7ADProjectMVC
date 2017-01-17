@@ -2,7 +2,7 @@
 
 @{
     Page.Title = "View All requisitions";
-    Layout = "~/Views/Shared/_LayoutDe.cshtml";
+    Layout = "~/Views/Shared/_LayoutD.cshtml";
     
 }
 
@@ -95,16 +95,16 @@
                     <thead>
                         <tr>
                             <th>
-                                #
+                                Department ID
                             </th>
                             <th>
-                                Product
+                                Employee
                             </th>
                             <th>
-                                Payment Taken
+                                ApproveDate
                             </th>
                             <th>
-                                Status
+                                Requisiton Status
                             </th>
                         </tr>
                     </thead>
@@ -114,16 +114,16 @@
                         {
                             <tr>
                                 <td>
-                                    @item.RequisitionId
-                                </td>
-                                <td>
-                                    @item
+                                    @item.DepartmentId
                                 </td>
                                 <td>
                                     @item.EmployeeId
                                 </td>
                                 <td>
-                                    @item.EmployeeId
+                                    @item.ApprovedDate
+                                </td>
+                                <td>
+                                    @item.RequisitionStatus
                                 </td>
                             </tr>
                         }

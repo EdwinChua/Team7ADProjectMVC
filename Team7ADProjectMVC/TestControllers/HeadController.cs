@@ -54,11 +54,20 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.req = r;
-            //int i = (int)r.RequisitionId;
-            //RequisitionDetail rd = listdetailsvc.FindById(i);
+
             
             return View("Approve",r);
+        }
+        public ActionResult ApproveReject(int id)
+        {
+            Requisition r = listsvc.FindById(id);
+            if (r == null)
+            {
+                return HttpNotFound();
+            }
+
+
+            return View("Approve", r);
         }
     }
 }

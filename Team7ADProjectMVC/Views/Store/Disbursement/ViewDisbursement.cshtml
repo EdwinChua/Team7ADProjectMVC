@@ -1,10 +1,14 @@
-﻿@{
+﻿@model Team7ADProjectMVC.DisbursementList
+
+@{
     Layout = "~/_Layout1.cshtml";
-    Page.Title = "Disbursement for {Department} on {Date}";
+    Page.Title = "Disbursement for " + @ViewBag.disbursementListInfo.Department.DepartmentName;
+
+    //TODO: EDWIN - Logic for disbursement
 }
 
 
-<h2>Collection Point: {Collection Point}</h2>
+<h2>Collection Point: @Model.CollectionPoint.PlaceName ( @Model.CollectionPoint.CollectTime )</h2>
 <form role="form">
     <table class="table">
         <thead>
@@ -24,12 +28,14 @@
             </tr>
         </thead>
         <tbody>
+        @foreach (var item in Model.DisbursementDetails)
+        {
             <tr>
                 <td>
                     1
                 </td>
                 <td>
-                    TB - Monthly
+                    @item.RequisitionDetail.ItemNo @item.RequisitionDetail.Inventory.Description
                 </td>
                 <td>
                     8
@@ -38,62 +44,7 @@
                     <input type="number" class="form-control" value="8" />
                 </td>
             </tr>
-            <tr class="active">
-                <td>
-                    1
-                </td>
-                <td>
-                    TB - Monthly
-                </td>
-                <td>
-                    9
-                </td>
-                <td>
-                    <input type="number" class="form-control" value="9" />
-                </td>
-            </tr>
-            <tr class="success">
-                <td>
-                    2
-                </td>
-                <td>
-                    TB - Monthly
-                </td>
-                <td>
-                    8
-                </td>
-                <td>
-                    <input type="number" class="form-control" value="8" />
-                </td>
-            </tr>
-            <tr class="warning">
-                <td>
-                    3
-                </td>
-                <td>
-                    TB - Monthly
-                </td>
-                <td>
-                    5
-                </td>
-                <td>
-                    <input type="number" class="form-control" value="5" />
-                </td>
-            </tr>
-            <tr class="danger">
-                <td>
-                    4
-                </td>
-                <td>
-                    TB - Monthly
-                </td>
-                <td>
-                    5
-                </td>
-                <td>
-                    <input type="number" class="form-control" value="5" />
-                </td>
-            </tr>
+        }
         </tbody>
     </table>
     <div class="row">

@@ -106,13 +106,16 @@
                             <th>
                                 Requisiton Status
                             </th>
+                            <th>
+                                See Detail
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        @foreach (var item in ViewBag.Cat)
+                        @*@foreach (var item in Model)
                         {
-                            <tr>
+                            <tr class="clickable-row" data-href="ViewRequisitionDetails/@item.RequisitionId">
+
                                 <td>
                                     @item.DepartmentId
                                 </td>
@@ -124,6 +127,30 @@
                                 </td>
                                 <td>
                                     @item.RequisitionStatus
+                                </td>
+                            </tr>
+                        }*@
+
+                        @foreach (var item in ViewBag.Cat)
+                        {
+                            <tr class="clickable-row" data-href="ViewRequisitionDetails/@item.RequisitionId">
+
+                                <td>
+                                    @item.DepartmentId
+                                </td>
+                                <td>
+                                    @item.EmployeeId
+                                </td>
+                                <td>
+                                    @item.ApprovedDate
+                                </td>
+                                <td>
+                                    @item.RequisitionStatus
+                                </td>
+                                <td>
+
+                                    @Html.ActionLink("Detail", "ViewRequisitionDetails", new { id = @item.RequisitionId })
+
                                 </td>
                             </tr>
                         }
@@ -170,3 +197,10 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>

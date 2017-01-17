@@ -321,9 +321,7 @@
     <Compile Include="Models\InventoryService\IInventoryService.cs" />
     <Compile Include="Models\InventoryService\InventoryService.cs" />
     <Compile Include="Models\ListAllRequisitionService\IIListAllRequisition.cs" />
-    <Compile Include="Models\RequisitionDetailsService\IIRequisitionDetails.cs" />
     <Compile Include="Models\ListAllRequisitionService\IListAllRequisiton.cs" />
-    <Compile Include="Models\RequisitionDetailsService\IRequisitionDetails.cs" />
     <Compile Include="Permission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

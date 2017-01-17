@@ -47,15 +47,12 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult ViewRequisitionDetails(int? id)
         {
-
-            //db.Customers.Where(u => u.ContactName == "张学友").OrderBy(u => u.ContactName).Take(2)
-            id = 2;
+            
 
             Requisition requisition = db.Requisitions.Find(id);
             ViewBag.re = requisition;
           
-            return View(requisition);
-
+        
             List<RequisitionDetail> relis = db.RequisitionDetails.Where(u => u.RequisitionId == id).ToList();
 
             ViewBag.rel = relis;

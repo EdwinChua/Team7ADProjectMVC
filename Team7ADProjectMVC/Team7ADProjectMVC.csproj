@@ -323,6 +323,7 @@
     <Compile Include="TestControllers\InventoriesController.cs" />
     <Compile Include="TestControllers\RepresentativeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="TestControllers\TESTDepartmentsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -372,6 +373,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Department\Index.cshtml" />
+    <Content Include="Views\TESTDepartments\Create.cshtml" />
+    <Content Include="Views\TESTDepartments\Delete.cshtml" />
+    <Content Include="Views\TESTDepartments\Details.cshtml" />
+    <Content Include="Views\TESTDepartments\Edit.cshtml" />
+    <Content Include="Views\TESTDepartments\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

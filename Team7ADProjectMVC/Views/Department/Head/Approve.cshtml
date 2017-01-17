@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Team7ADProjectMVC.Requisition>
+﻿@model Team7ADProjectMVC.Requisition
 @{
     ViewBag.Title = "Approve/Reject Requisition";
     Layout = "~/_Layout1.cshtml";
@@ -13,15 +13,15 @@
                         </h5>
                         <div>
                             
-                            Dept Name:@Html.DisplayNameFor(model => model.DepartmentId)
+                            Dept Name:@Html.DisplayFor(model => model.DepartmentId)
                             <div>
                                 <h5>
 
                                  
-                                    Employee Name:@Html.DisplayNameFor(model => model.Employee.EmployeeName)
+                                    Employee Name:@Html.DisplayFor(model => model.Employee.EmployeeName)
                                     <br />
                                     <br />
-                                    Employee Number:@Html.DisplayNameFor(model => model.Employee.EmployeeId)
+                                    Employee Number:@Html.DisplayFor(model => model.Employee.EmployeeId)
                                     <br />
                                     <br />
                                     Employee Email Address:<a href="mailto:Address:Jenny@LogicUniversity">Jenny@LogicUniversity</a>
@@ -51,19 +51,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @
-                                @foreach (var item in Model)
+                                
+                                @foreach (var item in Model.RequisitionDetails)
                                 {
                                     <tr>
                                         <td>
-                                            @item.
+                                            @item.Inventory.Description
                                         </td>
                                         <td>
-                                            @item.Employee.EmployeeName
+                                            @item.Quantity
                                         </td>
-                                        <td>
-                                            <a href="EmployeeRequisition/@item.RequisitionId"><input type="button" name="Approve" /></a>
-                                        </td>
+                                        
                                     </tr>
                                 }
 

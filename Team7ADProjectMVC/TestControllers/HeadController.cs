@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
+using Team7ADProjectMVC.Models.RequisitionDetailsService;
 
 namespace Team7ADProjectMVC.TestControllers
 {
@@ -15,11 +16,13 @@ namespace Team7ADProjectMVC.TestControllers
     public class HeadController : Controller
     {
         private IIListAllRequisition listsvc;
+       // private IIRequisitionDetails listdetailsvc;
 
        private ProjectEntities db = new ProjectEntities();
         public HeadController()
         {
             listsvc =new IListAllRequisiton();
+            //listdetailsvc = new IRequisitionDetails();
         }
 
         // GET: Head
@@ -51,8 +54,10 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 return HttpNotFound();
             }
-            ViewBag.req = r;
-          
+            //ViewBag.req = r;
+            //int i = (int)r.RequisitionId;
+            //RequisitionDetail rd = listdetailsvc.FindById(i);
+            
             return View("Approve",r);
         }
     }

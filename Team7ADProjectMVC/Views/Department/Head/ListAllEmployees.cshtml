@@ -121,14 +121,17 @@
                             {
                                 <option value="@c.CategoryId">@c.CategoryName</option>
                             }*@
-                        @foreach (var item in ViewBag.Cat)
+                        @foreach (var item in Model)
                         {
                             <tr>
                                 <td>
-                                    @item.RequisitionId
+                                    @item.OrderedDate
                                 </td>
                                 <td>
-                                    <a href="EmployeeRequisition/@item.RequisitionId">@item.Employee.EmployeeName</a>
+                                    @item.Employee.EmployeeName
+                                </td>
+                                <td>
+                                    <a href="EmployeeRequisition/@item.RequisitionId"><input type="button" name="Approve"/></a>
                                 </td>
                             </tr>
                         }

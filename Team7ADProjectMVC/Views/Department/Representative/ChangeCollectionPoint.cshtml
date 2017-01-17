@@ -32,10 +32,10 @@
                 @Html.ValidationMessageFor(model => model.RepresentativeId, "", new { @class = "text-danger" })
             </div>
         </div>
-        <br/>
+        <br />
         <div class="form-group">
             @Html.LabelFor(model => model.CollectionPointId, "Current Collection Point", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
+            <div class="col-md-4">
                 @Html.DisplayFor(model => model.CollectionPoint.PlaceName)  ( @Html.DisplayFor(model => model.CollectionPoint.CollectTime))
                 @Html.ValidationMessageFor(model => model.CollectionPointId, "", new { @class = "text-danger" })
             </div>
@@ -46,19 +46,14 @@
                 <div class="col-md-2">
                     <label>New Collection Point</label>
                 </div>
-            </div>
-            <div class="col-md-5">
-                @foreach (var item in ViewBag.Message)
-                {
-                    @*@Html.RadioButtonFor(model => model.CollectionPointId, item.Value, false)*@
-                    @*<label class="control-label">@item.PlaceName @item.CollectTime </label> 
-                    <br />*@
 
-                    <input type="radio" name="group2" value="@item.CollectionPointId" checked> @item.PlaceName   <label>( @item.CollectTime )</label> <br />
+                <div class="col-md-5">
+                    @foreach (var item in ViewBag.Message)
+                    {
+                        <input type="radio"  name="radio" value="@item.CollectionPointId" > @item.PlaceName   <label>( @item.CollectTime )</label> <br />
+                    }
 
-
-                }
-
+                </div>
             </div>
         </div>
 

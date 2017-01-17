@@ -287,6 +287,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DepartmentService\DepartmentService.cs" />
+    <Compile Include="Models\DepartmentService\IDepartmentService.cs" />
     <Compile Include="Models\DisbursementService\DisbursementService.cs" />
     <Compile Include="Models\DisbursementService\IDisbursementService.cs" />
     <Compile Include="Models\InventoryAdjustmentService\IInventoryAdjustmentService.cs" />

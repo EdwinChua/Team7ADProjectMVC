@@ -13,7 +13,19 @@ namespace Team7ADProjectMVC.Models
             throw new NotImplementedException();
         }
 
+        public DisbursementList GetDisbursementById(string id)
+        {
+            //TODO: Linda 
+            throw new NotImplementedException();
+        }
+
         public List<DisbursementList> GetDisbursementsBySearchCriteria(Department department, string status)
+        {
+            //TODO: Linda 
+            throw new NotImplementedException();
+        }
+
+        public void UpdateDisbursementList(DisbursementList disbursementList)
         {
             //TODO: Linda 
             throw new NotImplementedException();

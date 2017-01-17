@@ -339,11 +339,11 @@ PurchaseOrderId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 OrderDate DATE,
 DeliveredDate DATE,
 SupplierId INT,
-OrderedBy INT,
+EmployeeId INT,
 ReceivedBy INT,
 AuthorizedBy INT,
 AuthorizedDate DATE,
-CONSTRAINT PurchaseOrderOrderedBy FOREIGN KEY(OrderedBy) REFERENCES Employee(EmployeeId),
+CONSTRAINT PurchaseOrderEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId),
 CONSTRAINT PurchaseOrderReceivedBy FOREIGN KEY(ReceivedBy) REFERENCES Employee(EmployeeId)
 )
 
@@ -454,7 +454,7 @@ VALUES
 ('F020',100,'',2);
 
 -------------------------------------- Stock Card View ----------------------------------------
-
+CREATE VIEW StockCard AS
 SELECT a.AdjustmentDate AS [Date], e.EmployeeName AS [Dept/Supplier], '-' + CAST(ad.Quantity AS VARCHAR(100)) As AdjustedQuantity, i.ItemNo, i.Description FROM AdjustmentDetail ad
 INNER JOIN Adjustment a on a.AdjustmentId = ad.AdjustmentId
 INNER JOIN Employee e on e.EmployeeId = a.EmployeeId
@@ -473,4 +473,3 @@ SELECT po.OrderDate AS [Date], s.SupplierName,'+' + CAST(pd.Quantity AS VARCHAR(
 INNER JOIN PurchaseOrder po on po.PurchaseOrderId = pd.PurchaseOrderId
 INNER JOIN Inventory i on i.ItemNo = pd.ItemNo
 INNER JOIN Supplier s on s.SupplierId = po.SupplierId
-ORDER BY i.ItemNo

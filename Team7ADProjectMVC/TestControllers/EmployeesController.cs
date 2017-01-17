@@ -22,7 +22,7 @@ namespace Team7ADProjectMVC.TestControllers
         }
 
         // GET: Employees/Details/5
-        public ActionResult Something(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {

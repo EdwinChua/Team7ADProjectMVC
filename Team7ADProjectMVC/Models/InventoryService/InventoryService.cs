@@ -50,11 +50,10 @@ namespace Team7ADProjectMVC.Models
             db.SaveChanges();
         }
 
-        public List<Inventory> GetInventoryListByCategory(string id)
+        public List<Inventory> GetInventoryListByCategory(int id)
         {
-            Category cat = db.Categories.Find(id);
             var queryByCategory = from t in db.Inventories
-                                  where t.Category == cat
+                                  where t.Category.CategoryId == id
                                   orderby t.Description ascending
                                   select t;
             return (queryByCategory.ToList());

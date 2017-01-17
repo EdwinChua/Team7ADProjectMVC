@@ -29,128 +29,40 @@ namespace Team7ADProjectMVC.TestControllers
             return View("MakeRequisition");
         }
 
-        public ActionResult ViewRequisitionDetails()
+        // GET: TESTRequisitions/Details/5
+        public ActionResult Details(int? id)
         {
-            var requisitions = db.Requisitions.ToList();
-            ViewBag.Cat = requisitions;
-            return View("ViewRequisitionDetails");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Requisition requisition = db.Requisitions.Find(id);
+            if (requisition == null)
+            {
+                return HttpNotFound();
+            }
+            return View(requisition);
+        }
+
+
+        public ActionResult ViewRequisitionDetails(int? id)
+        {
+
+            //db.Customers.Where(u => u.ContactName == "张学友").OrderBy(u => u.ContactName).Take(2)
+            id = 2;
+
+            Requisition requisition = db.Requisitions.Find(id);
+            ViewBag.re = requisition;
+          
+            return View(requisition);
+
+            List<RequisitionDetail> relis = db.RequisitionDetails.Where(u => u.RequisitionId == id).ToList();
+
+            ViewBag.rel = relis;
+
+            return View(requisition);
         }
     }
 }
-//    // GET: Employees/Details/5
-//    public ActionResult Something(int? id)
-//    {
-//        if (id == null)
-//        {
-//            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//        }
-//        Employee employee = db.Employees.Find(id);
-//        if (employee == null)
-//        {
-//            return HttpNotFound();
-//        }
-//        return View("Details",employee);
-//    }
 
-//    // GET: Employees/Create
-//    public ActionResult Create()
-//    {
-//        ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentCode");
-//        ViewBag.PermissionId = new SelectList(db.Permissions, "PermissionId", "PermissionId");
-//        ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name");
-//        return View();
-//    }
-
-//    // POST: Employees/Create
-//    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-//    // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-//    [HttpPost]
-//    [ValidateAntiForgeryToken]
-//    public ActionResult Create([Bind(Include = "EmployeeId,EmployeeName,Email,DepartmentId,RoleId,PermissionId,PhNo")] Employee employee)
-//    {
-//        if (ModelState.IsValid)
-//        {
-//            db.Employees.Add(employee);
-//            db.SaveChanges();
-//            return RedirectToAction("Index");
-//        }
-
-//        ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentCode", employee.DepartmentId);
-//        ViewBag.PermissionId = new SelectList(db.Permissions, "PermissionId", "PermissionId", employee.PermissionId);
-//        ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", employee.RoleId);
-//        return View(employee);
-//    }
-
-//    // GET: Employees/Edit/5
-//    public ActionResult Edit(int? id)
-//    {
-//        if (id == null)
-//        {
-//            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//        }
-//        Employee employee = db.Employees.Find(id);
-//        if (employee == null)
-//        {
-//            return HttpNotFound();
-//        }
-//        ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentCode", employee.DepartmentId);
-//        ViewBag.PermissionId = new SelectList(db.Permissions, "PermissionId", "PermissionId", employee.PermissionId);
-//        ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", employee.RoleId);
-//        return View(employee);
-//    }
-
-//    // POST: Employees/Edit/5
-//    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-//    // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-//    [HttpPost]
-//    [ValidateAntiForgeryToken]
-//    public ActionResult Edit([Bind(Include = "EmployeeId,EmployeeName,Email,DepartmentId,RoleId,PermissionId,PhNo")] Employee employee)
-//    {
-//        if (ModelState.IsValid)
-//        {
-//            db.Entry(employee).State = EntityState.Modified;
-//            db.SaveChanges();
-//            return RedirectToAction("Index");
-//        }
-//        ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentCode", employee.DepartmentId);
-//        ViewBag.PermissionId = new SelectList(db.Permissions, "PermissionId", "PermissionId", employee.PermissionId);
-//        ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", employee.RoleId);
-//        return View(employee);
-//    }
-
-//    // GET: Employees/Delete/5
-//    public ActionResult Delete(int? id)
-//    {
-//        if (id == null)
-//        {
-//            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//        }
-//        Employee employee = db.Employees.Find(id);
-//        if (employee == null)
-//        {
-//            return HttpNotFound();
-//        }
-//        return View(employee);
-//    }
-
-//    // POST: Employees/Delete/5
-//    [HttpPost, ActionName("Delete")]
-//    [ValidateAntiForgeryToken]
-//    public ActionResult DeleteConfirmed(int id)
-//    {
-//        Employee employee = db.Employees.Find(id);
-//        db.Employees.Remove(employee);
-//        db.SaveChanges();
-//        return RedirectToAction("Index");
-//    }
-
-//    protected override void Dispose(bool disposing)
-//    {
-//        if (disposing)
-//        {
-//            db.Dispose();
-//        }
-//        base.Dispose(disposing);
-//    }
-//}
 

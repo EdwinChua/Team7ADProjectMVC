@@ -6,16 +6,21 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
+using Team7ADProjectMVC.Models.DepartmentService;
 
 namespace Team7ADProjectMVC.TestControllers
 {
     public class StoreController : Controller
     {
         private IInventoryService inventorySvc;
+        private IDisbursementService disbursementSvc;
+        private IDepartmentService deptSvc;
 
         public StoreController()
         {
             inventorySvc = new InventoryService();
+            disbursementSvc = new DisbursementService();
+            deptSvc = new DepartmentService();
         }
 
         //**************** INVENTORY ********************
@@ -132,8 +137,9 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult ViewDisbursements()
         {
-            //TODO: EDWIN - Implementation code here
-            return View();
+
+            ViewBag.Departments = deptSvc.ListAllDepartments();
+            return View(disbursementSvc.GetAllDisbursements());
         }
 
         public ActionResult ViewDisbursement(String id)
@@ -142,6 +148,13 @@ namespace Team7ADProjectMVC.TestControllers
             return View();
         }
 
+        public ActionResult SearchDisbursements(int? id, String status)
+        {
+            //disbursementSvc.GetDisbursementsBySearchCriteria(id, status);
+            ViewBag.Departments = deptSvc.ListAllDepartments();
+
+            return View("ViewDisbursements", disbursementSvc.GetDisbursementsBySearchCriteria(id, status));
+        }
 
         // ********************* ADJUSTMENTS *******************
 

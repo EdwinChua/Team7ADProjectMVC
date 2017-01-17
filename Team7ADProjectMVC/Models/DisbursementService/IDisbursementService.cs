@@ -9,7 +9,7 @@ namespace Team7ADProjectMVC.Models
     {
         List<DisbursementList> GetAllDisbursements();
 
-        List<DisbursementList> GetDisbursementsBySearchCriteria(Department department, String status);
+        List<DisbursementList> GetDisbursementsBySearchCriteria(int? departmentId, String status);
         //Search for disbursements by department and status
 
         DisbursementList GetDisbursementById(String id);

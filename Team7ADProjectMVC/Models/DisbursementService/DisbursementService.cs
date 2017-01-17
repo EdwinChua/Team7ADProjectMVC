@@ -15,6 +15,7 @@ namespace Team7ADProjectMVC.Models
             var disbursementList = from d in db.DisbursementLists
                                    orderby d.Status
                                    select d;
+            
             return (disbursementList.ToList());
         }
 
@@ -26,7 +27,7 @@ namespace Team7ADProjectMVC.Models
         public List<DisbursementList> GetDisbursementsBySearchCriteria(Department department, string status)
         {
             var queryResults = from d in db.DisbursementLists
-                                where d.Department == department
+                                where d.DepartmentId == department.DepartmentId
                                 && d.Status == status
                                 orderby d.OrderedDate
                                 select d;

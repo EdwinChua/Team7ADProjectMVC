@@ -12,10 +12,12 @@ namespace Team7ADProjectMVC.TestControllers
     public class StoreController : Controller
     {
         private IInventoryService inventorySvc;
+        private IDisbursementService disbursementSvc;
 
         public StoreController()
         {
             inventorySvc = new InventoryService();
+            disbursementSvc = new DisbursementService();
         }
 
         //**************** INVENTORY ********************
@@ -132,8 +134,7 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult ViewDisbursements()
         {
-            //TODO: EDWIN - Implementation code here
-            return View();
+            return View(disbursementSvc.GetAllDisbursements());
         }
 
         public ActionResult ViewDisbursement(String id)

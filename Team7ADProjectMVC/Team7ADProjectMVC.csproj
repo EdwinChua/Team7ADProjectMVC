@@ -327,6 +327,7 @@
     <Compile Include="TestControllers\InventoriesController.cs" />
     <Compile Include="TestControllers\RepresentativeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="TestControllers\TESTDisbursementListsController.cs" />
     <Compile Include="TestControllers\TESTRequisitionsController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -382,7 +383,11 @@
     <Content Include="Views\TESTRequisitions\Details.cshtml" />
     <Content Include="Views\TESTRequisitions\Edit.cshtml" />
     <Content Include="Views\TESTRequisitions\Index.cshtml" />
-    <Content Include="Views\Shared\_LayoutD.cshtml" />
+    <Content Include="Views\TESTDisbursementLists\Create.cshtml" />
+    <Content Include="Views\TESTDisbursementLists\Delete.cshtml" />
+    <Content Include="Views\TESTDisbursementLists\Details.cshtml" />
+    <Content Include="Views\TESTDisbursementLists\Edit.cshtml" />
+    <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

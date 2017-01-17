@@ -9,12 +9,15 @@
     <div class="row">
         <div class="col-md-12">
             <div class="page-header">
-                <h1>
+                @*<h1>
                     VIEW REQUISITION DETAILS
-                </h1>
+                </h1>*@
             </div>
             <h3>
-                Requisition ID:
+                Requisition ID: 
+               @Html.labal(model => model.DepartmentId) 
+               
+
             </h3>
             <h3>
                 Department:
@@ -36,6 +39,9 @@
                         <th>
                             Outstanding Quantity
                         </th>
+                        <th>
+                            Delivery Status
+                        </th>
                     </tr>
 
                  
@@ -46,7 +52,16 @@
                     {
                         <tr>
                             <td>
-                                @item.RequisitionId
+                                @item.ItemNo
+                            </td>
+                            <td>
+                                @item.Quantity
+                            </td>
+                            <td>
+                                @item.OutstandingQuantity
+                            </td>
+                            <td>
+                                @item.DeliveryStatus
                             </td>
                            
                         </tr>

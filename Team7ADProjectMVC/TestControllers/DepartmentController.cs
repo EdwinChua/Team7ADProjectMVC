@@ -52,6 +52,7 @@ namespace Team7ADProjectMVC.TestControllers
             Requisition requisition = db.Requisitions.Find(id);
             ViewBag.re = requisition;
           
+
         
             List<RequisitionDetail> relis = db.RequisitionDetails.Where(u => u.RequisitionId == id).ToList();
 

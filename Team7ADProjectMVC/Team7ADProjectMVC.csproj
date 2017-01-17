@@ -287,8 +287,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\IInventoryService.cs" />
-    <Compile Include="Models\InventoryService.cs" />
+    <Compile Include="Models\DisbursementService\DisbursementService.cs" />
+    <Compile Include="Models\DisbursementService\IDisbursementService.cs" />
+    <Compile Include="Models\InventoryAdjustmentService\IInventoryAdjustmentService.cs" />
+    <Compile Include="Models\InventoryAdjustmentService\InventoryAdjustmentService.cs" />
+    <Compile Include="Models\InventoryService\IInventoryService.cs" />
+    <Compile Include="Models\InventoryService\InventoryService.cs" />
     <Compile Include="Permission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

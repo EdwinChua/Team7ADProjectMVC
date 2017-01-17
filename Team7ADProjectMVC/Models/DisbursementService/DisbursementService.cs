@@ -15,6 +15,7 @@ namespace Team7ADProjectMVC.Models
             var disbursementList = from d in db.DisbursementLists
                                    orderby d.Status
                                    select d;
+            
             return (disbursementList.ToList());
         }
 

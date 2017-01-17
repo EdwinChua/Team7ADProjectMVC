@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Team7ADProjectMVC.Models;
 
 namespace Team7ADProjectMVC
 {
@@ -52,6 +53,7 @@ namespace Team7ADProjectMVC
 
             AreaRegistration.RegisterAllAreas();
             //RegisterRoutes(RouteTable.Routes);
+            Application["RetrievalList"] = new RetrievalList();
         }
     }
 }

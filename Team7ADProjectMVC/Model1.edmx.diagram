@@ -56,7 +56,7 @@
         <AssociationConnector Association="ProjectModel.SupplierId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectModel.RequisitionId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectModel.PurchaseOrderReceivedBy" />
-        <AssociationConnector Association="ProjectModel.PurchaseOrderReceivedBy1" />
+        <EntityTypeShape EntityType="ProjectModel.StockCard" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

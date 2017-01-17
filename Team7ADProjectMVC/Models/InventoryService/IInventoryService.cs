@@ -25,7 +25,8 @@ namespace Team7ADProjectMVC.Models
         List<Inventory> GetInventoryListByCategory(int id);
         //Takes category ID, returns list of inventory
 
+        List<StockCard> GetStockCardFor(String id);
 
-        
+        List<Requisition> GetOutStandingRequisitions();
     }
 }

@@ -13,7 +13,7 @@
                         </h5>
                         <div>
                             
-                            Dept Name:@Html.DisplayFor(model => model.DepartmentId)
+                            Dept Name:@Html.DisplayFor(model => model.Employee.Department.DepartmentName)
                             <div>
                                 <h5>
 
@@ -24,7 +24,7 @@
                                     Employee Number:@Html.DisplayFor(model => model.Employee.EmployeeId)
                                     <br />
                                     <br />
-                                    Employee Email Address:<a href="mailto:Address:Jenny@LogicUniversity">Jenny@LogicUniversity</a>
+                                    Employee Email Address:<a href="mailto:Address:Jenny@LogicUniversity">@Html.DisplayFor(model => model.Employee.Email)</a>
                                     <br />
                                     <br />
                                     <br />
@@ -71,14 +71,16 @@
                         </p>
 
 
-
+                    <a href="ApproveRequisition/model.RequisitionId">
                         <button type="button" class="btn btn-success btn-lg">
                             Approve
-                        </button>
+                        </button></a>
 
+                    <a href="RejectRequisition/model.RequisitionId">
                         <button type="button" class="btn btn-danger btn-lg">
                             Reject
                         </button>
+                    </a>
                 </div>
             </div>
 

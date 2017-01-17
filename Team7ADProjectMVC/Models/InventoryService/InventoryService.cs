@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -19,8 +19,6 @@ namespace Team7ADProjectMVC.Models
             db.Inventories.Add(inventory);
             db.SaveChanges();
         }
-
-
 
         public List<Category> GetAllCategories()
         {
@@ -52,5 +50,13 @@ namespace Team7ADProjectMVC.Models
             db.SaveChanges();
         }
 
+        public List<Inventory> GetInventoryListByCategory(int id)
+        {
+            var queryByCategory = from t in db.Inventories
+                                  where t.Category.CategoryId == id
+                                  orderby t.Description ascending
+                                  select t;
+            return (queryByCategory.ToList());
+        }
     }
 }

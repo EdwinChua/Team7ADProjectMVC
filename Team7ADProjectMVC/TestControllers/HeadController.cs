@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Team7ADProjectMVC;
+using Team7ADProjectMVC.Models;
+using Team7ADProjectMVC.Models.ListAllRequisitionService;
 
 namespace Team7ADProjectMVC.TestControllers
 {
   
-
+    
     public class HeadController : Controller
     {
-        private ProjectEntities db = new ProjectEntities();
+        private IIListAllRequisition listsvc;
+
+       private ProjectEntities db = new ProjectEntities();
+        public HeadController()
+        {
+            listsvc =new IListAllRequisiton();
+        }
+
         // GET: Head
         public ActionResult Index()
         {
@@ -30,13 +37,23 @@ namespace Team7ADProjectMVC.TestControllers
         }
         public ActionResult ListAllEmployees()
         {
+            var requisitions = listsvc.GetAllRequisition();
+            ViewBag.req = requisitions.ToList();
+          
+                return View("ListAllEmployees", requisitions);
 
-            var requisitions = db.Requisitions.ToList();
-            ViewBag.Cat = requisitions;
-            return View();
+        }
 
-
-            
+        public ActionResult EmployeeRequisition(int id)
+        {
+            Requisition r = listsvc.FindById(id);
+            if (r == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.req = r;
+          
+            return View("Approve",r);
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿@{
-    Layout = "~/_Layout1.cshtml";
+﻿@model Team7ADProjectMVC.Requisition
+@{
     Page.Title = "View Requisition Details";
+    Layout = "~/Views/Shared/_LayoutD.cshtml";
 }
 
 
@@ -24,83 +25,40 @@
 
             <table class="table">
                 <thead>
+
                     <tr>
                         <th>
-                            #Catalogue Item Code
-                        </th>
-                        <th>
-                        </th>
-                        <th>
-                            Description
+                            ItemNo
                         </th>
                         <th>
                             Quantity
                         </th>
+                        <th>
+                            Outstanding Quantity
+                        </th>
                     </tr>
+
+                 
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            C010
-                        </td>
-                        <td></td>
-                        <td>
-                            Clips Double 2"
-                        </td>
-                        <td>
-                            10
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            S002
-                        </td>
-                        <td></td>
-                        <td>
-                            Short Hand Book
-                        </td>
-                        <td>
-                            45
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            P049
-                        </td>
-                        <td></td>
-                        <td>
-                            Pad Postit 2"x4"
-                        </td>
-                        <td>
-                            100
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            T100
-                        </td>
-                        <td></td>
-                        <td>
-                            Trays in/out
-                        </td>
-                        <td>
-                            25
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            S010
-                        </td>
-                        <td></td>
-                        <td>
-                            Stapler No.28
-                        </td>
-                        <td>
-                            55
-                        </td>
-                    </tr>
+
+                    @foreach (var item in @ViewBag.rel)
+                    {
+                        <tr>
+                            <td>
+                                @item.RequisitionId
+                            </td>
+                           
+                        </tr>
+                    }
+
                 </tbody>
-            </table>
+             
+
+                </table>
+
+
+        
 
 
 

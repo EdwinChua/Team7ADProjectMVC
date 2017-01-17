@@ -6,23 +6,30 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
+using Team7ADProjectMVC.Models.DepartmentService;
 
 namespace Team7ADProjectMVC.TestControllers
 {
     public class StoreController : Controller
     {
         private IInventoryService inventorySvc;
+        private IDisbursementService disbursementSvc;
+        private IDepartmentService deptSvc;
 
         public StoreController()
         {
             inventorySvc = new InventoryService();
+            disbursementSvc = new DisbursementService();
+            deptSvc = new DepartmentService();
         }
+
+        //**************** INVENTORY ********************
 
         // GET: Store
         public ActionResult Index()
         {
             return View("Dashboard");
-            //TODO: Create a nice dashboard
+            //TODO: EDWIN - Create a nice dashboard
         }
 
         public ActionResult Inventory()
@@ -41,12 +48,12 @@ namespace Team7ADProjectMVC.TestControllers
                 return HttpNotFound();
             }
             ViewBag.inv = inventory;
-            //TODO: Require a view in DB to populate data to table
+            //TODO: EDWIN - Require a view in DB to populate data to table
             return View("ViewStockCard",inventory);
         }
         public ActionResult RetrievalList()
         {
-            //TODO: Implementation code here
+            //TODO: EDWIN - Implementation code here
             return View("ViewRetrievalList");
         }
 
@@ -116,6 +123,93 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.SupplierId2 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId2);
             ViewBag.SupplierId3 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId3);
             return View("UpdateStockCard",inventory);
+        }
+
+        public ActionResult Search(int id)
+        {
+            var inventories = inventorySvc.GetInventoryListByCategory(id);
+            var categories = inventorySvc.GetAllCategories();
+            ViewBag.Cat = categories.ToList();
+            return View("ViewInventory", inventories);
+        }
+
+        //************** DISBURSEMENTS **************
+
+        public ActionResult ViewDisbursements()
+        {
+
+            ViewBag.Departments = deptSvc.ListAllDepartments();
+            return View(disbursementSvc.GetAllDisbursements());
+        }
+
+        public ActionResult ViewDisbursement(String id)
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        public ActionResult SearchDisbursements(int? id, String status)
+        {
+            //disbursementSvc.GetDisbursementsBySearchCriteria(id, status);
+            ViewBag.Departments = deptSvc.ListAllDepartments();
+
+            return View("ViewDisbursements", disbursementSvc.GetDisbursementsBySearchCriteria(id, status));
+        }
+
+        // ********************* ADJUSTMENTS *******************
+
+        public ActionResult InventoryAdjustment()
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        public ActionResult CreateNewAdjustment()
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        // ********************* MAINTAIN *******************
+        public ActionResult SupplierList()
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        public ActionResult Supplier(String id)
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+
+        // ********************* RESUPPLY *******************
+
+        public ActionResult GeneratePO()
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        public ActionResult PurchaseOrderSummary(String id)
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        public ActionResult ViewReceiveOrder(String id)
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        // ********************* Other *******************
+
+        public ActionResult GenerateReports()
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
         }
 
     }

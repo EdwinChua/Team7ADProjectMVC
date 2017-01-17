@@ -21,5 +21,11 @@ namespace Team7ADProjectMVC.Models
         void AddItem(Inventory inventory);
 
         void UpdateInventory(Inventory inventory);
+
+        List<Inventory> GetInventoryListByCategory(int id);
+        //Takes category ID, returns list of inventory
+
+
+        
     }
 }

@@ -19,7 +19,7 @@
                 @Html.LabelFor(model => model.ItemNo, "Item No.", htmlAttributes: new { @class = "control-label" })
             </div>
             <div class="col-md-3">
-                @Html.EditorFor(model => model.ItemNo, new { htmlAttributes = new { @class = "form-control", required = "true", title = "A unique item code is required." } })
+                @Html.EditorFor(model => model.ItemNo, new { htmlAttributes = new { @class = "form-control", required = "true", title = "A unique item code is required.", @readonly= "true" } })
                 @Html.ValidationMessageFor(model => model.ItemNo, "", new { @class = "text-danger" })
             </div>
         </div>

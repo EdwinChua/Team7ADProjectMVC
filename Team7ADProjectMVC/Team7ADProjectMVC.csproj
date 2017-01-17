@@ -287,8 +287,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\IInventoryService.cs" />
-    <Compile Include="Models\InventoryService.cs" />
+    <Compile Include="Models\DepartmentService\DepartmentService.cs" />
+    <Compile Include="Models\DepartmentService\IDepartmentService.cs" />
+    <Compile Include="Models\DisbursementService\DisbursementService.cs" />
+    <Compile Include="Models\DisbursementService\IDisbursementService.cs" />
+    <Compile Include="Models\InventoryAdjustmentService\IInventoryAdjustmentService.cs" />
+    <Compile Include="Models\InventoryAdjustmentService\InventoryAdjustmentService.cs" />
+    <Compile Include="Models\InventoryService\IInventoryService.cs" />
+    <Compile Include="Models\InventoryService\InventoryService.cs" />
+    <Compile Include="Models\ListAllRequisitionService\IIListAllRequisition.cs" />
+    <Compile Include="Models\RequisitionDetailsService\IIRequisitionDetails.cs" />
+    <Compile Include="Models\ListAllRequisitionService\IListAllRequisiton.cs" />
+    <Compile Include="Models\RequisitionDetailsService\IRequisitionDetails.cs" />
     <Compile Include="Permission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -323,7 +333,8 @@
     <Compile Include="TestControllers\InventoriesController.cs" />
     <Compile Include="TestControllers\RepresentativeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
-    <Compile Include="TestControllers\TESTDepartmentsController.cs" />
+    <Compile Include="TestControllers\TESTDisbursementListsController.cs" />
+    <Compile Include="TestControllers\TESTRequisitionsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -373,11 +384,16 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Department\Index.cshtml" />
-    <Content Include="Views\TESTDepartments\Create.cshtml" />
-    <Content Include="Views\TESTDepartments\Delete.cshtml" />
-    <Content Include="Views\TESTDepartments\Details.cshtml" />
-    <Content Include="Views\TESTDepartments\Edit.cshtml" />
-    <Content Include="Views\TESTDepartments\Index.cshtml" />
+    <Content Include="Views\TESTRequisitions\Create.cshtml" />
+    <Content Include="Views\TESTRequisitions\Delete.cshtml" />
+    <Content Include="Views\TESTRequisitions\Details.cshtml" />
+    <Content Include="Views\TESTRequisitions\Edit.cshtml" />
+    <Content Include="Views\TESTRequisitions\Index.cshtml" />
+    <Content Include="Views\TESTDisbursementLists\Create.cshtml" />
+    <Content Include="Views\TESTDisbursementLists\Delete.cshtml" />
+    <Content Include="Views\TESTDisbursementLists\Details.cshtml" />
+    <Content Include="Views\TESTDisbursementLists\Edit.cshtml" />
+    <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -388,6 +404,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\DelegateRoleService\" />
     <Folder Include="Views\StoreTest\" />
   </ItemGroup>
   <ItemGroup>

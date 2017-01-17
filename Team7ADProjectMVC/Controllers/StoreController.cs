@@ -120,6 +120,14 @@ namespace Team7ADProjectMVC.TestControllers
             return View("UpdateStockCard",inventory);
         }
 
+        public ActionResult Search(int id)
+        {
+            var inventories = inventorySvc.GetInventoryListByCategory(id);
+            var categories = inventorySvc.GetAllCategories();
+            ViewBag.Cat = categories.ToList();
+            return View("ViewInventory", inventories);
+        }
+
         //************** DISBURSEMENTS **************
 
         public ActionResult ViewDisbursements()

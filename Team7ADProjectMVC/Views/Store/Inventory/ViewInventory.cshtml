@@ -9,14 +9,14 @@
 <div class="container-fluid">
     <div class="row jumbotron">
 
-        <form class="form" role="form">
+        <form class="form" role="form" action="/Store/Search" method="Get">
             <div class="col-md-2 form-group ">
                 <label for="categoryPicker">
                     Category
                 </label>
             </div>
             <div class="col-md-4 form-group">
-                <select id="categoryPicker" name="category"
+                <select id="categoryPicker" name="id"
                         class="selectpicker show-tick form-control"
                         data-live-search="true" required>
                     @foreach (Category c in ViewBag.Cat)

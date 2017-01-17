@@ -22,7 +22,7 @@ namespace Team7ADProjectMVC.Models
 
         void UpdateInventory(Inventory inventory);
 
-        List<Inventory> GetInventoryListByCategory(String id);
+        List<Inventory> GetInventoryListByCategory(int id);
         //Takes category ID, returns list of inventory
 
 

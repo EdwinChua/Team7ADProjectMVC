@@ -50,7 +50,7 @@ namespace Team7ADProjectMVC.Models
             db.SaveChanges();
         }
 
-        public List<Inventory> GetInventoryListByCategory(string id)
+        public List<Inventory> GetInventoryListByCategory(int id)
         {
             //TODO: Linda 
             Category c = db.Categories.Find(id);

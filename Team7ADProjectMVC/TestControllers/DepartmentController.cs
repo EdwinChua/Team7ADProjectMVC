@@ -27,8 +27,13 @@ namespace Team7ADProjectMVC.TestControllers
             var requisitions = db.Requisitions.ToList();
             ViewBag.Cat = requisitions;
 
+            
 
-            List<RequisitionDetail> relis = db.RequisitionDetails.Where(u => u.RequisitionId == id).ToList();
+            //List<RequisitionDetail> relis = db.RequisitionDetails.ToList();
+
+            //ViewBag.rel = relis;
+
+            List<RequisitionDetail> relis = db.RequisitionDetails.Where(u => u.RequisitionId == 2).ToList();
 
             ViewBag.rel = relis;
 

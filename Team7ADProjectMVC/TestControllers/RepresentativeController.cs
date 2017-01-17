@@ -39,9 +39,9 @@ namespace Team7ADProjectMVC.TestControllers
                 return HttpNotFound();
             }
             
-            ViewBag.CollectionPointId = new SelectList(db.CollectionPoints, "CollectionPointId", "PlaceName", department.CollectionPointId);
+            //ViewBag.CollectionPointId = new SelectList(db.CollectionPoints, "CollectionPointId", "PlaceName", department.CollectionPointId);
             //ViewBag.RepresentativeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", department.RepresentativeId);
-
+            ViewBag.Message = db.CollectionPoints.ToList();
             return View("ChangeCollectionPoint", department);
         
         }
@@ -57,7 +57,7 @@ namespace Team7ADProjectMVC.TestControllers
             }
 
             //ViewBag.CollectionPointId = new SelectList(db.CollectionPoints, "CollectionPointId", "PlaceName", department.CollectionPointId);
-            ViewBag.Cp = db.CollectionPoints.ToList();
+            ViewBag.Message = db.CollectionPoints.ToList();
             return View(department);
 
         }

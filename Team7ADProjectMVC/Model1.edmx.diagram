@@ -55,6 +55,7 @@
         <AssociationConnector Association="ProjectModel.SupplierId3" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectModel.SupplierId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectModel.RequisitionId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.PurchaseOrderReceivedBy" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

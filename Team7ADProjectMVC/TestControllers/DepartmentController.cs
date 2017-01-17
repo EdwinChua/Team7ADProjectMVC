@@ -47,24 +47,18 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult ViewRequisitionDetails(int? id)
         {
+            
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Requisition requisition = db.Requisitions.Find(id);
             ViewBag.re = requisition;
-            if (requisition == null)
-            {
-                return HttpNotFound();
-            }
-            return View(requisition);
+          
 
-            var relis = db.RequisitionDetails.ToList();
+        
+            List<RequisitionDetail> relis = db.RequisitionDetails.Where(u => u.RequisitionId == id).ToList();
 
             ViewBag.rel = relis;
 
-            return View();
+            return View(requisition);
         }
     }
 }

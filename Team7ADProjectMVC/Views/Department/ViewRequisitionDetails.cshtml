@@ -1,6 +1,5 @@
-﻿
+﻿@model Team7ADProjectMVC.Requisition
 @{
-
     Page.Title = "View Requisition Details";
     Layout = "~/Views/Shared/_LayoutD.cshtml";
 }
@@ -10,16 +9,19 @@
     <div class="row">
         <div class="col-md-12">
             <div class="page-header">
-                <h1>
-                    VIEW REQUISITION DETAILS
-                </h1>
+                <h3>
+                    Department:  @Html.DisplayFor(model => model.Employee.Department.DepartmentName)
+
+                </h3>
+                <h3>
+                    EmployeeId:  @Html.DisplayFor(model => model.Employee.EmployeeName)
+
+                </h3>
+                <h3>
+                    OrderedDate:  @Html.DisplayFor(model => model.OrderedDate)
+                </h3>
             </div>
-            <h3>
-                Requisition ID:
-            </h3>
-            <h3>
-                Department:
-            </h3>
+            
             <h3>
                 Item List:
             </h3>
@@ -37,17 +39,29 @@
                         <th>
                             Outstanding Quantity
                         </th>
+                        <th>
+                            Delivery Status
+                        </th>
                     </tr>
 
                  
                 </thead>
                 <tbody>
 
-                    @foreach (var item in ViewBag.relis)
+                    @foreach (var item in @ViewBag.rel)
                     {
                         <tr>
                             <td>
                                 @item.ItemNo
+                            </td>
+                            <td>
+                                @item.Quantity
+                            </td>
+                            <td>
+                                @item.OutstandingQuantity
+                            </td>
+                            <td>
+                                @item.DeliveryStatus
                             </td>
                            
                         </tr>

@@ -1,5 +1,6 @@
-﻿@{
-    Page.Title = "Approve/Reject Requisition";
+﻿@model Team7ADProjectMVC.Requisition
+@{
+    ViewBag.Title = "Approve/Reject Requisition";
     Layout = "~/_Layout1.cshtml";
 }
 
@@ -11,21 +12,19 @@
                         Requisition Form#: DDS/111/999
                         </h5>
                         <div>
-                            Dept Name:Department of Register
+                            
+                            Dept Name:@Html.DisplayFor(model => model.Employee.Department.DepartmentName)
                             <div>
                                 <h5>
 
-                                    <br />
-                                    Dept Code:DDS
-                                    <br />
-                                    <br />
-                                    Employee Name:Jenny Wong Mei Lin
+                                 
+                                    Employee Name:@Html.DisplayFor(model => model.Employee.EmployeeName)
                                     <br />
                                     <br />
-                                    Employee Number:11233
+                                    Employee Number:@Html.DisplayFor(model => model.Employee.EmployeeId)
                                     <br />
                                     <br />
-                                    Employee Email Address:<a href="mailto:Address:Jenny@LogicUniversity">Jenny@LogicUniversity</a>
+                                    Employee Email Address:<a href="mailto:Address:Jenny@LogicUniversity">@Html.DisplayFor(model => model.Employee.Email)</a>
                                     <br />
                                     <br />
                                     <br />
@@ -38,11 +37,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>
-                                        #Catalogue Item Code
-                                    </th>
-                                    <th>
-                                    </th>
+                                    
                                     <th>
                                         Description
                                     </th>
@@ -52,66 +47,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        C010
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        Clips Double 2"
-                                    </td>
-                                    <td>
-                                        10
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        S002
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        Short Hand Book
-                                    </td>
-                                    <td>
-                                        45
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        P049
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        Pad Postit 2"x4"
-                                    </td>
-                                    <td>
-                                        100
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        T100
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        Trays in/out
-                                    </td>
-                                    <td>
-                                        25
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        S010
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        Stapler No.28
-                                    </td>
-                                    <td>
-                                        55
-                                    </td>
-                                </tr>
+                                
+                                @foreach (var item in Model.RequisitionDetails)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.Inventory.Description
+                                        </td>
+                                        <td>
+                                            @item.Quantity
+                                        </td>
+                                        
+                                    </tr>
+                                }
+
                             </tbody>
                         </table>
                         <h5>
@@ -122,14 +71,16 @@
                         </p>
 
 
-
+                    <a href="ApproveRequisition/model.RequisitionId">
                         <button type="button" class="btn btn-success btn-lg">
                             Approve
-                        </button>
+                        </button></a>
 
+                    <a href="RejectRequisition/model.RequisitionId">
                         <button type="button" class="btn btn-danger btn-lg">
                             Reject
                         </button>
+                    </a>
                 </div>
             </div>
 

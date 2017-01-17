@@ -94,10 +94,10 @@
                     <thead>
                         <tr>
                             <th>
-                                #
+                                Employee
                             </th>
                             <th>
-                                Employee
+                                Ordered Date
                             </th>
                             @*<th>
                                     Request Date
@@ -121,14 +121,17 @@
                             {
                                 <option value="@c.CategoryId">@c.CategoryName</option>
                             }*@
-                        @foreach (var item in ViewBag.Cat)
+                        @foreach (var item in Model)
                         {
-                            <tr>
+                            <tr class="clickable-row" data-href="EmployeeRequisition/@item.RequisitionId">
                                 <td>
-                                    @item.RequisitionId
+                                    @item.OrderedDate
                                 </td>
                                 <td>
-                                    <a href="EmployeeRequisition/@item.RequisitionId">@item.Employee.EmployeeName</a>
+                                    @item.Employee.EmployeeName
+                                </td>
+                                <td>
+                                    <a href="EmployeeRequisition/@item.RequisitionId"><input type="button" name="Approve" /></a>
                                 </td>
                             </tr>
                         }
@@ -188,5 +191,11 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
+<script>
+    $(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>

@@ -18,11 +18,13 @@ namespace Team7ADProjectMVC.TestControllers
             inventorySvc = new InventoryService();
         }
 
+        //**************** INVENTORY ********************
+
         // GET: Store
         public ActionResult Index()
         {
             return View("Dashboard");
-            //TODO: Create a nice dashboard
+            //TODO: EDWIN - Create a nice dashboard
         }
 
         public ActionResult Inventory()
@@ -41,12 +43,12 @@ namespace Team7ADProjectMVC.TestControllers
                 return HttpNotFound();
             }
             ViewBag.inv = inventory;
-            //TODO: Require a view in DB to populate data to table
+            //TODO: EDWIN - Require a view in DB to populate data to table
             return View("ViewStockCard",inventory);
         }
         public ActionResult RetrievalList()
         {
-            //TODO: Implementation code here
+            //TODO: EDWIN - Implementation code here
             return View("ViewRetrievalList");
         }
 
@@ -116,6 +118,77 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.SupplierId2 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId2);
             ViewBag.SupplierId3 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId3);
             return View("UpdateStockCard",inventory);
+        }
+
+        //************** DISBURSEMENTS **************
+
+        public ActionResult ViewDisbursements()
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        public ActionResult ViewDisbursement(String id)
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+
+        // ********************* ADJUSTMENTS *******************
+
+        public ActionResult InventoryAdjustment()
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        public ActionResult CreateNewAdjustment()
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        // ********************* MAINTAIN *******************
+        public ActionResult SupplierList()
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        public ActionResult Supplier(String id)
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+
+        // ********************* RESUPPLY *******************
+
+        public ActionResult GeneratePO()
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        public ActionResult PurchaseOrderSummary(String id)
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        public ActionResult ViewReceiveOrder(String id)
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
+        }
+
+        // ********************* Other *******************
+
+        public ActionResult GenerateReports()
+        {
+            //TODO: EDWIN - Implementation code here
+            return View();
         }
 
     }

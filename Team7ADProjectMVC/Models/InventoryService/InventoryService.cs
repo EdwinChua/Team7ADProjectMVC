@@ -52,5 +52,10 @@ namespace Team7ADProjectMVC.Models
             db.SaveChanges();
         }
 
+        public List<Inventory> GetInventoryListByCategory(string id)
+        {
+            //TODO: Linda 
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,8 +1,10 @@
-﻿@{
-    Layout = "~/_Layout1.cshtml";
-    Page.Title = "My Home Page";
-}
+﻿@model IEnumerable<Team7ADProjectMVC.Requisition>
 
+@{
+    Page.Title = "View All requisitions";
+    Layout = "~/Views/Shared/_LayoutDe.cshtml";
+    
+}
 
 <div class="container-fluid">
     <div class="row">
@@ -107,7 +109,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+
+                        @foreach (var item in ViewBag.Cat)
+                        {
+                            <tr>
+                                <td>
+                                    @item.RequisitionId
+                                </td>
+                                <td>
+                                    @item
+                                </td>
+                                <td>
+                                    @item.EmployeeId
+                                </td>
+                                <td>
+                                    @item.EmployeeId
+                                </td>
+                            </tr>
+                        }
+
+
+                        @*<tr>
                             <td>
                                 1
                             </td>
@@ -176,7 +198,7 @@
                             <td>
                                 Call in to confirm
                             </td>
-                        </tr>
+                        </tr>*@
                     </tbody>
                 </table>
 

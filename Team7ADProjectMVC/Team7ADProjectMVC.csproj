@@ -424,6 +424,7 @@
     <Content Include="Views\TESTDisbursementLists\Details.cshtml" />
     <Content Include="Views\TESTDisbursementLists\Edit.cshtml" />
     <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
+    <Content Include="Views\Rpt\ReportOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -435,7 +436,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\DelegateRoleService\" />
-    <Folder Include="Views\Rpt\" />
     <Folder Include="Views\StoreTest\" />
   </ItemGroup>
   <ItemGroup>

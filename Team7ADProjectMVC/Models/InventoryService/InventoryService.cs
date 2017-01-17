@@ -20,8 +20,6 @@ namespace Team7ADProjectMVC.Models
             db.SaveChanges();
         }
 
-
-
         public List<Category> GetAllCategories()
         {
             var categories = db.Categories;
@@ -55,7 +53,13 @@ namespace Team7ADProjectMVC.Models
         public List<Inventory> GetInventoryListByCategory(string id)
         {
             //TODO: Linda 
-            throw new NotImplementedException();
+            Category c = db.Categories.Find(id);
+            var queryByCategory = from t in db.Inventories
+                                  where t.Category == c
+                                  orderby t.Description ascending
+                                  select t;
+            return (queryByCategory.ToList());
+           
         }
     }
 }

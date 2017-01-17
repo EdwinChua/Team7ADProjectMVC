@@ -10,17 +10,20 @@ namespace Team7ADProjectMVC.Models
         ProjectEntities db = new ProjectEntities();
         public List<DisbursementList> GetAllDisbursements()
         {
-            //TODO: Linda 
-            var disbursementList = db.DisbursementLists;
+            var disbursementList = from d in db.DisbursementLists
+                                   orderby d.Status
+                                   select d;
             return (disbursementList.ToList());
-            throw new NotImplementedException();
         }
 
         public List<DisbursementList> GetDisbursementsBySearchCriteria(Department department, string status)
         {
-            //TODO: Linda 
-            
-            throw new NotImplementedException();
+            var queryResults = from d in db.DisbursementLists
+                                where d.Department == department
+                                && d.Status == status
+                                orderby d.OrderedDate
+                                select d;
+            return (queryResults.ToList());
         }
     }
 }

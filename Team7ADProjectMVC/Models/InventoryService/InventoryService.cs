@@ -52,14 +52,12 @@ namespace Team7ADProjectMVC.Models
 
         public List<Inventory> GetInventoryListByCategory(string id)
         {
-            //TODO: Linda 
-            Category c = db.Categories.Find(id);
+            Category cat = db.Categories.Find(id);
             var queryByCategory = from t in db.Inventories
-                                  where t.Category == c
+                                  where t.Category == cat
                                   orderby t.Description ascending
                                   select t;
             return (queryByCategory.ToList());
-           
         }
     }
 }

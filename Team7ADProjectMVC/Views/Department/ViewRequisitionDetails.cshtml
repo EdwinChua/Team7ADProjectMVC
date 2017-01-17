@@ -1,6 +1,4 @@
-﻿
-@{
-
+﻿@{
     Page.Title = "View Requisition Details";
     Layout = "~/Views/Shared/_LayoutD.cshtml";
 }
@@ -43,7 +41,7 @@
                 </thead>
                 <tbody>
 
-                    @foreach (var item in ViewBag.relis)
+                    @foreach (var item in @ViewBag.relis)
                     {
                         <tr>
                             <td>

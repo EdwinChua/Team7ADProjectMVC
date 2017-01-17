@@ -42,14 +42,21 @@
         </div>
 
         <div class="form-group">
-            @*@Html.LabelFor(model => model.CollectionPointId, "New Collection Point", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="row">
+                <div class="col-md-2">
+                    <label>New Collection Point</label>
+                </div>
+            </div>
             <div class="col-md-5">
-                @foreach (var item in ViewBag.Cp)
+                @foreach (var item in ViewBag.Message)
                 {
                     @*@Html.RadioButtonFor(model => model.CollectionPointId, item.Value, false)*@
                     @*<label class="control-label">@item.PlaceName @item.CollectTime </label> 
                     <br />*@
-                    <p>@item </p>
+
+                    <input type="radio" name="group2" value="@item.CollectionPointId" checked> @item.PlaceName   <label>( @item.CollectTime )</label> <br />
+
+
                 }
 
             </div>

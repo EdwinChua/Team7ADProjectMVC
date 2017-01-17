@@ -473,3 +473,22 @@ SELECT po.OrderDate AS [Date], s.SupplierName,'+' + CAST(pd.Quantity AS VARCHAR(
 INNER JOIN PurchaseOrder po on po.PurchaseOrderId = pd.PurchaseOrderId
 INNER JOIN Inventory i on i.ItemNo = pd.ItemNo
 INNER JOIN Supplier s on s.SupplierId = po.SupplierId
+
+-------------------------------------- CrystalReports Views ----------------------------------------
+create view disbAnalysis as
+select d.DepartmentName, c.CategoryName, r.ApprovedDate, dd.Quantity, e.EmployeeName, r.RequisitionId
+from 
+DisbursementDetail dd, 
+RequisitionDetail rd, 
+Requisition r, 
+Inventory i, 
+Employee e, 
+Department d, 
+Category c
+where 
+dd.RequisitionDetailId=rd.RequisitionDetailId 
+and rd.RequisitionId=r.RequisitionId 
+and rd.ItemNo=i.ItemNo 
+and i.CategoryId=c.CategoryId
+and r.EmployeeId=e.EmployeeId 
+and e.DepartmentId=d.DepartmentId 

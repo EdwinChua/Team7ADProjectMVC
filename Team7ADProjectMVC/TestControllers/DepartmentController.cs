@@ -26,7 +26,19 @@ namespace Team7ADProjectMVC.TestControllers
         {
             var requisitions = db.Requisitions.ToList();
             ViewBag.Cat = requisitions;
-            return View("MakeRequisition");
+
+            
+
+            //List<RequisitionDetail> relis = db.RequisitionDetails.ToList();
+
+            //ViewBag.rel = relis;
+
+            List<RequisitionDetail> relis = db.RequisitionDetails.Where(u => u.RequisitionId == 2).ToList();
+
+            ViewBag.rel = relis;
+
+
+            return View("MakeRequisition", requisitions);
         }
 
         // GET: TESTRequisitions/Details/5
@@ -52,6 +64,7 @@ namespace Team7ADProjectMVC.TestControllers
             Requisition requisition = db.Requisitions.Find(id);
             ViewBag.re = requisition;
           
+
         
             List<RequisitionDetail> relis = db.RequisitionDetails.Where(u => u.RequisitionId == id).ToList();
 

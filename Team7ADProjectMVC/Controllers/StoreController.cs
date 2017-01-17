@@ -48,7 +48,7 @@ namespace Team7ADProjectMVC.TestControllers
                 return HttpNotFound();
             }
             ViewBag.inv = inventory;
-            //TODO: EDWIN - Require a view in DB to populate data to table
+            ViewBag.sCard = inventorySvc.GetStockCardFor(id);
             return View("ViewStockCard",inventory);
         }
         public ActionResult RetrievalList()
@@ -137,7 +137,6 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult ViewDisbursements()
         {
-
             ViewBag.Departments = deptSvc.ListAllDepartments();
             return View(disbursementSvc.GetAllDisbursements());
         }
@@ -145,7 +144,8 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult ViewDisbursement(String id)
         {
             //TODO: EDWIN - Implementation code here
-            return View();
+            DisbursementList dl = disbursementSvc.GetDisbursementById(id);
+            return View(dl);
         }
 
         public ActionResult SearchDisbursements(int? id, String status)

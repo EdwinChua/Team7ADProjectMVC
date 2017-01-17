@@ -26,14 +26,14 @@ namespace Team7ADProjectMVC.TestControllers
         {
             var requisitions = db.Requisitions.ToList();
             ViewBag.Cat = requisitions;
-            return View();
+            return View("MakeRequisition");
         }
 
         public ActionResult ViewRequisitionDetails()
         {
             var requisitions = db.Requisitions.ToList();
             ViewBag.Cat = requisitions;
-            return View();
+            return View("ViewRequisitionDetails");
         }
     }
 }

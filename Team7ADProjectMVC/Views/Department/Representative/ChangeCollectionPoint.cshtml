@@ -1,29 +1,78 @@
-﻿@{
+﻿@model Team7ADProjectMVC.Department
+
+@{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Change Collection Point";
 }
 
 
-<form >
-    <input type="Text" Enabled="false" Text="Medical School" />
-</form>
-<br />
-<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<br />
-<form class="form-inline">
-    <div class="form-group">
-        <span class="label label-primary">Change Collection Point:</span>
-        <select id="collection" name="collection"
-                class="selectpicker show-tick form-control"
-                data-live-search="true">
-            <option>Management School</option>
-            <option>Medical School</option>
-            <option>Engineering School</option>
-            <option>Science School</option>
-            <option>University Hospital</option>
+    <div class="form-horizontal">
+        <h4>Department</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.DepartmentId)
 
-        </select>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartmentName, "Department Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.DepartmentName, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.DepartmentName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RepresentativeId, "Representative Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Employee.EmployeeName, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.RepresentativeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br/>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CollectionPointId, "Current Collection Point", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.DisplayFor(model => model.CollectionPoint.PlaceName)  ( @Html.DisplayFor(model => model.CollectionPoint.CollectTime))
+                @Html.ValidationMessageFor(model => model.CollectionPointId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.CollectionPointId, "New Collection Point", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-5">
+                @foreach (var item in ViewBag.Cp)
+                {
+                    @*@Html.RadioButtonFor(model => model.CollectionPointId, item.Value, false)*@
+                    @*<label class="control-label">@item.PlaceName @item.CollectTime </label> 
+                    <br />*@
+                    <p>@item </p>
+                }
+
+            </div>
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-success btn-default">Save</button>
-</form>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+

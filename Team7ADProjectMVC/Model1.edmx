@@ -96,6 +96,7 @@
           <Property Name="DisbursementListId" Type="int" />
           <Property Name="RequisitionDetailId" Type="int" />
           <Property Name="Quantity" Type="int" />
+          <Property Name="Remark" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="DisbursementList">
           <Key>
@@ -105,6 +106,7 @@
           <Property Name="RetrievalId" Type="int" />
           <Property Name="DepartmentId" Type="int" />
           <Property Name="OrderedDate" Type="date" />
+          <Property Name="DeliveryDate" Type="date" />
           <Property Name="CollectionPointId" Type="int" />
           <Property Name="Status" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -168,8 +170,8 @@
           <Property Name="ItemNo" Type="varchar" MaxLength="50" />
           <Property Name="Quantity" Type="int" />
           <Property Name="Price" Type="decimal" Precision="8" Scale="2" />
-          <Property Name="SupplierId" Type="int" />
           <Property Name="Amount" Type="int" />
+          <Property Name="SupplierId" Type="int" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -178,7 +180,9 @@
           <Property Name="PurchaseOrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderDate" Type="date" />
           <Property Name="DeliveredDate" Type="date" />
+          <Property Name="SupplierId" Type="int" />
           <Property Name="EmployeeId" Type="int" />
+          <Property Name="ReceivedBy" Type="int" />
           <Property Name="AuthorizedBy" Type="int" />
           <Property Name="AuthorizedDate" Type="date" />
         </EntityType>
@@ -426,6 +430,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="PurchaseDetailSupplierId">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="PurchaseOrderEmployeeId">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
@@ -447,6 +463,18 @@
             </Principal>
             <Dependent Role="Delivery">
               <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderReceivedBy">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="ReceivedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -531,18 +559,6 @@
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="SupplierId">
-          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
-          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="SupplierId" />
-            </Principal>
-            <Dependent Role="PurchaseDetail">
-              <PropertyRef Name="SupplierId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -668,6 +684,10 @@
             <End Role="Inventory" EntitySet="Inventory" />
             <End Role="PurchaseDetail" EntitySet="PurchaseDetail" />
           </AssociationSet>
+          <AssociationSet Name="PurchaseDetailSupplierId" Association="Self.PurchaseDetailSupplierId">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetail" />
+          </AssociationSet>
           <AssociationSet Name="PurchaseOrderEmployeeId" Association="Self.PurchaseOrderEmployeeId">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
@@ -675,6 +695,10 @@
           <AssociationSet Name="PurchaseOrderId" Association="Self.PurchaseOrderId">
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
             <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderReceivedBy" Association="Self.PurchaseOrderReceivedBy">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
           </AssociationSet>
           <AssociationSet Name="RequisitionDetailId" Association="Self.RequisitionDetailId">
             <End Role="RequisitionDetail" EntitySet="RequisitionDetail" />
@@ -703,10 +727,6 @@
           <AssociationSet Name="RoleId" Association="Self.RoleId">
             <End Role="Role" EntitySet="Role" />
             <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
-          <AssociationSet Name="SupplierId" Association="Self.SupplierId">
-            <End Role="Supplier" EntitySet="Supplier" />
-            <End Role="PurchaseDetail" EntitySet="PurchaseDetail" />
           </AssociationSet>
           <AssociationSet Name="SupplierId1" Association="Self.SupplierId1">
             <End Role="Supplier" EntitySet="Supplier" />
@@ -832,6 +852,7 @@
           <Property Name="Quantity" Type="Int32" />
           <NavigationProperty Name="DisbursementList" Relationship="Self.DisbursementListId" FromRole="DisbursementDetail" ToRole="DisbursementList" />
           <NavigationProperty Name="RequisitionDetail" Relationship="Self.RequisitionDetailId" FromRole="DisbursementDetail" ToRole="RequisitionDetail" />
+          <Property Name="Remark" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="DisbursementList">
           <Key>
@@ -847,6 +868,7 @@
           <NavigationProperty Name="Department" Relationship="Self.DisbursementListDepartmentId" FromRole="DisbursementList" ToRole="Department" />
           <NavigationProperty Name="DisbursementDetails" Relationship="Self.DisbursementListId" FromRole="DisbursementList" ToRole="DisbursementDetail" />
           <NavigationProperty Name="Retrieval" Relationship="Self.RetrievalId" FromRole="DisbursementList" ToRole="Retrieval" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -870,6 +892,7 @@
           <NavigationProperty Name="Requisitions" Relationship="Self.RequisitionEmployeeId" FromRole="Employee" ToRole="Requisition" />
           <NavigationProperty Name="Retrievals" Relationship="Self.RetrievalEmployeeId" FromRole="Employee" ToRole="Retrieval" />
           <NavigationProperty Name="Role" Relationship="Self.RoleId" FromRole="Employee" ToRole="Role" />
+          <NavigationProperty Name="PurchaseOrders1" Relationship="ProjectModel.PurchaseOrderReceivedBy" FromRole="Employee" ToRole="PurchaseOrder" />
         </EntityType>
         <EntityType Name="Inventory">
           <Key>
@@ -947,6 +970,9 @@
           <Property Name="AuthorizedDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Deliveries" Relationship="Self.PurchaseOrderId" FromRole="PurchaseOrder" ToRole="Delivery" />
           <NavigationProperty Name="Employee" Relationship="Self.PurchaseOrderEmployeeId" FromRole="PurchaseOrder" ToRole="Employee" />
+          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="ReceivedBy" Type="Int32" />
+          <NavigationProperty Name="Employee1" Relationship="ProjectModel.PurchaseOrderReceivedBy" FromRole="PurchaseOrder" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Requisition">
           <Key>
@@ -1498,7 +1524,23 @@
             <End Role="Requisition" EntitySet="Requisitions" />
             <End Role="RequisitionDetail" EntitySet="RequisitionDetails" />
           </AssociationSet>
+          <AssociationSet Name="PurchaseOrderReceivedBy" Association="ProjectModel.PurchaseOrderReceivedBy">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="PurchaseOrderReceivedBy">
+          <End Type="ProjectModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ProjectModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="ReceivedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1599,6 +1641,7 @@
           <EntitySetMapping Name="DisbursementDetails">
             <EntityTypeMapping TypeName="ProjectModel.DisbursementDetail">
               <MappingFragment StoreEntitySet="DisbursementDetail">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="DisbursementDetailId" ColumnName="DisbursementDetailId" />
                 <ScalarProperty Name="DisbursementListId" ColumnName="DisbursementListId" />
                 <ScalarProperty Name="RequisitionDetailId" ColumnName="RequisitionDetailId" />
@@ -1609,6 +1652,7 @@
           <EntitySetMapping Name="DisbursementLists">
             <EntityTypeMapping TypeName="ProjectModel.DisbursementList">
               <MappingFragment StoreEntitySet="DisbursementList">
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
                 <ScalarProperty Name="DisbursementListId" ColumnName="DisbursementListId" />
                 <ScalarProperty Name="RetrievalId" ColumnName="RetrievalId" />
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
@@ -1689,6 +1733,8 @@
           <EntitySetMapping Name="PurchaseOrders">
             <EntityTypeMapping TypeName="ProjectModel.PurchaseOrder">
               <MappingFragment StoreEntitySet="PurchaseOrder">
+                <ScalarProperty Name="ReceivedBy" ColumnName="ReceivedBy" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
                 <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="DeliveredDate" ColumnName="DeliveredDate" />

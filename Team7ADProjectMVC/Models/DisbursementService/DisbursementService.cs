@@ -26,16 +26,19 @@ namespace Team7ADProjectMVC.Models
 
         public List<DisbursementList> GetDisbursementsBySearchCriteria(int? departmentId, string status)
         {
-            if (departmentId != null)
+            if (status == null && departmentId == null)
+            {
+                return (db.DisbursementLists.ToList());
+            }
+            else if (departmentId == null)
             {
                 var queryResults = from d in db.DisbursementLists
                                where d.DepartmentId == departmentId
-                               && d.Status == status
                                orderby d.OrderedDate
                                select d;
                 return (queryResults.ToList());
             }
-            else
+            else if (status == null)
             {
                 var queryResults = from d in db.DisbursementLists
                                    where d.Status == status
@@ -43,6 +46,16 @@ namespace Team7ADProjectMVC.Models
                                    select d;
                 return (queryResults.ToList());
             }
+            else
+            {
+                var queryResults = from d in db.DisbursementLists
+                                   where d.DepartmentId == departmentId
+                                   && d.Status == status
+                                   orderby d.OrderedDate
+                                   select d;
+                return (queryResults.ToList());
+            }
+
         }
 
         public void UpdateDisbursementList(DisbursementList disbursementList)

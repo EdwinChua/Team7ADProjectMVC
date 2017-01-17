@@ -327,6 +327,7 @@
     <Compile Include="TestControllers\InventoriesController.cs" />
     <Compile Include="TestControllers\RepresentativeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="TestControllers\TESTRequisitionsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -360,7 +361,7 @@
     <Content Include="Views\Store\Adjustment\CreateNewAdjustment.cshtml" />
     <Content Include="Views\Store\Adjustment\InventoryAdjustment.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewDisbursements.cshtml" />
-    <Content Include="Views\Store\Disbursement\ViewDisbursement.cshtml" />
+    <Content Include="Views\Store\Disbursement\ViewDisbursementItems.cshtml" />
     <Content Include="Views\Store\Inventory\NewStockCard.cshtml" />
     <Content Include="Views\Store\Inventory\UpdateStockCard.cshtml" />
     <Content Include="Views\Store\Inventory\ViewInventory.cshtml" />
@@ -376,6 +377,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Department\Index.cshtml" />
+    <Content Include="Views\TESTRequisitions\Create.cshtml" />
+    <Content Include="Views\TESTRequisitions\Delete.cshtml" />
+    <Content Include="Views\TESTRequisitions\Details.cshtml" />
+    <Content Include="Views\TESTRequisitions\Edit.cshtml" />
+    <Content Include="Views\TESTRequisitions\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

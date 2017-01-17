@@ -17,26 +17,23 @@ namespace Team7ADProjectMVC.TestControllers
         // GET: Department
         public ActionResult Index()
         {
-            //var employees = db.Employees.Include(e => e.Department).Include(e => e.Permission).Include(e => e.Role);
-            //return View(employees.ToList());
-            var Requisitions = db.Requisitions.Select (d=>new {ID=d.RequisitionId,emID=d.EmployeeId, deID=d.DepartmentId ,aBy=d.ApprovedBy ,aDate=d.ApprovedDate,OrderDate=d.OrderedDate,res=d.RequisitionStatus });
-            return View(Requisitions.ToList());
+            var requisitions = db.Requisitions.ToList();
+            ViewBag.Cat = requisitions;
+            return View();
         }
 
         public ActionResult MakeRequisition()
         {
-            //var employees = db.Employees.Include(e => e.Department).Include(e => e.Permission).Include(e => e.Role);
-            //return View(employees.ToList());
-            var Requisitions = db.Requisitions.Select(d => new { ID = d.RequisitionId, emID = d.EmployeeId, deID = d.DepartmentId, aBy = d.ApprovedBy, aDate = d.ApprovedDate, OrderDate = d.OrderedDate, res = d.RequisitionStatus });
-            return View(Requisitions.ToList());
+            var requisitions = db.Requisitions.ToList();
+            ViewBag.Cat = requisitions;
+            return View("MakeRequisition");
         }
 
         public ActionResult ViewRequisitionDetails()
         {
-            //var employees = db.Employees.Include(e => e.Department).Include(e => e.Permission).Include(e => e.Role);
-            //return View(employees.ToList());
-            var Requisitions = db.Requisitions.Select(d => new { ID = d.RequisitionId, emID = d.EmployeeId, deID = d.DepartmentId, aBy = d.ApprovedBy, aDate = d.ApprovedDate, OrderDate = d.OrderedDate, res = d.RequisitionStatus });
-            return View(Requisitions.ToList());
+            var requisitions = db.Requisitions.ToList();
+            ViewBag.Cat = requisitions;
+            return View("ViewRequisitionDetails");
         }
     }
 }

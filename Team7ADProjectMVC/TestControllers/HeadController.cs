@@ -30,13 +30,16 @@ namespace Team7ADProjectMVC.TestControllers
         }
         public ActionResult ListAllEmployees()
         {
-
             var requisitions = db.Requisitions.ToList();
             ViewBag.Cat = requisitions;
             return View();
 
+        }
 
-            
+        public ActionResult EmployeeRequisition(string id)
+        {
+            //var empReq = db.RequisitionDetails
+            return View("Approve");
         }
     }
 }

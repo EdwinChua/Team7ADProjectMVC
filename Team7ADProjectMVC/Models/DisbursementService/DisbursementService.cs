@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -8,6 +9,7 @@ namespace Team7ADProjectMVC.Models
     public class DisbursementService : IDisbursementService
     {
         ProjectEntities db = new ProjectEntities();
+        
         public List<DisbursementList> GetAllDisbursements()
         {
             var disbursementList = from d in db.DisbursementLists
@@ -18,8 +20,7 @@ namespace Team7ADProjectMVC.Models
 
         public DisbursementList GetDisbursementById(string id)
         {
-            //TODO: Linda 
-            throw new NotImplementedException();
+            return db.DisbursementLists.Find(id);
         }
 
         public List<DisbursementList> GetDisbursementsBySearchCriteria(Department department, string status)
@@ -34,8 +35,8 @@ namespace Team7ADProjectMVC.Models
 
         public void UpdateDisbursementList(DisbursementList disbursementList)
         {
-            //TODO: Linda 
-            throw new NotImplementedException();
+            db.Entry(disbursementList).State = EntityState.Modified;
+            db.SaveChanges();
         }
     }
 }

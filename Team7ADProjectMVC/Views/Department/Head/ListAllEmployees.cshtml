@@ -100,56 +100,82 @@
                                 Employee
                             </th>
                             @*<th>
-                                Request Date
-                            </th>
-                            <th>
-                                Request
-                            </th>*@
+                                    Request Date
+                                </th>
+                                <th>
+                                    Request
+                                </th>*@
                         </tr>
                     </thead>
                     <tbody>
-                       
+                        @*@foreach (var StockCard in Model)
+                            {
+                                <tr class="clickable-row" data-href="InventoryItem/@StockCard.ItemNo">
+                                    <td>@StockCard.ItemNo</td>
+                                    <td>@StockCard.Description</td>
+
+                                </tr>
+                            }*@
+
+                        @*@foreach (Category c in ViewBag.Cat)
+                            {
+                                <option value="@c.CategoryId">@c.CategoryName</option>
+                            }*@
                         @foreach (var item in ViewBag.Cat)
-                                {
-                                    <tr>
-                                        <td>
-                                            @item.RequisitionId
-                                        </td>
-                                        <td>
-                                            @item.EmployeeId
-                                        </td>
-                                    </tr>
-                                }
+                        {
+                            <tr>
+                                <td>
+                                    @item.RequisitionId
+                                </td>
+                                <td>
+                                    <a href="EmployeeRequisition/@item.RequisitionId">@item.Employee.EmployeeName</a>
+                                </td>
+                            </tr>
+                        }
 
-
-                        
                     </tbody>
                 </table>
 
-                <ul class="pagination">
-                    <li>
-                        <a href="#">Prev</a>
-                    </li>
-                    <li>
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">Next</a>
-                    </li>
-                </ul>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Item Code
+                            </th>
+                            <th>
+                                Product
+                            </th>
+                        </tr>
+                    </thead>
+                    
+                </table>
             </div>
+        </div>
+        <ul class="pagination">
+            <li>
+                <a href="#">Prev</a>
+            </li>
+            <li>
+                <a href="#">1</a>
+            </li>
+            <li>
+                <a href="#">2</a>
+            </li>
+            <li>
+                <a href="#">3</a>
+            </li>
+            <li>
+                <a href="#">4</a>
+            </li>
+            <li>
+                <a href="#">5</a>
+            </li>
+            <li>
+                <a href="#">Next</a>
+            </li>
+        </ul>
+    </div>
 
         </div>
         <div class="col-md-4">

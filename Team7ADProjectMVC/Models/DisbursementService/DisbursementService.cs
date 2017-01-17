@@ -21,7 +21,7 @@ namespace Team7ADProjectMVC.Models
 
         public DisbursementList GetDisbursementById(string id)
         {
-            return db.DisbursementLists.Find(id);
+            return db.DisbursementLists.Find(Int32.Parse(id));
         }
 
         public List<DisbursementList> GetDisbursementsBySearchCriteria(int? departmentId, string status)

@@ -48,7 +48,7 @@ namespace Team7ADProjectMVC.TestControllers
                 return HttpNotFound();
             }
             ViewBag.inv = inventory;
-            //TODO: EDWIN - Require a view in DB to populate data to table
+            ViewBag.sCard = inventorySvc.GetStockCardFor(id);
             return View("ViewStockCard",inventory);
         }
         public ActionResult RetrievalList()

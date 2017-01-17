@@ -24,14 +24,25 @@ namespace Team7ADProjectMVC.Models
             return db.DisbursementLists.Find(id);
         }
 
-        public List<DisbursementList> GetDisbursementsBySearchCriteria(Department department, string status)
+        public List<DisbursementList> GetDisbursementsBySearchCriteria(int? departmentId, string status)
         {
-            var queryResults = from d in db.DisbursementLists
-                                where d.DepartmentId == department.DepartmentId
-                                && d.Status == status
-                                orderby d.OrderedDate
-                                select d;
-            return (queryResults.ToList());
+            if (departmentId != null)
+            {
+                var queryResults = from d in db.DisbursementLists
+                               where d.DepartmentId == departmentId
+                               && d.Status == status
+                               orderby d.OrderedDate
+                               select d;
+                return (queryResults.ToList());
+            }
+            else
+            {
+                var queryResults = from d in db.DisbursementLists
+                                   where d.Status == status
+                                   orderby d.OrderedDate
+                                   select d;
+                return (queryResults.ToList());
+            }
         }
 
         public void UpdateDisbursementList(DisbursementList disbursementList)

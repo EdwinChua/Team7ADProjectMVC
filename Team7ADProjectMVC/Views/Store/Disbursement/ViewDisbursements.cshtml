@@ -10,16 +10,15 @@
     <div class="row">
         <div class="col-md-12">
             <div class="jumbotron row">
-                <form role="form">
+                <form role="form" action="SearchDisbursements">
                     <div class="col-md-6">
-                        <select id="deptNdeliveryPicker" name="deptNdelivery"
+                        <select id="deptNdeliveryPicker" name="id"
                                 class="selectpicker show-tick form-control"
-                                data-live-search="true" title="Retrieve by department/delivery location. Leave blank to show all" multiple>
-                            <option></option>
-                            <option data-subtext="Location: Stationary Store - Admin Bld (9.30am)">Computer Science Department</option>
-                            <option data-subtext="Location: Management School (11.00am)">Commerce Department</option>
-                            <option data-subtext="Location: Medical School (9.30am)">Registrar Department</option>
-                            <option data-subtext="Location: Stationary Store - Admin Bld (9.30am)">English Department</option>
+                                data-live-search="true" title="Retrieve by department/delivery location. Leave blank to show all">
+                            @foreach (var item in @ViewBag.Departments)
+                            {
+                                <option value="@item.DepartmentId">@item.DepartmentName </option>
+                            }
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -45,7 +44,7 @@
                             Department
                         </th>
                         <th>
-                            Delivery Location
+                            Delivery Location (Time)
                         </th>
                         <th>
                             Status
@@ -55,20 +54,27 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr>
-                        <td>
-                            Computer Science Department
-                        </td>
-                        <td>
-                            Stationary Store - Admin Bld (9.30am)
-                        </td>
-                        <td>
-                            Completed
-                        </td>
-                    </tr>
+                        <tr class="clickable-row" data-href="ViewDisbursement/@item.DisbursementListId">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Department.DepartmentName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CollectionPoint.PlaceName) (@Html.DisplayFor(modelItem => item.CollectionPoint.CollectTime))
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>

@@ -339,11 +339,11 @@ PurchaseOrderId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 OrderDate DATE,
 DeliveredDate DATE,
 SupplierId INT,
-OrderedBy INT,
+EmployeeId INT,
 ReceivedBy INT,
 AuthorizedBy INT,
 AuthorizedDate DATE,
-CONSTRAINT PurchaseOrderOrderedBy FOREIGN KEY(OrderedBy) REFERENCES Employee(EmployeeId),
+CONSTRAINT PurchaseOrderEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId),
 CONSTRAINT PurchaseOrderReceivedBy FOREIGN KEY(ReceivedBy) REFERENCES Employee(EmployeeId)
 )
 

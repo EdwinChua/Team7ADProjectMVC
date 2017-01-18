@@ -1,8 +1,9 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+
 
 namespace Team7ADProjectMVC.Models
 {
@@ -74,8 +75,107 @@ namespace Team7ADProjectMVC.Models
                         && rq.RequisitionStatus != "Pending"
                         orderby rq.ApprovedDate
                         select rq;
-            return (query.ToList());
 
+            List<Requisition> temp = query.ToList();
+            System.Web.HttpContext.Current.Application.Lock();
+            RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
+            System.Web.HttpContext.Current.Application.UnLock();
+            if (temp != null && rList != null)
+            {
+                try
+                {
+                    temp = temp.Intersect(rList.requisitionList).ToList();
+                }
+                catch
+                {
+                    
+                }
+            }
+            return (temp);
+        }
+
+        public RetrievalList GetRetrievalList()
+        {
+            System.Web.HttpContext.Current.Application.Lock();
+            RetrievalList rList = (RetrievalList) System.Web.HttpContext.Current.Application["RetrievalList"];
+            
+
+            if (rList.retrievalId == null)
+            {
+                var query = from rt in db.Retrievals
+                            orderby rt.RetrievalId
+                            select rt;
+                rList.retrievalId = (query.ToList()).Last().RetrievalId + 1;
+                Retrieval tempRetrieval = new Retrieval();
+                tempRetrieval.RetrievalId = (int) rList.retrievalId;
+                tempRetrieval.RetrievalDate = DateTime.Today;
+                db.Retrievals.Add(tempRetrieval);
+                db.SaveChanges();
+                System.Web.HttpContext.Current.Application["RetrievalList"] = rList;
+            }
+
+            System.Web.HttpContext.Current.Application.UnLock();
+            return rList;           
+        }
+
+        public void PopulateRetrievalList()
+        {
+            System.Web.HttpContext.Current.Application.Lock();
+            RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
+            
+            rList.requisitionList = GetOutStandingRequisitions();
+
+            System.Web.HttpContext.Current.Application["RetrievalList"] = rList;
+            System.Web.HttpContext.Current.Application.UnLock();
+        }
+        public void PopulateRetrievalListItems()
+        {
+            System.Web.HttpContext.Current.Application.Lock();
+            RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
+
+            rList.itemsToRetrieve = new List<RetrievalListItems>();
+
+            List<RetrievalListItems>  unconsolidatedList = new List<RetrievalListItems>();
+
+            foreach (Requisition requisition in rList.requisitionList)
+            {
+                foreach(RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                {
+                    RetrievalListItems newItem = new RetrievalListItems();
+                    newItem.itemNo = reqDetails.ItemNo;
+                    newItem.requiredQuantity = (int)reqDetails.OutstandingQuantity;
+                    unconsolidatedList.Add(newItem);
+                }
+            }
+            RetrievalListItemsComparer comparer = new RetrievalListItemsComparer();
+            unconsolidatedList.Sort(comparer);
+
+            int i = 0;
+            foreach (var item in unconsolidatedList)
+            {
+                if (i==0)
+                {
+                    rList.itemsToRetrieve.Add(item);
+                    i++;
+                }
+                else if (item.itemNo.Equals(rList.itemsToRetrieve[i-1].itemNo))
+                {
+                    rList.itemsToRetrieve[i-1].requiredQuantity += item.requiredQuantity;
+                }
+                else
+                {
+                    rList.itemsToRetrieve.Add(item);
+                    i++;
+                }
+            }
+
+            System.Web.HttpContext.Current.Application["RetrievalList"] = rList;
+            System.Web.HttpContext.Current.Application.UnLock();
+        }
+
+        public void ClearRetrievalList()
+        {
+            System.Web.HttpContext.Current.Application["RetrievalList"] = new RetrievalList();
         }
     }
 }

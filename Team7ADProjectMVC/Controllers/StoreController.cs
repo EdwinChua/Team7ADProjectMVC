@@ -53,7 +53,11 @@ namespace Team7ADProjectMVC.TestControllers
         }
         public ActionResult RetrievalList()
         {
+            List<Inventory> invList = new List<Inventory>();
             //TODO: EDWIN - Implementation code here
+            RetrievalList rList = inventorySvc.GetRetrievalList();
+            
+            ViewBag.Message = rList;
             return View("ViewRetrievalList");
         }
 
@@ -209,8 +213,16 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult ViewRequisitions()
         {
-            
+            RetrievalList rList = inventorySvc.GetRetrievalList();
+            ViewBag.rList = rList;
             return View(inventorySvc.GetOutStandingRequisitions());
+        }
+
+        public ActionResult GenerateRetrievalList()
+        {
+            inventorySvc.PopulateRetrievalList();
+            inventorySvc.PopulateRetrievalListItems();
+            return RedirectToAction("ViewRequisitions");
         }
         
         // ********************* Other *******************

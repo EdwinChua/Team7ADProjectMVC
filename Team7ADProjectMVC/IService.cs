@@ -29,8 +29,8 @@ namespace Team7ADProjectMVC
         List<wcfTodayCollectionlist> getTodayCollection(string deptid);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={reqID}", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string reqID);
+        [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={disListID}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string disListID);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfApproveRequisitions/{deptid}", ResponseFormat = WebMessageFormat.Json)]

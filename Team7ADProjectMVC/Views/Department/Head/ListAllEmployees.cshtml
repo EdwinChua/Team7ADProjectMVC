@@ -118,7 +118,9 @@
                                 <td>
                                     @item.OrderedDate
                                 </td>
-                              <td>                              </td>
+                              <td> @foreach (var item2 in item.RequisitionDetails)
+                              { @item2.Inventory.Description  } <br>   
+                                 </td>
                                 <td>                                   </td>    
                                     <td>
                                         <a href="ApproveRequisition/@item.RequisitionId"><button type="button" class="btn btn-success">Approve</button></a>          <a href="RejectRequisition/@item.RequisitionId"><button type="button" class="btn btn-danger">Reject</button></a>

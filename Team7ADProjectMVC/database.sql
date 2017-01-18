@@ -201,6 +201,7 @@ ApprovedBy INT,
 ApprovedDate Date,
 OrderedDate Date,
 RequisitionStatus VARCHAR(50),
+Comment VARCHAR(250),
 CONSTRAINT RequisitionEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
 )
 
@@ -416,16 +417,17 @@ CREATE TABLE DisbursementDetail
 DisbursementDetailId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 DisbursementListId INT,
 RequisitionDetailId INT,
-Quantity INT,
+OrderedQuantity INT,
+DeliveredQuantity INT,
 Remark VARCHAR(250),
 CONSTRAINT DisbursementListId FOREIGN KEY (DisbursementListId) REFERENCES DisbursementList (DisbursementListId),
 CONSTRAINT RequisitionDetailId FOREIGN KEY (RequisitionDetailId) REFERENCES RequisitionDetail (RequisitionDetailId)
 )
 
 INSERT INTO DisbursementDetail
-VALUES	(1,1,10,''),(1,2,10,''),(1,3,10,''),
-		(2,4,10,''),(2,5,10,''),(2,6,10,''),
-		(3,7,10,''),(3,8,10,''),(3,9,10,'');
+VALUES	(1,1,10,'',''),(1,2,10,'',''),(1,3,10,'',''),
+		(2,4,10,'',''),(2,5,10,'',''),(2,6,10,'',''),
+		(3,7,10,'',''),(3,8,10,'',''),(3,9,10,'','');
 
 -------------------------------------------------- Delivery ----------------------------------------
 CREATE TABLE Delivery

@@ -146,6 +146,8 @@ namespace Team7ADProjectMVC
             var aList = from a in db.RequisitionDetails
                         where a.RequisitionId == rId
                         && a.Requisition.EmployeeId == eId
+                        && a.Requisition.RequisitionStatus != "Approved"
+                        && a.DeliveryStatus != "Delivered"
                         orderby a.Inventory.Description ascending
                         select a;
 

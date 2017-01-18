@@ -77,16 +77,16 @@ namespace Team7ADProjectMVC
             return making.ToList();
         }
 
-        public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String reqDetailID)
+        public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String requisitionID)
         {
             List<wcfTodayCollectionDetail> collectionDetail = new List<wcfTodayCollectionDetail>();
             int did = Convert.ToInt32(deptid);
-            int reqID = Convert.ToInt32(reqDetailID);
+            int reqID = Convert.ToInt32(requisitionID);
         
 
              var dDetail = from r in db.DisbursementDetails
                           where r.DisbursementList.DepartmentId == did
-                          && r.RequisitionDetailId == reqID
+                          && r.RequisitionDetail.RequisitionId == reqID
                           select r;
 
             foreach (DisbursementDetail dd in dDetail)

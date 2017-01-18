@@ -368,7 +368,6 @@
     <Compile Include="TestControllers\RepresentativeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="TestControllers\RptController.cs" />
-    <Compile Include="TestControllers\TESTDisbursementListsController.cs" />
     <Compile Include="TestControllers\TESTRequisitionsController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -430,6 +429,7 @@
     <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewDisbursement.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewRequisitions.cshtml" />
+    <Content Include="Views\Rpt\RptOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -441,7 +441,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\DelegateRoleService\" />
-    <Folder Include="Views\Rpt\" />
     <Folder Include="Views\StoreTest\" />
   </ItemGroup>
   <ItemGroup>

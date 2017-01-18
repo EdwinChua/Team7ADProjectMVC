@@ -40,10 +40,9 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfApproveReqDetails?d={deptId}&r={reqId}", ResponseFormat = WebMessageFormat.Json)]
         List<wcfApproveReqDetails> getApproveReqDetails(string deptId, string reqId);
 
-        //[OperationContract]
-        //[WebGet(UriTemplate = "/ttt?d={deptid}&r={reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
-        //String ttt(string deptid, string reqDetailID);
-
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfCollectionPoint/{deptid}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfCollectionPoint> getCollectionPoint (string deptid);
 
     }
 }
@@ -188,5 +187,14 @@ public class wcfApproveReqDetails
 
     [DataMember]
     public String UOM { get; set; }
+}
+
+public class wcfCollectionPoint
+{
+    string locationAndTime;
+
+    [DataMember]
+    public String LocationAndtime { get; set; }
+
 }
 

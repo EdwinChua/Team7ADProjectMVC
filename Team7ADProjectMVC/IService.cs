@@ -102,7 +102,7 @@ public class wcfRequisitionItem
 {
 
     string itemname;
-    string quanity;
+    string quantity;
     string uom;
 
 
@@ -110,7 +110,7 @@ public class wcfRequisitionItem
     public String Itemname { get; set; }
 
     [DataMember]
-    public String Quanity { get; set; }
+    public String Quantity { get; set; }
 
     [DataMember]
     public String Uom { get; set; }

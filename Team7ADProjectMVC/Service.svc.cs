@@ -72,6 +72,7 @@ namespace Team7ADProjectMVC
                 wcfTodayCollectionlist rl = new wcfTodayCollectionlist();
                 rl.Collectionpt = rr.CollectionPoint.PlaceName;
                 rl.Time = rr.CollectionPoint.CollectTime.ToString();
+                rl.RequisitionID = rr.Retrieval.Employee.Requisitions.ToString();
                 making.Add(rl);
             }
             return making.ToList();
@@ -84,7 +85,7 @@ namespace Team7ADProjectMVC
             int reqID = Convert.ToInt32(requisitionID);
         
 
-             var dDetail = from r in db.DisbursementDetails
+            var dDetail = from r in db.DisbursementDetails
                           where r.DisbursementList.DepartmentId == did
                           && r.RequisitionDetail.RequisitionId == reqID
                           select r;

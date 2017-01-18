@@ -80,18 +80,27 @@ namespace Team7ADProjectMVC.Models
             System.Web.HttpContext.Current.Application.Lock();
             RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
             System.Web.HttpContext.Current.Application.UnLock();
-            if (temp != null && rList != null)
+
+            try
             {
-                try
+                if (temp.Count != 0 && rList.requisitionList.Count != 0)
                 {
-                    temp = temp.Intersect(rList.requisitionList).ToList();
-                }
-                catch
-                {
-                    
+                    try
+                    {
+                        temp = temp.Intersect(rList.requisitionList).ToList();
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine("Expected" + e.ToString());
+            }
             return (temp);
+            
         }
 
         public RetrievalList GetRetrievalList()
@@ -179,6 +188,33 @@ namespace Team7ADProjectMVC.Models
         public void ClearRetrievalList()
         {
             System.Web.HttpContext.Current.Application["RetrievalList"] = new RetrievalList();
+        }
+
+        public void AutoAllocateDisbursements()
+        {
+            System.Web.HttpContext.Current.Application.Lock();
+            RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
+
+            foreach (RetrievalListItems retrievalListItem in rList.itemsToRetrieve)
+            {
+                foreach (Requisition requisition in rList.requisitionList)
+                {
+                    foreach (RequisitionDetail requisitionDetail in requisition.RequisitionDetails)
+                    {
+                        if (retrievalListItem.itemNo.Equals(requisitionDetail.ItemNo))
+                        {
+                            int requestedQty = (int)requisitionDetail.Quantity;
+                            if (retrievalListItem.collectedQuantity >= requestedQty)
+                            {
+
+                            }
+                        }
+                    }
+                }
+            }
+
+            System.Web.HttpContext.Current.Application["RetrievalList"] = rList;
+            System.Web.HttpContext.Current.Application.UnLock();
         }
     }
 }

@@ -235,7 +235,13 @@ namespace Team7ADProjectMVC.TestControllers
             inventorySvc.PopulateRetrievalListItems();
             return RedirectToAction("ViewRequisitions");
         }
-        
+
+        public ActionResult ClearRetrievalList()
+        {
+            inventorySvc.ClearRetrievalList();
+            return RedirectToAction("ViewRequisitions");
+        }
+
         // ********************* Other *******************
 
         public ActionResult GenerateReports()

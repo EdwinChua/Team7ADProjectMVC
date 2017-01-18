@@ -29,6 +29,7 @@ namespace Team7ADProjectMVC
             int departmentId = Convert.ToInt32(deptid);
             var reqList = from req in db.Requisitions
                           where req.DepartmentId == departmentId
+                          orderby req.RequisitionStatus ascending
                           select req;
 
          foreach(Requisition rr in reqList)
@@ -53,7 +54,7 @@ namespace Team7ADProjectMVC
             {
                 wcfRequisitionItem rl = new wcfRequisitionItem();
                 rl.Itemname = rr.Inventory.Description;
-                rl.Quanity= rr.Quantity.ToString();
+                rl.Quantity = rr.Quantity.ToString();
                 rl.Uom = rr.OutstandingQuantity.ToString();
                 making.Add(rl);
             }

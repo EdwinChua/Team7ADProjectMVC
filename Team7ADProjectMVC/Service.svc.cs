@@ -73,7 +73,6 @@ namespace Team7ADProjectMVC
             var r = from x in db.DisbursementDetails
                     where x.DisbursementList.DepartmentId == newid
                     && x.DisbursementList.Status != "Completed"
-                    //&& x.DisbursementList.DeliveryDate.Equals(DateTime.Today)
                     orderby x.DisbursementList.Status
                     select x;
             var list = r.ToList();
@@ -162,5 +161,20 @@ namespace Team7ADProjectMVC
             return approvalList.ToList();
         }
 
+        public List<wcfCollectionPoint> getCollectionPoint(String deptId)
+        {
+            List<wcfCollectionPoint> collectionPoint = new List<wcfCollectionPoint>();
+            int dId = Convert.ToInt32(deptId);
+            var collectionLocation = from c in db.DisbursementLists
+                                     where c.DepartmentId == dId
+                                     select c;
+            foreach (DisbursementList d in collectionLocation)
+            {
+                wcfCollectionPoint cp = new wcfCollectionPoint();
+                cp.LocationAndtime = d.CollectionPoint.PlaceName + d.CollectionPoint.CollectTime;
+                collectionPoint.Add(cp);
+            }
+            return collectionPoint.ToList();
+        }
     }
 }

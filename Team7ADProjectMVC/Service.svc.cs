@@ -50,8 +50,8 @@ namespace Team7ADProjectMVC
             int dId = Convert.ToInt32(deptId);
             int rId = Convert.ToInt32(reqID);
             var reqItem= from req in db.RequisitionDetails
-                        where req.Requisition.DepartmentId.Equals(deptId)
-                        && req.RequisitionId.Equals(rId)
+                         where req.Requisition.DepartmentId == dId
+                        && req.RequisitionId==rId
                         orderby req.DeliveryStatus ascending
                         select req;
             

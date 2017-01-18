@@ -138,14 +138,14 @@ namespace Team7ADProjectMVC
             return approvalList.ToList();
         }
 
-        public List<wcfApproveReqDetails> getApproveReqDetails(String reqId, String empId)
+        public List<wcfApproveReqDetails> getApproveReqDetails(String deptId, String reqId)
         {
             List<wcfApproveReqDetails> approvalList = new List<wcfApproveReqDetails>();
+            int dId = Convert.ToInt32(deptId);
             int rId = Convert.ToInt32(reqId);
-            int eId = Convert.ToInt32(empId);
             var aList = from a in db.RequisitionDetails
                         where a.RequisitionId == rId
-                        && a.Requisition.EmployeeId == eId
+                        && a.Requisition.DepartmentId == dId
                         && a.Requisition.RequisitionStatus != "Approved"
                         && a.DeliveryStatus != "Delivered"
                         orderby a.Inventory.Description ascending
@@ -157,7 +157,6 @@ namespace Team7ADProjectMVC
                 rd.Item = req.Inventory.Description;
                 rd.Quantity = req.Quantity.ToString();
                 rd.UOM = req.Inventory.Measurement.UnitOfMeasurement;
-                rd.ReqID = req.RequisitionId.ToString();
                 approvalList.Add(rd);
             }
             return approvalList.ToList();

@@ -37,8 +37,8 @@ namespace Team7ADProjectMVC
         List<wcfApproveRequisitions> getApproveReqList(string deptid);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfApproveReqDetails?d={reqID}&r={empID}", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfApproveReqDetails> getApproveReqDetails(string reqID, string empID);
+        [WebGet(UriTemplate = "/wcfApproveReqDetails?d={deptId}&r={reqId}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfApproveReqDetails> getApproveReqDetails(string deptId, string reqId);
 
         //[OperationContract]
         //[WebGet(UriTemplate = "/ttt?d={deptid}&r={reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
@@ -178,7 +178,7 @@ public class wcfApproveReqDetails
     string item;
     string quantity;
     string uom;
-    string reqID;
+  
 
     [DataMember]
     public String Item { get; set; }
@@ -188,8 +188,5 @@ public class wcfApproveReqDetails
 
     [DataMember]
     public String UOM { get; set; }
-
-    [DataMember]
-    public String ReqID { get; set; }
 }
 

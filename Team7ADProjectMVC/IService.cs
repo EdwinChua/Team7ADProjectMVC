@@ -17,8 +17,8 @@ namespace Team7ADProjectMVC
         List<WCFMsg> DoWork();
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfRequisitionList", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfRequisitionList> RequisitionList();
+        [WebGet(UriTemplate = "/wcfRequisitionList/{deptid}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfRequisitionList> RequisitionList(string deptid);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfRequisitionList/{id}", ResponseFormat = WebMessageFormat.Json)]
@@ -29,8 +29,16 @@ namespace Team7ADProjectMVC
         List<wcfTodayCollectionlist> getTodayCollection(string deptid);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfTodayCollectionDetail/{deptid}/{reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
         List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string reqDetailID);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfApproveRequisitions/{deptid}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfApproveRequisitions> getApproveReqList(string deptid);
+
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/ttt?d={deptid}&r={reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
+        //String ttt(string deptid, string reqDetailID);
 
 
     }
@@ -49,8 +57,6 @@ public class WCFMsg
         set { msg = value; }
     }
 
-
-
     public WCFMsg(string m)
     {
         msg = m;
@@ -65,6 +71,7 @@ public class wcfRequisitionList
     string id;
     string employeename;
     string status;
+    string deptID;
 
     [DataMember]
     public string Employeename
@@ -78,19 +85,15 @@ public class wcfRequisitionList
 
     [DataMember]
     public String Id { get; set; }
-
-
+    
     public static wcfRequisitionList Make(string name, string s)
     {
         wcfRequisitionList c = new wcfRequisitionList();
 
         c.employeename = name;
         c.status = s;
-     
         return c;
     }
-
-
 }
 
 
@@ -98,7 +101,7 @@ public class wcfRequisitionList
 public class wcfRequisitionItem
 {
 
-     string itemname;
+    string itemname;
     string quanity;
     string uom;
 
@@ -120,7 +123,7 @@ public class wcfTodayCollectionlist
 
     string collectionpt;
     string time;
-  
+    string reqDetailID;
 
     [DataMember]
     public String Collectionpt { get; set; }
@@ -128,7 +131,8 @@ public class wcfTodayCollectionlist
     [DataMember]
     public String Time { get; set; }
 
-
+    [DataMember]
+    public String RequisitionDetailID { get; set; }
 }
 
 
@@ -137,16 +141,11 @@ public class wcfTodayCollectionDetail
 {
 
     string itemDescription;
-    
     string disbursedQty;
-
     string requstedQty;
 
-   
     [DataMember]
     public String DisbursedQty { get; set; }
-
-
 
     [DataMember]
     public String RequestedQty { get; set; }
@@ -154,35 +153,19 @@ public class wcfTodayCollectionDetail
     public String ItemDescription { get; set; }
 
 }
+public class wcfApproveRequisitions
+{
+    string empName;
+    string reqDate;
+    string reqID;
 
+    [DataMember]
+    public String EmployeeName { get; set; }
 
-//[DataContract]
-//public class wcfTodayCollectionDetail
-//{
+    [DataMember]
+    public String RequestedDate { get; set; }
 
-//    string collectionpt;
-//    string time;
-//    string disbursementDetailID;
-//    int disbursedQty;
-//    string reqDetailID;
-//    int requstedQty;
+    [DataMember]
+    public String RequisitionID { get; set; }
+}
 
-//    [DataMember]
-//    public String Collectionpt { get; set; }
-
-//    [DataMember]
-//    public String Time { get; set; }
-
-//    [DataMember]
-//    public String DisbursementDetailID { get; set; }
-
-//    [DataMember]
-//    public int DisbursedQty { get; set; }
-
-//    [DataMember]
-//    public String ReqDetailID { get; set; }
-
-//    [DataMember]
-//    public int RequestedQty { get; set; }
-
-//}

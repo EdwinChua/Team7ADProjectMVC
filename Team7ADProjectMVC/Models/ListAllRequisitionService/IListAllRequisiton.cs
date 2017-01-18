@@ -20,19 +20,23 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
             return (queryByStatus.ToList());
         }
       
-        public Requisition FindById(int id)
+        public Requisition FindById(int? id)
         {
             return db.Requisitions.Find(id);
         }
-        public void  UpdateApproveStatus(Requisition r)
+        public void  UpdateApproveStatus(Requisition r,String c)
         {
             
             r.RequisitionStatus = "Approved";
+            r.Comment = c;
+            
             db.Entry(r).State = EntityState.Modified;
             db.SaveChanges();
         }
-        public void UpdateRejectStatus(Requisition r)
+        public void UpdateRejectStatus(Requisition r,String c)
         {
+           
+            r.Comment = c;
 
             r.RequisitionStatus = "Rejected";
             db.Entry(r).State = EntityState.Modified;

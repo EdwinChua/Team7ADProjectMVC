@@ -62,17 +62,17 @@ namespace Team7ADProjectMVC
         {
             List<wcfTodayCollectionlist> making = new List<wcfTodayCollectionlist>();
             int newid = Convert.ToInt32(deptid);
-            var r = from x in db.DisbursementLists
-                                       where x.DepartmentId == newid
-                                       && x.Status != "Completed"
+            var r = from x in db.DisbursementDetails
+                                       where x.DisbursementList.DepartmentId == newid
+                                       && x.DisbursementList.Status != "Completed"
                                        select x;
             
-            foreach (DisbursementList rr in r)
+            foreach (DisbursementDetail rr in r)
             {
                 wcfTodayCollectionlist rl = new wcfTodayCollectionlist();
-                rl.Collectionpt = rr.CollectionPoint.PlaceName;
-                rl.Time = rr.CollectionPoint.CollectTime.ToString();
-                rl.RequisitionID = rr.Retrieval.Employee.Requisitions.ToString();
+                rl.Collectionpt = rr.DisbursementList.CollectionPoint.PlaceName.ToString();
+                rl.Time = rr.DisbursementList.CollectionPoint.CollectTime.ToString();
+                rl.RequisitionDetailID = rr.RequisitionDetailId.ToString();
                 making.Add(rl);
             }
             return making.ToList();

@@ -53,8 +53,6 @@ public class WCFMsg
         set { msg = value; }
     }
 
-
-
     public WCFMsg(string m)
     {
         msg = m;
@@ -132,7 +130,6 @@ public class wcfTodayCollectionlist
     [DataMember]
     public String Time { get; set; }
 
-
 }
 
 
@@ -141,16 +138,11 @@ public class wcfTodayCollectionDetail
 {
 
     string itemDescription;
-    
     string disbursedQty;
-
     string requstedQty;
 
-   
     [DataMember]
     public String DisbursedQty { get; set; }
-
-
 
     [DataMember]
     public String RequestedQty { get; set; }
@@ -160,33 +152,3 @@ public class wcfTodayCollectionDetail
 }
 
 
-//[DataContract]
-//public class wcfTodayCollectionDetail
-//{
-
-//    string collectionpt;
-//    string time;
-//    string disbursementDetailID;
-//    int disbursedQty;
-//    string reqDetailID;
-//    int requstedQty;
-
-//    [DataMember]
-//    public String Collectionpt { get; set; }
-
-//    [DataMember]
-//    public String Time { get; set; }
-
-//    [DataMember]
-//    public String DisbursementDetailID { get; set; }
-
-//    [DataMember]
-//    public int DisbursedQty { get; set; }
-
-//    [DataMember]
-//    public String ReqDetailID { get; set; }
-
-//    [DataMember]
-//    public int RequestedQty { get; set; }
-
-//}

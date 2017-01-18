@@ -22,6 +22,15 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
         {
             return db.Requisitions.Find(id);
         }
+        public void  UpdateApproveStatus(int id)
+        {
+            var r = from t in db.Requisitions
+                                where t.RequisitionId == id
+                                orderby t.RequisitionId ascending
+                                select t;
+           
+            db.SaveChanges();
+        }
 
     }
 }

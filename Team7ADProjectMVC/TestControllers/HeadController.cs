@@ -69,5 +69,29 @@ namespace Team7ADProjectMVC.TestControllers
 
             return View("Approve", r);
         }
+        public ActionResult ApproveRequisition(int id)
+        {
+            
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Requisition r = listsvc.FindById(id);
+
+            listsvc.UpdateApproveStatus(r.RequisitionId);
+                return RedirectToAction("ViewInventory");
+
+        }
+        public ActionResult RejectRequisition(int id)
+        {
+            Requisition r = listsvc.FindById(id);
+            if (r == null)
+            {
+                return HttpNotFound();
+            }
+
+
+            return View("Approve", r);
+        }
     }
 }

@@ -9,6 +9,6 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
     {
         List<Requisition> GetAllRequisition();
         Requisition FindById(int id);
-
+        void UpdateApproveStatus(int id);
     }
 }

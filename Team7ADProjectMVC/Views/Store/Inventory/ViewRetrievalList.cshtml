@@ -1,18 +1,20 @@
-﻿@{
+﻿@model Team7ADProjectMVC.Inventory
+
+@{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "View Stationery Retrieval List";
     //TODO: EDWIN - Write logic for retrieval list to populate table
 }
 
 
-@foreach(var item in ViewBag.Message.itemsToRetrieve)
-{
-    <p>hi</p>
-}
-@ViewBag.Message.itemsToRetrieve.Count
+
+
 <div>
     <br />
 </div>
+
+<h2>Items to collect</h2>
+
 <table class="table">
     <thead>
         <tr>
@@ -32,93 +34,87 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>
-                1
-            </td>
-            <td>
-                Pencil
-            </td>
-            <td>
-                5
-            </td>
-            <td>
-                <input type="number" class="form-control" value="5" />
-            </td>
-            <td>
-                <input type="button" class="btn btn-info disabled" value="Allocate" onclick="ShowModal()" />
-            </td>
-        </tr>
-        <tr class="active">
-            <td>
-                1
-            </td>
-            <td>
-                Pen, Blue
-            </td>
-            <td>
-                50
-            </td>
-            <td>
-                <input type="number" class="form-control" value="50" />
-            </td>
-            <td>
-                <input type="button" class="btn btn-info" value="Allocate" onclick="ShowModal()" />
-            </td>
-        </tr>
-        <tr class="success">
-            <td>
-                2
-            </td>
-            <td>
-                Staplers
-            </td>
-            <td>
-                50
-            </td>
-            <td>
-                <input type="number" class="form-control" value="50" />
-            </td>
-            <td>
-                <input type="button" class="btn btn-info" value="Allocate" onclick="ShowModal()" />
-            </td>
-        </tr>
-        <tr class="warning">
-            <td>
-                3
-            </td>
-            <td>
-                Ring files
-            </td>
-            <td>
-                8
-            </td>
-            <td>
-                <input type="number" class="form-control" value="8" />
-            </td>
-            <td>
-                <input type="button" class="btn btn-info" value="Allocate" onclick="ShowModal()" />
-            </td>
-        </tr>
-        <tr class="danger">
-            <td>
-                4
-            </td>
-            <td>
-                Paper Clips
-            </td>
-            <td>
-                8
-            </td>
-            <td>
-                <input type="number" class="form-control" value="8" />
-            </td>
-            <td>
-                <input type="button" class="btn btn-info disabled" value="Allocate" onclick="ShowModal()" />
-            </td>
-        </tr>
+        @foreach (var item in ViewBag.RList.itemsToRetrieve)
+        {
+            if (!item.collectionStatus)
+            {
+
+                    <tr>
+                        <td>
+                            @item.binNo
+                        </td>
+                        <td>
+                            @item.itemNo - @item.description
+                        </td>
+                        <td>
+                            @item.requiredQuantity
+                        </td>
+                        <td>
+                            <form action="MarkAsCollected">
+                            <div class="col-md-4"><input type="number" name="collectedQuantity" class="form-control" value="@item.requiredQuantity" width="30" /></div>
+                            <input type="hidden" value="@item.itemNo" name="itemNo" />
+                            <input type="submit" class="btn btn-info" value="Mark As Collected" /></form>
+                        </td>
+                    </tr>
+
+            }
+        }
+
     </tbody>
 </table>
+
+<hr />
+<h2>Items collected</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Bin#
+            </th>
+            <th>
+                Stationery Description
+            </th>
+            <th>
+                Quantity Needed
+            </th>
+            <th>
+                Quantity Retrieved
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.RList.itemsToRetrieve)
+        {
+            if (item.collectionStatus)
+            {
+
+                <tr>
+                    <td>
+                        @item.binNo
+                    </td>
+                    <td>
+                        @item.itemNo - @item.description
+                    </td>
+                    <td>
+                        @item.requiredQuantity
+                    </td>
+                    <td>
+                        <form action="MarkAsCollected">
+                            <div class="col-md-4"><input type="number" name="collectedQuantity" class="form-control" value="@item.collectedQuantity" width="30" /></div>
+                            <input type="hidden" value="@item.itemNo" name="itemNo" />
+                            <input type="submit" class="btn btn-info" value="Update" />
+                        </form>
+                    </td>
+                </tr>
+
+            }
+        }
+
+    </tbody>
+</table>
+
+
 
 <input type="button" class="btn btn-info" value="Generate Disbursements" />
 <!-- Confirm Remove from Enrolment Modal -->
@@ -197,7 +193,7 @@
 </div>
 
 <script>
-        function ShowModal() {
-            $('#allocateQuantityModal').modal('toggle');
-        }
+    function ShowModal() {
+        $('#allocateQuantityModal').modal('toggle');
+    }
 </script>

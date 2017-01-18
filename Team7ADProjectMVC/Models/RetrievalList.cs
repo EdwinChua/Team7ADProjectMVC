@@ -28,7 +28,9 @@ namespace Team7ADProjectMVC.Models
         public string itemNo { get; set;}
         public int requiredQuantity { get; set; }
         public int collectedQuantity { get; set; }
-
+        public string binNo { get; set; }
+        public string description { get; set; }
+        public bool collectionStatus { get; set; }
     }
 
     public class RetrievalListItemsComparer : IComparer<RetrievalListItems>

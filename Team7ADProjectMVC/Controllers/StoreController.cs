@@ -53,12 +53,23 @@ namespace Team7ADProjectMVC.TestControllers
         }
         public ActionResult RetrievalList()
         {
-            List<Inventory> invList = new List<Inventory>();
-            //TODO: EDWIN - Implementation code here
             RetrievalList rList = inventorySvc.GetRetrievalList();
-            
-            ViewBag.Message = rList;
+            ViewBag.RList = rList;
             return View("ViewRetrievalList");
+        }
+
+        public ActionResult MarkAsCollected(int collectedQuantity, string itemNo)
+        {
+            RetrievalList rList = inventorySvc.GetRetrievalList();
+            foreach (var item in rList.itemsToRetrieve)
+            {
+                if (item.itemNo.Equals(itemNo))
+                {
+                    item.collectedQuantity = collectedQuantity;
+                    item.collectionStatus = true;
+                }
+            }
+            return RedirectToAction("RetrievalList");
         }
 
         public ActionResult New()

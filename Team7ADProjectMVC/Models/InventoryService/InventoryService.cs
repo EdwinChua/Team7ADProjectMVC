@@ -144,6 +144,9 @@ namespace Team7ADProjectMVC.Models
                     RetrievalListItems newItem = new RetrievalListItems();
                     newItem.itemNo = reqDetails.ItemNo;
                     newItem.requiredQuantity = (int)reqDetails.OutstandingQuantity;
+                    newItem.binNo = reqDetails.Inventory.BinNo;
+                    newItem.description = reqDetails.Inventory.Description;
+                    newItem.collectionStatus = false;
                     unconsolidatedList.Add(newItem);
                 }
             }

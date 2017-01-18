@@ -27,6 +27,14 @@ namespace Team7ADProjectMVC.Models
 
         List<StockCard> GetStockCardFor(String id);
 
+        List<Requisition> GetOutStandingRequisitions();
 
+        RetrievalList GetRetrievalList();
+
+        void PopulateRetrievalList();
+
+        void PopulateRetrievalListItems();
+
+        void ClearRetrievalList();
     }
 }

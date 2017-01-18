@@ -53,8 +53,23 @@ namespace Team7ADProjectMVC.TestControllers
         }
         public ActionResult RetrievalList()
         {
-            //TODO: EDWIN - Implementation code here
+            RetrievalList rList = inventorySvc.GetRetrievalList();
+            ViewBag.RList = rList;
             return View("ViewRetrievalList");
+        }
+
+        public ActionResult MarkAsCollected(int collectedQuantity, string itemNo)
+        {
+            RetrievalList rList = inventorySvc.GetRetrievalList();
+            foreach (var item in rList.itemsToRetrieve)
+            {
+                if (item.itemNo.Equals(itemNo))
+                {
+                    item.collectedQuantity = collectedQuantity;
+                    item.collectionStatus = true;
+                }
+            }
+            return RedirectToAction("RetrievalList");
         }
 
         public ActionResult New()
@@ -143,8 +158,9 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult ViewDisbursement(String id)
         {
-            //TODO: EDWIN - Implementation code here
             DisbursementList dl = disbursementSvc.GetDisbursementById(id);
+            ViewBag.disbursementListInfo = dl;
+            //TODO: EDWIN - Retrieval list info required
             return View(dl);
         }
 
@@ -204,6 +220,22 @@ namespace Team7ADProjectMVC.TestControllers
             return View();
         }
 
+        //****************** Outstanding Requisitions ***************
+
+        public ActionResult ViewRequisitions()
+        {
+            RetrievalList rList = inventorySvc.GetRetrievalList();
+            ViewBag.rList = rList;
+            return View(inventorySvc.GetOutStandingRequisitions());
+        }
+
+        public ActionResult GenerateRetrievalList()
+        {
+            inventorySvc.PopulateRetrievalList();
+            inventorySvc.PopulateRetrievalListItems();
+            return RedirectToAction("ViewRequisitions");
+        }
+        
         // ********************* Other *******************
 
         public ActionResult GenerateReports()

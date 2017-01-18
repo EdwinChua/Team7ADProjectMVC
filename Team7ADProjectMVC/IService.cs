@@ -15,6 +15,14 @@ namespace Team7ADProjectMVC
         [OperationContract]
         [WebGet(UriTemplate = "/msgs", ResponseFormat = WebMessageFormat.Json)]
         List<WCFMsg> DoWork();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfRequisitionList", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfRequisitionList> RequisitionList();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfRequisitionList/{id}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfRequisitionItem> getrequisitionitem(string id);
     }
 }
 
@@ -38,4 +46,63 @@ public class WCFMsg
         msg = m;
     }
 
+}
+
+[DataContract]
+public class wcfRequisitionList
+{
+
+    string id;
+    string employeename;
+    string status;
+
+    [DataMember]
+    public string Employeename
+    {
+        get { return employeename; }
+        set { employeename = value; }
+    }
+
+    [DataMember]
+    public String Status { get; set; }
+
+    [DataMember]
+    public String Id { get; set; }
+
+
+    public static wcfRequisitionList Make(string name, string s)
+    {
+        wcfRequisitionList c = new wcfRequisitionList();
+
+        c.employeename = name;
+        c.status = s;
+     
+        return c;
+    }
+ 
+ 
+
+
+
+}
+
+
+[DataContract]
+public class wcfRequisitionItem
+{
+
+     string itemname;
+    string quanity;
+    string uom;
+
+
+    [DataMember]
+    public String Itemname { get; set; }
+
+    [DataMember]
+    public String Quanity { get; set; }
+
+    [DataMember]
+    public String Uom { get; set; }
+    
 }

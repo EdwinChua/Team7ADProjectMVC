@@ -69,5 +69,21 @@ namespace Team7ADProjectMVC.TestControllers
 
             return View("Approve", r);
         }
+        public ActionResult ApproveRequisition(int id)
+        {
+          
+            Requisition r = listsvc.FindById(id);
+
+            listsvc.UpdateApproveStatus(r);
+            return RedirectToAction("ListAllEmployees");
+
+        }
+        public ActionResult RejectRequisition(int id)
+        {
+            Requisition r = listsvc.FindById(id);
+
+            listsvc.UpdateRejectStatus(r);
+            return RedirectToAction("ListAllEmployees");
+        }
     }
 }

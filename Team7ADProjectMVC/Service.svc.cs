@@ -11,6 +11,7 @@ namespace Team7ADProjectMVC
 	// NOTE: In order to launch WCF Test Client for testing this service, please select Service.svc or Service.svc.cs at the Solution Explorer and start debugging.
 	public class Service : IService
 	{
+        ProjectEntities db = new ProjectEntities();
         public List<WCFMsg> DoWork()
         {
             List<WCFMsg> l = new List<WCFMsg>();
@@ -21,5 +22,43 @@ namespace Team7ADProjectMVC
             return l;
 
         }
+
+        public List<wcfRequisitionList> RequisitionList()
+        {
+            List<wcfRequisitionList> making = new List<wcfRequisitionList>();
+           
+         List<Requisition> r = db.Requisitions.ToList();
+
+         foreach(Requisition rr in r)
+         {
+             wcfRequisitionList rl = new wcfRequisitionList();
+             rl.Employeename = rr.Employee.EmployeeName;
+             rl.Status = rr.RequisitionStatus;
+             rl.Id = rr.RequisitionId.ToString();
+             making.Add(rl);
+         }
+         return making;
+        }
+
+
+
+        public List<wcfRequisitionItem> getrequisitionitem(String id)
+        {
+            List<wcfRequisitionItem> making = new List<wcfRequisitionItem>();
+
+            List<RequisitionDetail> r = db.RequisitionDetails.ToList();
+
+            foreach (RequisitionDetail rr in r)
+            {
+                wcfRequisitionItem rl = new wcfRequisitionItem();
+                rl.Itemname = rr.Inventory.Description;
+                rl.Quanity= rr.Quantity.ToString();
+                rl.Uom = rr.OutstandingQuantity.ToString();
+                making.Add(rl);
+            }
+            return making;
+        }
+
+
     }
 }

@@ -474,7 +474,7 @@ INNER JOIN Employee e on e.EmployeeId = a.EmployeeId
 INNER JOIN Inventory i on i.ItemNo = ad.ItemNo
 
 UNION
-SELECT ISNULL(dl.DeliveryDate,'1900-01-01') AS [Date], d.DepartmentName , '-' + CAST(dd.PreparedQuantity AS VARCHAR(100)) As DeliveredQuantity, rd.ItemNo, i.Description FROM DisbursementDetail dd
+SELECT ISNULL(dl.DeliveryDate,'1900-01-01') AS [Date], d.DepartmentName , '-' + CAST(dd.DeliveredQuantity AS VARCHAR(100)) As DeliveredQuantity, rd.ItemNo, i.Description FROM DisbursementDetail dd
 LEFT JOIN RequisitionDetail rd on rd.RequisitionId = dd.RequisitionDetailId
 INNER JOIN DisbursementList dl on dl.DisbursementListId = dd.DisbursementListId
 INNER JOIN Department d on d.DepartmentId = dl.DepartmentId

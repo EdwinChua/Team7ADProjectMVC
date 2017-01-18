@@ -21,8 +21,8 @@ namespace Team7ADProjectMVC
         List<wcfRequisitionList> RequisitionList(string deptid);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfRequisitionItem/{id}", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfRequisitionItem> getrequisitionitem(string id);
+        [WebGet(UriTemplate = "/wcfRequisitionItem/?d={deptid}&r={reqID}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfRequisitionItem> getrequisitionitem(string deptId, string reqID);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfTodayCollection/{deptid}", ResponseFormat = WebMessageFormat.Json)]

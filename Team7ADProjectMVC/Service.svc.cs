@@ -29,7 +29,7 @@ namespace Team7ADProjectMVC
             int departmentId = Convert.ToInt32(deptid);
             var reqList = from req in db.Requisitions
                           where req.DepartmentId == departmentId
-                          orderby req.RequisitionStatus ascending
+                          orderby req.RequisitionStatus descending
                           select req;
 
          foreach(Requisition rr in reqList)
@@ -44,13 +44,18 @@ namespace Team7ADProjectMVC
         }
 
 
-        public List<wcfRequisitionItem> getrequisitionitem(String id)
+        public List<wcfRequisitionItem> getrequisitionitem(String deptId, String reqID)
         {
             List<wcfRequisitionItem> making = new List<wcfRequisitionItem>();
-            int newid = Convert.ToInt32(id);
-            List<RequisitionDetail> r = db.RequisitionDetails.Where(x => x.RequisitionId == newid).ToList();
-
-            foreach (RequisitionDetail rr in r)
+            int dId = Convert.ToInt32(deptId);
+            int rId = Convert.ToInt32(reqID);
+            var reqItem= from req in db.RequisitionDetails
+                        where req.Requisition.DepartmentId.Equals(deptId)
+                        && req.RequisitionId.Equals(rId)
+                        orderby req.DeliveryStatus ascending
+                        select req;
+            
+            foreach (RequisitionDetail rr in reqItem)
             {
                 wcfRequisitionItem rl = new wcfRequisitionItem();
                 rl.Itemname = rr.Inventory.Description;
@@ -86,15 +91,7 @@ namespace Team7ADProjectMVC
                 }
             }
             return making;
-            //foreach (DisbursementDetail rr in r)
-            //{
-            //    wcfTodayCollectionlist rl = new wcfTodayCollectionlist();
-            //    rl.Collectionpt = rr.DisbursementList.CollectionPoint.PlaceName.ToString();
-            //    rl.Time = rr.DisbursementList.CollectionPoint.CollectTime.ToString();
-            //    rl.RequisitionDetailID = rr.RequisitionDetailId.ToString();
-            //    making.Add(rl);
-            //}
-            //return making.ToList();
+           
         }
 
         public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String requisitionID)

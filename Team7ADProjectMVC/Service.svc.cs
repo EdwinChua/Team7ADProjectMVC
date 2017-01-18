@@ -67,8 +67,8 @@ namespace Team7ADProjectMVC
             var r = from x in db.DisbursementDetails
                     where x.DisbursementList.DepartmentId == newid
                     && x.DisbursementList.Status != "Completed"
-                    && x.DisbursementList.DeliveryDate == DateTime.Today
-                                       select x;
+                    && x.DisbursementList.DeliveryDate.Equals(DateTime.Today)
+                    select x;
             
             foreach (DisbursementDetail rr in r)
             {

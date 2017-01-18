@@ -17,8 +17,8 @@ namespace Team7ADProjectMVC
         List<WCFMsg> DoWork();
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfRequisitionList", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfRequisitionList> RequisitionList();
+        [WebGet(UriTemplate = "/wcfRequisitionList/{deptid}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfRequisitionList> RequisitionList(string deptid);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfRequisitionList/{id}", ResponseFormat = WebMessageFormat.Json)]
@@ -31,6 +31,10 @@ namespace Team7ADProjectMVC
         [OperationContract]
         [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
         List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string reqDetailID);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfApproveRequisitions/{deptid}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfApproveRequisitions> getApproveReqList(string deptid);
 
         //[OperationContract]
         //[WebGet(UriTemplate = "/ttt?d={deptid}&r={reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
@@ -152,5 +156,19 @@ public class wcfTodayCollectionDetail
     public String ItemDescription { get; set; }
 
 }
+public class wcfApproveRequisitions
+{
+    string empName;
+    string reqDate;
+    string reqID;
 
+    [DataMember]
+    public String EmployeeName { get; set; }
+
+    [DataMember]
+    public String RequestedDate { get; set; }
+
+    [DataMember]
+    public String RequisitionID { get; set; }
+}
 

@@ -63,8 +63,9 @@ namespace Team7ADProjectMVC
             List<wcfTodayCollectionlist> making = new List<wcfTodayCollectionlist>();
             int newid = Convert.ToInt32(deptid);
             var r = from x in db.DisbursementDetails
-                                       where x.DisbursementList.DepartmentId == newid
-                                       && x.DisbursementList.Status != "Completed"
+                    where x.DisbursementList.DepartmentId == newid
+                    && x.DisbursementList.Status != "Completed"
+                    && x.DisbursementList.DeliveryDate == DateTime.Today
                                        select x;
             
             foreach (DisbursementDetail rr in r)
@@ -84,7 +85,6 @@ namespace Team7ADProjectMVC
             int did = Convert.ToInt32(deptid);
             int reqID = Convert.ToInt32(requisitionID);
         
-
             var dDetail = from r in db.DisbursementDetails
                           where r.DisbursementList.DepartmentId == did
                           && r.RequisitionDetail.RequisitionId == reqID
@@ -101,9 +101,26 @@ namespace Team7ADProjectMVC
             return collectionDetail.ToList();
         }
 
-        public String ttt(string deptid, string reqDetailID)
+        public List<wcfApproveRequisitions> getApproveReqList(String deptid)
         {
-            return deptid + "XXXX" + reqDetailID;
+            List<wcfApproveRequisitions> approvalList = new List<wcfApproveRequisitions>();
+            int did = Convert.ToInt32(deptid);
+
+            var aList = from a in db.Requisitions
+                          where a.DepartmentId == did
+                          && a.RequisitionStatus != "Approved"
+                          select a;
+
+            foreach (Requisition req in aList)
+            {
+                wcfApproveRequisitions cd = new wcfApproveRequisitions();
+                cd.EmployeeName = req.Employee.EmployeeName.ToString();
+                cd.RequestedDate = req.OrderedDate.ToString();
+                cd.RequisitionID = req.RequisitionId.ToString();
+                approvalList.Add(cd);
+            }
+            return approvalList.ToList();
         }
+     
     }
 }

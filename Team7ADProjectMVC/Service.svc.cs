@@ -67,7 +67,7 @@ namespace Team7ADProjectMVC
             var r = from x in db.DisbursementDetails
                     where x.DisbursementList.DepartmentId == newid
                     && x.DisbursementList.Status != "Completed"
-                    && x.DisbursementList.DeliveryDate.Equals(DateTime.Today)
+                    //&& x.DisbursementList.DeliveryDate.Equals(DateTime.Today)
                     orderby x.DisbursementList.Status
                     select x;
             var list = r.ToList();
@@ -78,8 +78,8 @@ namespace Team7ADProjectMVC
                 {
                     wcfTodayCollectionlist itemTemp = new wcfTodayCollectionlist();
                     itemTemp.Collectionpt = item.DisbursementList.CollectionPoint.PlaceName;
-                    string time = item.DisbursementList.CollectionPoint.CollectTime.ToString();
-                    string reqDetailID = item.RequisitionDetailId.ToString();
+                    itemTemp.Time = item.DisbursementList.CollectionPoint.CollectTime.ToString();
+                    itemTemp.RequisitionDetailID = item.RequisitionDetailId.ToString();
 
                     making.Add(itemTemp);
                 }

@@ -67,5 +67,15 @@ namespace Team7ADProjectMVC.Models
             return (query.ToList());
         }
 
+        public List<Requisition> GetOutStandingRequisitions()
+        {
+            var query = from rq in db.Requisitions
+                        where rq.RequisitionStatus != "Complete" 
+                        && rq.RequisitionStatus != "Pending"
+                        orderby rq.ApprovedDate
+                        select rq;
+            return (query.ToList());
+
+        }
     }
 }

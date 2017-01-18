@@ -27,6 +27,6 @@ namespace Team7ADProjectMVC.Models
 
         List<StockCard> GetStockCardFor(String id);
 
-
+        List<Requisition> GetOutStandingRequisitions();
     }
 }

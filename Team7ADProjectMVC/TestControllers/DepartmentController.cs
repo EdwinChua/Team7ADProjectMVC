@@ -33,12 +33,12 @@ namespace Team7ADProjectMVC.TestControllers
 
             //ViewBag.rel = relis;
 
-            List<RequisitionDetail> relis = db.RequisitionDetails.Where(u => u.RequisitionId == 2).ToList();
+            List<RequisitionDetail> relis = db.RequisitionDetails.Take(3).ToList();
 
             ViewBag.rel = relis;
 
 
-            return View("MakeRequisition", requisitions);
+            return View(requisitions);
         }
 
         // GET: TESTRequisitions/Details/5

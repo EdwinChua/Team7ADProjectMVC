@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Team7ADProjectMVC.Requisition>
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "View Requisitions";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Currently Active Retrieval List</h3>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <br />
+        <button class="btn btn-success">Generate Retrieval List</button>
+    </div>
+</div>
+<br />
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <h3>Unfulfilled Requisitions</h3>
+    </div>
+</div>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Department
+                </th>
+                <th>
+                    Date Approved
+                </th>
+                <th>
+                    Requisition Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Employee.Department.DepartmentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApprovedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequisitionStatus)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -143,8 +143,9 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult ViewDisbursement(String id)
         {
-            //TODO: EDWIN - Implementation code here
             DisbursementList dl = disbursementSvc.GetDisbursementById(id);
+            ViewBag.disbursementListInfo = dl;
+            //TODO: EDWIN - Retrieval list info required
             return View(dl);
         }
 
@@ -204,6 +205,14 @@ namespace Team7ADProjectMVC.TestControllers
             return View();
         }
 
+        //****************** Outstanding Requisitions ***************
+
+        public ActionResult ViewRequisitions()
+        {
+            
+            return View(inventorySvc.GetOutStandingRequisitions());
+        }
+        
         // ********************* Other *******************
 
         public ActionResult GenerateReports()

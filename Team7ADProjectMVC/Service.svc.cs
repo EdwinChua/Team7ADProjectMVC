@@ -69,23 +69,22 @@ namespace Team7ADProjectMVC
         public List<wcfTodayCollectionlist> getTodayCollection(String deptid)
         {
             List<wcfTodayCollectionlist> making = new List<wcfTodayCollectionlist>();
-            int newid = Convert.ToInt32(deptid);
-            var r = from x in db.DisbursementDetails
-                    where x.DisbursementList.DepartmentId == newid
-                    && x.DisbursementList.Status != "Completed"
-                    orderby x.DisbursementList.Status
+            int dId = Convert.ToInt32(deptid);
+            var r = from x in db.DisbursementLists
+                    where x.DepartmentId == dId
+                    && x.Status != "Completed"
+                    orderby x.Status
                     select x;
             var list = r.ToList();
             List<DisbursementDetail> tempList = new List<DisbursementDetail>();
             foreach (var item in list)
             {
-                if(item.DisbursementList.DeliveryDate.Equals(DateTime.Today))
+                if(item.DeliveryDate.Equals(DateTime.Today))
                 {
                     wcfTodayCollectionlist itemTemp = new wcfTodayCollectionlist();
-                    itemTemp.Collectionpt = item.DisbursementList.CollectionPoint.PlaceName;
-                    itemTemp.Time = item.DisbursementList.CollectionPoint.CollectTime.ToString();
-                    itemTemp.RequisitionID = item.RequisitionDetail.RequisitionId.ToString();
-
+                    itemTemp.Collectionpt = item.CollectionPoint.PlaceName;
+                    itemTemp.Time = item.CollectionPoint.CollectTime.ToString();
+                    itemTemp.DisbursementListID = item.DisbursementListId.ToString();
                     making.Add(itemTemp);
                 }
             }

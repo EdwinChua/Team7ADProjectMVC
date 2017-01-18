@@ -126,7 +126,7 @@ public class wcfTodayCollectionlist
 
     string collectionpt;
     string time;
-    string reqID;
+    string disbursementListID;
 
     [DataMember]
     public String Collectionpt { get; set; }
@@ -135,7 +135,7 @@ public class wcfTodayCollectionlist
     public String Time { get; set; }
 
     [DataMember]
-    public String RequisitionID { get; set; }
+    public String DisbursementListID { get; set; }
 }
 
 

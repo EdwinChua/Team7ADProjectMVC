@@ -122,7 +122,7 @@ public class wcfTodayCollectionlist
 
     string collectionpt;
     string time;
-  
+    string reqID;
 
     [DataMember]
     public String Collectionpt { get; set; }
@@ -130,6 +130,8 @@ public class wcfTodayCollectionlist
     [DataMember]
     public String Time { get; set; }
 
+    [DataMember]
+    public String RequisitionID { get; set; }
 }
 
 

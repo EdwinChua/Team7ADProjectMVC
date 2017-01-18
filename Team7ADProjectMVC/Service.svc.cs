@@ -137,6 +137,29 @@ namespace Team7ADProjectMVC
             }
             return approvalList.ToList();
         }
-     
+
+        public List<wcfApproveReqDetails> getApproveReqDetails(String reqId, String empId)
+        {
+            List<wcfApproveReqDetails> approvalList = new List<wcfApproveReqDetails>();
+            int rId = Convert.ToInt32(reqId);
+            int eId = Convert.ToInt32(empId);
+            var aList = from a in db.RequisitionDetails
+                        where a.RequisitionId == rId
+                        && a.Requisition.EmployeeId == eId
+                        orderby a.Inventory.Description ascending
+                        select a;
+
+            foreach (RequisitionDetail req in aList)
+            {
+                wcfApproveReqDetails rd = new wcfApproveReqDetails();
+                rd.Item = req.Inventory.Description;
+                rd.Quantity = req.Quantity.ToString();
+                rd.UOM = req.Inventory.Measurement.UnitOfMeasurement;
+                rd.ReqID = req.RequisitionId.ToString();
+                approvalList.Add(rd);
+            }
+            return approvalList.ToList();
+        }
+
     }
 }

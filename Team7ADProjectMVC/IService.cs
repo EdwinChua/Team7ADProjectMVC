@@ -21,7 +21,7 @@ namespace Team7ADProjectMVC
         List<wcfRequisitionList> RequisitionList(string deptid);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfRequisitionList/{id}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/wcfRequisitionItem/{id}", ResponseFormat = WebMessageFormat.Json)]
         List<wcfRequisitionItem> getrequisitionitem(string id);
 
         [OperationContract]
@@ -160,12 +160,12 @@ public class wcfApproveRequisitions
     string reqID;
 
     [DataMember]
-    public String EmployeeName { get; set; }
+    public String EmpName { get; set; }
 
     [DataMember]
-    public String RequestedDate { get; set; }
+    public String ReqDate { get; set; }
 
     [DataMember]
-    public String RequisitionID { get; set; }
+    public String ReqID { get; set; }
 }
 

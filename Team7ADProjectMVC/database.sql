@@ -6,7 +6,7 @@ DROP DATABASE Project
 
 CREATE DATABASE Project
 
----------------------------------------- Tne run this till the end to create tables -----------------------------------------
+-------------------------------------- Tne run this till the end to create tables -----------------------------------------
 USE Project
 
 --------------------------------------- Supplier -----------------------------------------
@@ -201,15 +201,21 @@ ApprovedBy INT,
 ApprovedDate Date,
 OrderedDate Date,
 RequisitionStatus VARCHAR(50),
+Comment VARCHAR(250),
 CONSTRAINT RequisitionEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
 )
 
 INSERT INTO Requisition
-VALUES (1,4,8,'2017-01-03','2017-01-03','Approved')
+VALUES (1,4,8,'2017-01-03','2017-01-03','Approved','')
 INSERT INTO Requisition
-VALUES (1,4,1,'','2017-01-14','Pending')
+VALUES (1,4,15,'2017-01-01','2017-01-01','Approved','')
 INSERT INTO Requisition
-VALUES (1,4,15,'','2017-01-15','Pending')
+VALUES (1,4,15,'2017-01-04','2017-01-04','Approved','')
+INSERT INTO Requisition
+VALUES (1,4,1,'','2017-01-14','Pending','')
+INSERT INTO Requisition
+VALUES (1,4,15,'','2017-01-15','Pending','')
+
 
 -------------------------------------------------- Category ----------------------------------------
 CREATE TABLE Category
@@ -282,9 +288,11 @@ CONSTRAINT RequisitionDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(Item
 )
 
 INSERT INTO RequisitionDetail
-VALUES(1,'C001',10,0,'Delivered'), (1,'C002',10,0,'Delivered'), (1,'E001',10,0,'Delivered'),
-		(2,'C001',10,0,'Preparing'), (2,'C002',10,0,'Preparing'), (2,'E001',10,0,'Preparing'),
-		(3,'C001',5,0,'Preparing'), (3,'C002',5,0,'Preparing'), (3,'E001',5,0,'Preparing');
+VALUES	(1,'C001',10,0,'Delivered'), (1,'C002',10,0,'Delivered'), (1,'E001',10,0,'Delivered'),
+		(2,'C001',10,0,'Delivered'), (2,'C002',10,0,'Delivered'), (2,'E001',10,0,'Delivered'),
+		(3,'C001',10,0,'Delivered'), (3,'C002',10,0,'Delivered'), (3,'E001',10,0,'Delivered'),
+		(4,'C001',10,0,'Preparing'), (4,'C002',10,0,'Preparing'), (4,'E001',10,0,'Preparing'),
+		(5,'C001',5,0,'Preparing'), (5,'C002',5,0,'Preparing'), (5,'E001',5,0,'Preparing');
 
 -------------------------------------------------- Delegate ----------------------------------------
 CREATE TABLE Delegate
@@ -363,8 +371,9 @@ CONSTRAINT RetrievalEmployeeId FOREIGN KEY (EmployeeId) REFERENCES Employee (Emp
 
 INSERT INTO Retrieval(EmployeeId, RetrievalDate)
 VALUES
-(2,'2017-01-04')
---,(2,'2017-01-14'),(2, '2017-01-07'),(3, '2017-01-09'),](3,'2017-01-10'),(2,'2017-01-15');
+(2,'2017-01-04'),
+(2,'2017-01-05'),
+(2,'2017-01-06');
 
 -------------------------------------------------- PruchaseDetail ----------------------------------------
 CREATE TABLE PurchaseDetail
@@ -400,7 +409,7 @@ CONSTRAINT DisbursementListCollectionPointId FOREIGN KEY (CollectionPointId) REF
 )
 
 INSERT INTO DisbursementList(RetrievalId, DepartmentId,  OrderedDate, DeliveryDate, CollectionPointId, [Status])
-VALUES	(1, 4, '2017-01-03', '2017-01-05', 1, '');--,(1, 4, '2017-01-14', 2),(1, 4, '2017-01-15', 5); 
+VALUES	(1, 4, '2017-01-03', '2017-01-05', 1, 'Delivered'), (1, 4, '2017-01-01', '2017-01-03', 1, 'Delivered'), (1, 4, '2017-01-03', '2017-01-06', 1, 'Delivered');
 
 -------------------------------------------------- DisbursementDetail ----------------------------------------
 CREATE TABLE DisbursementDetail
@@ -408,14 +417,17 @@ CREATE TABLE DisbursementDetail
 DisbursementDetailId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 DisbursementListId INT,
 RequisitionDetailId INT,
-Quantity INT,
+PreparedQuantity INT,
+DeliveredQuantity INT,
 Remark VARCHAR(250),
 CONSTRAINT DisbursementListId FOREIGN KEY (DisbursementListId) REFERENCES DisbursementList (DisbursementListId),
 CONSTRAINT RequisitionDetailId FOREIGN KEY (RequisitionDetailId) REFERENCES RequisitionDetail (RequisitionDetailId)
 )
 
 INSERT INTO DisbursementDetail
-VALUES (1,1,10,''),(1,2,10,''),(1,3,10,'');
+VALUES	(1,1,10,'',''),(1,2,10,'',''),(1,3,10,'',''),
+		(2,4,10,'',''),(2,5,10,'',''),(2,6,10,'',''),
+		(3,7,10,'',''),(3,8,10,'',''),(3,9,10,'','');
 
 -------------------------------------------------- Delivery ----------------------------------------
 CREATE TABLE Delivery
@@ -462,7 +474,7 @@ INNER JOIN Employee e on e.EmployeeId = a.EmployeeId
 INNER JOIN Inventory i on i.ItemNo = ad.ItemNo
 
 UNION
-SELECT ISNULL(dl.DeliveryDate,'1900-01-01') AS [Date], d.DepartmentName , '-' + CAST(dd.Quantity AS VARCHAR(100)) As DeliveredQuantity, rd.ItemNo, i.Description FROM DisbursementDetail dd
+SELECT ISNULL(dl.DeliveryDate,'1900-01-01') AS [Date], d.DepartmentName , '-' + CAST(dd.DeliveredQuantity AS VARCHAR(100)) As DeliveredQuantity, rd.ItemNo, i.Description FROM DisbursementDetail dd
 LEFT JOIN RequisitionDetail rd on rd.RequisitionId = dd.RequisitionDetailId
 INNER JOIN DisbursementList dl on dl.DisbursementListId = dd.DisbursementListId
 INNER JOIN Department d on d.DepartmentId = dl.DepartmentId
@@ -477,7 +489,7 @@ INNER JOIN Supplier s on s.SupplierId = po.SupplierId
 
 -------------------------------------- CrystalReports Views ----------------------------------------
 create view disbAnalysis as
-select d.DepartmentName, c.CategoryName, r.ApprovedDate, dd.Quantity, e.EmployeeName, r.RequisitionId
+select d.DepartmentName, c.CategoryName, r.ApprovedDate, dd.PreparedQuantity, e.EmployeeName, r.RequisitionId
 from 
 DisbursementDetail dd, 
 RequisitionDetail rd, 

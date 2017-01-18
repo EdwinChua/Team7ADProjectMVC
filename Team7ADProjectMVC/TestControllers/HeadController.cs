@@ -47,7 +47,7 @@ namespace Team7ADProjectMVC.TestControllers
 
         }
 
-        public ActionResult EmployeeRequisition(int id)
+        public ActionResult EmployeeRequisition(int? id)
         {
             Requisition r = listsvc.FindById(id);
             if (r == null)
@@ -69,29 +69,36 @@ namespace Team7ADProjectMVC.TestControllers
 
             return View("Approve", r);
         }
-        public ActionResult ApproveRequisition(int id)
+        public ActionResult MarkAsCollected(int? rid, string textcomments,string status)
         {
-            
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Requisition r = listsvc.FindById(rid);
+            if (status.Equals("Approve")) {              
+                listsvc.UpdateApproveStatus(r, textcomments);
+                return RedirectToAction("ListAllEmployees");
             }
-            Requisition r = listsvc.FindById(id);
-
-            listsvc.UpdateApproveStatus(r.RequisitionId);
-                return RedirectToAction("ViewInventory");
+           
+                listsvc.UpdateRejectStatus(r, textcomments);
+                return RedirectToAction("ListAllEmployees");
+           
 
         }
-        public ActionResult RejectRequisition(int id)
-        {
-            Requisition r = listsvc.FindById(id);
-            if (r == null)
-            {
-                return HttpNotFound();
-            }
 
 
-            return View("Approve", r);
-        }
+        //public ActionResult ApproveRequisition(int id)
+        //{
+
+        //    Requisition r = listsvc.FindById(id);
+
+        //    listsvc.UpdateApproveStatus(r);
+        //    return RedirectToAction("ListAllEmployees");
+
+        //}
+        //public ActionResult RejectRequisition(int id)
+        //{
+        //    Requisition r = listsvc.FindById(id);
+
+        //    listsvc.UpdateRejectStatus(r);
+        //    return RedirectToAction("ListAllEmployees");
+        //}
     }
 }

@@ -68,17 +68,32 @@ namespace Team7ADProjectMVC
                     where x.DisbursementList.DepartmentId == newid
                     && x.DisbursementList.Status != "Completed"
                     && x.DisbursementList.DeliveryDate.Equals(DateTime.Today)
+                    orderby x.DisbursementList.Status
                     select x;
-            
-            foreach (DisbursementDetail rr in r)
+            var list = r.ToList();
+            List<DisbursementDetail> tempList = new List<DisbursementDetail>();
+            foreach (var item in list)
             {
-                wcfTodayCollectionlist rl = new wcfTodayCollectionlist();
-                rl.Collectionpt = rr.DisbursementList.CollectionPoint.PlaceName.ToString();
-                rl.Time = rr.DisbursementList.CollectionPoint.CollectTime.ToString();
-                rl.RequisitionDetailID = rr.RequisitionDetailId.ToString();
-                making.Add(rl);
+                if(item.DisbursementList.DeliveryDate.Equals(DateTime.Today))
+                {
+                    wcfTodayCollectionlist itemTemp = new wcfTodayCollectionlist();
+                    itemTemp.Collectionpt = item.DisbursementList.CollectionPoint.PlaceName;
+                    string time = item.DisbursementList.CollectionPoint.CollectTime.ToString();
+                    string reqDetailID = item.RequisitionDetailId.ToString();
+
+                    making.Add(itemTemp);
+                }
             }
-            return making.ToList();
+            return making;
+            //foreach (DisbursementDetail rr in r)
+            //{
+            //    wcfTodayCollectionlist rl = new wcfTodayCollectionlist();
+            //    rl.Collectionpt = rr.DisbursementList.CollectionPoint.PlaceName.ToString();
+            //    rl.Time = rr.DisbursementList.CollectionPoint.CollectTime.ToString();
+            //    rl.RequisitionDetailID = rr.RequisitionDetailId.ToString();
+            //    making.Add(rl);
+            //}
+            //return making.ToList();
         }
 
         public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String requisitionID)
@@ -111,6 +126,7 @@ namespace Team7ADProjectMVC
             var aList = from a in db.Requisitions
                           where a.DepartmentId == did
                           && a.RequisitionStatus != "Approved"
+                          orderby a.OrderedDate
                           select a;
 
             foreach (Requisition req in aList)

@@ -13,11 +13,12 @@ namespace Team7ADProjectMVC.TestControllers
     public class DepartmentController : Controller
     {
         private ProjectEntities db = new ProjectEntities();
-
+        List<String> Roles;
         // GET: Department
         public ActionResult Index()
         {
             var requisitions = db.Requisitions.ToList();
+
             ViewBag.Cat = requisitions;
             return View();
         }
@@ -51,6 +52,16 @@ namespace Team7ADProjectMVC.TestControllers
         [ValidateAntiForgeryToken]
         public ActionResult MakeRequisition([Bind(Include = "RequisitionId,EmployeeId,DepartmentId,ApprovedBy,ApprovedDate,OrderedDate,RequisitionStatus")] Requisition requisition)
         {
+
+            Requisition req = new Requisition();
+           
+            
+
+
+            List<RequisitionDetail> redlis = new List<RequisitionDetail>();
+            
+
+
 
             if (ModelState.IsValid)
             {
@@ -93,6 +104,26 @@ namespace Team7ADProjectMVC.TestControllers
             return View(requisition);
         }
 
+        //public ActionResult AddUser(List<String> Roles)
+        //{
+
+
+        //    return null;
+        //}
+        [HttpPost]
+        public ActionResult AddUser(List<String> Roles)
+        {
+            this.Roles = Roles;
+            foreach (string i in Roles)
+            {
+
+                Console.WriteLine(i.ToString());
+
+            }
+
+            return null;
+
+        }
 
         public ActionResult ViewRequisitionDetails(int? id)
         {

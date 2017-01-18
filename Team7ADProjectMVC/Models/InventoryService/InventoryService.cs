@@ -58,5 +58,24 @@ namespace Team7ADProjectMVC.Models
                                   select t;
             return (queryByCategory.ToList());
         }
+        public List<StockCard> GetStockCardFor(String id)
+        {
+            var query = from stockCard in db.StockCards
+                        where stockCard.ItemNo == id
+                        orderby stockCard.Date
+                        select stockCard;
+            return (query.ToList());
+        }
+
+        public List<Requisition> GetOutStandingRequisitions()
+        {
+            var query = from rq in db.Requisitions
+                        where rq.RequisitionStatus != "Complete" 
+                        && rq.RequisitionStatus != "Pending"
+                        orderby rq.ApprovedDate
+                        select rq;
+            return (query.ToList());
+
+        }
     }
 }

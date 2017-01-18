@@ -21,16 +21,16 @@ namespace Team7ADProjectMVC.Models
 
         public DisbursementList GetDisbursementById(string id)
         {
-            return db.DisbursementLists.Find(id);
+            return db.DisbursementLists.Find(Int32.Parse(id));
         }
 
         public List<DisbursementList> GetDisbursementsBySearchCriteria(int? departmentId, string status)
         {
-            if (status == null && departmentId == null)
+            if ((status == null || status == "") && departmentId == null)
             {
                 return (db.DisbursementLists.ToList());
             }
-            else if (departmentId == null)
+            else if (status == null || status == "")
             {
                 var queryResults = from d in db.DisbursementLists
                                where d.DepartmentId == departmentId
@@ -38,7 +38,7 @@ namespace Team7ADProjectMVC.Models
                                select d;
                 return (queryResults.ToList());
             }
-            else if (status == null)
+            else if (departmentId == null) 
             {
                 var queryResults = from d in db.DisbursementLists
                                    where d.Status == status

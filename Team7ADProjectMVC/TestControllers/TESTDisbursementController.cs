@@ -10,7 +10,7 @@ using Team7ADProjectMVC;
 
 namespace Team7ADProjectMVC.TestControllers
 {
-    public class TESTDisbursementListsController : Controller
+    public class TESTDisbursementController : Controller
     {
         private ProjectEntities db = new ProjectEntities();
 
@@ -50,7 +50,7 @@ namespace Team7ADProjectMVC.TestControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DisbursementListId,RetrievalId,DepartmentId,OrderedDate,CollectionPointId,Status")] DisbursementList disbursementList)
+        public ActionResult Create([Bind(Include = "DisbursementListId,RetrievalId,DepartmentId,OrderedDate,CollectionPointId,Status,DeliveryDate,DeliveryDate1")] DisbursementList disbursementList)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace Team7ADProjectMVC.TestControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DisbursementListId,RetrievalId,DepartmentId,OrderedDate,CollectionPointId,Status")] DisbursementList disbursementList)
+        public ActionResult Edit([Bind(Include = "DisbursementListId,RetrievalId,DepartmentId,OrderedDate,CollectionPointId,Status,DeliveryDate,DeliveryDate1")] DisbursementList disbursementList)
         {
             if (ModelState.IsValid)
             {

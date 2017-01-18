@@ -10,28 +10,52 @@ namespace Team7ADProjectMVC.TestControllers
 {
     public class RepresentativeController : Controller
     {
-        private ProjectEntities db = new ProjectEntities();
+        private ProjectEntities da = new ProjectEntities();
         // GET: Representative
-        public ActionResult Index()
+        public ActionResult ViewDisbursmentList()
         {
-            return View("ViewRequisitionDetails");
+            var disbursementLists = da.DisbursementLists.Include(d => d.CollectionPoint).Include(d => d.Department).Include(d => d.Retrieval);
+            return View(disbursementLists.ToList());
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DisbursementList disbursementList = da.DisbursementLists.Find(id);
+            if (disbursementList == null)
+            {
+                return HttpNotFound();
+            }
+            return View(disbursementList);
         }
         public ActionResult MakeRequisition()
         {
             return View("MakeRequisition");
         }
 
-        public ActionResult Confirm()
-        {
-            return View("ConfirmDisbursementList");
-        }
-        public ActionResult Change(int? id)
+        //public ActionResult Confirm(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    DisbursementList dbl=db.DisbursementLists.Find()
+        //    if (employee == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View("Details", employee);
+        //    return View("ConfirmDisbursementList");
+        //}
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee e = db.Employees.Find(id);
+            Employee e = da.Employees.Find(id);
             Department department = e.Department;
             
             if (department == null)
@@ -39,25 +63,28 @@ namespace Team7ADProjectMVC.TestControllers
                 return HttpNotFound();
             }
             
-            //ViewBag.CollectionPointId = new SelectList(db.CollectionPoints, "CollectionPointId", "PlaceName", department.CollectionPointId);
-            //ViewBag.RepresentativeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", department.RepresentativeId);
-            ViewBag.Message = db.CollectionPoints.ToList();
+            ViewBag.Message = da.CollectionPoints.ToList();
             return View("ChangeCollectionPoint", department);
         
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Change([Bind(Include = "DepartmentId,CollectionPointId,DepartmentName,DepartmentName")] Department department)
+
+        public ActionResult Edit( [Bind(Include = "DepartmentId,CollectionPointId")] Department department)
         {
+            
             if (ModelState.IsValid)
             {
-                db.Entry(department).State = EntityState.Modified;
-                db.SaveChanges();
+
+                var r = Request.Form["radio"];
+                int id = department.DepartmentId;
+                da.Departments.Single(model => model.DepartmentId== id).CollectionPointId = int.Parse(r);
+                
+                da.SaveChanges();
+
                 return RedirectToAction("ViewRequisitionDetails");
             }
-
-            //ViewBag.CollectionPointId = new SelectList(db.CollectionPoints, "CollectionPointId", "PlaceName", department.CollectionPointId);
-            ViewBag.Message = db.CollectionPoints.ToList();
+            ViewBag.Message = da.CollectionPoints.ToList();
             return View(department);
 
         }

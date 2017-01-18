@@ -219,6 +219,7 @@
     <Content Include="DataSet1.xss">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\wcf.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
@@ -254,6 +255,7 @@
     <Compile Include="CollectionPoint.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RetrievalList.cs" />
     <Compile Include="Reports\CrystalReport1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -353,6 +355,9 @@
     <Compile Include="Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>
     </Compile>
+    <Compile Include="StockCard.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Supplier.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -363,7 +368,6 @@
     <Compile Include="TestControllers\RepresentativeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="TestControllers\RptController.cs" />
-    <Compile Include="TestControllers\TESTDisbursementListsController.cs" />
     <Compile Include="TestControllers\TESTRequisitionsController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -398,7 +402,6 @@
     <Content Include="Views\Store\Adjustment\CreateNewAdjustment.cshtml" />
     <Content Include="Views\Store\Adjustment\InventoryAdjustment.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewDisbursements.cshtml" />
-    <Content Include="Views\Store\Disbursement\ViewDisbursementItems.cshtml" />
     <Content Include="Views\Store\Inventory\NewStockCard.cshtml" />
     <Content Include="Views\Store\Inventory\UpdateStockCard.cshtml" />
     <Content Include="Views\Store\Inventory\ViewInventory.cshtml" />
@@ -424,6 +427,9 @@
     <Content Include="Views\TESTDisbursementLists\Details.cshtml" />
     <Content Include="Views\TESTDisbursementLists\Edit.cshtml" />
     <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
+    <Content Include="Views\Store\Disbursement\ViewDisbursement.cshtml" />
+    <Content Include="Views\Store\Disbursement\ViewRequisitions.cshtml" />
+    <Content Include="Views\Rpt\RptOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -435,7 +441,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\DelegateRoleService\" />
-    <Folder Include="Views\Rpt\" />
     <Folder Include="Views\StoreTest\" />
   </ItemGroup>
   <ItemGroup>

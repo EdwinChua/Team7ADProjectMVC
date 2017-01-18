@@ -93,7 +93,7 @@ namespace Team7ADProjectMVC
             {
                 wcfTodayCollectionDetail cd = new wcfTodayCollectionDetail();
                 cd.RequestedQty =dd.RequisitionDetail.Quantity.ToString();
-                cd.DisbursedQty = dd.Quantity.ToString();
+                cd.DisbursedQty = dd.DeliveredQuantity.ToString();
                 cd.ItemDescription = dd.RequisitionDetail.Inventory.Description;
                 collectionDetail.Add(cd);
             }

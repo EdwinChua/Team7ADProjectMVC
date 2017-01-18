@@ -41,12 +41,11 @@ namespace Team7ADProjectMVC
         }
 
 
-
         public List<wcfRequisitionItem> getrequisitionitem(String id)
         {
             List<wcfRequisitionItem> making = new List<wcfRequisitionItem>();
-
-            List<RequisitionDetail> r = db.RequisitionDetails.ToList();
+            int newid = Convert.ToInt32(id);
+            List<RequisitionDetail> r = db.RequisitionDetails.Where(x => x.RequisitionId == newid).ToList();
 
             foreach (RequisitionDetail rr in r)
             {
@@ -59,6 +58,46 @@ namespace Team7ADProjectMVC
             return making;
         }
 
+        public List<wcfTodayCollectionlist> getTodayCollection(String deptid)
+        {
+            List<wcfTodayCollectionlist> making = new List<wcfTodayCollectionlist>();
+            int newid = Convert.ToInt32(deptid);
+            var r = from x in db.DisbursementLists
+                                       where x.DepartmentId == newid
+                                       && x.Status != "Completed"
+                                       select x;
+            
+            foreach (DisbursementList rr in r)
+            {
+                wcfTodayCollectionlist rl = new wcfTodayCollectionlist();
+                rl.Collectionpt = rr.CollectionPoint.PlaceName;
+                rl.Time = rr.CollectionPoint.CollectTime.ToString();
+                making.Add(rl);
+            }
+            return making.ToList();
+        }
 
+        public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String reqDetailID)
+        {
+            List<wcfTodayCollectionDetail> collectionDetail = new List<wcfTodayCollectionDetail>();
+            int did = Convert.ToInt32(deptid);
+            int reqID = Convert.ToInt32(reqDetailID);
+        
+
+             var dDetail = from r in db.DisbursementDetails
+                          where r.DisbursementList.DepartmentId == did
+                          && r.RequisitionDetailId == reqID
+                          select r;
+
+            foreach (DisbursementDetail dd in dDetail)
+            {
+                wcfTodayCollectionDetail cd = new wcfTodayCollectionDetail();
+                cd.RequestedQty =dd.RequisitionDetail.Quantity.ToString();
+                cd.DisbursedQty = dd.Quantity.ToString();
+                cd.ItemDescription = dd.RequisitionDetail.Inventory.Description;
+                collectionDetail.Add(cd);
+            }
+            return collectionDetail.ToList();
+        }
     }
 }

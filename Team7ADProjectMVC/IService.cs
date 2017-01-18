@@ -23,6 +23,16 @@ namespace Team7ADProjectMVC
         [OperationContract]
         [WebGet(UriTemplate = "/wcfRequisitionList/{id}", ResponseFormat = WebMessageFormat.Json)]
         List<wcfRequisitionItem> getrequisitionitem(string id);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfTodayCollection/{deptid}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfTodayCollectionlist> getTodayCollection(string deptid);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfTodayCollectionDetail/{deptid}/{reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string reqDetailID);
+
+
     }
 }
 
@@ -79,9 +89,6 @@ public class wcfRequisitionList
      
         return c;
     }
- 
- 
-
 
 
 }
@@ -106,3 +113,76 @@ public class wcfRequisitionItem
     public String Uom { get; set; }
     
 }
+
+[DataContract]
+public class wcfTodayCollectionlist
+{
+
+    string collectionpt;
+    string time;
+  
+
+    [DataMember]
+    public String Collectionpt { get; set; }
+
+    [DataMember]
+    public String Time { get; set; }
+
+
+}
+
+
+[DataContract]
+public class wcfTodayCollectionDetail
+{
+
+    string itemDescription;
+    
+    string disbursedQty;
+
+    string requstedQty;
+
+   
+    [DataMember]
+    public String DisbursedQty { get; set; }
+
+
+
+    [DataMember]
+    public String RequestedQty { get; set; }
+    [DataMember]
+    public String ItemDescription { get; set; }
+
+}
+
+
+//[DataContract]
+//public class wcfTodayCollectionDetail
+//{
+
+//    string collectionpt;
+//    string time;
+//    string disbursementDetailID;
+//    int disbursedQty;
+//    string reqDetailID;
+//    int requstedQty;
+
+//    [DataMember]
+//    public String Collectionpt { get; set; }
+
+//    [DataMember]
+//    public String Time { get; set; }
+
+//    [DataMember]
+//    public String DisbursementDetailID { get; set; }
+
+//    [DataMember]
+//    public int DisbursedQty { get; set; }
+
+//    [DataMember]
+//    public String ReqDetailID { get; set; }
+
+//    [DataMember]
+//    public int RequestedQty { get; set; }
+
+//}

@@ -29,12 +29,16 @@ namespace Team7ADProjectMVC
         List<wcfTodayCollectionlist> getTodayCollection(string deptid);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string reqDetailID);
+        [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={reqID}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string reqID);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfApproveRequisitions/{deptid}", ResponseFormat = WebMessageFormat.Json)]
         List<wcfApproveRequisitions> getApproveReqList(string deptid);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfApproveReqDetails?d={reqID}&r={empID}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfApproveReqDetails> getApproveReqDetails(string reqID, string empID);
 
         //[OperationContract]
         //[WebGet(UriTemplate = "/ttt?d={deptid}&r={reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
@@ -164,6 +168,26 @@ public class wcfApproveRequisitions
 
     [DataMember]
     public String ReqDate { get; set; }
+
+    [DataMember]
+    public String ReqID { get; set; }
+}
+
+public class wcfApproveReqDetails
+{
+    string item;
+    string quantity;
+    string uom;
+    string reqID;
+
+    [DataMember]
+    public String Item { get; set; }
+
+    [DataMember]
+    public String Quantity { get; set; }
+
+    [DataMember]
+    public String UOM { get; set; }
 
     [DataMember]
     public String ReqID { get; set; }

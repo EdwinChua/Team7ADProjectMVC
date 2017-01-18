@@ -17,12 +17,33 @@ namespace Team7ADProjectMVC
         List<WCFMsg> DoWork();
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfRequisitionList", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfRequisitionList> RequisitionList();
+        [WebGet(UriTemplate = "/wcfRequisitionList/{deptid}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfRequisitionList> RequisitionList(string deptid);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfRequisitionList/{id}", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfRequisitionItem> getrequisitionitem(string id);
+        [WebGet(UriTemplate = "/wcfRequisitionItem?d={deptid}&r={reqID}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfRequisitionItem> getrequisitionitem(string deptId, string reqID);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfTodayCollection/{deptid}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfTodayCollectionlist> getTodayCollection(string deptid);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={disListID}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string disListID);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfApproveRequisitions/{deptid}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfApproveRequisitions> getApproveReqList(string deptid);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfApproveReqDetails?d={deptId}&r={reqId}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfApproveReqDetails> getApproveReqDetails(string deptId, string reqId);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfCollectionPoint/{deptid}", ResponseFormat = WebMessageFormat.Json)]
+        List<String> getCollectionPoint(string deptid);
+
     }
 }
 
@@ -39,8 +60,6 @@ public class WCFMsg
         set { msg = value; }
     }
 
-
-
     public WCFMsg(string m)
     {
         msg = m;
@@ -55,6 +74,7 @@ public class wcfRequisitionList
     string id;
     string employeename;
     string status;
+    string deptID;
 
     [DataMember]
     public string Employeename
@@ -68,22 +88,15 @@ public class wcfRequisitionList
 
     [DataMember]
     public String Id { get; set; }
-
-
+    
     public static wcfRequisitionList Make(string name, string s)
     {
         wcfRequisitionList c = new wcfRequisitionList();
 
         c.employeename = name;
         c.status = s;
-     
         return c;
     }
- 
- 
-
-
-
 }
 
 
@@ -91,8 +104,8 @@ public class wcfRequisitionList
 public class wcfRequisitionItem
 {
 
-     string itemname;
-    string quanity;
+    string itemname;
+    string quantity;
     string uom;
 
 
@@ -100,9 +113,88 @@ public class wcfRequisitionItem
     public String Itemname { get; set; }
 
     [DataMember]
-    public String Quanity { get; set; }
+    public String Quantity { get; set; }
 
     [DataMember]
     public String Uom { get; set; }
     
 }
+
+[DataContract]
+public class wcfTodayCollectionlist
+{
+
+    string collectionpt;
+    string time;
+    string disbursementListID;
+
+    [DataMember]
+    public String Collectionpt { get; set; }
+
+    [DataMember]
+    public String Time { get; set; }
+
+    [DataMember]
+    public String DisbursementListID { get; set; }
+}
+
+
+[DataContract]
+public class wcfTodayCollectionDetail
+{
+
+    string itemDescription;
+    string disbursedQty;
+    string requstedQty;
+
+    [DataMember]
+    public String DisbursedQty { get; set; }
+
+    [DataMember]
+    public String RequestedQty { get; set; }
+    [DataMember]
+    public String ItemDescription { get; set; }
+
+}
+public class wcfApproveRequisitions
+{
+    string empName;
+    string reqDate;
+    string reqID;
+
+    [DataMember]
+    public String EmpName { get; set; }
+
+    [DataMember]
+    public String ReqDate { get; set; }
+
+    [DataMember]
+    public String ReqID { get; set; }
+}
+
+public class wcfApproveReqDetails
+{
+    string item;
+    string quantity;
+    string uom;
+  
+
+    [DataMember]
+    public String Item { get; set; }
+
+    [DataMember]
+    public String Quantity { get; set; }
+
+    [DataMember]
+    public String UOM { get; set; }
+}
+
+//public class wcfCollectionPoint
+//{
+//    string locationAndTime;
+
+//    [DataMember]
+//    public String LocationAndtime { get; set; }
+
+//}
+

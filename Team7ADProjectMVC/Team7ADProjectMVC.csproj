@@ -219,6 +219,7 @@
     <Content Include="DataSet1.xss">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\wcf.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />

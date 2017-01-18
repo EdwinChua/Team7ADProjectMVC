@@ -71,6 +71,7 @@ public class wcfRequisitionList
     string id;
     string employeename;
     string status;
+    string deptID;
 
     [DataMember]
     public string Employeename
@@ -84,19 +85,15 @@ public class wcfRequisitionList
 
     [DataMember]
     public String Id { get; set; }
-
-
+    
     public static wcfRequisitionList Make(string name, string s)
     {
         wcfRequisitionList c = new wcfRequisitionList();
 
         c.employeename = name;
         c.status = s;
-     
         return c;
     }
-
-
 }
 
 
@@ -104,7 +101,7 @@ public class wcfRequisitionList
 public class wcfRequisitionItem
 {
 
-     string itemname;
+    string itemname;
     string quanity;
     string uom;
 

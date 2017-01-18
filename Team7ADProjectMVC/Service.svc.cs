@@ -23,13 +23,15 @@ namespace Team7ADProjectMVC
 
         }
 
-        public List<wcfRequisitionList> RequisitionList()
+        public List<wcfRequisitionList> RequisitionList(string deptid)
         {
             List<wcfRequisitionList> making = new List<wcfRequisitionList>();
-           
-         List<Requisition> r = db.Requisitions.ToList();
+            int departmentId = Convert.ToInt32(deptid);
+            var reqList = from req in db.Requisitions
+                          where req.DepartmentId == departmentId
+                          select req;
 
-         foreach(Requisition rr in r)
+         foreach(Requisition rr in reqList)
          {
              wcfRequisitionList rl = new wcfRequisitionList();
              rl.Employeename = rr.Employee.EmployeeName;
@@ -37,7 +39,7 @@ namespace Team7ADProjectMVC
              rl.Id = rr.RequisitionId.ToString();
              making.Add(rl);
          }
-         return making;
+         return making.ToList();
         }
 
 

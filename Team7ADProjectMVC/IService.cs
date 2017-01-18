@@ -122,6 +122,7 @@ public class wcfTodayCollectionlist
 
     string collectionpt;
     string time;
+
   
 
     [DataMember]

@@ -99,5 +99,10 @@ namespace Team7ADProjectMVC
             }
             return collectionDetail.ToList();
         }
+
+        public String ttt(string deptid, string reqDetailID)
+        {
+            return deptid + "XXXX" + reqDetailID;
+        }
     }
 }

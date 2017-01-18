@@ -101,7 +101,7 @@ namespace Team7ADProjectMVC
         
             var dDetail = from r in db.DisbursementDetails
                           where r.DisbursementList.DepartmentId == did
-                          && r.RequisitionDetail.RequisitionId == reqID
+                          && r.RequisitionDetail.Requisition.RequisitionId == reqID
                           select r;
 
             foreach (DisbursementDetail dd in dDetail)

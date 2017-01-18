@@ -29,12 +29,12 @@ namespace Team7ADProjectMVC
         List<wcfTodayCollectionlist> getTodayCollection(string deptid);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfTodayCollectionDetail/{deptid}/{reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
         List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string reqDetailID);
 
-        [OperationContract]
-        [WebGet(UriTemplate = "/ttt?d={deptid}&r={reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
-        String ttt(string deptid, string reqDetailID);
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/ttt?d={deptid}&r={reqDetailID}", ResponseFormat = WebMessageFormat.Json)]
+        //String ttt(string deptid, string reqDetailID);
 
 
     }

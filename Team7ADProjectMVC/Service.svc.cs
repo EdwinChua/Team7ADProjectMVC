@@ -39,5 +39,26 @@ namespace Team7ADProjectMVC
          }
          return making;
         }
+
+
+
+        public List<wcfRequisitionItem> getrequisitionitem(String id)
+        {
+            List<wcfRequisitionItem> making = new List<wcfRequisitionItem>();
+
+            List<RequisitionDetail> r = db.RequisitionDetails.ToList();
+
+            foreach (RequisitionDetail rr in r)
+            {
+                wcfRequisitionItem rl = new wcfRequisitionItem();
+                rl.Itemname = rr.Inventory.Description;
+                rl.Quanity= rr.Quantity.ToString();
+                rl.Uom = rr.OutstandingQuantity.ToString();
+                making.Add(rl);
+            }
+            return making;
+        }
+
+
     }
 }

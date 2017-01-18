@@ -17,8 +17,12 @@ namespace Team7ADProjectMVC
         List<WCFMsg> DoWork();
 
         [OperationContract]
-        [WebGet(UriTemplate = "/testlistandroid", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/wcfRequisitionList", ResponseFormat = WebMessageFormat.Json)]
         List<wcfRequisitionList> RequisitionList();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfRequisitionList/{id}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfRequisitionItem> getrequisitionitem(string id);
     }
 }
 
@@ -80,4 +84,25 @@ public class wcfRequisitionList
 
 
 
+}
+
+
+[DataContract]
+public class wcfRequisitionItem
+{
+
+     string itemname;
+    string quanity;
+    string uom;
+
+
+    [DataMember]
+    public String Itemname { get; set; }
+
+    [DataMember]
+    public String Quanity { get; set; }
+
+    [DataMember]
+    public String Uom { get; set; }
+    
 }

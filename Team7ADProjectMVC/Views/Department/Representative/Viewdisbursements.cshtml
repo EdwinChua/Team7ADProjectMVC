@@ -66,8 +66,8 @@
 
                 @foreach (var item in Model)
                 {
-                    <a href="~/Content/"
-                    <tr>
+                   
+                    <tr class='clickable-row' data-href="../ViewDisbursementDetail/@item.DisbursementListId">
                         <td>
                             @Html.DisplayFor(modelItem => item.Department.DepartmentName)
                         </td>
@@ -91,6 +91,7 @@
                             @Html.DisplayFor(modelItem => item.Status)
                         </td>
                     </tr>
+                    
                 }
 
             </table>

@@ -85,7 +85,7 @@ namespace Team7ADProjectMVC
                     wcfTodayCollectionlist itemTemp = new wcfTodayCollectionlist();
                     itemTemp.Collectionpt = item.DisbursementList.CollectionPoint.PlaceName;
                     itemTemp.Time = item.DisbursementList.CollectionPoint.CollectTime.ToString();
-                    itemTemp.RequisitionDetailID = item.RequisitionDetailId.ToString();
+                    itemTemp.RequisitionID = item.DisbursementDetailId.ToString();
 
                     making.Add(itemTemp);
                 }

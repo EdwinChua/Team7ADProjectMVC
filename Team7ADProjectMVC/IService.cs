@@ -42,7 +42,7 @@ namespace Team7ADProjectMVC
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfCollectionPoint/{deptid}", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfCollectionPoint> getCollectionPoint (string deptid);
+        List<String> getCollectionPoint(string deptid);
 
     }
 }
@@ -189,12 +189,12 @@ public class wcfApproveReqDetails
     public String UOM { get; set; }
 }
 
-public class wcfCollectionPoint
-{
-    string locationAndTime;
+//public class wcfCollectionPoint
+//{
+//    string locationAndTime;
 
-    [DataMember]
-    public String LocationAndtime { get; set; }
+//    [DataMember]
+//    public String LocationAndtime { get; set; }
 
-}
+//}
 

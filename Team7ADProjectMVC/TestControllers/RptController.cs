@@ -15,7 +15,7 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult Index()
         {
             ViewBag.Departments = db.Departments.ToList();
-            return View("ReportOptions");
+            return View("RptOptions");
         }
 
         //[HttpPost]

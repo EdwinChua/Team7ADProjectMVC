@@ -11,6 +11,7 @@ namespace Team7ADProjectMVC
 	// NOTE: In order to launch WCF Test Client for testing this service, please select Service.svc or Service.svc.cs at the Solution Explorer and start debugging.
 	public class Service : IService
 	{
+        ProjectEntities db = new ProjectEntities();
         public List<WCFMsg> DoWork()
         {
             List<WCFMsg> l = new List<WCFMsg>();
@@ -21,5 +22,107 @@ namespace Team7ADProjectMVC
             return l;
 
         }
+
+        public List<wcfRequisitionList> RequisitionList(string deptid)
+        {
+            List<wcfRequisitionList> making = new List<wcfRequisitionList>();
+            int departmentId = Convert.ToInt32(deptid);
+            var reqList = from req in db.Requisitions
+                          where req.DepartmentId == departmentId
+                          select req;
+
+         foreach(Requisition rr in reqList)
+         {
+             wcfRequisitionList rl = new wcfRequisitionList();
+             rl.Employeename = rr.Employee.EmployeeName;
+             rl.Status = rr.RequisitionStatus;
+             rl.Id = rr.RequisitionId.ToString();
+             making.Add(rl);
+         }
+         return making.ToList();
+        }
+
+
+        public List<wcfRequisitionItem> getrequisitionitem(String id)
+        {
+            List<wcfRequisitionItem> making = new List<wcfRequisitionItem>();
+            int newid = Convert.ToInt32(id);
+            List<RequisitionDetail> r = db.RequisitionDetails.Where(x => x.RequisitionId == newid).ToList();
+
+            foreach (RequisitionDetail rr in r)
+            {
+                wcfRequisitionItem rl = new wcfRequisitionItem();
+                rl.Itemname = rr.Inventory.Description;
+                rl.Quanity= rr.Quantity.ToString();
+                rl.Uom = rr.OutstandingQuantity.ToString();
+                making.Add(rl);
+            }
+            return making;
+        }
+
+        public List<wcfTodayCollectionlist> getTodayCollection(String deptid)
+        {
+            List<wcfTodayCollectionlist> making = new List<wcfTodayCollectionlist>();
+            int newid = Convert.ToInt32(deptid);
+            var r = from x in db.DisbursementDetails
+                    where x.DisbursementList.DepartmentId == newid
+                    && x.DisbursementList.Status != "Completed"
+                    && x.DisbursementList.DeliveryDate == DateTime.Today
+                                       select x;
+            
+            foreach (DisbursementDetail rr in r)
+            {
+                wcfTodayCollectionlist rl = new wcfTodayCollectionlist();
+                rl.Collectionpt = rr.DisbursementList.CollectionPoint.PlaceName.ToString();
+                rl.Time = rr.DisbursementList.CollectionPoint.CollectTime.ToString();
+                rl.RequisitionDetailID = rr.RequisitionDetailId.ToString();
+                making.Add(rl);
+            }
+            return making.ToList();
+        }
+
+        public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String requisitionID)
+        {
+            List<wcfTodayCollectionDetail> collectionDetail = new List<wcfTodayCollectionDetail>();
+            int did = Convert.ToInt32(deptid);
+            int reqID = Convert.ToInt32(requisitionID);
+        
+            var dDetail = from r in db.DisbursementDetails
+                          where r.DisbursementList.DepartmentId == did
+                          && r.RequisitionDetail.RequisitionId == reqID
+                          select r;
+
+            foreach (DisbursementDetail dd in dDetail)
+            {
+                wcfTodayCollectionDetail cd = new wcfTodayCollectionDetail();
+                cd.RequestedQty =dd.RequisitionDetail.Quantity.ToString();
+                cd.DisbursedQty = dd.DeliveredQuantity.ToString();
+                cd.ItemDescription = dd.RequisitionDetail.Inventory.Description;
+                collectionDetail.Add(cd);
+            }
+            return collectionDetail.ToList();
+        }
+
+        public List<wcfApproveRequisitions> getApproveReqList(String deptid)
+        {
+            List<wcfApproveRequisitions> approvalList = new List<wcfApproveRequisitions>();
+            int did = Convert.ToInt32(deptid);
+
+            var aList = from a in db.Requisitions
+                          where a.DepartmentId == did
+                          && a.RequisitionStatus != "Approved"
+                          select a;
+
+            foreach (Requisition req in aList)
+            {
+                wcfApproveRequisitions cd = new wcfApproveRequisitions();
+                cd.EmployeeName = req.Employee.EmployeeName.ToString();
+                cd.RequestedDate = req.OrderedDate.ToString();
+                cd.RequisitionID = req.RequisitionId.ToString();
+                approvalList.Add(cd);
+            }
+            return approvalList.ToList();
+        }
+     
     }
 }

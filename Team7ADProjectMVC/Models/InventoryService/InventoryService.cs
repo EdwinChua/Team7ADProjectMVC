@@ -194,6 +194,47 @@ namespace Team7ADProjectMVC.Models
         {
             System.Web.HttpContext.Current.Application.Lock();
             RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
+            var requisitionListFromRList = rList.requisitionList;
+            RequisitionComparer comparer = new RequisitionComparer();
+            requisitionListFromRList.Sort(comparer);
+
+            List<DisbursementList> newDisbursementList = new List<DisbursementList>();
+            DisbursementList dList = new DisbursementList();
+            int i = 0;
+            foreach (Requisition requisition in requisitionListFromRList)
+            {
+                if (i == 0)
+                {
+                    
+                    Department d = db.Departments.Find(requisition.DepartmentId);
+                    dList.Department = d;
+                    dList.CollectionPoint = d.CollectionPoint;
+                    dList.OrderedDate = requisition.OrderedDate;
+                    dList.RetrievalId = rList.retrievalId;
+                    dList.Status = "Pending Delivery";
+                    dList.DeliveryDate = DateTime.Today.AddDays(2); //TODO: Place logic for date later
+
+                    List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
+                    //TODO : Implementation logic here
+
+                    dList.DisbursementDetails = tempDisbursementDetailList;
+                    
+
+                    newDisbursementList.Add(dList);
+                    i++;
+                }
+                else if (requisition.DepartmentId.Equals(dList.DepartmentId))
+                {
+
+                }
+                else
+                {
+
+                    i++;
+                }
+            }
+
+
 
             foreach (RetrievalListItems retrievalListItem in rList.itemsToRetrieve)
             {
@@ -206,7 +247,8 @@ namespace Team7ADProjectMVC.Models
                             int requestedQty = (int)requisitionDetail.Quantity;
                             if (retrievalListItem.collectedQuantity >= requestedQty)
                             {
-
+                                
+                                //requisitionDetail.DisbursementDetails
                             }
                         }
                     }

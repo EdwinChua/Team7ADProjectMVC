@@ -114,7 +114,7 @@ DepartmentName VARCHAR(100),
 ContactName VARCHAR(100),
 PhNo VARCHAR(50),
 FaxNo VARCHAR(50),
-HeadName VARCHAR(100),
+HeadId INT,
 CollectionPointId INT,
 RepresentativeId INT,
 CONSTRAINT CollectionPointId FOREIGN KEY(CollectionPointId) REFERENCES CollectionPoints(CollectionPointId)
@@ -137,17 +137,17 @@ VALUES ('University Hospital','11:00 am',1)
 
 ----------------------------------------- Add Department ----------------------------------------
 INSERT INTO Department
-VALUES ('ENGL','English Department','Mrs Pamela Kow','874 2234','892 2234','Prof Ezra Pound',1,11)
+VALUES ('ENGL','English Department','Mrs Pamela Kow','874 2234','892 2234',5,1,11)
 INSERT INTO Department
-VALUES ('CPSC','Computer Science','Mr. Wee Kian Fatt','890 1235','892 1457','Dr. Soh Kian Wee',1,12)
+VALUES ('CPSC','Computer Science','Mr. Wee Kian Fatt','890 1235','892 1457',6,1,12)
 INSERT INTO Department
-VALUES ('COMM','Commerce Department','MrMohd. Azman','874 1284','892 1256','Dr. Chia Leow Bee',1,13)
+VALUES ('COMM','Commerce Department','MrMohd. Azman','874 1284','892 1256',7,1,13)
 INSERT INTO Department
-VALUES ('REGR','Registrar Department','Ms Helen Ho','890 1266','892 1465','Mrs Low Kway Boo',1,14)
+VALUES ('REGR','Registrar Department','Ms Helen Ho','890 1266','892 1465',8,1,14)
 INSERT INTO Department
-VALUES ('ZOOL','Zoology Department','Mr. Peter Tan Ah Meng','890 1266','892 1465','Prof Tan',1,15)
+VALUES ('ZOOL','Zoology Department','Mr. Peter Tan Ah Meng','890 1266','892 1465',9,1,15)
 INSERT INTO Department
-VALUES ('STO','STORE','Mr. Dino Thunder','890 6656','891 9912','Mr. Sander',1,1)
+VALUES ('STO','STORE','Mr. Dino Thunder','890 6656','891 9912',10,1,1)
 
 ----------------------------------------- Add Employee -----------------------------------------
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
@@ -163,24 +163,24 @@ VALUES ('Lao Lao','@logicuniversity',6,2,4,'44444444')
 INSERT INTO Employee
 VALUES ('Mrs Pamela Kow','@logicuniversity',1,3,5,'55555555') -- english 1 Head 3
 INSERT INTO Employee
-VALUES ('Mr. Wee Kian Fatt','@logicuniversity',2,3,6,'66666666')-- com science 2 
+VALUES ('Dr. Soh Kian Wee','@logicuniversity',2,3,6,'66666666')-- com science 2 
 INSERT INTO Employee
 VALUES ('MrMohd. Azman','@logicuniversity',3,3,7,'77777777') -- commerce 3
 INSERT INTO Employee
-VALUES ('Ms Helen Ho','@logicuniversity',4,3,8,'88888888') -- registrar 4
+VALUES ('Mrs Low Kway Boo','@logicuniversity',4,3,8,'88888888') -- registrar 4
 INSERT INTO Employee
 VALUES ('Mr. Peter Tan Ah Meng','@logicuniversity',5,3,9,'99999999') -- zoo 5
 INSERT INTO Employee
-VALUES ('Mr. Dino Thunder','@logicuniversity',6,3,10,'10101010') -- store 6
+VALUES ('Mr. Sander','@logicuniversity',6,3,10,'10101010') -- store 6
 
 INSERT INTO Employee
-VALUES ('Mr. Paw Taw Taw','@logicuniversity',1,4,11,'11111111') -- eng 1 rep 4
+VALUES ('Prof Ezra Pound','@logicuniversity',1,4,11,'11111111') -- eng 1 rep 4
 INSERT INTO Employee
 VALUES ('Mr. Ar Phyan Kwee','@logicuniversity',2,4,12,'12121212') -- com science 2
 INSERT INTO Employee
-VALUES ('Mr. Shout Arr','@logicuniversity',3,4,13,'13131313') -- commerce 3
+VALUES ('Dr. Chia Leow Bee','@logicuniversity',3,4,13,'13131313') -- commerce 3
 INSERT INTO Employee
-VALUES ('Mr. Ah Lay Lite','@logicuniversity',4,4,14,'14141414') -- registrar 4
+VALUES ('Prof Tan','@logicuniversity',4,4,14,'14141414') -- registrar 4
 INSERT INTO Employee
 VALUES ('Mr. Tay Shout Pann','@logicuniversity',5,4,15,'15151515') -- zoo 5
 
@@ -200,6 +200,8 @@ ADD CONSTRAINT eid FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
 
 ALTER TABLE Department
 ADD CONSTRAINT EmployeeId FOREIGN KEY(RepresentativeId) REFERENCES Employee(EmployeeId)
+ALTER TABLE Department
+ADD CONSTRAINT DepartmentHeadId FOREIGN KEY(HeadId) REFERENCES Employee(EmployeeId)
 
 -------------------------------------------------- Requisition ----------------------------------------
 CREATE TABLE Requisition

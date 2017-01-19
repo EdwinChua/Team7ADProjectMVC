@@ -43,7 +43,6 @@ namespace Team7ADProjectMVC
          return making.ToList();
         }
 
-
         public List<wcfRequisitionItem> getrequisitionitem(String deptId, String reqID)
         {
             List<wcfRequisitionItem> making = new List<wcfRequisitionItem>();
@@ -171,7 +170,6 @@ namespace Team7ADProjectMVC
             String s;
              foreach (DisbursementList d in collectionLocation)
             {
-               
                 s= d.CollectionPoint.PlaceName +" "+ d.CollectionPoint.CollectTime;
                sl.Add(s);
             }

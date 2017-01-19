@@ -295,6 +295,3 @@ public class wcfStockReorder
     [DataMember]
     public String S3Phone { get; set; }
 }
-
-
-

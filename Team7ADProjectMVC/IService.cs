@@ -48,6 +48,10 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfCDisbursementList/", ResponseFormat = WebMessageFormat.Json)]
         List<wcfDisbursementList> getDisbursementList();
 
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfCDisbursementListDetail/{disListID}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfCDisbursementListDetail> getDisbursementListDetails(string disListID);
+
     }
 }
 
@@ -221,6 +225,26 @@ public class wcfDisbursementList
 
     [DataMember]
     public String RepPhone { get; set; }
+}
+
+public class wcfCDisbursementListDetail
+{
+    string itemName;
+    string reqQty;
+    string disbQty;
+    string remarks;
+
+    [DataMember]
+    public String ItemName { get; set; }
+
+    [DataMember]
+    public String ReqQty { get; set; }
+
+    [DataMember]
+    public String DisbQty { get; set; }
+
+    [DataMember]
+    public String Remarks { get; set; }
 }
 
 

@@ -200,5 +200,25 @@ namespace Team7ADProjectMVC
             }
             return dList;
         }
+
+        public List<wcfCDisbursementListDetail> getDisbursementListDetails(String disListID)
+        {
+            List<wcfCDisbursementListDetail> dDetail = new List<wcfCDisbursementListDetail>();
+            int dId = Convert.ToInt32(disListID);
+            var disDetail = from dd in db.DisbursementDetails
+                            where dd.DisbursementListId == dId
+                            select dd;
+
+            foreach (DisbursementDetail d in disDetail)
+            {
+                wcfCDisbursementListDetail dd = new wcfCDisbursementListDetail();
+                dd.ItemName = d.RequisitionDetail.Inventory.Description;
+                dd.ReqQty = d.RequisitionDetail.Quantity.ToString();
+                dd.DisbQty = d.DeliveredQuantity.ToString();
+                dd.Remarks = d.Remark;
+                dDetail.Add(dd);
+            }
+            return dDetail;
+        }
     }
 }

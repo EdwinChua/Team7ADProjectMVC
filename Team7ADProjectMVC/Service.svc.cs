@@ -179,6 +179,27 @@ namespace Team7ADProjectMVC
             return sl;
         }
 
+        public List<wcfDisbursementList> getDisbursementList()
+        {
+            List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
+            var disburse = from d in db.DisbursementLists
+                           where d.Status != "Delivered"
+                           select d;
 
+            foreach (DisbursementList d in disburse)
+            {
+                wcfDisbursementList dl = new wcfDisbursementList();
+                dl.DeptName = d.Department.DepartmentName;
+                dl.CollectionPoint = d.CollectionPoint.PlaceName;
+                dl.DeliveryDate = d.DeliveryDate.ToString();
+                dl.DeliveryTime = d.CollectionPoint.CollectTime.ToString();
+                dl.RepName = d.Department.Employee.EmployeeName.ToString();
+                dl.RepPhone = d.Department.Employee.PhNo.ToString();
+                dl.DisListID = d.DisbursementListId.ToString();
+                dList.Add(dl);
+            }
+            return dList;
+
+        }
     }
 }

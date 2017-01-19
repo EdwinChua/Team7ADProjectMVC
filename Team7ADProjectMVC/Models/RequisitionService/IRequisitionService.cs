@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Team7ADProjectMVC.Models.ListAllRequisitionService
 {
-    public interface IIListAllRequisition
+    public interface IRequisitionService
     {
         List<Requisition> GetAllRequisition();
        

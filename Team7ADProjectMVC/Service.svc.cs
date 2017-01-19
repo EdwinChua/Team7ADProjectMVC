@@ -235,8 +235,13 @@ namespace Team7ADProjectMVC
                 inv.ActualQty = i.Quantity.ToString();
                 inv.ReorderLevel = i.ReorderLevel.ToString();
                 inv.ReorderQty = i.ReorderQuantity.ToString();
-                inv.Suppliers = i.Supplier.SupplierName;
-                inv.SPhone = i.Supplier.PhNo.ToString();
+                inv.Supplier1 = i.Supplier.SupplierName;
+                inv.S1Phone = i.Supplier.PhNo.ToString();
+                inv.Supplier2 = i.Supplier1.SupplierName;
+                inv.S2Phone = i.Supplier1.PhNo.ToString();
+                inv.Supplier3 = i.Supplier2.SupplierName;
+                inv.S3Phone = i.Supplier2.PhNo.ToString();
+
                 soList.Add(inv);
             }
             return soList;

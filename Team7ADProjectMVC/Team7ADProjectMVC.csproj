@@ -255,6 +255,8 @@
     <Compile Include="CollectionPoint.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DelegateRoleService\DelegateRoleService.cs" />
+    <Compile Include="Models\DelegateRoleService\IDelegateRoleService.cs" />
     <Compile Include="Models\ReportService\IReportService.cs" />
     <Compile Include="Models\ReportService\ReportService.cs" />
     <Compile Include="Models\RequisitionComparer.cs" />
@@ -443,7 +445,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\DelegateRoleService\" />
     <Folder Include="Views\StoreTest\" />
   </ItemGroup>
   <ItemGroup>

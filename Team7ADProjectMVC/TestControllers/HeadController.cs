@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
-using Team7ADProjectMVC.Models.DepartmentService;
+using Team7ADProjectMVC.Models.DelegateRoleService;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 
 
@@ -19,12 +19,12 @@ namespace Team7ADProjectMVC.TestControllers
     {
         private IRequisitionService listsvc;
 
-        private IDepartmentService depsvc;
+        private  IDelegateRoleService depsvc;
        private ProjectEntities db = new ProjectEntities();
         public HeadController()
         {
             listsvc =new RequisitionService();
-            depsvc = new DepartmentService();
+            depsvc = new DelegateRoleService();
         }
 
         // GET: Head

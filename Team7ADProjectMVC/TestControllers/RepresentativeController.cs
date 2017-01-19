@@ -45,7 +45,7 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.DisbursementList= disbursementSvc.GetDisbursementById(id);
             ViewBag.Cpname=disbursementSvc.findCpnameByDisburse(id);
             ViewBag.Cptime = disbursementSvc.findCptimeByDisburse(id);
-            
+            ViewBag.status = disbursementSvc.findDisbursenmentStatus(id);
             return View(disbursementSvc.GetdisbursementdetailById(id));
         }
         public ActionResult MakeRequisition()

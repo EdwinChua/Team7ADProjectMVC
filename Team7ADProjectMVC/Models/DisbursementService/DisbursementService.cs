@@ -127,5 +127,9 @@ namespace Team7ADProjectMVC.Models
         {
             return (db.DisbursementLists.Find(id).CollectionPoint.CollectTime.ToString());
         }
+        public string findDisbursenmentStatus(int? id)
+        {
+            return (db.DisbursementLists.Find(id).Status);
+        }
     }
 }

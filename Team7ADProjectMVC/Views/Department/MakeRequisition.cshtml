@@ -170,7 +170,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-default" >
+            <button id="click1" type="submit" class="btn btn-default" >
                 Submit
             </button>
         </div>
@@ -188,6 +188,7 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+@*<script src="jquery.json-2.4.min.js"></script>*@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
@@ -196,7 +197,7 @@
 
 ////////ok///////////////////////
     var da = $('#demo').val();
-
+    var TableData = new Array();
     var myObject = new Object();
     myObject.dname = "Science";
     myObject.ename = "joe";
@@ -233,30 +234,57 @@ $(document).ready(function(){
 
 
 
-      var myRows = [];
-      var $headers = $("th");
-      var $rows = $("tbody tr").each(function (index) {
-          $cells = $(this).find(".hihi");
-          myRows[index] = {};
-          $cells.each(function (cellIndex) {
+      ///////////////////////////
+      TableData = new Array();
 
+      $('#taskTable tr').each(function (row, tr) {
+          TableData[row] = {
+              "Item": $(tr).find('td:eq(0)').text()
+            , "Quantity": $(tr).find('td:eq(1)').children().val()
 
-              if ($(this).html() == "") {
-
-                  myRows[index][$($headers[cellIndex]).html()] = $(this).val();
-
-              } else { myRows[index][$($headers[cellIndex]).html()] = $(this).html(); }
-
-
-
-
-          });
+          }
       });
+      TableData.shift();
+      TableData = $.toJSON(TableData);
+      TableData = $.makeArray(TableData);
+      ///////////////////////////
+
+
+      //var myRows = [];
+      //var $headers = $("th");
+      //var $rows = $("tbody tr").each(function (index) {
+      //    $cells = $(this).find(".hihi");
+      //    myRows[index] = {};
+      //    $cells.each(function (cellIndex) {
+
+
+      //        if ($(this).html() == "" && $(this).html() != 'Delete') {
+
+      //            myRows[index][$($headers[cellIndex]).html()] = $(this).val();
+
+      //        } else { myRows[index][$($headers[cellIndex]).html()] = $(this).html(); }
 
 
 
-      myObjt.myrows = myRows;
-      console.log(myObjt);
+
+      //    });
+      //});
+
+      //items = [];
+
+      //myObjt.myrows = myRows;
+
+      //myRows.forEach(function (item,index) {
+
+
+      //    $(item).html();
+          
+
+
+      //});
+
+      //myObjt.myrows = myRows;
+      //console.log(myObjt);
 
       var option = $('#lecturerId').val();
       var qty = $('#QTY').val();
@@ -275,9 +303,9 @@ function addNewRow() {
     ///////////////////////////////////////
     var numRows = $('#taskTable tr').length;
     $('#taskTable').append('<tr id="myTableRow">\
-           <td class="hihi">' + option + '</td>\
+           <td class="hihi" value="' + option + '">' + option + '</td>\
            <td><input type="text" id="description-' + numRows + '" class="hihi" placeholder="Task Description" value="' + qty + '"/></td>\
-           <td><button type="button" id="' + numRows + '" class="removebutton hihi" title="Remove this row">Delete</button></td>\
+           <td><button type="button" id="' + numRows + '" class="removebutton" title="Remove this row">Delete</button></td>\
            </tr>\
    ');
 
@@ -317,44 +345,66 @@ $(document).on('click', 'button.removebutton', function () {
 
 
 
+    ///////////////////////////
+    var TableData = new Array();
 
-
-
-
-
-    var myRows = [];
-    var $headers = $("th");
-    var $rows = $("tbody tr").each(function (index) {
-        $cells = $(this).find(".hihi");
-        myRows[index] = {};
-        $cells.each(function (cellIndex) {
-
-
-            if ($(this).html() == "") {
-
-                myRows[index][$($headers[cellIndex]).html()] = $(this).val();
-
-            } else { myRows[index][$($headers[cellIndex]).html()] = $(this).html(); }
-
-
-
-
-
-
-
-
-
-        });
+    $('#taskTable tr').each(function (row, tr) {
+        TableData[row] = {
+            "Item": $(tr).find('td:eq(0)').text()
+            , "Quantity": $(tr).find('td:eq(1)').text()
+            
+        }
     });
+    TableData.shift();
+    TableData = $.toJSON(TableData);
+    TableData = $.makeArray(TableData);
+    ///////////////////////////
 
 
 
-    myObjt.myrows = myRows;
+
+    //var myRows = [];
+    //var $headers = $("th");
+    //var $rows = $("tbody tr").each(function (index) {
+    //    $cells = $(this).find(".hihi");
+    //    myRows[index] = {};
+    //    $cells.each(function (cellIndex) {
+
+
+    //        if ($(this).html() == "" && $(this).html() != 'Delete') {
+
+    //            myRows[index][$($headers[cellIndex]).html()] = $(this).val();
+
+    //        } else { myRows[index][$($headers[cellIndex]).html()] = $(this).html(); }
+
+
+
+
+
+
+
+
+
+    //    });
+    //});
+
+    //items = [];
+    
+    
+    //myObjt.myrows = myRows;
+   
+    //items.forEach(function (index) {
+
+
+
+
+    //});
+
     console.log(myObjt);
     return false;
 
 });
-$(document).ready(submitForm);
+@*$(document).ready(submitForm);
 
 function submitForm() {
     var roles = myObjt;
@@ -369,11 +419,42 @@ function submitForm() {
     failure: function (errMsg) {
         alert(errMsg);
     }
-});
-}
+})
+}*@
 
 
 </script>
 
 
 
+<script>
+    $(function () {
+        $('#click1').click(function (e) {
+
+            var jsonObject = {
+                "Name" : "Rami",
+                "Roles": [{ "RoleName": "Admin", "Description" : "Admin Role"}, { "RoleName": "User", "Description" : "User Role"}],
+                //"Items": [{ "Item": "clips", "Quantity": "1" }, { "Item": "pen", "Quantity": "2" }]
+                //"Items": myObjt.myrows
+                "Items": TableData
+            };
+
+            //var jsonObject = myObjt;
+
+            $.ajax({
+                url: "@Url.Action("AddUser")",
+                type: "POST",
+                data: JSON.stringify(jsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert(response.responseText);
+            },
+                success: function (response) {
+                    alert(response);
+                }
+            });
+
+        });
+    });
+</script>

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Team7ADProjectMVC.Models.ListAllRequisitionService
 {
-    public class IListAllRequisiton:IIListAllRequisition
+    public class RequisitionService : IRequisitionService
     {
         ProjectEntities db = new ProjectEntities();
       

@@ -10,6 +10,30 @@ using Team7ADProjectMVC;
 
 namespace Team7ADProjectMVC.TestControllers
 {
+
+    public class PersonModel
+    {
+        public List<RoleModel> Roles { get; set; }
+        public List<ItemModel> Items { get; set; }
+
+        public string Name { get; set; }
+    }
+    public class ItemModel
+    {
+        public string Item { get; set; }
+        public string Quantity { get; set; }
+    }
+
+    public class RoleModel
+    {
+        public string RoleName { get; set; }
+        public string Description { get; set; }
+    }
+    //public class QuantityModel
+    //{
+    //    public string Quantity { get; set; }
+    //}
+
     public class DepartmentController : Controller
     {
         private ProjectEntities db = new ProjectEntities();
@@ -104,26 +128,35 @@ namespace Team7ADProjectMVC.TestControllers
             return View(requisition);
         }
 
-        //public ActionResult AddUser(List<String> Roles)
-        //{
-
-
-        //    return null;
-        //}
         [HttpPost]
-        public ActionResult AddUser(List<String> Roles)
+        public ActionResult AddUser(PersonModel model)
         {
-            this.Roles = Roles;
-            foreach (string i in Roles)
+        //    model.Items[0];
+            if (model != null)
             {
-
-                Console.WriteLine(i.ToString());
-
+                return Json("Success");
+            }
+            else
+            {
+                return Json("An Error Has occoured");
             }
 
-            return null;
-
         }
+
+        //[HttpPost]
+        //public ActionResult AddUser(List<String> rs)
+        //{
+        //    this.Roles = rs;
+        //    foreach (string i in Roles)
+        //    {
+
+        //        Console.WriteLine(i.ToString());
+
+        //    }
+
+        //    return null;
+
+        //}
 
         public ActionResult ViewRequisitionDetails(int? id)
         {

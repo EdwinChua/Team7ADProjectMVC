@@ -132,8 +132,10 @@ namespace Team7ADProjectMVC.Models
         {
             System.Web.HttpContext.Current.Application.Lock();
             RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
-
-            rList.requisitionList = GetOutStandingRequisitions();
+            if (rList.requisitionList == null)
+            {
+                rList.requisitionList = GetOutStandingRequisitions();
+            }
 
             System.Web.HttpContext.Current.Application["RetrievalList"] = rList;
             System.Web.HttpContext.Current.Application.UnLock();

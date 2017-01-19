@@ -11,7 +11,8 @@ namespace Team7ADProjectMVC
 {
     using System;
     using System.Collections.Generic;
-    
+    using TestControllers;
+
     public partial class RequisitionDetail
     {
         public int RequisitionDetailId { get; set; }
@@ -23,5 +24,10 @@ namespace Team7ADProjectMVC
     
         public virtual Inventory Inventory { get; set; }
         public virtual Requisition Requisition { get; set; }
+
+        public static implicit operator RequisitionDetail(DepartmentController.ItemModel v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

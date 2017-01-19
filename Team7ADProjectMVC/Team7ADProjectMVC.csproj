@@ -255,6 +255,8 @@
     <Compile Include="CollectionPoint.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReportService\IReportService.cs" />
+    <Compile Include="Models\ReportService\ReportService.cs" />
     <Compile Include="Models\RequisitionComparer.cs" />
     <Compile Include="Models\RetrievalList.cs" />
     <Compile Include="DataSet1.Designer.cs">

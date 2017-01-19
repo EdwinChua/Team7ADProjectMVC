@@ -9,6 +9,7 @@
 <h3>Collection Point: @ViewBag.Cpname (@ViewBag.Cptime)</h3>
 
 
+
 <table class="table">
     <tr>
         <th>
@@ -40,25 +41,32 @@
 
 
 
+
         </tr>
     }
 
 </table>
 <hr />
-<h3></h3>
+
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="form-group">
-        <div class="col-md-offset-4 col-md-8">
-            <div class="form-actions no-color">
-                <input type="submit" value="Conform" class="btn btn-default" />
 
+    <div class="form-group">
+        @if (Model.DisbursementList.Status != "Completed")
+        {
+            <div class="col-md-offset-4 col-md-8">
+                <div class="form-actions no-color">
+                    <input type="submit" value="Conform" class="btn btn-default" />
+
+                </div>
             </div>
-        </div>
-        
-    </div>
+        }
+
+    </div>}
 }
-<br/>
-<br/>
-@Html.ActionLink("Back to List", "Index")
+<br />
+<br />
+<h3>@Html.ActionLink("Back to List", null, null, null, new { href = Request.UrlReferrer })</h3>
+

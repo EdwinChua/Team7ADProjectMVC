@@ -14,7 +14,6 @@ namespace Team7ADProjectMVC
     
     public partial class Department
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Department()
         {
             this.Employees = new HashSet<Employee>();
@@ -33,9 +32,7 @@ namespace Team7ADProjectMVC
     
         public virtual CollectionPoint CollectionPoint { get; set; }
         public virtual Employee Employee { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DisbursementList> DisbursementLists { get; set; }
         public virtual Employee Employee1 { get; set; }
     }

@@ -14,7 +14,6 @@ namespace Team7ADProjectMVC
     
     public partial class Retrieval
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Retrieval()
         {
             this.DisbursementLists = new HashSet<DisbursementList>();
@@ -25,10 +24,8 @@ namespace Team7ADProjectMVC
         public Nullable<int> EmployeeId { get; set; }
         public Nullable<System.DateTime> RetrievalDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DisbursementList> DisbursementLists { get; set; }
         public virtual Employee Employee { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Requisition> Requisitions { get; set; }
     }
 }

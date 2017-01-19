@@ -14,7 +14,6 @@ namespace Team7ADProjectMVC
     
     public partial class Measurement
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Measurement()
         {
             this.Inventories = new HashSet<Inventory>();
@@ -23,7 +22,6 @@ namespace Team7ADProjectMVC
         public int MeasurementId { get; set; }
         public string UnitOfMeasurement { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inventory> Inventories { get; set; }
     }
 }

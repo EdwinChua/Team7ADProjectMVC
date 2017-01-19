@@ -14,11 +14,11 @@ namespace Team7ADProjectMVC
     
     public partial class Inventory
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Inventory()
         {
             this.AdjustmentDetails = new HashSet<AdjustmentDetail>();
             this.DeliveryDetails = new HashSet<DeliveryDetail>();
+            this.DisbursementDetails = new HashSet<DisbursementDetail>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
             this.RequisitionDetails = new HashSet<RequisitionDetail>();
         }
@@ -39,15 +39,12 @@ namespace Team7ADProjectMVC
         public Nullable<int> SupplierId3 { get; set; }
         public Nullable<decimal> Price3 { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdjustmentDetail> AdjustmentDetails { get; set; }
         public virtual Category Category { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; }
+        public virtual ICollection<DisbursementDetail> DisbursementDetails { get; set; }
         public virtual Measurement Measurement { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequisitionDetail> RequisitionDetails { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual Supplier Supplier1 { get; set; }

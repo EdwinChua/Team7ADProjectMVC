@@ -21,6 +21,7 @@ namespace Team7ADProjectMVC
         public Nullable<int> DeliveredQuantity { get; set; }
         public string Remark { get; set; }
     
+        public virtual Inventory Inventory { get; set; }
         public virtual DisbursementList DisbursementList { get; set; }
     }
 }

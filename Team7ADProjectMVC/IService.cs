@@ -53,8 +53,8 @@ namespace Team7ADProjectMVC
         List<wcfDisbursementListDetail> getDisbursementListDetails(string disListID);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfStockReorder", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfStockReorder> getStockReorder;
+        [WebGet(UriTemplate = "/wcfStockReorder/", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfStockReorder> getStockReorder();
 
     }
 }

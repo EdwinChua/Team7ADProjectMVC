@@ -225,7 +225,7 @@ namespace Team7ADProjectMVC
         {
             List<wcfStockReorder> soList = new List<wcfStockReorder>();
             var reOrders = from so in db.Inventories
-                           where so.Quantity <= so.ReorderQuantity
+                           where so.Quantity <= so.ReorderLevel
                            select so;
 
             foreach (Inventory i in reOrders)

@@ -422,7 +422,6 @@
     <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewDisbursement.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewRequisitions.cshtml" />
-    <Content Include="Views\Rpt\RptOptions.cshtml" />
     <Content Include="Views\Department\Representative\Details.cshtml" />
     <Content Include="Views\Department\Representative\Viewdisbursements.cshtml" />
     <Content Include="Views\DisbursementDetails\Create.cshtml" />
@@ -431,6 +430,9 @@
     <Content Include="Views\DisbursementDetails\Edit.cshtml" />
     <Content Include="Views\DisbursementDetails\Index.cshtml" />
     <Content Include="Views\Department\Representative\ViewDisbursementDetail.cshtml" />
+    <Content Include="Views\Rpt\ItemDeptRpt.cshtml" />
+    <Content Include="Views\Rpt\ItemSupplierRpt.cshtml" />
+    <Content Include="Views\Rpt\ReportOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

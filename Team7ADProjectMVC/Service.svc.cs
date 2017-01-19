@@ -103,15 +103,15 @@ namespace Team7ADProjectMVC
             var dDetail = from r in db.DisbursementDetails
                           where r.DisbursementList.DepartmentId == did
                           && r.DisbursementListId== disbursementListID
-                          orderby r.Inventory.Description ascending
+                          orderby r. ascending
                           select r;
 
             foreach (DisbursementDetail dd in dDetail)
             {
                 wcfTodayCollectionDetail cd = new wcfTodayCollectionDetail();
-                cd.RequestedQty =dd.RequisitionDetail.Quantity.ToString();
+                cd.RequestedQty = dd.PreparedQuantity.ToString();
                 cd.DisbursedQty = dd.DeliveredQuantity.ToString();
-                cd.ItemDescription = dd.RequisitionDetail.Inventory.Description;
+                cd.ItemDescription = dd.
                 collectionDetail.Add(cd);
             }
             return collectionDetail.ToList();

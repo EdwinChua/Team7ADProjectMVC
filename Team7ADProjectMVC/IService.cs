@@ -45,12 +45,16 @@ namespace Team7ADProjectMVC
         List<String> getCollectionPoint(string deptid);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfCDisbursementList/", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/wcfDisbursementList/", ResponseFormat = WebMessageFormat.Json)]
         List<wcfDisbursementList> getDisbursementList();
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfCDisbursementListDetail/{disListID}", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfCDisbursementListDetail> getDisbursementListDetails(string disListID);
+        [WebGet(UriTemplate = "/wcfDisbursementListDetail/{disListID}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfDisbursementListDetail> getDisbursementListDetails(string disListID);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfStockReorder", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfStockReorder> getStockReorder;
 
     }
 }
@@ -227,7 +231,7 @@ public class wcfDisbursementList
     public String RepPhone { get; set; }
 }
 
-public class wcfCDisbursementListDetail
+public class wcfDisbursementListDetail
 {
     string itemName;
     string reqQty;
@@ -246,5 +250,51 @@ public class wcfCDisbursementListDetail
     [DataMember]
     public String Remarks { get; set; }
 }
+
+public class wcfStockReorder
+{
+    string itemName;
+    string actualQty;
+    string reorderLevel;
+    string reorderQty;
+    string suppliers;
+    string sPhone;
+    //string supplier2;
+    //string s2Phone;
+    //string supplier3;
+    //string s3Phone;
+
+
+    [DataMember]
+    public String ItemName { get; set; }
+
+    [DataMember]
+    public String ActualQty { get; set; }
+
+    [DataMember]
+    public String ReorderLevel { get; set; }
+
+    [DataMember]
+    public String ReorderQty { get; set; }
+
+    [DataMember]
+    public String Suppliers { get; set; }
+
+    [DataMember]
+    public String SPhone { get; set; }
+
+    //[DataMember]
+    //public String Supplier2 { get; set; }
+
+    //[DataMember]
+    //public String S2Phone { get; set; }
+
+    //[DataMember]
+    //public String Supplier3 { get; set; }
+
+    //[DataMember]
+    //public String S3Phone { get; set; }
+}
+
 
 

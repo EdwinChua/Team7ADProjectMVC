@@ -201,9 +201,9 @@ namespace Team7ADProjectMVC
             return dList;
         }
 
-        public List<wcfCDisbursementListDetail> getDisbursementListDetails(String disListID)
+        public List<wcfDisbursementListDetail> getDisbursementListDetails(String disListID)
         {
-            List<wcfCDisbursementListDetail> dDetail = new List<wcfCDisbursementListDetail>();
+            List<wcfDisbursementListDetail> dDetail = new List<wcfDisbursementListDetail>();
             int dId = Convert.ToInt32(disListID);
             var disDetail = from dd in db.DisbursementDetails
                             where dd.DisbursementListId == dId
@@ -211,7 +211,7 @@ namespace Team7ADProjectMVC
 
             foreach (DisbursementDetail d in disDetail)
             {
-                wcfCDisbursementListDetail dd = new wcfCDisbursementListDetail();
+                wcfDisbursementListDetail dd = new wcfDisbursementListDetail();
                 dd.ItemName = d.RequisitionDetail.Inventory.Description;
                 dd.ReqQty = d.RequisitionDetail.Quantity.ToString();
                 dd.DisbQty = d.DeliveredQuantity.ToString();
@@ -219,6 +219,27 @@ namespace Team7ADProjectMVC
                 dDetail.Add(dd);
             }
             return dDetail;
+        }
+
+        public List<wcfStockReorder> getStockReorder()
+        {
+            List<wcfStockReorder> soList = new List<wcfStockReorder>();
+            var reOrders = from so in db.Inventories
+                           where so.Quantity <= so.ReorderQuantity
+                           select so;
+
+            foreach (Inventory i in reOrders)
+            {
+                wcfStockReorder inv = new wcfStockReorder();
+                inv.ItemName = i.Description;
+                inv.ActualQty = i.Quantity.ToString();
+                inv.ReorderLevel = i.ReorderLevel.ToString();
+                inv.ReorderQty = i.ReorderQuantity.ToString();
+                inv.Suppliers = i.Supplier.SupplierName;
+                inv.SPhone = i.Supplier.PhNo.ToString();
+                soList.Add(inv);
+            }
+            return soList;
         }
     }
 }

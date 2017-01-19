@@ -28,7 +28,8 @@ namespace Team7ADProjectMVC.Models.DepartmentService
 
         public List<Requisition> ListAllRequisition()
         {
-            throw new NotImplementedException();
+           
+             return (db.Requisitions.ToList());
         }
 
         public List<Department> ListAllDepartments()

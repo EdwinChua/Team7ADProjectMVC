@@ -249,22 +249,28 @@ namespace Team7ADProjectMVC
         }
 
 
-        public List<string> retrivallist()
+        public List<wcfRetrivalList> getRetrivalList()
         {
-            List<String> sl = new List<string>();
-            RetrievalList retrivallist = new RetrievalList();
-
+            List<wcfRetrivalList> retrialList = new List<wcfRetrivalList>();
+            
+            RetrievalList reList = new RetrievalList();
             invService.PopulateRetrievalList();
             invService.PopulateRetrievalListItems();
-          retrivallist=  invService.GetRetrievalList();
-          int? rid =retrivallist.retrievalId;
-          List<RetrievalListItems> itemsToR = retrivallist.itemsToRetrieve;
-          List<Requisition> reqList = retrivallist.requisitionList;
+            reList = invService.GetRetrievalList();
+            int? rid =reList.retrievalId;
+            List<RetrievalListItems> itemsToR = reList.itemsToRetrieve;
 
-          sl.Add(rid.ToString());
-
-
-            return sl;
+            foreach (RetrievalListItems r in itemsToR)
+            {
+                wcfRetrivalList rl = new wcfRetrivalList();
+                rl.ItemName = r.description;
+                rl.RequestedQty = r.requiredQuantity.ToString();
+                rl.RetrievedQty = r.collectedQuantity.ToString();
+                rl.Status = r.collectionStatus.ToString();
+                retrialList.Add(rl);
+            }
+            //List<Requisition> reqList = retrivallist.requisitionList;
+            return retrialList;
         }
     }
 }

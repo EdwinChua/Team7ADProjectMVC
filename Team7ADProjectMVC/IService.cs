@@ -302,11 +302,15 @@ public class wcfStockReorder
 
 public class wcfRetrivalList
 {
+    string itemNo;
     string itemName;
     string requestedQty;
     string retrievedQty;
     string status;
-    
+
+    [DataMember]
+    public String ItemNo { get; set; }
+
     [DataMember]
     public String ItemName { get; set; }
 

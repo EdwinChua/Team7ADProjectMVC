@@ -263,6 +263,7 @@ namespace Team7ADProjectMVC
             foreach (RetrievalListItems r in itemsToR)
             {
                 wcfRetrivalList rl = new wcfRetrivalList();
+                rl.ItemNo = r.itemNo;
                 rl.ItemName = r.description;
                 rl.RequestedQty = r.requiredQuantity.ToString();
                 rl.RetrievedQty = r.collectedQuantity.ToString();

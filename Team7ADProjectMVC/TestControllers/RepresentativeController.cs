@@ -19,26 +19,17 @@ namespace Team7ADProjectMVC.TestControllers
             disbursementSvc = new DisbursementService();
         }
         // GET: Representative
-        public ActionResult Viewdisbursements(int? id)
+        public ActionResult Viewdisbursements()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
             
-            return View( disbursementSvc.GetdisbursementsByDept(id));
+            return View( disbursementSvc.GetAllDisbursements());
 
 
         }
-        public ActionResult Searchdisbursements(String status)
+        public ActionResult Searchdisbursements(string date,String status)
         {
-            
-            return View("Viewdisbursements", disbursementSvc.GetdisbursementsByStatus(status));
+
+            return View("Viewdisbursements", disbursementSvc.FindDisbursementsBySearch(date,status));
         }
         public ActionResult ViewDisbursementDetail(int? id)
         {
@@ -115,6 +106,7 @@ namespace Team7ADProjectMVC.TestControllers
             return View(department);
 
         }
+
 
     }
 }

@@ -6,6 +6,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
+using Team7ADProjectMVC.Models.DepartmentService;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 
 
@@ -15,14 +16,14 @@ namespace Team7ADProjectMVC.TestControllers
     
     public class HeadController : Controller
     {
-        private IIListAllRequisition listsvc;
-      
+        private IRequisitionService listsvc;
 
+        private IDepartmentService depsvc;
        private ProjectEntities db = new ProjectEntities();
         public HeadController()
         {
-            listsvc =new IListAllRequisiton();
-       
+            listsvc =new RequisitionService();
+            depsvc = new DepartmentService();
         }
 
         // GET: Head

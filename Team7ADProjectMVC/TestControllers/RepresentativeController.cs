@@ -40,18 +40,22 @@ namespace Team7ADProjectMVC.TestControllers
             
             return View("Viewdisbursements", disbursementSvc.GetdisbursementsByStatus(status));
         }
-        public ActionResult Details(int? id)
+        public ActionResult ViewDisbursementDetail(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DisbursementList disbursementList = db.DisbursementLists.Find(id);
-            if (disbursementList == null)
+            DisbursementList dl = disbursementSvc.GetDisbursementById(id);
+            if (dl == null)
             {
                 return HttpNotFound();
             }
-            return View(disbursementList);
+            ViewBag.DisbursementList= disbursementSvc.GetDisbursementById(id);
+            ViewBag.Cpname=disbursementSvc.findCpnameByDisburse(id);
+            ViewBag.Cptime = disbursementSvc.findCptimeByDisburse(id);
+            
+            return View(disbursementSvc.GetdisbursementdetailById(id));
         }
         public ActionResult MakeRequisition()
         {

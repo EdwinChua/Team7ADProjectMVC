@@ -113,7 +113,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Site.css" />
-    <Content Include="database.sql" />
+    <Content Include="DatabaseTableQueries.sql" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Model1.Context.tt">
@@ -255,6 +255,8 @@
     <Compile Include="CollectionPoint.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReportService\IReportService.cs" />
+    <Compile Include="Models\ReportService\ReportService.cs" />
     <Compile Include="Models\RequisitionComparer.cs" />
     <Compile Include="Models\RetrievalList.cs" />
     <Compile Include="DataSet1.Designer.cs">
@@ -317,8 +319,8 @@
     <Compile Include="Models\InventoryAdjustmentService\InventoryAdjustmentService.cs" />
     <Compile Include="Models\InventoryService\IInventoryService.cs" />
     <Compile Include="Models\InventoryService\InventoryService.cs" />
-    <Compile Include="Models\ListAllRequisitionService\IIListAllRequisition.cs" />
-    <Compile Include="Models\ListAllRequisitionService\IListAllRequisiton.cs" />
+    <Compile Include="Models\RequisitionService\IRequisitionService.cs" />
+    <Compile Include="Models\RequisitionService\RequisitionService.cs" />
     <Compile Include="Permission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -363,6 +365,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="TestControllers\DepartmentController.cs" />
+    <Compile Include="TestControllers\DisbursementDetailsController.cs" />
     <Compile Include="TestControllers\EmployeesController.cs" />
     <Compile Include="TestControllers\HeadController.cs" />
     <Compile Include="TestControllers\InventoriesController.cs" />
@@ -386,11 +389,6 @@
     <Content Include="Views\TestViews\Inventories\Edit.cshtml" />
     <Content Include="Views\TestViews\Inventories\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\TestViews\Employees\Create.cshtml" />
-    <Content Include="Views\TestViews\Employees\Delete.cshtml" />
-    <Content Include="Views\TestViews\Employees\Details.cshtml" />
-    <Content Include="Views\TestViews\Employees\Edit.cshtml" />
-    <Content Include="Views\TestViews\Employees\Index.cshtml" />
     <Content Include="Views\Department\Head\Approve.cshtml" />
     <Content Include="Views\Department\Head\DelegateRole.cshtml" />
     <Content Include="Views\Department\Head\ListAllEmployees.cshtml" />
@@ -424,7 +422,17 @@
     <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewDisbursement.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewRequisitions.cshtml" />
-    <Content Include="Views\Rpt\RptOptions.cshtml" />
+    <Content Include="Views\Department\Representative\Details.cshtml" />
+    <Content Include="Views\Department\Representative\Viewdisbursements.cshtml" />
+    <Content Include="Views\DisbursementDetails\Create.cshtml" />
+    <Content Include="Views\DisbursementDetails\Delete.cshtml" />
+    <Content Include="Views\DisbursementDetails\Details.cshtml" />
+    <Content Include="Views\DisbursementDetails\Edit.cshtml" />
+    <Content Include="Views\DisbursementDetails\Index.cshtml" />
+    <Content Include="Views\Department\Representative\ViewDisbursementDetail.cshtml" />
+    <Content Include="Views\Rpt\ItemDeptRpt.cshtml" />
+    <Content Include="Views\Rpt\ItemSupplierRpt.cshtml" />
+    <Content Include="Views\Rpt\ReportOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

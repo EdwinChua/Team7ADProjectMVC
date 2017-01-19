@@ -240,8 +240,8 @@
           <Property Name="Address" Type="varchar" MaxLength="250" />
           <Property Name="GstRegistrationNo" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“Project.dbo.StockCard”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="StockCard">
           <Key>
             <PropertyRef Name="Date" />

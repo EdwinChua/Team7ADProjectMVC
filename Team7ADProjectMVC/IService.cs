@@ -46,7 +46,7 @@ namespace Team7ADProjectMVC
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfCDisbursementList/", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfCDisbursementList> getDisbursementList();
+        List<wcfDisbursementList> getDisbursementList();
 
     }
 }

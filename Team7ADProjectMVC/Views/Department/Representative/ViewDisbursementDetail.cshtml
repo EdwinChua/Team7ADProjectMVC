@@ -13,10 +13,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.RequisitionDetail.ItemNo)
+            @Html.DisplayNameFor(model => model.ItemNo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RequisitionDetail.Inventory.Description)
+            @Html.DisplayNameFor(model => model.Inventory.Description)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DeliveredQuantity)
@@ -30,10 +30,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.RequisitionDetail.ItemNo)
+                @Html.DisplayFor(modelItem => item.ItemNo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RequisitionDetail.Inventory.Description)
+                @Html.DisplayFor(modelItem => item.Inventory.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DeliveredQuantity)
@@ -54,7 +54,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        @if (Model.DisbursementList.Status != "Completed")
+        @if (@ViewBag.status != "Completed")
         {
             <div class="col-md-offset-4 col-md-8">
                 <div class="form-actions no-color">
@@ -65,8 +65,8 @@
         }
 
     </div>}
-}
+
 <br />
 <br />
-<h3>@Html.ActionLink("Back to List", null, null, null, new { href = Request.UrlReferrer })</h3>
+<h4>@Html.ActionLink("Back to List", null, null, null, new { href = Request.UrlReferrer })</h4>
 

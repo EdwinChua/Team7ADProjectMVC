@@ -6,34 +6,24 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Team7ADProjectMVC.Models.ReportService;
 
 namespace Team7ADProjectMVC.TestControllers
 {
     public class RptController : Controller
     {
         private ProjectEntities db = new ProjectEntities();
+        private IReportService rptSvc = new ReportService();
         // GET: Rpt
         public ActionResult Index()
         {
             
-            List<String> mths = new List<String>();
-            for(int i = 1; i < 13; i++)
-            {
-                mths.Add(i.ToString());
-            }
-            List<String> yrs = new List<String>();
-            int s = DateTime.Now.Year;
-            for (int i = s; i > s - 8; i--)
-            {
-                yrs.Add(i.ToString());
-            }
-
             ViewBag.Departments = db.Departments.ToList();
             ViewBag.Categories = db.Categories.ToList();
-            ViewBag.Months = mths;
-            ViewBag.Years = yrs;
+            ViewBag.Months = rptSvc.GetMonthValues();
+            ViewBag.Years = rptSvc.GetYearValues();
 
-            return View("RptOptions");
+            return View("ItemDeptRpt");
         }
 
         [HttpPost]
@@ -94,6 +84,16 @@ namespace Team7ADProjectMVC.TestControllers
             Stream s = cr.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             return File(s, "application/pdf");
 
+        }
+
+        // GET: Rpt/SupplierItem
+        public ActionResult ItemSupplier()
+        {
+            ViewBag.Categories = db.Categories.ToList();
+            ViewBag.Months = rptSvc.GetMonthValues();
+            ViewBag.Years = rptSvc.GetYearValues();
+
+            return View("ItemSupplierRpt");
         }
 
         public ActionResult test()

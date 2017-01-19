@@ -146,7 +146,7 @@ namespace Team7ADProjectMVC
             var aList = from a in db.RequisitionDetails
                         where a.RequisitionId == rId
                         && a.Requisition.DepartmentId == dId
-                        && a.Requisition.RequisitionStatus == "Outstanding"
+                        && a.Requisition.RequisitionStatus != "Approved"
                         && a.DeliveryStatus != "Delivered" 
                         orderby a.Inventory.Description ascending
                         select a;
@@ -267,7 +267,16 @@ namespace Team7ADProjectMVC
                 rl.ItemName = r.description;
                 rl.RequestedQty = r.requiredQuantity.ToString();
                 rl.RetrievedQty = r.collectedQuantity.ToString();
-                rl.Status = r.collectionStatus.ToString();
+                String st = "";
+                if(r.collectionStatus.ToString().Equals("False"))
+                {
+                    st = "Not Collected";
+                }
+                else
+                {
+                    st = "Collected";
+                }
+                rl.Status = st;
                 retrialList.Add(rl);
             }
             //List<Requisition> reqList = retrivallist.requisitionList;

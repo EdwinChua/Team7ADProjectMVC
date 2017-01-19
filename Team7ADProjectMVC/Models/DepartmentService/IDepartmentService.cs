@@ -9,5 +9,9 @@ namespace Team7ADProjectMVC.Models.DepartmentService
     interface IDepartmentService
     {
         List<Department> ListAllDepartments();
+
+        List<Requisition> ListAllDepartment();
+        Requisition FindRequisitionById(String id);
+        List<Requisition> GetRequisitionByStatus(string status);
     }
 }

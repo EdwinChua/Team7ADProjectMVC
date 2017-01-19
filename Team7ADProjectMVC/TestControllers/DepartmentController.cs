@@ -46,6 +46,16 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.Cat = requisitions;
             return View();
         }
+        public ActionResult Search(int id)
+        {
+            //var inventories = inventorySvc.GetInventoryListByCategory(id);
+            //var categories = inventorySvc.GetAllCategories();
+            //ViewBag.Cat = categories.ToList();
+            var requisitions = db.Requisitions.ToList();
+
+            ViewBag.Cat = requisitions;
+            return View("Index");
+        }
 
         // GET: TESTRequisitions/Create
         public ActionResult MakeRequisition()

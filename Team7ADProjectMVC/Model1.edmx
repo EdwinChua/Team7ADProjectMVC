@@ -95,6 +95,7 @@
           <Property Name="DisbursementDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DisbursementListId" Type="int" />
           <Property Name="RequisitionDetailId" Type="int" />
+          <Property Name="ItemNo" Type="varchar" MaxLength="50" />
           <Property Name="PreparedQuantity" Type="int" />
           <Property Name="DeliveredQuantity" Type="int" />
           <Property Name="Remark" Type="varchar" MaxLength="250" />
@@ -240,8 +241,8 @@
           <Property Name="Address" Type="varchar" MaxLength="250" />
           <Property Name="GstRegistrationNo" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“Project.dbo.StockCard”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="StockCard">
           <Key>
             <PropertyRef Name="Date" />
@@ -408,6 +409,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="DisbursementDetail" Type="Self.DisbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="DisbursementDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="MeasurementId">
           <End Role="Measurement" Type="Self.Measurement" Multiplicity="0..1" />
           <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
@@ -489,18 +502,6 @@
             </Principal>
             <Dependent Role="PurchaseOrder">
               <PropertyRef Name="ReceivedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="RequisitionDetailId">
-          <End Role="RequisitionDetail" Type="Self.RequisitionDetail" Multiplicity="0..1" />
-          <End Role="DisbursementDetail" Type="Self.DisbursementDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RequisitionDetail">
-              <PropertyRef Name="RequisitionDetailId" />
-            </Principal>
-            <Dependent Role="DisbursementDetail">
-              <PropertyRef Name="RequisitionDetailId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -695,6 +696,10 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Department" EntitySet="Department" />
           </AssociationSet>
+          <AssociationSet Name="ItemNo" Association="Self.ItemNo">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="DisbursementDetail" EntitySet="DisbursementDetail" />
+          </AssociationSet>
           <AssociationSet Name="MeasurementId" Association="Self.MeasurementId">
             <End Role="Measurement" EntitySet="Measurement" />
             <End Role="Inventory" EntitySet="Inventory" />
@@ -722,10 +727,6 @@
           <AssociationSet Name="PurchaseOrderReceivedBy" Association="Self.PurchaseOrderReceivedBy">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
-          </AssociationSet>
-          <AssociationSet Name="RequisitionDetailId" Association="Self.RequisitionDetailId">
-            <End Role="RequisitionDetail" EntitySet="RequisitionDetail" />
-            <End Role="DisbursementDetail" EntitySet="DisbursementDetail" />
           </AssociationSet>
           <AssociationSet Name="RequisitionDetailItemNo" Association="Self.RequisitionDetailItemNo">
             <End Role="Inventory" EntitySet="Inventory" />
@@ -877,6 +878,8 @@
           <Property Name="Remark" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="PreparedQuantity" Type="Int32" />
           <Property Name="DeliveredQuantity" Type="Int32" />
+          <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inventory" Relationship="ProjectModel.ItemNo" FromRole="DisbursementDetail" ToRole="Inventory" />
         </EntityType>
         <EntityType Name="DisbursementList">
           <Key>
@@ -946,6 +949,7 @@
           <NavigationProperty Name="Supplier1" Relationship="Self.SupplierId2" FromRole="Inventory" ToRole="Supplier" />
           <NavigationProperty Name="Supplier2" Relationship="Self.SupplierId3" FromRole="Inventory" ToRole="Supplier" />
           <Property Name="BinNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DisbursementDetails" Relationship="ProjectModel.ItemNo" FromRole="Inventory" ToRole="DisbursementDetail" />
         </EntityType>
         <EntityType Name="Measurement">
           <Key>
@@ -1554,6 +1558,10 @@
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
           </AssociationSet>
           <EntitySet Name="StockCards" EntityType="ProjectModel.StockCard" />
+          <AssociationSet Name="ItemNo" Association="ProjectModel.ItemNo">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="DisbursementDetail" EntitySet="DisbursementDetails" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="PurchaseOrderReceivedBy">
           <End Type="ProjectModel.Employee" Role="Employee" Multiplicity="0..1" />
@@ -1577,6 +1585,18 @@
           <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="ItemNo">
+          <End Type="ProjectModel.Inventory" Role="Inventory" Multiplicity="0..1" />
+          <End Type="ProjectModel.DisbursementDetail" Role="DisbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="DisbursementDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1677,6 +1697,7 @@
           <EntitySetMapping Name="DisbursementDetails">
             <EntityTypeMapping TypeName="ProjectModel.DisbursementDetail">
               <MappingFragment StoreEntitySet="DisbursementDetail">
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
                 <ScalarProperty Name="DeliveredQuantity" ColumnName="DeliveredQuantity" />
                 <ScalarProperty Name="PreparedQuantity" ColumnName="PreparedQuantity" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />

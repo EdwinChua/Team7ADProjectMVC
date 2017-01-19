@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Team7ADProjectMVC.Models.DepartmentService
 {
-    interface IDepartmentService
+    interface IDelegateRoleService
     {
         List<Department> ListAllDepartments();
-    }
+      }
 }

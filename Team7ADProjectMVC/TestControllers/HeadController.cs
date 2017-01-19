@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
+using Team7ADProjectMVC.Models.DelegateRoleService;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 
 
@@ -15,14 +17,14 @@ namespace Team7ADProjectMVC.TestControllers
     
     public class HeadController : Controller
     {
-        private IIListAllRequisition listsvc;
-      
+        private IRequisitionService listsvc;
 
+        private  IDelegateRoleService depsvc;
        private ProjectEntities db = new ProjectEntities();
         public HeadController()
         {
-            listsvc =new IListAllRequisiton();
-       
+            listsvc =new RequisitionService();
+            depsvc = new DelegateRoleService();
         }
 
         // GET: Head
@@ -100,5 +102,71 @@ namespace Team7ADProjectMVC.TestControllers
         //    listsvc.UpdateRejectStatus(r);
         //    return RedirectToAction("ListAllEmployees");
         //}
+        //----------------------------Delegation Part----------------------------------start
+        public ActionResult show()
+        {
+            //var Employeelist = depsvc.GetAllEmployee();
+            ViewBag.empList = depsvc.GetAllEmployeebyDepId(4);
+            //Find employee with delegated role
+            //ViewBag.DelegatedEmployee
+            return View("DelegateRole");
+
+        }
+        public ActionResult Manage(int? empId, string status,string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl)
+
+        {
+
+            String []  s = startDate.Split('/');
+            DateTime sdate = new DateTime(Int32.Parse(s[2]), Int32.Parse(s[1]), Int32.Parse(s[0]));
+            String[] e = endDate.Split('/');
+            DateTime edate = new DateTime(Int32.Parse(e[2]), Int32.Parse(e[1]), Int32.Parse(e[0]));
+
+
+            Employee emp = depsvc.FindById(empId);
+            if (status.Equals("Delegate"))
+            {
+                bool approveReqint = true;
+                bool changeCPint = true;
+                bool viewReqint = true;
+                bool makeReqint = true;
+                bool delegateRolint = true;
+                bool viewColDetlint = true;
+               
+                if (approveReq == null)
+                {
+                    approveReqint = false;
+                }
+                if (changeCP==null)
+                {
+                    changeCPint = false;
+                }
+                if (viewReq == null)
+                {
+                    viewReqint = false;
+                }
+                if (makeReq == null)
+                {
+                    makeReqint = false;
+                }
+                if (delegateRol == null)
+                {
+                    delegateRolint = false;
+                }
+                if (viewColDetl == null)
+                {
+                    viewColDetlint = false;
+                }
+
+                depsvc.manageDelegate(emp, sdate, edate, approveReqint,changeCPint,viewReqint,makeReqint,delegateRolint,viewColDetlint);
+                return RedirectToAction("ListAllEmployees");
+            }
+
+            //listsvc.manageTerminate();
+            return RedirectToAction("ListAllEmployees");
+
+
+        }
+
+
     }
 }

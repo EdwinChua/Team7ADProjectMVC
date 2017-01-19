@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Team7ADProjectMVC.Models;
 
 namespace Team7ADProjectMVC
 {
@@ -12,6 +13,8 @@ namespace Team7ADProjectMVC
 	public class Service : IService
 	{
         ProjectEntities db = new ProjectEntities();
+
+        InventoryService invService = new InventoryService();
         public List<WCFMsg> DoWork()
         {
             List<WCFMsg> l = new List<WCFMsg>();
@@ -42,7 +45,6 @@ namespace Team7ADProjectMVC
          }
          return making.ToList();
         }
-
 
         public List<wcfRequisitionItem> getrequisitionitem(String deptId, String reqID)
         {
@@ -101,6 +103,7 @@ namespace Team7ADProjectMVC
             var dDetail = from r in db.DisbursementDetails
                           where r.DisbursementList.DepartmentId == did
                           && r.DisbursementListId== disbursementListID
+                          orderby r.Inventory.Description ascending
                           select r;
 
             foreach (DisbursementDetail dd in dDetail)
@@ -145,7 +148,7 @@ namespace Team7ADProjectMVC
                         where a.RequisitionId == rId
                         && a.Requisition.DepartmentId == dId
                         && a.Requisition.RequisitionStatus != "Approved"
-                        && a.DeliveryStatus != "Delivered"
+                        && a.DeliveryStatus != "Delivered" 
                         orderby a.Inventory.Description ascending
                         select a;
 
@@ -164,27 +167,125 @@ namespace Team7ADProjectMVC
         public List<String> getCollectionPoint(String deptid)
         {
             List<String> sl = new List<string>();
-            String s = "Science School";
-            sl.Add(s);
+            int dId = Convert.ToInt32(deptid);
+             var collectionLocation = from c in db.DisbursementLists
+                                    where c.DepartmentId == dId
+                                    orderby c.CollectionPoint.PlaceName ascending
+                                    select c;
+            String s;
+             foreach (DisbursementList d in collectionLocation)
+            {
+                s= d.CollectionPoint.PlaceName +" "+ d.CollectionPoint.CollectTime;
+               sl.Add(s);
+            }
+         
             return sl;
         }
-        //public List<wcfCollectionPoint> getCollectionPoint(String deptId)
-        //{
-        //    List<wcfCollectionPoint> collectionPoint = new List<wcfCollectionPoint>();
-        //    int dId = Convert.ToInt32(deptId);
-        //    var collectionLocation = from c in db.DisbursementLists
-        //                             where c.DepartmentId == dId
-        //                             select c;
-        //    foreach (DisbursementList d in collectionLocation)
-        //    {
-        //        wcfCollectionPoint cp = new wcfCollectionPoint();
-        //        cp.LocationAndtime = d.CollectionPoint.PlaceName + d.CollectionPoint.CollectTime;
-        //        collectionPoint.Add(cp);
-        //    }
-        //    return collectionPoint.ToList();
-        //}
+
+        public List<wcfDisbursementList> getDisbursementList()
+        {
+            List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
+            var disburse = from d in db.DisbursementLists
+                           where d.Status != "Completed"
+                           orderby d.DeliveryDate ascending
+                           select d;
+
+            foreach (DisbursementList d in disburse)
+            {
+                wcfDisbursementList dl = new wcfDisbursementList();
+                dl.DeptName = d.Department.DepartmentName;
+                dl.CollectionPoint = d.CollectionPoint.PlaceName;
+                dl.DeliveryDate = d.DeliveryDate.ToString();
+                dl.DeliveryTime = d.CollectionPoint.CollectTime.ToString();
+                dl.RepName = d.Department.Employee.EmployeeName.ToString();
+                dl.RepPhone = d.Department.Employee.PhNo.ToString();
+                dl.DisListID = d.DisbursementListId.ToString();
+                dList.Add(dl);
+            }
+            return dList;
+        }
+
+        public List<wcfDisbursementListDetail> getDisbursementListDetails(String disListID)
+        {
+            List<wcfDisbursementListDetail> dDetail = new List<wcfDisbursementListDetail>();
+            int dId = Convert.ToInt32(disListID);
+            var disDetail = from dd in db.DisbursementDetails
+                            where dd.DisbursementListId == dId
+                            orderby dd.Inventory.Description ascending
+                            select dd;
+
+            foreach (DisbursementDetail d in disDetail)
+            {
+                wcfDisbursementListDetail dd = new wcfDisbursementListDetail();
+                dd.ItemName = d.RequisitionDetail.Inventory.Description;
+                dd.ReqQty = d.RequisitionDetail.Quantity.ToString();
+                dd.DisbQty = d.DeliveredQuantity.ToString();
+                dd.Remarks = d.Remark;
+                dDetail.Add(dd);
+            }
+            return dDetail;
+        }
+
+        public List<wcfStockReorder> getStockReorder()
+        {
+            List<wcfStockReorder> soList = new List<wcfStockReorder>();
+            var reOrders = from so in db.Inventories
+                           where so.Quantity <= so.ReorderLevel
+                           orderby so.Quantity ascending
+                           select so;
+
+            foreach (Inventory i in reOrders)
+            {
+                wcfStockReorder inv = new wcfStockReorder();
+                inv.ItemName = i.Description;
+                inv.ActualQty = i.Quantity.ToString();
+                inv.ReorderLevel = i.ReorderLevel.ToString();
+                inv.ReorderQty = i.ReorderQuantity.ToString();
+                inv.Supplier1 = i.Supplier.SupplierName;
+                inv.S1Phone = i.Supplier.PhNo.ToString();
+                inv.Supplier2 = i.Supplier1.SupplierName;
+                inv.S2Phone = i.Supplier1.PhNo.ToString();
+                inv.Supplier3 = i.Supplier2.SupplierName;
+                inv.S3Phone = i.Supplier2.PhNo.ToString();
+
+                soList.Add(inv);
+            }
+            return soList;
+        }
 
 
+        public List<wcfRetrivalList> getRetrivalList()
+        {
+            List<wcfRetrivalList> retrialList = new List<wcfRetrivalList>();
+            
+            RetrievalList reList = new RetrievalList();
+            invService.PopulateRetrievalList();
+            invService.PopulateRetrievalListItems();
+            reList = invService.GetRetrievalList();
+            int? rid =reList.retrievalId;
+            List<RetrievalListItems> itemsToR = reList.itemsToRetrieve;
 
+            foreach (RetrievalListItems r in itemsToR)
+            {
+                wcfRetrivalList rl = new wcfRetrivalList();
+                rl.ItemNo = r.itemNo;
+                rl.ItemName = r.description;
+                rl.RequestedQty = r.requiredQuantity.ToString();
+                rl.RetrievedQty = r.collectedQuantity.ToString();
+                String st = "";
+                if(r.collectionStatus.ToString().Equals("False"))
+                {
+                    st = "Not Collected";
+                }
+                else
+                {
+                    st = "Collected";
+                }
+                rl.Status = st;
+                retrialList.Add(rl);
+            }
+            //List<Requisition> reqList = retrivallist.requisitionList;
+            return retrialList;
+        }
     }
 }

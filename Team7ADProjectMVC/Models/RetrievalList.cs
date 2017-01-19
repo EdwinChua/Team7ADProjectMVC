@@ -10,7 +10,7 @@ namespace Team7ADProjectMVC.Models
     {
         public int? retrievalId { get; set; }
         public List<Requisition> requisitionList { get; set; }
-
+ 
         public List<RetrievalListItems> itemsToRetrieve { get; set; }
 
         public RetrievalList()

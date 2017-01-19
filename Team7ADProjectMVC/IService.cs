@@ -28,9 +28,9 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfTodayCollection/{deptid}", ResponseFormat = WebMessageFormat.Json)]
         List<wcfTodayCollectionlist> getTodayCollection(string deptid);
 
-        [OperationContract]
-        [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={disListID}", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string disListID);
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={disListID}", ResponseFormat = WebMessageFormat.Json)]
+        //List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string disListID);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfApproveRequisitions/{deptid}", ResponseFormat = WebMessageFormat.Json)]
@@ -44,9 +44,24 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfCollectionPoint/{deptid}", ResponseFormat = WebMessageFormat.Json)]
         List<String> getCollectionPoint(string deptid);
 
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfDisbursementList/", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfDisbursementList> getDisbursementList();
+
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/wcfDisbursementListDetail/{disListID}", ResponseFormat = WebMessageFormat.Json)]
+        //List<wcfDisbursementListDetail> getDisbursementListDetails(string disListID);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfStockReorder/", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfStockReorder> getStockReorder();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfRetrivalList/", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfRetrivalList> getRetrivalList();
+
     }
 }
-
 
 [DataContract]
 public class WCFMsg
@@ -188,13 +203,124 @@ public class wcfApproveReqDetails
     [DataMember]
     public String UOM { get; set; }
 }
+public class wcfDisbursementList
+{
+    string disListID;
+    string deptName;
+    string collectionPt;
+    string deliveryDate;
+    string deliveryTime;
+    string repName;
+    string repPhone;
 
-//public class wcfCollectionPoint
-//{
-//    string locationAndTime;
+    [DataMember]
+    public String DisListID { get; set; }
 
-//    [DataMember]
-//    public String LocationAndtime { get; set; }
+    [DataMember]
+    public String DeptName { get; set; }
 
-//}
+    [DataMember]
+    public String CollectionPoint { get; set; }
 
+    [DataMember]
+    public String DeliveryDate { get; set; }
+
+    [DataMember]
+    public String DeliveryTime { get; set; }
+
+    [DataMember]
+    public String RepName { get; set; }
+
+    [DataMember]
+    public String RepPhone { get; set; }
+}
+
+public class wcfDisbursementListDetail
+{
+    string itemName;
+    string reqQty;
+    string disbQty;
+    string remarks;
+
+    [DataMember]
+    public String ItemName { get; set; }
+
+    [DataMember]
+    public String ReqQty { get; set; }
+
+    [DataMember]
+    public String DisbQty { get; set; }
+
+    [DataMember]
+    public String Remarks { get; set; }
+}
+
+public class wcfStockReorder
+{
+    string itemName;
+    string actualQty;
+    string reorderLevel;
+    string reorderQty;
+    string supplier1;
+    string s1Phone;
+    string supplier2;
+    string s2Phone;
+    string supplier3;
+    string s3Phone;
+
+
+    [DataMember]
+    public String ItemName { get; set; }
+
+    [DataMember]
+    public String ActualQty { get; set; }
+
+    [DataMember]
+    public String ReorderLevel { get; set; }
+
+    [DataMember]
+    public String ReorderQty { get; set; }
+
+    [DataMember]
+    public String Supplier1 { get; set; }
+
+    [DataMember]
+    public String S1Phone { get; set; }
+
+    [DataMember]
+    public String Supplier2 { get; set; }
+
+    [DataMember]
+    public String S2Phone { get; set; }
+
+    [DataMember]
+    public String Supplier3 { get; set; }
+
+    [DataMember]
+    public String S3Phone { get; set; }
+}
+
+public class wcfRetrivalList
+{
+    string itemNo;
+    string itemName;
+    string requestedQty;
+    string retrievedQty;
+    string status;
+
+    [DataMember]
+    public String ItemNo { get; set; }
+
+    [DataMember]
+    public String ItemName { get; set; }
+
+    [DataMember]
+    public String RequestedQty { get; set; }
+
+    [DataMember]
+    public String RetrievedQty { get; set; }
+
+    [DataMember]
+    public String Status { get; set; }
+
+   }

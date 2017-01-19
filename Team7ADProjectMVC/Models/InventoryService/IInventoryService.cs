@@ -36,5 +36,7 @@ namespace Team7ADProjectMVC.Models
         void PopulateRetrievalListItems();
 
         void ClearRetrievalList();
+
+        void AutoAllocateDisbursements();
     }
 }

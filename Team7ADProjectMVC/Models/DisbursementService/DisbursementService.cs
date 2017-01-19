@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Team7ADProjectMVC.Models.UtilityService;
+
 
 namespace Team7ADProjectMVC.Models
 {
@@ -116,7 +116,7 @@ namespace Team7ADProjectMVC.Models
 
         public List<DisbursementDetail> GetdisbursementdetailById(int? id)
         {
-            var disbursementDetails = db.DisbursementDetails.Where(model => model.DisbursementListId == id).Include(d => d.DisbursementList).Include(d => d.RequisitionDetail);
+            var disbursementDetails = db.DisbursementDetails.Where(model => model.DisbursementListId == id).Include(d => d.DisbursementList);
             return (disbursementDetails.ToList());
 
         }

@@ -79,7 +79,7 @@ ViewCollectionDetails BIT
 INSERT INTO Permission
 VALUES (1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),
 (1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),
-(1,1,1,1,1,1),(1,1,1,1,1,1);
+(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1);
 
 
 ----------------------------------------- Collection Points -----------------------------------------
@@ -114,13 +114,14 @@ DepartmentName VARCHAR(100),
 ContactName VARCHAR(100),
 PhNo VARCHAR(50),
 FaxNo VARCHAR(50),
-HeadName VARCHAR(100),
+HeadId INT,
 CollectionPointId INT,
 RepresentativeId INT,
 CONSTRAINT CollectionPointId FOREIGN KEY(CollectionPointId) REFERENCES CollectionPoints(CollectionPointId)
 )
 ----------------------------------------- End of Department -----------------------------------------
 
+----------------------------------------- Add Collection Points-----------------------------------------
 INSERT INTO CollectionPoints
 VALUES ('Stationert Store','9:30 am',1)
 INSERT INTO CollectionPoints
@@ -134,20 +135,21 @@ VALUES ('Science School','9:30 am',1)
 INSERT INTO CollectionPoints
 VALUES ('University Hospital','11:00 am',1)
 
+----------------------------------------- Add Department ----------------------------------------
 INSERT INTO Department
-VALUES ('ENGL','English Department','Mrs Pamela Kow','874 2234','892 2234','Prof Ezra Pound',1,11)
+VALUES ('ENGL','English Department','Mrs Pamela Kow','874 2234','892 2234',5,1,11)
 INSERT INTO Department
-VALUES ('CPSC','Computer Science','Mr. Wee Kian Fatt','890 1235','892 1457','Dr. Soh Kian Wee',1,12)
+VALUES ('CPSC','Computer Science','Mr. Wee Kian Fatt','890 1235','892 1457',6,1,12)
 INSERT INTO Department
-VALUES ('COMM','Commerce Department','MrMohd. Azman','874 1284','892 1256','Dr. Chia Leow Bee',1,13)
+VALUES ('COMM','Commerce Department','MrMohd. Azman','874 1284','892 1256',7,1,13)
 INSERT INTO Department
-VALUES ('REGR','Registrar Department','Ms Helen Ho','890 1266','892 1465','Mrs Low Kway Boo',1,14)
+VALUES ('REGR','Registrar Department','Ms Helen Ho','890 1266','892 1465',8,1,14)
 INSERT INTO Department
-VALUES ('ZOOL','Zoology Department','Mr. Peter Tan Ah Meng','890 1266','892 1465','Prof Tan',1,15)
+VALUES ('ZOOL','Zoology Department','Mr. Peter Tan Ah Meng','890 1266','892 1465',9,1,15)
 INSERT INTO Department
-VALUES ('STO','STORE','Mr. Dino Thunder','890 6656','891 9912','Mr. Sander',1,1)
+VALUES ('STO','STORE','Mr. Dino Thunder','890 6656','891 9912',10,1,1)
 
-
+----------------------------------------- Add Employee -----------------------------------------
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Jenny Wong Mei Lin','jenny@logicuniversity',4,1,1,'11111111') -- registrar
 
@@ -159,28 +161,36 @@ INSERT INTO Employee
 VALUES ('Lao Lao','@logicuniversity',6,2,4,'44444444')
 
 INSERT INTO Employee
-VALUES ('Mrs Pamela Kow','@logicuniversity',1,3,5,'12345678') -- english 1 Head 3
+VALUES ('Mrs Pamela Kow','@logicuniversity',1,3,5,'55555555') -- english 1 Head 3
 INSERT INTO Employee
-VALUES ('Mr. Wee Kian Fatt','@logicuniversity',2,3,6,'55555555')-- com science 2 
+VALUES ('Dr. Soh Kian Wee','@logicuniversity',2,3,6,'66666666')-- com science 2 
 INSERT INTO Employee
-VALUES ('MrMohd. Azman','@logicuniversity',3,3,7,'66666666') -- commerce 3
+VALUES ('MrMohd. Azman','@logicuniversity',3,3,7,'77777777') -- commerce 3
 INSERT INTO Employee
-VALUES ('Ms Helen Ho','@logicuniversity',4,3,8,'77777777') -- registrar 4
+VALUES ('Mrs Low Kway Boo','@logicuniversity',4,3,8,'88888888') -- registrar 4
 INSERT INTO Employee
-VALUES ('Mr. Peter Tan Ah Meng','@logicuniversity',5,3,9,'88888888') -- zoo 5
+VALUES ('Mr. Peter Tan Ah Meng','@logicuniversity',5,3,9,'99999999') -- zoo 5
 INSERT INTO Employee
-VALUES ('Mr. Dino Thunder','@logicuniversity',6,3,10,'99999999') -- store 6
+VALUES ('Mr. Sander','@logicuniversity',6,3,10,'10101010') -- store 6
 
 INSERT INTO Employee
-VALUES ('Mr. Paw Taw Taw','@logicuniversity',1,4,11,'00000000') -- eng 1 rep 4
+VALUES ('Prof Ezra Pound','@logicuniversity',1,4,11,'11111111') -- eng 1 rep 4
 INSERT INTO Employee
-VALUES ('Mr. Ar Phyan Kwee','@logicuniversity',2,4,12,'87654321') -- com science 2
+VALUES ('Mr. Ar Phyan Kwee','@logicuniversity',2,4,12,'12121212') -- com science 2
 INSERT INTO Employee
-VALUES ('Mr. Shout Arr','@logicuniversity',3,4,12,'87654321') -- commerce 3
+VALUES ('Dr. Chia Leow Bee','@logicuniversity',3,4,13,'13131313') -- commerce 3
 INSERT INTO Employee
-VALUES ('Mr. Ah Lay Lite','@logicuniversity',4,4,12,'87654321') -- registrar 4
+VALUES ('Prof Tan','@logicuniversity',4,4,14,'14141414') -- registrar 4
 INSERT INTO Employee
-VALUES ('Mr. Tay Shout Pann','@logicuniversity',5,4,12,'87654321') -- zoo 5
+VALUES ('Mr. Tay Shout Pann','@logicuniversity',5,4,15,'15151515') -- zoo 5
+
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo) -- employeeid 16 dept zoo 5
+VALUES ('Tang Wo Long','tan@logicuniversity',5,3,16,'16161616')
+
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo) -- employee 17 dept commerce 3
+VALUES ('Ngyuen Feng','ngfg@logicuniversity',3,3,17,'17171717')
+
+----------------------------------------- End of Adding Employee ----------------------------------------------------------------------------
 
 ALTER TABLE Employee
 ADD CONSTRAINT DepartmentId FOREIGN KEY(DepartmentId) REFERENCES Department(DepartmentId)
@@ -190,31 +200,43 @@ ADD CONSTRAINT eid FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
 
 ALTER TABLE Department
 ADD CONSTRAINT EmployeeId FOREIGN KEY(RepresentativeId) REFERENCES Employee(EmployeeId)
+ALTER TABLE Department
+ADD CONSTRAINT DepartmentHeadId FOREIGN KEY(HeadId) REFERENCES Employee(EmployeeId)
 
 -------------------------------------------------- Requisition ----------------------------------------
 CREATE TABLE Requisition
 (
 RequisitionId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+
 EmployeeId INT,
 DepartmentId INT,
 ApprovedBy INT,
-ApprovedDate Date,
 OrderedDate Date,
+ApprovedDate Date,
 RequisitionStatus VARCHAR(50),
 Comment VARCHAR(250),
 CONSTRAINT RequisitionEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
 )
 
 INSERT INTO Requisition
-VALUES (1,4,8,'2017-01-03','2017-01-03','Approved','')
+VALUES (1,4,8,'2017-01-03','2017-01-03','Approved','') -- registrar
 INSERT INTO Requisition
-VALUES (1,4,15,'2017-01-01','2017-01-01','Approved','')
+VALUES (1,4,8,'2017-01-01','2017-01-01','Approved','')
 INSERT INTO Requisition
-VALUES (1,4,15,'2017-01-04','2017-01-04','Approved','')
+VALUES (1,4,8,'2017-01-04','2017-01-04','Approved','')
+
 INSERT INTO Requisition
-VALUES (1,4,1,'','2017-01-14','Pending','')
+VALUES (16,5,9,'2017-01-10','2017-01-11','Approved','') -- zoo
+
 INSERT INTO Requisition
-VALUES (1,4,15,'','2017-01-15','Pending','')
+VALUES (17,3,7,'2017-01-11','2017-01-12','Approved','') -- commerce
+
+INSERT INTO Requisition
+VALUES (1,4,8,'','2017-01-14','Pending','')
+INSERT INTO Requisition
+VALUES (1,4,8,'','2017-01-15','Pending','')
+INSERT INTO Requisition
+VALUES (1,4,'','','2017-01-15','Pending','')
 
 
 -------------------------------------------------- Category ----------------------------------------
@@ -291,8 +313,13 @@ INSERT INTO RequisitionDetail
 VALUES	(1,'C001',10,0,'Delivered'), (1,'C002',10,0,'Delivered'), (1,'E001',10,0,'Delivered'),
 		(2,'C001',10,0,'Delivered'), (2,'C002',10,0,'Delivered'), (2,'E001',10,0,'Delivered'),
 		(3,'C001',10,0,'Delivered'), (3,'C002',10,0,'Delivered'), (3,'E001',10,0,'Delivered'),
+
 		(4,'C001',10,0,'Preparing'), (4,'C002',10,0,'Preparing'), (4,'E001',10,0,'Preparing'),
-		(5,'C001',5,0,'Preparing'), (5,'C002',5,0,'Preparing'), (5,'E001',5,0,'Preparing');
+		(5,'C001',5,0,'Preparing'), (5,'C002',5,0,'Preparing'), (5,'E001',5,0,'Preparing'),
+
+		(6,'C002',10,0,'Delivered'), (6,'E020',10,0,'Delivered'), (6,'F020',10,0,'Delivered'),
+
+		(7,'E020',10,0,'Delivered'), (7,'F020',10,0,'Delivered'), (7,'E001',10,0,'Delivered');
 
 -------------------------------------------------- Delegate ----------------------------------------
 CREATE TABLE Delegate
@@ -324,7 +351,7 @@ CONSTRAINT AdjustmentEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(Empl
 )
 
 INSERT INTO Adjustment
-VALUES ('2016-12-22',2,'','','',''), ('2016-12-31',2,'','','','');
+VALUES ('2016-12-22',2,'','','',''), ('2016-12-31',3,'','','',''), ('2017-01-14',2,'','','','');
 
 -------------------------------------------------- AdjustmentDetail ----------------------------------------
 CREATE TABLE AdjustmentDetail
@@ -338,7 +365,7 @@ CONSTRAINT AdjustmentDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(ItemN
 )
 
 INSERT INTO AdjustmentDetail
-VALUES (1,'C001',1,'Broken'), (2,'C002',1,'Damamged');
+VALUES (1,'C001',1,'Broken'), (2,'C002',1,'Damamged'),(3,'E001',1,'Damamged');
 
 -------------------------------------------------- PruchaseOrder ----------------------------------------
 CREATE TABLE PurchaseOrder
@@ -372,8 +399,10 @@ CONSTRAINT RetrievalEmployeeId FOREIGN KEY (EmployeeId) REFERENCES Employee (Emp
 INSERT INTO Retrieval(EmployeeId, RetrievalDate)
 VALUES
 (2,'2017-01-04'),
-(2,'2017-01-05'),
-(2,'2017-01-06');
+(3,'2017-01-05'),
+(2,'2017-01-06'),
+(3,'2017-01-13'),
+(2,'2017-01-14');
 
 -------------------------------------------------- PruchaseDetail ----------------------------------------
 CREATE TABLE PurchaseDetail
@@ -409,12 +438,17 @@ CONSTRAINT DisbursementListCollectionPointId FOREIGN KEY (CollectionPointId) REF
 )
 
 INSERT INTO DisbursementList(RetrievalId, DepartmentId,  OrderedDate, DeliveryDate, CollectionPointId, [Status])
-VALUES	(1, 4, '2017-01-03', '2017-01-05', 1, 'Delivered'), (1, 4, '2017-01-01', '2017-01-03', 1, 'Delivered'), (1, 4, '2017-01-03', '2017-01-06', 1, 'Delivered');
+VALUES	(1, 4, '2017-01-03', '2017-01-05', 1, 'Delivered'), 
+		(2, 4, '2017-01-01', '2017-01-03', 2, 'Delivered'), 
+		(3, 4, '2017-01-03', '2017-01-06', 1, 'Delivered'),
+		(4, 5, '2017-01-10', '2017-01-13', 3, 'Delivered'),
+		(5, 3, '2017-01-11', '2017-01-14', 5, 'Delivered');
 
 -------------------------------------------------- DisbursementDetail ----------------------------------------
 CREATE TABLE DisbursementDetail
 (
 DisbursementDetailId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+
 DisbursementListId INT,
 RequisitionDetailId INT,
 PreparedQuantity INT,
@@ -425,9 +459,11 @@ CONSTRAINT RequisitionDetailId FOREIGN KEY (RequisitionDetailId) REFERENCES Requ
 )
 
 INSERT INTO DisbursementDetail
-VALUES	(1,1,10,'',''),(1,2,10,'',''),(1,3,10,'',''),
-		(2,4,10,'',''),(2,5,10,'',''),(2,6,10,'',''),
-		(3,7,10,'',''),(3,8,10,'',''),(3,9,10,'','');
+VALUES	(1,1,10,10,''),(1,2,10,10,''),(1,3,10,10,''),
+		(2,4,10,10,''),(2,5,10,10,''),(2,6,10,10,''),
+		(3,7,10,10,''),(3,8,10,10,''),(3,9,10,10,''),
+		(4,10,10,10,''),(4,11,10,10,''),(4,12,10,10,''),
+		(4,13,10,10,''),(4,14,10,10,''),(4,15,10,9,'One item damaged');
 
 -------------------------------------------------- Delivery ----------------------------------------
 CREATE TABLE Delivery

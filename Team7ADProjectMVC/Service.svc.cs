@@ -144,8 +144,8 @@ namespace Team7ADProjectMVC
             var aList = from a in db.RequisitionDetails
                         where a.RequisitionId == rId
                         && a.Requisition.DepartmentId == dId
-                        && a.Requisition.RequisitionStatus != "Approved"
-                        && a.DeliveryStatus != "Delivered"
+                        && a.Requisition.RequisitionStatus == "Outstanding"
+                        && a.DeliveryStatus != "Delivered" 
                         orderby a.Inventory.Description ascending
                         select a;
 
@@ -164,27 +164,61 @@ namespace Team7ADProjectMVC
         public List<String> getCollectionPoint(String deptid)
         {
             List<String> sl = new List<string>();
-            String s = "Science School";
-            sl.Add(s);
+            int dId = Convert.ToInt32(deptid);
+             var collectionLocation = from c in db.DisbursementLists
+                                    where c.DepartmentId == dId
+                                   select c;
+            String s;
+             foreach (DisbursementList d in collectionLocation)
+            {
+               
+                s= d.CollectionPoint.PlaceName +" "+ d.CollectionPoint.CollectTime;
+               sl.Add(s);
+            }
+         
             return sl;
         }
-        //public List<wcfCollectionPoint> getCollectionPoint(String deptId)
-        //{
-        //    List<wcfCollectionPoint> collectionPoint = new List<wcfCollectionPoint>();
-        //    int dId = Convert.ToInt32(deptId);
-        //    var collectionLocation = from c in db.DisbursementLists
-        //                             where c.DepartmentId == dId
-        //                             select c;
-        //    foreach (DisbursementList d in collectionLocation)
-        //    {
-        //        wcfCollectionPoint cp = new wcfCollectionPoint();
-        //        cp.LocationAndtime = d.CollectionPoint.PlaceName + d.CollectionPoint.CollectTime;
-        //        collectionPoint.Add(cp);
-        //    }
-        //    return collectionPoint.ToList();
-        //}
 
+        public List<wcfDisbursementList> getDisbursementList()
+        {
+            List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
+            var disburse = from d in db.DisbursementLists
+                           where d.Status != "Completed"
+                           select d;
 
+            foreach (DisbursementList d in disburse)
+            {
+                wcfDisbursementList dl = new wcfDisbursementList();
+                dl.DeptName = d.Department.DepartmentName;
+                dl.CollectionPoint = d.CollectionPoint.PlaceName;
+                dl.DeliveryDate = d.DeliveryDate.ToString();
+                dl.DeliveryTime = d.CollectionPoint.CollectTime.ToString();
+                dl.RepName = d.Department.Employee.EmployeeName.ToString();
+                dl.RepPhone = d.Department.Employee.PhNo.ToString();
+                dl.DisListID = d.DisbursementListId.ToString();
+                dList.Add(dl);
+            }
+            return dList;
+        }
 
+        public List<wcfCDisbursementListDetail> getDisbursementListDetails(String disListID)
+        {
+            List<wcfCDisbursementListDetail> dDetail = new List<wcfCDisbursementListDetail>();
+            int dId = Convert.ToInt32(disListID);
+            var disDetail = from dd in db.DisbursementDetails
+                            where dd.DisbursementListId == dId
+                            select dd;
+
+            foreach (DisbursementDetail d in disDetail)
+            {
+                wcfCDisbursementListDetail dd = new wcfCDisbursementListDetail();
+                dd.ItemName = d.RequisitionDetail.Inventory.Description;
+                dd.ReqQty = d.RequisitionDetail.Quantity.ToString();
+                dd.DisbQty = d.DeliveredQuantity.ToString();
+                dd.Remarks = d.Remark;
+                dDetail.Add(dd);
+            }
+            return dDetail;
+        }
     }
 }

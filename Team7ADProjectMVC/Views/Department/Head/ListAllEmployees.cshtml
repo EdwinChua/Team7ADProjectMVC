@@ -118,10 +118,20 @@
                                 <td>
                                     @item.OrderedDate
                                 </td>
-                              <td>                              </td>
+                              <td> @foreach (var item2 in item.RequisitionDetails)
+                                  { @item2.Inventory.Description <br> }
+                                 <br>   
+                                 </td>
                                 <td>                                   </td>    
                                     <td>
-                                        <a href="ApproveRequisition/@item.RequisitionId"><button type="button" class="btn btn-success">Approve</button></a>          <a href="RejectRequisition/@item.RequisitionId"><button type="button" class="btn btn-danger">Reject</button></a>
+                                        <form id="form1" action="/Head/MarkAsCollected">
+                                           
+                                            <input type="hidden" value="@item.RequisitionId" name="rid" />
+                                            <input type="hidden" value="" name="textcomments" />
+                                            <input type="submit" class="btn btn-success btn-lg" name="status" value="Approve" />
+                                            <input type="submit" class="btn btn-danger btn-lg" name="status" value="Reject" />
+                                        </form>
+                                        @*<a href="ApproveRequisition/@item.RequisitionId"><button type="button" class="btn btn-success">Approve</button></a>          <a href="RejectRequisition/@item.RequisitionId"><button type="button" class="btn btn-danger">Reject</button></a>*@
                                     </td>
                                 </tr>
 

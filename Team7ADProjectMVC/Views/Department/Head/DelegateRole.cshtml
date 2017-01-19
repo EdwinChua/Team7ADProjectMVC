@@ -15,20 +15,9 @@
                     data-live-search="true" required>
                 <option>Find by ID or Name</option>
                 <c:foreach var="lecturer" items="${lecturerList}">
-                    <option data-subtext="Edwin Representative">
-                        E001
+                    <option data-subtext="${lecturer.lastName }, ${lecturer.firstName }">
+                        ${lecturer.lecturerId }
                     </option>
-                    <option data-subtext="Joe Employee">
-                        E002
-                    </option>
-                    <option data-subtext="Linda Employee">
-                        E003
-                    </option>
-
-                    <option data-subtext="Edwin Representative">
-                        E004
-                    </option>
-                    <option data-subtext="Edwin Representative">E005</option>
                 </c:foreach>
             </select>
         </div>

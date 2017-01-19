@@ -13,5 +13,6 @@ namespace Team7ADProjectMVC.Models.DepartmentService
         {
             return (db.Departments.ToList());
         }
+
     }
 }

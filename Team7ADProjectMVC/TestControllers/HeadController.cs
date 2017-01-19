@@ -6,6 +6,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
+using Team7ADProjectMVC.Models.DepartmentService;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 
 
@@ -15,14 +16,14 @@ namespace Team7ADProjectMVC.TestControllers
     
     public class HeadController : Controller
     {
-        private IIListAllRequisition listsvc;
-      
+        private IRequisitionService listsvc;
 
+        private IDepartmentService depsvc;
        private ProjectEntities db = new ProjectEntities();
         public HeadController()
         {
-            listsvc =new IListAllRequisiton();
-       
+            listsvc =new RequisitionService();
+            depsvc = new DepartmentService();
         }
 
         // GET: Head
@@ -47,7 +48,7 @@ namespace Team7ADProjectMVC.TestControllers
 
         }
 
-        public ActionResult EmployeeRequisition(int id)
+        public ActionResult EmployeeRequisition(int? id)
         {
             Requisition r = listsvc.FindById(id);
             if (r == null)
@@ -69,21 +70,36 @@ namespace Team7ADProjectMVC.TestControllers
 
             return View("Approve", r);
         }
-        public ActionResult ApproveRequisition(int id)
+        public ActionResult MarkAsCollected(int? rid, string textcomments,string status)
         {
-          
-            Requisition r = listsvc.FindById(id);
-
-            listsvc.UpdateApproveStatus(r);
-            return RedirectToAction("ListAllEmployees");
+            Requisition r = listsvc.FindById(rid);
+            if (status.Equals("Approve")) {              
+                listsvc.UpdateApproveStatus(r, textcomments);
+                return RedirectToAction("ListAllEmployees");
+            }
+           
+                listsvc.UpdateRejectStatus(r, textcomments);
+                return RedirectToAction("ListAllEmployees");
+           
 
         }
-        public ActionResult RejectRequisition(int id)
-        {
-            Requisition r = listsvc.FindById(id);
 
-            listsvc.UpdateRejectStatus(r);
-            return RedirectToAction("ListAllEmployees");
-        }
+
+        //public ActionResult ApproveRequisition(int id)
+        //{
+
+        //    Requisition r = listsvc.FindById(id);
+
+        //    listsvc.UpdateApproveStatus(r);
+        //    return RedirectToAction("ListAllEmployees");
+
+        //}
+        //public ActionResult RejectRequisition(int id)
+        //{
+        //    Requisition r = listsvc.FindById(id);
+
+        //    listsvc.UpdateRejectStatus(r);
+        //    return RedirectToAction("ListAllEmployees");
+        //}
     }
 }

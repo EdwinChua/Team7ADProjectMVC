@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Team7ADProjectMVC.DisbursementList>
+
+@{
+    ViewBag.Title = "View Disbursement";
+    Layout = "~/_Layout1.cshtml";
+    Page.Title = "View Disbursement Lists";
+}
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron row">
+                <form role="form" action="../SearchDisbursements">
+                    @*<div class="col-md-6">
+                            <select id="deptNdeliveryPicker" name="id"
+                                    class="selectpicker show-tick form-control"
+                                    data-live-search="true" title="Retrieve by department/delivery location. Leave blank to show all">
+                                @foreach (var item in @ViewBag.Departments)
+                                {
+                                    <option value="@item.DepartmentId">@item.DepartmentName </option>
+                                }
+                            </select>
+                        </div>*@
+                    <div class="col-md-5">
+                        <select id="statusPicker" name="status"
+                                class="selectpicker show-tick form-control"
+                                data-live-search="true" title="Status">
+                            <option>Pending Delivery</option>
+                            <option>Delivered</option>
+                            <option>Completed</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-default" type="submit" >Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Department.DepartmentName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderedDate)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.DeliveryDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CollectionPoint.PlaceName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CollectionPoint.CollectTime)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                   
+                    <tr class='clickable-row' data-href="../ViewDisbursementDetail/@item.DisbursementListId">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Department.DepartmentName)
+                        </td>
+                        <td>
+                            @Convert.ToString(string.Format("{0:yyyy/MM/dd}", item.OrderedDate))
+                        </td>
+
+                        <td>
+
+                            @Convert.ToString(string.Format("{0:yyyy/MM/dd}", item.DeliveryDate))
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CollectionPoint.PlaceName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CollectionPoint.CollectTime)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                    </tr>
+                    
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>
+

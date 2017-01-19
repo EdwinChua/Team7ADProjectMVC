@@ -317,8 +317,8 @@
     <Compile Include="Models\InventoryAdjustmentService\InventoryAdjustmentService.cs" />
     <Compile Include="Models\InventoryService\IInventoryService.cs" />
     <Compile Include="Models\InventoryService\InventoryService.cs" />
-    <Compile Include="Models\ListAllRequisitionService\IIListAllRequisition.cs" />
-    <Compile Include="Models\ListAllRequisitionService\IListAllRequisiton.cs" />
+    <Compile Include="Models\RequisitionService\IRequisitionService.cs" />
+    <Compile Include="Models\RequisitionService\RequisitionService.cs" />
     <Compile Include="Permission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

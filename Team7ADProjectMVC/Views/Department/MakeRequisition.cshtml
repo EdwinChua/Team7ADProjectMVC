@@ -418,13 +418,9 @@ function submitForm() {
 }*@
 
 
-</script>
 
-
-
-<script>
     $(function () {
-        $('#cl').click(function (e) {
+        $('#cl,#addNew,.removebutton').click(function (e) {
 
             var jsonObject = {
                 "Name": "Rami",
@@ -433,7 +429,44 @@ function submitForm() {
                 
                 "Roles": [{ "RoleName": "Admin", "Description" : "Admin Role"}, { "RoleName": "User", "Description" : "User Role"}],
                 //"Items": [{ "Item": "clips", "Quantity": "1" }, { "Item": "pen", "Quantity": "2" }]
-                //"Items": myObjt.myrows
+              
+                "Items": TableData
+            };
+
+            //var jsonObject = myObjt;
+
+            $.ajax({
+                url: "@Url.Action("AddUser")",
+                type: "POST",
+            data: JSON.stringify(jsonObject),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (response) {
+                alert(response.responseText);
+            },
+            success: function (response) {
+                alert(response);
+            }
+        });
+
+    });
+    });
+</script>
+
+
+
+@*<script>
+    $(function () {
+        $('#cl,#addNew,.removebutton').click(function (e) {
+
+            var jsonObject = {
+                "Name": "Rami",
+                
+                "Depart": "Science",
+                
+                "Roles": [{ "RoleName": "Admin", "Description" : "Admin Role"}, { "RoleName": "User", "Description" : "User Role"}],
+                //"Items": [{ "Item": "clips", "Quantity": "1" }, { "Item": "pen", "Quantity": "2" }]
+              
                 "Items": TableData
             };
 
@@ -455,4 +488,4 @@ function submitForm() {
 
         });
     });
-</script>
+</script>*@

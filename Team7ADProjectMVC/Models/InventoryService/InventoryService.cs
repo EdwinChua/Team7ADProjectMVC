@@ -219,7 +219,7 @@ namespace Team7ADProjectMVC.Models
             DisbursementList dList = new DisbursementList();
             List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
             HashSet<DisbursementDetail> DisbursementDetailHashSet;
-            List<DisbursementDetail> DisbursementDetailListNoDuplicates;
+            List<DisbursementDetail> DisbursementDetailListNoDuplicates = null;
             int? currentDisbursementListId = null;
 
             int i = 0;
@@ -239,46 +239,36 @@ namespace Team7ADProjectMVC.Models
                     db.DisbursementLists.Add(dList);
                     db.SaveChanges(); // creates new disbursementlist
 
-                    currentDisbursementListId = dList.DepartmentId; //returns created disbursementlist Id
+                    currentDisbursementListId = db.DisbursementLists
+                                                .OrderByDescending(x => x.DisbursementListId)
+                                                .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
 
 
                     foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
                     {
                         DisbursementDetail newDisbursementDetail = new DisbursementDetail();
-                        //newDisbursementDetail.RequisitionDetailId = reqDetails.RequisitionDetailId;
                         newDisbursementDetail.DisbursementListId = currentDisbursementListId;
                         newDisbursementDetail.ItemNo = reqDetails.ItemNo;
                         tempDisbursementDetailList.Add(newDisbursementDetail);
-                        //db.Set(typeof(DisbursementDetail)).Attach(newDisbursementDetail);
-                        //db.DisbursementDetails.Add(newDisbursementDetail);
-                        //db.SaveChanges();
+                        
                     }
 
                     i++;
                 }
                 else if (requisition.DepartmentId.Equals(dList.DepartmentId))
                 {
-                    DisbursementList currentDisbursementList = db.DisbursementLists.Find(currentDisbursementListId);
-                    foreach (DisbursementDetail dDetail in currentDisbursementList.DisbursementDetails) //check current disbursement detail for existing item
+                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
                     {
-                        foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
-                        {
-                            DisbursementDetail newDisbursementDetail = new DisbursementDetail();
-                            //newDisbursementDetail.RequisitionDetailId = reqDetails.RequisitionDetailId;
-                            newDisbursementDetail.DisbursementListId = currentDisbursementListId;
-                            newDisbursementDetail.ItemNo = reqDetails.ItemNo;
-                            tempDisbursementDetailList.Add(newDisbursementDetail);
-                            //db.Set(typeof(DisbursementDetail)).Attach(newDisbursementDetail);
-                            //db.DisbursementDetails.Add(newDisbursementDetail);
-                            //db.SaveChanges();
-                        }
+                        DisbursementDetail newDisbursementDetail = new DisbursementDetail();
+                        newDisbursementDetail.DisbursementListId = currentDisbursementListId;
+                        newDisbursementDetail.ItemNo = reqDetails.ItemNo;
+                        tempDisbursementDetailList.Add(newDisbursementDetail);
                     }
                 }
-                else // different dept, create new disbursementlist
+                else if (!requisition.DepartmentId.Equals(dList.DepartmentId))// different dept, create new disbursementlist
                 {
-                    DisbursementDetailHashSet = new HashSet<DisbursementDetail>(tempDisbursementDetailList);
-                    // remove duplicates
-                    DisbursementDetailListNoDuplicates = DisbursementDetailHashSet.ToList();
+
+                    DisbursementDetailListNoDuplicates = tempDisbursementDetailList.GroupBy(x => x.ItemNo).Select(x => x.First()).ToList();
 
                     foreach (DisbursementDetail newDisbursementDetail in DisbursementDetailListNoDuplicates)
                     {
@@ -287,8 +277,8 @@ namespace Team7ADProjectMVC.Models
                         db.SaveChanges();
                     }
                     tempDisbursementDetailList.Clear();
-                    DisbursementDetailHashSet.Clear();
                     DisbursementDetailListNoDuplicates.Clear();
+                    dList = new DisbursementList();
 
                     Department d = db.Departments.Find(requisition.DepartmentId);
                     dList.DepartmentId = d.DepartmentId;
@@ -302,23 +292,22 @@ namespace Team7ADProjectMVC.Models
                     db.DisbursementLists.Add(dList);
                     db.SaveChanges(); // creates new disbursementlist
 
-                    currentDisbursementListId = dList.DepartmentId; //returns created disbursementlist Id
+                    currentDisbursementListId = db.DisbursementLists
+                                                .OrderByDescending(x => x.DisbursementListId)
+                                                .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
 
                     foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
                     {
                         DisbursementDetail newDisbursementDetail = new DisbursementDetail();
-                        newDisbursementDetail.ItemNo = reqDetails.ItemNo;
-                        //newDisbursementDetail.RequisitionDetailId = reqDetails.RequisitionDetailId;
                         newDisbursementDetail.DisbursementListId = currentDisbursementListId;
+                        newDisbursementDetail.ItemNo = reqDetails.ItemNo;
                         tempDisbursementDetailList.Add(newDisbursementDetail);
-                        //db.Set(typeof(DisbursementDetail)).Attach(newDisbursementDetail);
-                        //db.DisbursementDetails.Add(newDisbursementDetail);
-                        //db.SaveChanges();
                     }
                 }
             }
-            DisbursementDetailHashSet = new HashSet<DisbursementDetail>(tempDisbursementDetailList);// remove duplicates
-            DisbursementDetailListNoDuplicates = DisbursementDetailHashSet.ToList();
+            
+            
+            DisbursementDetailListNoDuplicates = tempDisbursementDetailList.GroupBy(x => x.ItemNo).Select(x => x.First()).ToList();
 
             foreach (DisbursementDetail newDisbursementDetail in DisbursementDetailListNoDuplicates)
             {
@@ -326,9 +315,6 @@ namespace Team7ADProjectMVC.Models
                 db.DisbursementDetails.Add(newDisbursementDetail);
                 db.SaveChanges();
             }
-
-
-
 
             foreach (RetrievalListItems retrievalListItem in retrievalList.itemsToRetrieve)
             {

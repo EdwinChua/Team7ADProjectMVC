@@ -28,9 +28,9 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfTodayCollection/{deptid}", ResponseFormat = WebMessageFormat.Json)]
         List<wcfTodayCollectionlist> getTodayCollection(string deptid);
 
-        //[OperationContract]
-        //[WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={disListID}", ResponseFormat = WebMessageFormat.Json)]
-        //List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string disListID);
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={disListID}", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string disListID);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfApproveRequisitions/{deptid}", ResponseFormat = WebMessageFormat.Json)]
@@ -59,6 +59,10 @@ namespace Team7ADProjectMVC
         [OperationContract]
         [WebGet(UriTemplate = "/wcfRetrivalList/", ResponseFormat = WebMessageFormat.Json)]
         List<wcfRetrivalList> getRetrivalList();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfallocate/", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfallocate> getallocate();
 
     }
 }
@@ -335,3 +339,22 @@ public class wcfRetrivalList
     public String Status { get; set; }
 
    }
+
+public class wcfallocate
+{
+    string itemName;
+    string preQty;
+    string disbQty;
+
+
+    [DataMember]
+    public String ItemName { get; set; }
+
+    [DataMember]
+    public String PreQty { get; set; }
+
+    [DataMember]
+    public String DisbQty { get; set; }
+
+
+}

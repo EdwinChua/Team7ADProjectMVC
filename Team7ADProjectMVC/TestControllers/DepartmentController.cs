@@ -64,7 +64,7 @@ namespace Team7ADProjectMVC.TestControllers
         }
 
 
-
+        private static PersonModel mododo;
         private IRequisitionService listsvc;
         private IDepartmentService depasvc;
         private IDelegateRoleService delpsvc;
@@ -77,6 +77,7 @@ namespace Team7ADProjectMVC.TestControllers
             listsvc = new RequisitionService();
             delpsvc = new DelegateRoleService();
             depasvc = new DepartmentService();
+            mododo = new PersonModel();
         }
         
         public ActionResult Index()
@@ -126,7 +127,7 @@ namespace Team7ADProjectMVC.TestControllers
         [ValidateAntiForgeryToken]
         public ActionResult MakeRequisition([Bind(Include = "RequisitionId,EmployeeId,DepartmentId,ApprovedBy,ApprovedDate,OrderedDate,RequisitionStatus")] Requisition requisition, PersonModel model)
         {
-
+            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", requisition.EmployeeId);
 
             Requisition req = new Requisition();
             ///fake
@@ -134,15 +135,17 @@ namespace Team7ADProjectMVC.TestControllers
             req.EmployeeId = 1;
             req.DepartmentId = 2;
             req.OrderedDate = DateTime.Today;
-
+            //
+            
 
 
             List<RequisitionDetail> redlis = new List<RequisitionDetail>();
 
+            //RequisitionDetail  r= model.Items[1];
             req.RequisitionDetails = redlis;
 
 
-            foreach (ItemModel i in model.Items)
+            foreach (ItemModel i in mododo.Items)
             {
 
                 RequisitionDetail rd = new RequisitionDetail();
@@ -162,11 +165,11 @@ namespace Team7ADProjectMVC.TestControllers
 
                 return RedirectToAction("Index");
             }
-            List<RequisitionDetail> relis = db.RequisitionDetails.Take(3).ToList();
+            //List<RequisitionDetail> relis = db.RequisitionDetails.Take(3).ToList();
 
-            ViewBag.rel = relis;
+            //ViewBag.rel = relis;
 
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", requisition.EmployeeId);
+            
             return View(requisition);
             //var requisitions = db.Requisitions.ToList();
             //ViewBag.Cat = requisitions;
@@ -203,6 +206,8 @@ namespace Team7ADProjectMVC.TestControllers
         //    model.Items[0];
             if (model != null)
             {
+                mododo = model;
+
                 return Json("Success");
             }
             else

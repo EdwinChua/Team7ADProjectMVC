@@ -262,6 +262,7 @@
     <Compile Include="CollectionPoint.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Delegate.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -434,6 +435,11 @@
     <Content Include="Views\Rpt\ItemDeptRpt.cshtml" />
     <Content Include="Views\Rpt\ItemSupplierRpt.cshtml" />
     <Content Include="Views\Rpt\ReportOptions.cshtml" />
+    <Content Include="Views\Inventory\Create.cshtml" />
+    <Content Include="Views\Inventory\Delete.cshtml" />
+    <Content Include="Views\Inventory\Details.cshtml" />
+    <Content Include="Views\Inventory\Edit.cshtml" />
+    <Content Include="Views\Inventory\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

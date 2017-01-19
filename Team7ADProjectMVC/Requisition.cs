@@ -14,6 +14,7 @@ namespace Team7ADProjectMVC
     
     public partial class Requisition
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Requisition()
         {
             this.RequisitionDetails = new HashSet<RequisitionDetail>();
@@ -30,6 +31,7 @@ namespace Team7ADProjectMVC
         public Nullable<int> RetrievalId { get; set; }
     
         public virtual Employee Employee { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequisitionDetail> RequisitionDetails { get; set; }
         public virtual Retrieval Retrieval { get; set; }
     }

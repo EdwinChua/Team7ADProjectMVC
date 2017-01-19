@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adjustment">
           <Key>
             <PropertyRef Name="AdjustmentId" />
@@ -797,7 +797,8 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             <End Role="Inventory" EntitySet="Inventory" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1100,6 +1101,16 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <NavigationProperty Name="Inventories1" Relationship="Self.SupplierId2" FromRole="Supplier" ToRole="Inventory" />
           <NavigationProperty Name="Inventories2" Relationship="Self.SupplierId3" FromRole="Supplier" ToRole="Inventory" />
           <NavigationProperty Name="PurchaseDetails" Relationship="Self.PurchaseDetailSupplierId" FromRole="Supplier" ToRole="PurchaseDetail" />
+        </EntityType>
+        <EntityType Name="StockCard">
+          <Key>
+            <PropertyRef Name="Date" />
+          </Key>
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Dept_Supplier" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AdjustedQuantity" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
+          <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="AdjustmentEmployeeId">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
@@ -1507,6 +1518,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <EntitySet Name="Retrievals" EntityType="Self.Retrieval" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="StockCards" EntityType="Self.StockCard" />
           <AssociationSet Name="AdjustmentEmployeeId" Association="Self.AdjustmentEmployeeId">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Adjustment" EntitySet="Adjustments" />
@@ -1635,18 +1647,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             <End Role="Retrieval" EntitySet="Retrievals" />
             <End Role="Requisition" EntitySet="Requisitions" />
           </AssociationSet>
-          <EntitySet Name="StockCards" EntityType="ProjectModel.StockCard" />
         </EntityContainer>
-        <EntityType Name="StockCard">
-          <Key>
-            <PropertyRef Name="Date" />
-          </Key>
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Dept_Supplier" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="AdjustedQuantity" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
-          <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1913,11 +1914,11 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <EntitySetMapping Name="StockCards">
             <EntityTypeMapping TypeName="ProjectModel.StockCard">
               <MappingFragment StoreEntitySet="StockCard">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
-                <ScalarProperty Name="AdjustedQuantity" ColumnName="AdjustedQuantity" />
-                <ScalarProperty Name="Dept_Supplier" ColumnName="Dept/Supplier" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Dept_Supplier" ColumnName="Dept/Supplier" />
+                <ScalarProperty Name="AdjustedQuantity" ColumnName="AdjustedQuantity" />
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

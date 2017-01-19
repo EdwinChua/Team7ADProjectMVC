@@ -14,6 +14,7 @@ namespace Team7ADProjectMVC
     
     public partial class CollectionPoint
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CollectionPoint()
         {
             this.Departments = new HashSet<Department>();
@@ -25,7 +26,9 @@ namespace Team7ADProjectMVC
         public Nullable<System.TimeSpan> CollectTime { get; set; }
         public Nullable<int> EmployeeId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Department> Departments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DisbursementList> DisbursementLists { get; set; }
         public virtual Employee Employee { get; set; }
     }

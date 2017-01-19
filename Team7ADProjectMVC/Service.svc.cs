@@ -94,27 +94,27 @@ namespace Team7ADProjectMVC
            
         }
 
-        public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String disListID)
-        {
-            List<wcfTodayCollectionDetail> collectionDetail = new List<wcfTodayCollectionDetail>();
-            int did = Convert.ToInt32(deptid);
-            int disbursementListID = Convert.ToInt32(disListID);
+        //public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String disListID)
+        //{
+        //    List<wcfTodayCollectionDetail> collectionDetail = new List<wcfTodayCollectionDetail>();
+        //    int did = Convert.ToInt32(deptid);
+        //    int disbursementListID = Convert.ToInt32(disListID);
         
-            var dDetail = from r in db.DisbursementDetails
-                          where r.DisbursementList.DepartmentId == did
-                          && r.DisbursementListId== disbursementListID
-                          select r;
+        //    var dDetail = from r in db.DisbursementDetails
+        //                  where r.DisbursementList.DepartmentId == did
+        //                  && r.DisbursementListId== disbursementListID
+        //                  select r;
 
-            foreach (DisbursementDetail dd in dDetail)
-            {
-                wcfTodayCollectionDetail cd = new wcfTodayCollectionDetail();
-                cd.RequestedQty =dd.RequisitionDetail.Quantity.ToString();
-                cd.DisbursedQty = dd.DeliveredQuantity.ToString();
-                cd.ItemDescription = dd.RequisitionDetail.Inventory.Description;
-                collectionDetail.Add(cd);
-            }
-            return collectionDetail.ToList();
-        }
+        //    foreach (DisbursementDetail dd in dDetail)
+        //    {
+        //        wcfTodayCollectionDetail cd = new wcfTodayCollectionDetail();
+        //        cd.RequestedQty =dd.RequisitionDetail.Quantity.ToString();
+        //        cd.DisbursedQty = dd.DeliveredQuantity.ToString();
+        //        cd.ItemDescription = dd.RequisitionDetail.Inventory.Description;
+        //        collectionDetail.Add(cd);
+        //    }
+        //    return collectionDetail.ToList();
+        //}
 
         public List<wcfApproveRequisitions> getApproveReqList(String deptid)
         {
@@ -202,25 +202,25 @@ namespace Team7ADProjectMVC
             return dList;
         }
 
-        public List<wcfDisbursementListDetail> getDisbursementListDetails(String disListID)
-        {
-            List<wcfDisbursementListDetail> dDetail = new List<wcfDisbursementListDetail>();
-            int dId = Convert.ToInt32(disListID);
-            var disDetail = from dd in db.DisbursementDetails
-                            where dd.DisbursementListId == dId
-                            select dd;
+        //public List<wcfDisbursementListDetail> getDisbursementListDetails(String disListID)
+        //{
+        //    List<wcfDisbursementListDetail> dDetail = new List<wcfDisbursementListDetail>();
+        //    int dId = Convert.ToInt32(disListID);
+        //    var disDetail = from dd in db.DisbursementDetails
+        //                    where dd.DisbursementListId == dId
+        //                    select dd;
 
-            foreach (DisbursementDetail d in disDetail)
-            {
-                wcfDisbursementListDetail dd = new wcfDisbursementListDetail();
-                dd.ItemName = d.RequisitionDetail.Inventory.Description;
-                dd.ReqQty = d.RequisitionDetail.Quantity.ToString();
-                dd.DisbQty = d.DeliveredQuantity.ToString();
-                dd.Remarks = d.Remark;
-                dDetail.Add(dd);
-            }
-            return dDetail;
-        }
+        //    foreach (DisbursementDetail d in disDetail)
+        //    {
+        //        wcfDisbursementListDetail dd = new wcfDisbursementListDetail();
+        //        dd.ItemName = d.RequisitionDetail.Inventory.Description;
+        //        dd.ReqQty = d.RequisitionDetail.Quantity.ToString();
+        //        dd.DisbQty = d.DeliveredQuantity.ToString();
+        //        dd.Remarks = d.Remark;
+        //        dDetail.Add(dd);
+        //    }
+        //    return dDetail;
+        //}
 
         public List<wcfStockReorder> getStockReorder()
         {

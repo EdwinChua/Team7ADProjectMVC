@@ -18,6 +18,7 @@ namespace Team7ADProjectMVC
         public Retrieval()
         {
             this.DisbursementLists = new HashSet<DisbursementList>();
+            this.Requisitions = new HashSet<Requisition>();
         }
     
         public int RetrievalId { get; set; }
@@ -27,5 +28,7 @@ namespace Team7ADProjectMVC
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DisbursementList> DisbursementLists { get; set; }
         public virtual Employee Employee { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Requisition> Requisitions { get; set; }
     }
 }

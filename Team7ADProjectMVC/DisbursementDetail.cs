@@ -16,14 +16,11 @@ namespace Team7ADProjectMVC
     {
         public int DisbursementDetailId { get; set; }
         public Nullable<int> DisbursementListId { get; set; }
-        public Nullable<int> RequisitionDetailId { get; set; }
-        public string Remark { get; set; }
+        public string ItemNo { get; set; }
         public Nullable<int> PreparedQuantity { get; set; }
         public Nullable<int> DeliveredQuantity { get; set; }
-        public string ItemNo { get; set; }
+        public string Remark { get; set; }
     
         public virtual DisbursementList DisbursementList { get; set; }
-        public virtual RequisitionDetail RequisitionDetail { get; set; }
-        public virtual Inventory Inventory { get; set; }
     }
 }

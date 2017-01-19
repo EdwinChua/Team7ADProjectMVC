@@ -27,15 +27,16 @@ namespace Team7ADProjectMVC
         public string ContactName { get; set; }
         public string PhNo { get; set; }
         public string FaxNo { get; set; }
-        public string HeadName { get; set; }
+        public Nullable<int> HeadId { get; set; }
         public Nullable<int> CollectionPointId { get; set; }
         public Nullable<int> RepresentativeId { get; set; }
     
         public virtual CollectionPoint CollectionPoint { get; set; }
+        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DisbursementList> DisbursementLists { get; set; }
-        public virtual Employee Employee { get; set; }
+        public virtual Employee Employee1 { get; set; }
     }
 }

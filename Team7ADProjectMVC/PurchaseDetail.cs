@@ -19,8 +19,8 @@ namespace Team7ADProjectMVC
         public string ItemNo { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> Price { get; set; }
-        public Nullable<int> SupplierId { get; set; }
         public Nullable<int> Amount { get; set; }
+        public Nullable<int> SupplierId { get; set; }
     
         public virtual Inventory Inventory { get; set; }
         public virtual Supplier Supplier { get; set; }

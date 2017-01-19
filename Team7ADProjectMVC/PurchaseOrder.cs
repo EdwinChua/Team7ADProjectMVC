@@ -23,11 +23,11 @@ namespace Team7ADProjectMVC
         public int PurchaseOrderId { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public Nullable<System.DateTime> DeliveredDate { get; set; }
+        public Nullable<int> SupplierId { get; set; }
         public Nullable<int> EmployeeId { get; set; }
+        public Nullable<int> ReceivedBy { get; set; }
         public Nullable<int> AuthorizedBy { get; set; }
         public Nullable<System.DateTime> AuthorizedDate { get; set; }
-        public Nullable<int> SupplierId { get; set; }
-        public Nullable<int> ReceivedBy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Delivery> Deliveries { get; set; }

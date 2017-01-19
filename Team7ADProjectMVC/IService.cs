@@ -44,6 +44,10 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfCollectionPoint/{deptid}", ResponseFormat = WebMessageFormat.Json)]
         List<String> getCollectionPoint(string deptid);
 
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfCDisbursementList/", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfCDisbursementList> getDisbursementList();
+
     }
 }
 
@@ -188,4 +192,36 @@ public class wcfApproveReqDetails
     [DataMember]
     public String UOM { get; set; }
 }
+public class wcfDisbursementList
+{
+    string disListID;
+    string deptName;
+    string collectionPt;
+    string deliveryDate;
+    string deliveryTime;
+    string repName;
+    string repPhone;
+
+    [DataMember]
+    public String DisListID { get; set; }
+
+    [DataMember]
+    public String DeptName { get; set; }
+
+    [DataMember]
+    public String CollectionPoint { get; set; }
+
+    [DataMember]
+    public String DeliveryDate { get; set; }
+
+    [DataMember]
+    public String DeliveryTime { get; set; }
+
+    [DataMember]
+    public String RepName { get; set; }
+
+    [DataMember]
+    public String RepPhone { get; set; }
+}
+
 

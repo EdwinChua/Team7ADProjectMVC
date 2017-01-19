@@ -57,9 +57,8 @@ namespace Team7ADProjectMVC
         List<wcfStockReorder> getStockReorder();
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfretrivallist/", ResponseFormat = WebMessageFormat.Json)]
-        List<String> retrivallist();
-
+        [WebGet(UriTemplate = "/wcfRetrivalList/", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfRetrivalList> getRetrivalList();
 
     }
 }
@@ -301,5 +300,23 @@ public class wcfStockReorder
     public String S3Phone { get; set; }
 }
 
+public class wcfRetrivalList
+{
+    string itemName;
+    string requestedQty;
+    string retrievedQty;
+    string status;
+    
+    [DataMember]
+    public String ItemName { get; set; }
 
+    [DataMember]
+    public String RequestedQty { get; set; }
 
+    [DataMember]
+    public String RetrievedQty { get; set; }
+
+    [DataMember]
+    public String Status { get; set; }
+
+   }

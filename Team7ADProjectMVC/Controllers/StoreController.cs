@@ -165,8 +165,7 @@ namespace Team7ADProjectMVC.TestControllers
         }
 
         public ActionResult SearchDisbursements(int? id, String status)
-        {
-            //disbursementSvc.GetDisbursementsBySearchCriteria(id, status);
+        { 
             ViewBag.Departments = deptSvc.ListAllDepartments();
 
             return View("ViewDisbursements", disbursementSvc.GetDisbursementsBySearchCriteria(id, status));
@@ -240,6 +239,12 @@ namespace Team7ADProjectMVC.TestControllers
         {
             inventorySvc.ClearRetrievalList();
             return RedirectToAction("ViewRequisitions");
+        }
+
+        public ActionResult DisburseItems()
+        {
+            inventorySvc.AutoAllocateDisbursements();
+            return RedirectToAction("Index");
         }
 
         // ********************* Other *******************

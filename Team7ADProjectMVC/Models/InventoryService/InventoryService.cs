@@ -71,7 +71,7 @@ namespace Team7ADProjectMVC.Models
         public List<Requisition> GetOutStandingRequisitions()
         {
             var query = from rq in db.Requisitions
-                        where rq.RequisitionStatus != "Complete" 
+                        where rq.RequisitionStatus != "Complete"
                         && rq.RequisitionStatus != "Pending"
                         orderby rq.ApprovedDate
                         select rq;
@@ -100,14 +100,14 @@ namespace Team7ADProjectMVC.Models
                 Console.WriteLine("Expected" + e.ToString());
             }
             return (temp);
-            
+
         }
 
         public RetrievalList GetRetrievalList()
         {
             System.Web.HttpContext.Current.Application.Lock();
-            RetrievalList rList = (RetrievalList) System.Web.HttpContext.Current.Application["RetrievalList"];
-            
+            RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
+
 
             if (rList.retrievalId == null)
             {
@@ -116,7 +116,7 @@ namespace Team7ADProjectMVC.Models
                             select rt;
                 rList.retrievalId = (query.ToList()).Last().RetrievalId + 1;
                 Retrieval tempRetrieval = new Retrieval();
-                tempRetrieval.RetrievalId = (int) rList.retrievalId;
+                tempRetrieval.RetrievalId = (int)rList.retrievalId;
                 tempRetrieval.RetrievalDate = DateTime.Today;
                 db.Retrievals.Add(tempRetrieval);
                 db.SaveChanges();
@@ -124,14 +124,14 @@ namespace Team7ADProjectMVC.Models
             }
 
             System.Web.HttpContext.Current.Application.UnLock();
-            return rList;           
+            return rList;
         }
 
         public void PopulateRetrievalList()
         {
             System.Web.HttpContext.Current.Application.Lock();
             RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
-            
+
             rList.requisitionList = GetOutStandingRequisitions();
 
             System.Web.HttpContext.Current.Application["RetrievalList"] = rList;
@@ -144,11 +144,11 @@ namespace Team7ADProjectMVC.Models
 
             rList.itemsToRetrieve = new List<RetrievalListItems>();
 
-            List<RetrievalListItems>  unconsolidatedList = new List<RetrievalListItems>();
+            List<RetrievalListItems> unconsolidatedList = new List<RetrievalListItems>();
 
             foreach (Requisition requisition in rList.requisitionList)
             {
-                foreach(RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
                 {
                     RetrievalListItems newItem = new RetrievalListItems();
                     newItem.itemNo = reqDetails.ItemNo;
@@ -165,14 +165,14 @@ namespace Team7ADProjectMVC.Models
             int i = 0;
             foreach (var item in unconsolidatedList)
             {
-                if (i==0)
+                if (i == 0)
                 {
                     rList.itemsToRetrieve.Add(item);
                     i++;
                 }
-                else if (item.itemNo.Equals(rList.itemsToRetrieve[i-1].itemNo))
+                else if (item.itemNo.Equals(rList.itemsToRetrieve[i - 1].itemNo))
                 {
-                    rList.itemsToRetrieve[i-1].requiredQuantity += item.requiredQuantity;
+                    rList.itemsToRetrieve[i - 1].requiredQuantity += item.requiredQuantity;
                 }
                 else
                 {
@@ -194,45 +194,102 @@ namespace Team7ADProjectMVC.Models
         {
             System.Web.HttpContext.Current.Application.Lock();
             RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
-            var requisitionListFromRList = rList.requisitionList;
+
+            //var context = new EntityContext();
+
+            List<Requisition> requisitionListFromRList = rList.requisitionList;
             RequisitionComparer comparer = new RequisitionComparer();
             requisitionListFromRList.Sort(comparer);
 
             List<DisbursementList> newDisbursementList = new List<DisbursementList>();
             DisbursementList dList = new DisbursementList();
+            List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
+
             int i = 0;
             foreach (Requisition requisition in requisitionListFromRList)
             {
                 if (i == 0)
                 {
-                    
+
                     Department d = db.Departments.Find(requisition.DepartmentId);
-                    dList.Department = d;
-                    dList.CollectionPoint = d.CollectionPoint;
+                    dList.DepartmentId = d.DepartmentId;
+                    dList.CollectionPointId = d.CollectionPointId;
                     dList.OrderedDate = requisition.OrderedDate;
                     dList.RetrievalId = rList.retrievalId;
                     dList.Status = "Pending Delivery";
                     dList.DeliveryDate = DateTime.Today.AddDays(2); //TODO: Place logic for date later
 
-                    List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
-                    //TODO : Implementation logic here
+                    db.Set(typeof(DisbursementList)).Attach(dList);
+                    db.DisbursementLists.Add(dList);
+                    db.SaveChanges();
+
+                    var currentDisbursementListId = dList.DepartmentId;
+
+                    tempDisbursementDetailList = new List<DisbursementDetail>();
+
+                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                    {
+                        DisbursementDetail newDisbursementDetail = new DisbursementDetail();
+                        newDisbursementDetail.RequisitionDetailId = reqDetails.RequisitionDetailId;
+                        //tempDisbursementDetailList.Add(newDisbursementDetail);
+                        newDisbursementDetail.DisbursementListId = currentDisbursementListId;
+                        db.Set(typeof(DisbursementDetail)).Attach(newDisbursementDetail);
+                        db.DisbursementDetails.Add(newDisbursementDetail);
+                        db.SaveChanges();
+                    }
 
                     dList.DisbursementDetails = tempDisbursementDetailList;
-                    
+
 
                     newDisbursementList.Add(dList);
                     i++;
                 }
                 else if (requisition.DepartmentId.Equals(dList.DepartmentId))
                 {
-
+                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                    {
+                        
+                        DisbursementDetail newDisbursementDetail = new DisbursementDetail();
+                        newDisbursementDetail.RequisitionDetail = reqDetails;
+                        tempDisbursementDetailList.Add(newDisbursementDetail);
+                    }
                 }
                 else
                 {
+                    db.Set(typeof(DisbursementList)).Attach(dList);
+                    db.DisbursementLists.Add(dList);
+                    
+                    db.SaveChanges();
+                    dList = new DisbursementList();
 
-                    i++;
+                    Department d = db.Departments.Find(requisition.DepartmentId);
+                    dList.DepartmentId = d.DepartmentId;
+                    dList.CollectionPointId = d.CollectionPointId;
+                    dList.OrderedDate = requisition.OrderedDate;
+                    dList.RetrievalId = rList.retrievalId;
+                    dList.Status = "Pending Delivery";
+                    dList.DeliveryDate = DateTime.Today.AddDays(2); //TODO: Place logic for date later
+
+                    tempDisbursementDetailList = new List<DisbursementDetail>();
+
+                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                    {
+                        DisbursementDetail newDisbursementDetail = new DisbursementDetail();
+                        newDisbursementDetail.RequisitionDetail = reqDetails;
+                        tempDisbursementDetailList.Add(newDisbursementDetail);
+                    }
+
+                    dList.DisbursementDetails = tempDisbursementDetailList;
+
+
+                    newDisbursementList.Add(dList);
                 }
             }
+            db.Set(typeof(DisbursementList)).Attach(dList);
+            db.DisbursementLists.Add(dList);
+
+            db.SaveChanges();
+            dList = new DisbursementList();
 
 
 
@@ -247,7 +304,7 @@ namespace Team7ADProjectMVC.Models
                             int requestedQty = (int)requisitionDetail.Quantity;
                             if (retrievalListItem.collectedQuantity >= requestedQty)
                             {
-                                
+
                                 //requisitionDetail.DisbursementDetails
                             }
                         }
@@ -255,8 +312,8 @@ namespace Team7ADProjectMVC.Models
                 }
             }
 
-            System.Web.HttpContext.Current.Application["RetrievalList"] = rList;
-            System.Web.HttpContext.Current.Application.UnLock();
+            HttpContext.Current.Application["RetrievalList"] = rList;
+            HttpContext.Current.Application.UnLock();
         }
     }
 }

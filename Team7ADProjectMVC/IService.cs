@@ -263,10 +263,13 @@ public class wcfStockReorder
     string reorderQty;
     string supplier1;
     string s1Phone;
+    string s1Price;
     string supplier2;
     string s2Phone;
+    string s2Price;
     string supplier3;
     string s3Phone;
+    string s3Price;
 
 
     [DataMember]
@@ -288,16 +291,24 @@ public class wcfStockReorder
     public String S1Phone { get; set; }
 
     [DataMember]
+    public String S1Price { get; set; }
+
+    [DataMember]
     public String Supplier2 { get; set; }
 
     [DataMember]
     public String S2Phone { get; set; }
 
     [DataMember]
+    public String S2Price { get; set; }
+
+    [DataMember]
     public String Supplier3 { get; set; }
 
     [DataMember]
     public String S3Phone { get; set; }
+    [DataMember]
+    public String S3Price { get; set; }
 }
 
 public class wcfRetrivalList

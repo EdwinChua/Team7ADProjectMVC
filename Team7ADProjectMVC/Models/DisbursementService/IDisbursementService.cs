@@ -21,6 +21,7 @@ namespace Team7ADProjectMVC.Models
         string findCpnameByDisburse(int? id);
         string findCptimeByDisburse(int? id);
         List<DisbursementList> FindDisbursementsBySearch(string date, string status);
+        string findDisbursenmentStatus(int? id);
 
     }
 }

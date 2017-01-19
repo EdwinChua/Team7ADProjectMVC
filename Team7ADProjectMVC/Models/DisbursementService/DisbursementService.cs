@@ -6,7 +6,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
-
 namespace Team7ADProjectMVC.Models
 {
     public class DisbursementService : IDisbursementService
@@ -127,6 +126,10 @@ namespace Team7ADProjectMVC.Models
         public string findCptimeByDisburse(int? id)
         {
             return (db.DisbursementLists.Find(id).CollectionPoint.CollectTime.ToString());
+        }
+        public string findDisbursenmentStatus(int? id)
+        {
+            return (db.DisbursementLists.Find(id).Status);
         }
     }
 }

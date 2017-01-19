@@ -102,14 +102,14 @@ namespace Team7ADProjectMVC
         
             var dDetail = from r in db.DisbursementDetails
                           where r.DisbursementList.DepartmentId == did
-                          && r.DisbursementListId== disbursementListID
+                          && r.DisbursementListId == disbursementListID
                           orderby r.Inventory.Description ascending
                           select r;
 
             foreach (DisbursementDetail dd in dDetail)
             {
                 wcfTodayCollectionDetail cd = new wcfTodayCollectionDetail();
-                cd.RequestedQty =dd.RequisitionDetail.Quantity.ToString();
+                cd.RequestedQty = dd.RequisitionDetail.Quantity.ToString();
                 cd.DisbursedQty = dd.DeliveredQuantity.ToString();
                 cd.ItemDescription = dd.RequisitionDetail.Inventory.Description;
                 collectionDetail.Add(cd);
@@ -243,11 +243,13 @@ namespace Team7ADProjectMVC
                 inv.ReorderQty = i.ReorderQuantity.ToString();
                 inv.Supplier1 = i.Supplier.SupplierName;
                 inv.S1Phone = i.Supplier.PhNo.ToString();
+                inv.S1Price = i.Price1.ToString();
                 inv.Supplier2 = i.Supplier1.SupplierName;
                 inv.S2Phone = i.Supplier1.PhNo.ToString();
+                inv.S2Price = i.Price2.ToString();
                 inv.Supplier3 = i.Supplier2.SupplierName;
                 inv.S3Phone = i.Supplier2.PhNo.ToString();
-
+                inv.S3Price = i.Price3.ToString();
                 soList.Add(inv);
             }
             return soList;

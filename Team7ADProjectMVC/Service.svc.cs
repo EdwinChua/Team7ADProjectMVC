@@ -244,10 +244,13 @@ namespace Team7ADProjectMVC
                 inv.ReorderQty = i.ReorderQuantity.ToString();
                 inv.Supplier1 = i.Supplier.SupplierName;
                 inv.S1Phone = i.Supplier.PhNo.ToString();
+                inv.S1Price = "$ " + i.Price1.ToString();
                 inv.Supplier2 = i.Supplier1.SupplierName;
                 inv.S2Phone = i.Supplier1.PhNo.ToString();
+                inv.S2Price = "$ " + i.Price2.ToString();
                 inv.Supplier3 = i.Supplier2.SupplierName;
                 inv.S3Phone = i.Supplier2.PhNo.ToString();
+                inv.S3Price = "$ " + i.Price3.ToString();
 
                 soList.Add(inv);
             }
@@ -287,6 +290,30 @@ namespace Team7ADProjectMVC
             }
             //List<Requisition> reqList = retrivallist.requisitionList;
             return retrialList;
+        }
+
+
+        public List<wcfallocate> getallocate()
+        {
+
+            // call his method to update and get the list from him and do it here!
+            // this below is just for testing!
+            List<wcfallocate> dDetail = new List<wcfallocate>();
+         
+            var disDetail = from dd in db.DisbursementDetails
+       
+                            orderby dd.Inventory.Description ascending
+                            select dd;
+
+            foreach (DisbursementDetail d in disDetail)
+            {
+                wcfallocate dd = new wcfallocate();
+                dd.ItemName = d.Inventory.Description;
+                dd.PreQty = d.PreparedQuantity.ToString();
+                dd.DisbQty = d.DeliveredQuantity.ToString();
+                dDetail.Add(dd);
+            }
+            return dDetail;
         }
     }
 }

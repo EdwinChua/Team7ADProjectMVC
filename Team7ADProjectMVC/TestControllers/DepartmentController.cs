@@ -8,15 +8,24 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC;
 
+using Team7ADProjectMVC.Models.DelegateRoleService;
+using Team7ADProjectMVC.Models.DepartmentService;
+using Team7ADProjectMVC.Models.ListAllRequisitionService;
+
+
+
+
 namespace Team7ADProjectMVC.TestControllers
 {
 
     public class PersonModel
     {
+        public string Name { get; set; }
+        public string Depart { get; set; }
         public List<RoleModel> Roles { get; set; }
         public List<ItemModel> Items { get; set; }
 
-        public string Name { get; set; }
+        
     }
     public class ItemModel
     {
@@ -29,20 +38,52 @@ namespace Team7ADProjectMVC.TestControllers
         public string RoleName { get; set; }
         public string Description { get; set; }
     }
-    //public class QuantityModel
-    //{
-    //    public string Quantity { get; set; }
-    //}
+   
 
     public class DepartmentController : Controller
     {
+        public class PersonModel
+        {
+            public string Name { get; set; }
+            public string Depart { get; set; }
+            public List<RoleModel> Roles { get; set; }
+            public List<ItemModel> Items { get; set; }
+
+
+        }
+        public class ItemModel
+        {
+            public string Item { get; set; }
+            public string Quantity { get; set; }
+        }
+
+        public class RoleModel
+        {
+            public string RoleName { get; set; }
+            public string Description { get; set; }
+        }
+
+
+        private static PersonModel mododo;
+        private IRequisitionService listsvc;
+        private IDepartmentService depasvc;
+        private IDelegateRoleService delpsvc;
         private ProjectEntities db = new ProjectEntities();
         List<String> Roles;
-        // GET: Department
+
+        public DepartmentController()
+        {
+            
+            listsvc = new RequisitionService();
+            delpsvc = new DelegateRoleService();
+            depasvc = new DepartmentService();
+            mododo = new PersonModel();
+        }
+        
         public ActionResult Index()
         {
-            var requisitions = db.Requisitions.ToList();
-
+            //var requisitions = db.Requisitions.ToList();
+            var requisitions = depasvc.ListAllRequisition();
             ViewBag.Cat = requisitions;
             return View();
         }
@@ -84,30 +125,51 @@ namespace Team7ADProjectMVC.TestControllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MakeRequisition([Bind(Include = "RequisitionId,EmployeeId,DepartmentId,ApprovedBy,ApprovedDate,OrderedDate,RequisitionStatus")] Requisition requisition)
+        public ActionResult MakeRequisition([Bind(Include = "RequisitionId,EmployeeId,DepartmentId,ApprovedBy,ApprovedDate,OrderedDate,RequisitionStatus")] Requisition requisition, PersonModel model)
         {
+            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", requisition.EmployeeId);
 
             Requisition req = new Requisition();
-           
+            ///fake
+            req.RequisitionStatus = "Pending";
+            req.EmployeeId = 1;
+            req.DepartmentId = 2;
+            req.OrderedDate = DateTime.Today;
+            //
             
 
 
             List<RequisitionDetail> redlis = new List<RequisitionDetail>();
-            
 
+            //RequisitionDetail  r= model.Items[1];
+            req.RequisitionDetails = redlis;
+
+
+            foreach (ItemModel i in mododo.Items)
+            {
+
+                RequisitionDetail rd = new RequisitionDetail();
+                rd.Quantity = Int32.Parse(i.Quantity);
+                rd.ItemNo = i.Item;
+                rd.OutstandingQuantity = Int32.Parse(i.Quantity);
+                rd.RequisitionId = req.RequisitionId;
+                rd.DeliveryStatus = "Preparing";
+                req.RequisitionDetails.Add(rd);
+            }
 
 
             if (ModelState.IsValid)
             {
                 db.Requisitions.Add(requisition);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-            List<RequisitionDetail> relis = db.RequisitionDetails.Take(3).ToList();
+            //List<RequisitionDetail> relis = db.RequisitionDetails.Take(3).ToList();
 
-            ViewBag.rel = relis;
+            //ViewBag.rel = relis;
 
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", requisition.EmployeeId);
+            
             return View(requisition);
             //var requisitions = db.Requisitions.ToList();
             //ViewBag.Cat = requisitions;
@@ -144,6 +206,8 @@ namespace Team7ADProjectMVC.TestControllers
         //    model.Items[0];
             if (model != null)
             {
+                mododo = model;
+
                 return Json("Success");
             }
             else

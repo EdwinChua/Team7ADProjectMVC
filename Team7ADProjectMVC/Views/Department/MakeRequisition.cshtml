@@ -34,13 +34,9 @@
                                     </script>
                                 </div>
                             </div>
+                        </div>
 
-
-
-                        </div><label for="exampleInputEmail1">
-                            Requisition Num:
-                        </label>
-                        @Html.TextBox("StudentName", null, new { @class = "form-control" })
+                        @*@Html.TextBox("StudentName", null, new { @class = "form-control" })*@
 
 
 
@@ -88,7 +84,7 @@
                         </div>
                         <div class="form-group">
 
-                            <button type="button" class="btn btn-default" id="addNew" onclick="submitForm()">
+                            <button type="button" class="btn btn-default" id="addNew">
                                 Add items to requistion list>>>
                             </button>
 
@@ -170,7 +166,7 @@
                 </div>
             </div>
 
-            <button id="click1" type="submit" class="btn btn-default" >
+            <button id="cl" type="submit" class="btn btn-default" >
                 Submit
             </button>
         </div>
@@ -188,7 +184,6 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@*<script src="jquery.json-2.4.min.js"></script>*@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
@@ -423,19 +418,55 @@ function submitForm() {
 }*@
 
 
+
+    $(function () {
+        $('#cl,#addNew,.removebutton').click(function (e) {
+
+            var jsonObject = {
+                "Name": "Rami",
+                
+                "Depart": "Science",
+                
+                "Roles": [{ "RoleName": "Admin", "Description" : "Admin Role"}, { "RoleName": "User", "Description" : "User Role"}],
+                //"Items": [{ "Item": "clips", "Quantity": "1" }, { "Item": "pen", "Quantity": "2" }]
+              
+                "Items": TableData
+            };
+
+            //var jsonObject = myObjt;
+
+            $.ajax({
+                url: "@Url.Action("AddUser")",
+                type: "POST",
+            data: JSON.stringify(jsonObject),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (response) {
+                alert(response.responseText);
+            },
+            success: function (response) {
+                alert(response);
+            }
+        });
+
+    });
+    });
 </script>
 
 
 
-<script>
+@*<script>
     $(function () {
-        $('#click1').click(function (e) {
+        $('#cl,#addNew,.removebutton').click(function (e) {
 
             var jsonObject = {
-                "Name" : "Rami",
+                "Name": "Rami",
+                
+                "Depart": "Science",
+                
                 "Roles": [{ "RoleName": "Admin", "Description" : "Admin Role"}, { "RoleName": "User", "Description" : "User Role"}],
                 //"Items": [{ "Item": "clips", "Quantity": "1" }, { "Item": "pen", "Quantity": "2" }]
-                //"Items": myObjt.myrows
+              
                 "Items": TableData
             };
 
@@ -457,4 +488,4 @@ function submitForm() {
 
         });
     });
-</script>
+</script>*@

@@ -10,7 +10,7 @@
 <div>
     <h4>Inventory</h4>
     <hr />
-    <dl class="row">
+    <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
@@ -73,6 +73,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.Price3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BinNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BinNo)
         </dd>
 
         <dt>

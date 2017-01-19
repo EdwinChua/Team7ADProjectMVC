@@ -12,14 +12,9 @@ namespace Team7ADProjectMVC
     using System;
     using System.Collections.Generic;
     
-    public partial class AdjustmentDetail
+    public partial class ItemCodeGenerator
     {
-        public int AdjustmentDetailId { get; set; }
-        public Nullable<int> AdjustmentId { get; set; }
-        public string ItemNo { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public string Reason { get; set; }
-    
-        public virtual Inventory Inventory { get; set; }
+        public string Letter { get; set; }
+        public Nullable<int> itemcount { get; set; }
     }
 }

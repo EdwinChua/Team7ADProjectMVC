@@ -374,7 +374,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="TestControllers\DepartmentController.cs" />
-    <Compile Include="TestControllers\DisbursementDetailsController.cs" />
     <Compile Include="TestControllers\EmployeesController.cs" />
     <Compile Include="TestControllers\HeadController.cs" />
     <Compile Include="TestControllers\InventoriesController.cs" />

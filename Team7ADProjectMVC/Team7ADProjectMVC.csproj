@@ -113,7 +113,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Site.css" />
-    <Content Include="database.sql" />
+    <Content Include="DatabaseTableQueries.sql" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Model1.Context.tt">
@@ -255,6 +255,8 @@
     <Compile Include="CollectionPoint.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReportService\IReportService.cs" />
+    <Compile Include="Models\ReportService\ReportService.cs" />
     <Compile Include="Models\RequisitionComparer.cs" />
     <Compile Include="Models\RetrievalList.cs" />
     <Compile Include="DataSet1.Designer.cs">
@@ -420,7 +422,6 @@
     <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewDisbursement.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewRequisitions.cshtml" />
-    <Content Include="Views\Rpt\RptOptions.cshtml" />
     <Content Include="Views\Department\Representative\Details.cshtml" />
     <Content Include="Views\Department\Representative\Viewdisbursements.cshtml" />
     <Content Include="Views\DisbursementDetails\Create.cshtml" />
@@ -429,6 +430,9 @@
     <Content Include="Views\DisbursementDetails\Edit.cshtml" />
     <Content Include="Views\DisbursementDetails\Index.cshtml" />
     <Content Include="Views\Department\Representative\ViewDisbursementDetail.cshtml" />
+    <Content Include="Views\Rpt\ItemDeptRpt.cshtml" />
+    <Content Include="Views\Rpt\ItemSupplierRpt.cshtml" />
+    <Content Include="Views\Rpt\ReportOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

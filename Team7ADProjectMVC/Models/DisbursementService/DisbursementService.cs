@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Team7ADProjectMVC.Models.UtilityService;
 
 namespace Team7ADProjectMVC.Models
 {

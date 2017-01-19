@@ -462,7 +462,8 @@ ItemNo VARCHAR(50),
 PreparedQuantity INT,
 DeliveredQuantity INT,
 Remark VARCHAR(250),
-CONSTRAINT DisbursementListId FOREIGN KEY (DisbursementListId) REFERENCES DisbursementList (DisbursementListId)
+CONSTRAINT DisbursementListId FOREIGN KEY (DisbursementListId) REFERENCES DisbursementList (DisbursementListId),
+CONSTRAINT DisbursementDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(ItemNo)
 )
 
 INSERT INTO DisbursementDetail

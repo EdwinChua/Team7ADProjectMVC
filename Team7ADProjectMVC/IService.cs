@@ -28,9 +28,9 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfTodayCollection/{deptid}", ResponseFormat = WebMessageFormat.Json)]
         List<wcfTodayCollectionlist> getTodayCollection(string deptid);
 
-        [OperationContract]
-        [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={disListID}", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string disListID);
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={disListID}", ResponseFormat = WebMessageFormat.Json)]
+        //List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string disListID);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfApproveRequisitions/{deptid}", ResponseFormat = WebMessageFormat.Json)]
@@ -238,7 +238,7 @@ public class wcfDisbursementList
 public class wcfDisbursementListDetail
 {
     string itemName;
-    string reqQty;
+    string preQty;
     string disbQty;
     string remarks;
 
@@ -246,7 +246,7 @@ public class wcfDisbursementListDetail
     public String ItemName { get; set; }
 
     [DataMember]
-    public String ReqQty { get; set; }
+    public String PreQty { get; set; }
 
     [DataMember]
     public String DisbQty { get; set; }

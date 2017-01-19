@@ -4,28 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a0777a9c183c484a85e633a99a49f26b" Name="Diagram1">
+      <Diagram DiagramId="6b7bc51f835347a08b7f92458e5360c5" Name="Diagram1">
         <EntityTypeShape EntityType="ProjectModel.Adjustment" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectModel.AdjustmentDetail" Width="1.5" PointX="9.75" PointY="31.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectModel.Category" Width="1.5" PointX="5.25" PointY="30.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.AdjustmentDetail" Width="1.5" PointX="12" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Category" Width="1.5" PointX="7.5" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.CollectionPoint" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.Delegate" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.Delivery" Width="1.5" PointX="7.5" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectModel.DeliveryDetail" Width="1.5" PointX="9.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.DeliveryDetail" Width="1.5" PointX="12" PointY="30.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.Department" Width="1.5" PointX="7.5" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectModel.DisbursementDetail" Width="1.5" PointX="12" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.DisbursementDetail" Width="1.5" PointX="12" PointY="18" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.DisbursementList" Width="1.5" PointX="9.75" PointY="17.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.Employee" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectModel.Inventory" Width="1.5" PointX="7.5" PointY="31.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectModel.Measurement" Width="1.5" PointX="5.25" PointY="32.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Inventory" Width="1.5" PointX="9.75" PointY="27.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Measurement" Width="1.5" PointX="7.5" PointY="28.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.Permission" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectModel.PurchaseDetail" Width="1.5" PointX="12.75" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.PurchaseDetail" Width="1.5" PointX="15" PointY="29.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.PurchaseOrder" Width="1.5" PointX="5.25" PointY="18.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.Requisition" Width="1.5" PointX="7.5" PointY="18.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.RequisitionDetail" Width="1.5" PointX="9.75" PointY="22" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.Retrieval" Width="1.5" PointX="5.25" PointY="26.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.Role" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectModel.Supplier" Width="1.5" PointX="5.25" PointY="35" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Supplier" Width="1.5" PointX="7.5" PointY="30.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectModel.StockCard" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="ProjectModel.AdjustmentEmployeeId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectModel.AdjustmentDetailItemNo" ManuallyRouted="false" />
@@ -41,6 +41,7 @@
         <AssociationConnector Association="ProjectModel.DepartmentId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectModel.DisbursementListDepartmentId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectModel.EmployeeId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.DisbursementDetailItemNo" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectModel.DisbursementListId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectModel.RetrievalId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectModel.PermissionId" ManuallyRouted="false" />

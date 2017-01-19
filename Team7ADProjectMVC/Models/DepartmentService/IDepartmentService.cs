@@ -9,8 +9,10 @@ namespace Team7ADProjectMVC.Models.DepartmentService
     interface IDepartmentService
     {
         List<Department> ListAllDepartments();
-        List<Employee> GetAllEmployeebyDepId(int depId);
-        Employee FindById(int? empid);
-        void manageDelegate(Employee e, DateTime startDate, DateTime endDate, bool approveReq, bool changeCP, bool viewReq, bool makeReq, bool delegateRol, bool viewColDetl);
-    }
+        Requisition FindById(string id);
+        Requisition FindRequisitionById(string id);
+        List<Requisition> GetRequisitionByStatus(string status);
+        List<Requisition> ListAllDepartment();
+        List<Requisition> ListAllRequisition();
+      }
 }

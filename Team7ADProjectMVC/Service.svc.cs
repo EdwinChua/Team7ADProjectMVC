@@ -93,10 +93,11 @@ namespace Team7ADProjectMVC
             return making;
            
         }
+      //  List<wcfTodayCollectionDetail> collectionDetail = new List<wcfTodayCollectionDetail>();
 
         public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String disListID)
         {
-            List<wcfTodayCollectionDetail> collectionDetail = new List<wcfTodayCollectionDetail>();
+            List<wcfTodayCollectionDetail> collectionDetails = new List<wcfTodayCollectionDetail>();
             int did = Convert.ToInt32(deptid);
             int disbursementListID = Convert.ToInt32(disListID);
         
@@ -109,12 +110,12 @@ namespace Team7ADProjectMVC
             foreach (DisbursementDetail dd in dDetail)
             {
                 wcfTodayCollectionDetail cd = new wcfTodayCollectionDetail();
-                cd.RequestedQty =dd.RequisitionDetail.Quantity.ToString();
+                cd.RequestedQty = dd.PreparedQuantity.ToString();
                 cd.DisbursedQty = dd.DeliveredQuantity.ToString();
-                cd.ItemDescription = dd.RequisitionDetail.Inventory.Description;
-                collectionDetail.Add(cd);
+                cd.ItemDescription = dd.Inventory.Description;
+                collectionDetails.Add(cd);
             }
-            return collectionDetail.ToList();
+            return collectionDetails.ToList();
         }
 
         public List<wcfApproveRequisitions> getApproveReqList(String deptid)
@@ -217,8 +218,8 @@ namespace Team7ADProjectMVC
             foreach (DisbursementDetail d in disDetail)
             {
                 wcfDisbursementListDetail dd = new wcfDisbursementListDetail();
-                dd.ItemName = d.RequisitionDetail.Inventory.Description;
-                dd.ReqQty = d.RequisitionDetail.Quantity.ToString();
+                dd.ItemName = d.Inventory.Description;
+                dd.PreQty = d.PreparedQuantity.ToString();
                 dd.DisbQty = d.DeliveredQuantity.ToString();
                 dd.Remarks = d.Remark;
                 dDetail.Add(dd);
@@ -243,10 +244,13 @@ namespace Team7ADProjectMVC
                 inv.ReorderQty = i.ReorderQuantity.ToString();
                 inv.Supplier1 = i.Supplier.SupplierName;
                 inv.S1Phone = i.Supplier.PhNo.ToString();
+                inv.S1Price = i.Price1.ToString();
                 inv.Supplier2 = i.Supplier1.SupplierName;
                 inv.S2Phone = i.Supplier1.PhNo.ToString();
+                inv.S2Price = i.Price2.ToString();
                 inv.Supplier3 = i.Supplier2.SupplierName;
                 inv.S3Phone = i.Supplier2.PhNo.ToString();
+                inv.S3Price = i.Price3.ToString();
 
                 soList.Add(inv);
             }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Team7ADProjectMVC.Models;
 
 namespace Team7ADProjectMVC
 {
@@ -12,6 +13,8 @@ namespace Team7ADProjectMVC
 	public class Service : IService
 	{
         ProjectEntities db = new ProjectEntities();
+
+        InventoryService invService = new InventoryService();
         public List<WCFMsg> DoWork()
         {
             List<WCFMsg> l = new List<WCFMsg>();
@@ -243,6 +246,25 @@ namespace Team7ADProjectMVC
                 soList.Add(inv);
             }
             return soList;
+        }
+
+
+        public List<string> retrivallist()
+        {
+            List<String> sl = new List<string>();
+            RetrievalList retrivallist = new RetrievalList();
+
+            invService.PopulateRetrievalList();
+            invService.PopulateRetrievalListItems();
+          retrivallist=  invService.GetRetrievalList();
+          int? rid =retrivallist.retrievalId;
+          List<RetrievalListItems> itemsToR = retrivallist.itemsToRetrieve;
+          List<Requisition> reqList = retrivallist.requisitionList;
+
+          sl.Add(rid.ToString());
+
+
+            return sl;
         }
     }
 }

@@ -56,6 +56,11 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfStockReorder/", ResponseFormat = WebMessageFormat.Json)]
         List<wcfStockReorder> getStockReorder();
 
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfretrivallist/", ResponseFormat = WebMessageFormat.Json)]
+        List<String> retrivallist();
+
+
     }
 }
 

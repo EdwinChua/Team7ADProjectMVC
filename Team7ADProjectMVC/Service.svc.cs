@@ -291,5 +291,29 @@ namespace Team7ADProjectMVC
             //List<Requisition> reqList = retrivallist.requisitionList;
             return retrialList;
         }
+
+
+        public List<wcfallocate> getallocate()
+        {
+
+            // call his method to update and get the list from him and do it here!
+            // this below is just for testing!
+            List<wcfallocate> dDetail = new List<wcfallocate>();
+         
+            var disDetail = from dd in db.DisbursementDetails
+       
+                            orderby dd.Inventory.Description ascending
+                            select dd;
+
+            foreach (DisbursementDetail d in disDetail)
+            {
+                wcfallocate dd = new wcfallocate();
+                dd.ItemName = d.Inventory.Description;
+                dd.PreQty = d.PreparedQuantity.ToString();
+                dd.DisbQty = d.DeliveredQuantity.ToString();
+                dDetail.Add(dd);
+            }
+            return dDetail;
+        }
     }
 }

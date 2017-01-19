@@ -103,6 +103,7 @@ namespace Team7ADProjectMVC
             var dDetail = from r in db.DisbursementDetails
                           where r.DisbursementList.DepartmentId == did
                           && r.DisbursementListId== disbursementListID
+                          orderby r.Inventory.Description ascending
                           select r;
 
             foreach (DisbursementDetail dd in dDetail)
@@ -169,7 +170,8 @@ namespace Team7ADProjectMVC
             int dId = Convert.ToInt32(deptid);
              var collectionLocation = from c in db.DisbursementLists
                                     where c.DepartmentId == dId
-                                   select c;
+                                    orderby c.CollectionPoint.PlaceName ascending
+                                    select c;
             String s;
              foreach (DisbursementList d in collectionLocation)
             {
@@ -185,6 +187,7 @@ namespace Team7ADProjectMVC
             List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
             var disburse = from d in db.DisbursementLists
                            where d.Status != "Completed"
+                           orderby d.DeliveryDate ascending
                            select d;
 
             foreach (DisbursementList d in disburse)
@@ -208,6 +211,7 @@ namespace Team7ADProjectMVC
             int dId = Convert.ToInt32(disListID);
             var disDetail = from dd in db.DisbursementDetails
                             where dd.DisbursementListId == dId
+                            orderby dd.Inventory.Description ascending
                             select dd;
 
             foreach (DisbursementDetail d in disDetail)
@@ -227,6 +231,7 @@ namespace Team7ADProjectMVC
             List<wcfStockReorder> soList = new List<wcfStockReorder>();
             var reOrders = from so in db.Inventories
                            where so.Quantity <= so.ReorderLevel
+                           orderby so.Quantity ascending
                            select so;
 
             foreach (Inventory i in reOrders)

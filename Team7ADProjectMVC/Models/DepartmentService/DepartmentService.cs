@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Team7ADProjectMVC.Models.DepartmentService
 {
-    class DepartmentService : IDelegateRoleService
+    class DepartmentService : IDepartmentService
     {
         ProjectEntities db = new ProjectEntities();
 
@@ -26,7 +26,7 @@ namespace Team7ADProjectMVC.Models.DepartmentService
             throw new NotImplementedException();
         }
 
-        public List<Requisition> ListAllDepartment()
+        public List<Requisition> ListAllRequisition()
         {
             throw new NotImplementedException();
         }
@@ -35,7 +35,10 @@ namespace Team7ADProjectMVC.Models.DepartmentService
         {
             return (db.Departments.ToList());
         }
-      
-       
+
+        public List<Requisition> ListAllDepartment()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

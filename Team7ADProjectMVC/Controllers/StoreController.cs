@@ -14,7 +14,7 @@ namespace Team7ADProjectMVC.TestControllers
     {
         private IInventoryService inventorySvc;
         private IDisbursementService disbursementSvc;
-        private IDelegateRoleService deptSvc;
+        private IDepartmentService deptSvc;
 
         public StoreController()
         {

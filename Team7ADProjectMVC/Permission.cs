@@ -14,6 +14,7 @@ namespace Team7ADProjectMVC
     
     public partial class Permission
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Permission()
         {
             this.Employees = new HashSet<Employee>();
@@ -27,6 +28,7 @@ namespace Team7ADProjectMVC
         public Nullable<bool> DelegateRole { get; set; }
         public Nullable<bool> ViewCollectionDetails { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
     }
 }

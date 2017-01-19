@@ -14,6 +14,7 @@ namespace Team7ADProjectMVC
     
     public partial class DisbursementList
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DisbursementList()
         {
             this.DisbursementDetails = new HashSet<DisbursementDetail>();
@@ -29,6 +30,7 @@ namespace Team7ADProjectMVC
     
         public virtual CollectionPoint CollectionPoint { get; set; }
         public virtual Department Department { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DisbursementDetail> DisbursementDetails { get; set; }
         public virtual Retrieval Retrieval { get; set; }
     }

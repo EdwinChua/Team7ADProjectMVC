@@ -49,7 +49,7 @@ namespace Team7ADProjectMVC.TestControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DisbursementDetailId,DisbursementListId,RequisitionDetailId,Quantity,Remark,Remark1")] DisbursementDetail disbursementDetail)
+        public ActionResult Create([Bind(Include = "DisbursementDetailId,DisbursementListId,RequisitionDetailId,Remark,PreparedQuantity,DeliveredQuantity")] DisbursementDetail disbursementDetail)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace Team7ADProjectMVC.TestControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DisbursementDetailId,DisbursementListId,RequisitionDetailId,Quantity,Remark,Remark1")] DisbursementDetail disbursementDetail)
+        public ActionResult Edit([Bind(Include = "DisbursementDetailId,DisbursementListId,RequisitionDetailId,Remark,PreparedQuantity,DeliveredQuantity")] DisbursementDetail disbursementDetail)
         {
             if (ModelState.IsValid)
             {

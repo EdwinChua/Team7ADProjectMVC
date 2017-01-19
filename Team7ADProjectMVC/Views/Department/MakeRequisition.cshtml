@@ -6,10 +6,10 @@
 }
 
 @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+{
+    @Html.AntiForgeryToken()
 
-       
+
 
     <div class="container-fluid">
         <div class="row">
@@ -17,32 +17,32 @@
                 <div class="row">
                     <div class="col-md-8">
                         @*<form role="form">*@
-                            <div class="form-group">
-                                <div class="page-header">
-                                  
-                                 
-                                        Department:  @Html.DisplayFor(model => model.Employee.Department.DepartmentName)
+                        <div class="form-group">
+                            <div class="page-header">
 
-                                        Employee Name:  @Html.DisplayFor(model => model.Employee.EmployeeName)
 
-                                   
-                                    <div>
-                                        <span>OrderedDate:</span> <p id="demo"></p>
-                                        <script>
+                                Department:  @Html.DisplayFor(model => model.Employee.Department.DepartmentName)
+
+                                Employee Name:  @Html.DisplayFor(model => model.Employee.EmployeeName)
+
+
+                                <div>
+                                    <span>OrderedDate:</span> <p id="demo"></p>
+                                    <script>
                                             var d = new Date();
                                             document.getElementById("demo").innerHTML = d.toDateString();
-                                        </script>
-                                    </div>
+                                    </script>
                                 </div>
-                                   
+                            </div>
 
 
-                                </div><label for="exampleInputEmail1">
-                                Requisition Num:
-                            </label>
-                            @Html.TextBox("StudentName", null, new { @class = "form-control" })
-                            
-                           
+
+                        </div><label for="exampleInputEmail1">
+                            Requisition Num:
+                        </label>
+                        @Html.TextBox("StudentName", null, new { @class = "form-control" })
+
+
 
                         <div class="form-group">
 
@@ -51,12 +51,12 @@
                             </label>
 
                             @*<select class="input-lg" name="PrerequisiteMembershipId" id="PrerequisiteMembershipId">
-                                <option value="" style="color:#ccc !important;"> Please select the membership name to be searched for </option>
-                                @foreach (var item in ViewBag.MembershipList.Items)
-                                {
-                                    <option value="@item.Id" @(Model.RequisitionDetails. == item.Id ? "selected" : "")>@item.Name</option>
-                                }
-                            </select>*@
+                                    <option value="" style="color:#ccc !important;"> Please select the membership name to be searched for </option>
+                                    @foreach (var item in ViewBag.MembershipList.Items)
+                                    {
+                                        <option value="@item.Id" @(Model.RequisitionDetails. == item.Id ? "selected" : "")>@item.Name</option>
+                                    }
+                                </select>*@
 
 
                             <select id="lecturerId" name="lecturerId"
@@ -69,11 +69,12 @@
                                         <option data-subtext="all">@item.Description</option>
                                     }
                                 </optgroup>
+
                                 <optgroup label="clips">
-                                   @foreach (var item in ViewBag.clips)
-                                   {
-                                    <option data-subtext="clip">@item.Description</option>
-                                   }
+                                    @foreach (var item in ViewBag.clips)
+                                    {
+                                        <option data-subtext="clip">@item.Description</option>
+                                    }
                                 </optgroup>
                             </select>
 
@@ -87,17 +88,33 @@
                         </div>
                         <div class="form-group">
 
-                            <button type="button" class="btn btn-default" id="addNew">
+                            <button type="button" class="btn btn-default" id="addNew" onclick="submitForm()">
                                 Add items to requistion list>>>
                             </button>
-                           
+
 
                         </div>
 
 
-                    @*</form>*@
+                        @*</form>*@
 
 
+                    </div>
+
+
+
+
+
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                NEWS
+                            </div>
+                            <div class="panel-body">
+                                <p>Mun Kew received his PhD from Stanford University. He has more than 25 years of R&D and commercial experience in IT. He was Chair and Editor of the ISO/JTC1/WG2/24800 JPSearch international standard, editor or past editor of the Journal of Information Retrieval, Information Processing and Management Journal, member of the advisory board for the School of IIT at Temasek Polytechnic, the IRAL and AIRS symposium series, and formerly Adjunct Assoc. Prof at the National Institute of Education.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -105,80 +122,64 @@
 
 
                 <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            NEWS
-                        </div>
-                        <div class="panel-body">
-                            <p>Mun Kew received his PhD from Stanford University. He has more than 25 years of R&D and commercial experience in IT. He was Chair and Editor of the ISO/JTC1/WG2/24800 JPSearch international standard, editor or past editor of the Journal of Information Retrieval, Information Processing and Management Journal, member of the advisory board for the School of IIT at Temasek Polytechnic, the IRAL and AIRS symposium series, and formerly Adjunct Assoc. Prof at the National Institute of Education.</p>
-                        </div>
-                    </div>
+                    <table class="table col-md-4" id="taskTable">
+                        <thead>
+
+                            <tr>
+                                <th>
+                                    Item
+                                </th>
+                                <th>
+                                    Quantity
+                                </th>
+                                @*<th>
+                                        Outstanding Quantity
+                                    </th>*@
+                                @*<th>
+                                        Delivery Status
+                                    </th>*@
+                            </tr>
+
+
+                        </thead>
+                        <tbody>
+
+                            @*@foreach (var item in ViewBag.rel)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.ItemNo
+                                        </td>
+                                        <td>
+                                            @item.Quantity
+                                        </td>
+                                        @*<td>
+                                            @item.OutstandingQuantity
+                                        </td>
+                                        <td>
+                                            @item.DeliveryStatus
+                                        </td>
+
+                                    </tr>
+                                }*@
+
+                        </tbody>
+
+
+                    </table>
                 </div>
             </div>
 
-
-
-
-
-            <div class="col-md-4">
-                <table class="table col-md-4" id="taskTable">
-                    <thead>
-
-                        <tr>
-                            <th>
-                                ItemNo
-                            </th>
-                            <th>
-                                Quantity
-                            </th>
-                            @*<th>
-                                Outstanding Quantity
-                            </th>*@
-                            @*<th>
-                                Delivery Status
-                            </th>*@
-                        </tr>
-
-
-                    </thead>
-                    <tbody>
-
-                        @*@foreach (var item in ViewBag.rel)
-                        {
-                            <tr>
-                                <td>
-                                    @item.ItemNo
-                                </td>
-                                <td>
-                                    @item.Quantity
-                                </td>
-                                @*<td>
-                                    @item.OutstandingQuantity
-                                </td>
-                                <td>
-                                    @item.DeliveryStatus
-                                </td>
-
-                            </tr>
-                        }*@
-
-                    </tbody>
-
-
-                </table>
-            </div>
+            <button type="submit" class="btn btn-default" >
+                Submit
+            </button>
         </div>
-       
-        <button type="submit" class="btn btn-default">
-            Submit
-        </button>
-    </div>
 
-</div>
+    </div>
 
 }
 
-  @*</form>*@
+@*</form>*@
 
 
 
@@ -191,137 +192,188 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script>
+
+
+////////ok///////////////////////
+    var da = $('#demo').val();
+
+    var myObject = new Object();
+    myObject.dname = "Science";
+    myObject.ename = "joe";
+    myObject.date = da;
+
+    //json = myObjectd.toJSONString();
+    //alert(json);
+    var json = JSON.stringify(myObject);
+    alert(json);
+
+    var myObjt = {};
+//////////////////////////////////////
+
+    var data = {
+        items: [
+           // <== The new item
+
+        ]
+    };
+    alert(data.items);
+
+
+
+
+
 $(document).ready(function(){
-  // Add button click event
+    // Add button click event
+
+
+
+
   $("#addNew").click(function(){
-    addNewRow();
+      addNewRow();
+
+
+
+      var myRows = [];
+      var $headers = $("th");
+      var $rows = $("tbody tr").each(function (index) {
+          $cells = $(this).find(".hihi");
+          myRows[index] = {};
+          $cells.each(function (cellIndex) {
+
+
+              if ($(this).html() == "") {
+
+                  myRows[index][$($headers[cellIndex]).html()] = $(this).val();
+
+              } else { myRows[index][$($headers[cellIndex]).html()] = $(this).html(); }
+
+
+
+
+          });
+      });
+
+
+
+      myObjt.myrows = myRows;
+      console.log(myObjt);
+
+      var option = $('#lecturerId').val();
+      var qty = $('#QTY').val();
+
+
   });
 
 });
 
 
-
-
-$(function() {
-
-    $('input[type="button"]').click(function (e) {
-
-        var row = $(this).closest('tr');
-
-        row.remove();
-
-    })
-})
-
-
-
-
 // Add a new row when Add Task button is clicked
 function addNewRow() {
-    var option = $('#lecturerId').val();
+
     var qty = $('#QTY').val();
+    var option = $('#lecturerId').val();
+    ///////////////////////////////////////
     var numRows = $('#taskTable tr').length;
     $('#taskTable').append('<tr id="myTableRow">\
-           <td>' + option + '</td>\
-           <td><input type="text" id="description-' + numRows + '" placeholder="Task Description" value="'+ qty+'"/></td>\
-           <td><button type="button" class="removebutton" title="Remove this row">Delete</button></td>\
+           <td class="hihi">' + option + '</td>\
+           <td><input type="text" id="description-' + numRows + '" class="hihi" placeholder="Task Description" value="' + qty + '"/></td>\
+           <td><button type="button" id="' + numRows + '" class="removebutton hihi" title="Remove this row">Delete</button></td>\
            </tr>\
    ');
+
+
+
 }
 
-//<td><div type="text" id="title-' + numRows + '" placeholder="Your Task Name" value="' + option + '" readonly/></td>\
-
+    ///////////////////////////////////////////////////////////
 
 $(document).on('click', 'button.removebutton', function () {
-    //alert("you have deleted this item from the list");
+
+    var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
+    alert('you clicked on button #' + clickedBtnID);
+    //var item = { id: 45, option: option, qty: qty };
+    //data.items.pop(this.Object);
+
+    //data.items.forEach(function (item, index) {
+
+
+    parseInt("10")
+    alert('you clicked on button #' +  $(this).toArray());
+    var index =parseInt(clickedBtnID)-1 ;
+    alert(index);
+    //});
+
+
+    if (index > -1) {
+        data.items.splice(index, 1);
+    }
+
+    data.items.forEach(function (item, index) {
+        console.log(item);
+    });
+
+
     $(this).closest('tr').remove();
+
+
+
+
+
+
+
+
+    var myRows = [];
+    var $headers = $("th");
+    var $rows = $("tbody tr").each(function (index) {
+        $cells = $(this).find(".hihi");
+        myRows[index] = {};
+        $cells.each(function (cellIndex) {
+
+
+            if ($(this).html() == "") {
+
+                myRows[index][$($headers[cellIndex]).html()] = $(this).val();
+
+            } else { myRows[index][$($headers[cellIndex]).html()] = $(this).html(); }
+
+
+
+
+
+
+
+
+
+        });
+    });
+
+
+
+    myObjt.myrows = myRows;
+    console.log(myObjt);
     return false;
+
 });
+$(document).ready(submitForm);
 
-function deleteRow(button) {
-    button.parent().parent().remove();
-}
- </script>
-@*@model Team7ADProjectMVC.Requisition
+function submitForm() {
+    var roles = myObjt;
 
-@{
-    Page.Title = "Make Requisition";
-    Layout = "~/Views/Shared/_LayoutD.cshtml";
-
-    }*@
-
-
-
-
-@*@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-
-
-
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.EmployeeId, "EmployeeId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("EmployeeId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DepartmentId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ApprovedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ApprovedBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ApprovedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ApprovedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ApprovedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ApprovedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RequisitionStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RequisitionStatus, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RequisitionStatus, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+    jQuery.ajax({
+        type: "POST",
+        url: "@Url.Action("AddUser")",
+        dataType: "json",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify(roles),
+    success: function (data) { alert(data); },
+    failure: function (errMsg) {
+        alert(errMsg);
+    }
+});
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+</script>
+
+
+

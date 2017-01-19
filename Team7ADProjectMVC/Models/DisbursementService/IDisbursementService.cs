@@ -13,10 +13,14 @@ namespace Team7ADProjectMVC.Models
         List<DisbursementList> GetDisbursementsBySearchCriteria(int? departmentId, String status);
         //Search for disbursements by department and status
 
-        DisbursementList GetDisbursementById(String id);
+        DisbursementList GetDisbursementById(int? id);
 
         void UpdateDisbursementList(DisbursementList disbursementList);
 
         List<DisbursementList> GetdisbursementsByDept(int? id);
+        List<DisbursementDetail> GetdisbursementdetailById(int? id);
+        string findCpnameByDisburse(int? id);
+        string findCptimeByDisburse(int? id);
+
     }
 }

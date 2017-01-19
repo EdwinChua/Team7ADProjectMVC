@@ -22,9 +22,10 @@ namespace Team7ADProjectMVC.Models
         }
         
 
-        public DisbursementList GetDisbursementById(string id)
+        public DisbursementList GetDisbursementById(int? id)
         {
-            return db.DisbursementLists.Find(Int32.Parse(id));
+
+            return db.DisbursementLists.Find(id);
         }
 
 
@@ -82,6 +83,20 @@ namespace Team7ADProjectMVC.Models
                                    orderby d.Status
                                    select d;
             return (disbursementLists.ToList());
+        }
+        public List<DisbursementDetail> GetdisbursementdetailById(int? id)
+        {
+            var disbursementDetails = db.DisbursementDetails.Where(model=>model.DisbursementListId==id).Include(d => d.DisbursementList).Include(d => d.RequisitionDetail);
+            return (disbursementDetails.ToList());
+
+        }
+        public string findCpnameByDisburse(int? id)
+        {
+            return (db.DisbursementLists.Find(id).CollectionPoint.PlaceName);
+        }
+        public string findCptimeByDisburse(int? id)
+        {
+            return (db.DisbursementLists.Find(id).CollectionPoint.CollectTime.ToString());
         }
     }
 }

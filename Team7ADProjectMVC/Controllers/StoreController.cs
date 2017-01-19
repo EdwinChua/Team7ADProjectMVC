@@ -156,7 +156,7 @@ namespace Team7ADProjectMVC.TestControllers
             return View(disbursementSvc.GetAllDisbursements());
         }
 
-        public ActionResult ViewDisbursement(String id)
+        public ActionResult ViewDisbursement(int id)
         {
             DisbursementList dl = disbursementSvc.GetDisbursementById(id);
             ViewBag.disbursementListInfo = dl;

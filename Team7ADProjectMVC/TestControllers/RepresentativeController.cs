@@ -21,15 +21,15 @@ namespace Team7ADProjectMVC.TestControllers
         // GET: Representative
         public ActionResult Viewdisbursements()
         {
-            
-            return View( disbursementSvc.GetAllDisbursements());
+
+            return View(disbursementSvc.GetAllDisbursements());
 
 
         }
-        public ActionResult Searchdisbursements(string date,String status)
+        public ActionResult Searchdisbursements(string date, String status)
         {
 
-            return View("Viewdisbursements", disbursementSvc.FindDisbursementsBySearch(date,status));
+            return View("Viewdisbursements", disbursementSvc.FindDisbursementsBySearch(date, status));
         }
         public ActionResult ViewDisbursementDetail(int? id)
         {
@@ -42,31 +42,38 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DisbursementList= disbursementSvc.GetDisbursementById(id);
-            ViewBag.Cpname=disbursementSvc.findCpnameByDisburse(id);
+            ViewBag.DisbursementList = disbursementSvc.GetDisbursementById(id);
+            ViewBag.Cpname = disbursementSvc.findCpnameByDisburse(id);
             ViewBag.Cptime = disbursementSvc.findCptimeByDisburse(id);
             ViewBag.status = disbursementSvc.findDisbursenmentStatus(id);
             return View(disbursementSvc.GetdisbursementdetailById(id));
         }
-        public ActionResult MakeRequisition()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ViewDisbursementDetail(int id)
         {
-            return View("MakeRequisition");
+
+
+
+            int rid = db.DisbursementLists.Find(id).Retrieval.RetrievalId;
+            List<RequisitionDetail> rdlist= db.Requisitions.Single(model => model.RetrievalId == rid).RequisitionDetails.ToList();
+            foreach(var item in rdlist)
+            {
+                db.RequisitionDetails.Find(item.RequisitionDetailId).DeliveryStatus = "Completed";
+            }
+           
+
+
+            db.DisbursementLists.Find(id).Status = "Completed";
+            db.SaveChanges();
+            return RedirectToAction("Viewdisbursements");
+
+
+
         }
 
-        //public ActionResult Confirm(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    DisbursementList dbl=db.DisbursementLists.Find()
-        //    if (employee == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View("Details", employee);
-        //    return View("ConfirmDisbursementList");
-        //}
+
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -100,7 +107,7 @@ namespace Team7ADProjectMVC.TestControllers
 
                 db.SaveChanges();
 
-                return RedirectToAction("ViewRequisitionDetails");
+                return RedirectToAction("Viewdisbursements");
             }
             ViewBag.Message = db.CollectionPoints.ToList();
             return View(department);

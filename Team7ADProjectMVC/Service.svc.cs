@@ -164,26 +164,20 @@ namespace Team7ADProjectMVC
         public List<String> getCollectionPoint(String deptid)
         {
             List<String> sl = new List<string>();
-            String s = "Science School";
-            sl.Add(s);
+            int dId = Convert.ToInt32(deptid);
+             var collectionLocation = from c in db.DisbursementLists
+                                    where c.DepartmentId == dId
+                                   select c;
+            String s;
+             foreach (DisbursementList d in collectionLocation)
+            {
+               
+                s= d.CollectionPoint.PlaceName +" "+ d.CollectionPoint.CollectTime;
+               sl.Add(s);
+            }
+         
             return sl;
         }
-        //public List<wcfCollectionPoint> getCollectionPoint(String deptId)
-        //{
-        //    List<wcfCollectionPoint> collectionPoint = new List<wcfCollectionPoint>();
-        //    int dId = Convert.ToInt32(deptId);
-        //    var collectionLocation = from c in db.DisbursementLists
-        //                             where c.DepartmentId == dId
-        //                             select c;
-        //    foreach (DisbursementList d in collectionLocation)
-        //    {
-        //        wcfCollectionPoint cp = new wcfCollectionPoint();
-        //        cp.LocationAndtime = d.CollectionPoint.PlaceName + d.CollectionPoint.CollectTime;
-        //        collectionPoint.Add(cp);
-        //    }
-        //    return collectionPoint.ToList();
-        //}
-
 
 
     }

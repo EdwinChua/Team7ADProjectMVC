@@ -189,12 +189,3 @@ public class wcfApproveReqDetails
     public String UOM { get; set; }
 }
 
-//public class wcfCollectionPoint
-//{
-//    string locationAndTime;
-
-//    [DataMember]
-//    public String LocationAndtime { get; set; }
-
-//}
-

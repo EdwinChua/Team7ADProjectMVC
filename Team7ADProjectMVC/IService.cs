@@ -28,9 +28,9 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfTodayCollection/{deptid}", ResponseFormat = WebMessageFormat.Json)]
         List<wcfTodayCollectionlist> getTodayCollection(string deptid);
 
-        [OperationContract]
-        [WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={disListID}", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string disListID);
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/wcfTodayCollectionDetail?d={deptid}&r={disListID}", ResponseFormat = WebMessageFormat.Json)]
+        //List<wcfTodayCollectionDetail> getTodayCollectionDetail(string deptid, string disListID);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfApproveRequisitions/{deptid}", ResponseFormat = WebMessageFormat.Json)]
@@ -48,9 +48,9 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfDisbursementList/", ResponseFormat = WebMessageFormat.Json)]
         List<wcfDisbursementList> getDisbursementList();
 
-        [OperationContract]
-        [WebGet(UriTemplate = "/wcfDisbursementListDetail/{disListID}", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfDisbursementListDetail> getDisbursementListDetails(string disListID);
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/wcfDisbursementListDetail/{disListID}", ResponseFormat = WebMessageFormat.Json)]
+        //List<wcfDisbursementListDetail> getDisbursementListDetails(string disListID);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfStockReorder/", ResponseFormat = WebMessageFormat.Json)]

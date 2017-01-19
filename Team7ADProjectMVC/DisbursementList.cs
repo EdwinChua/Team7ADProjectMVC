@@ -24,9 +24,9 @@ namespace Team7ADProjectMVC
         public Nullable<int> RetrievalId { get; set; }
         public Nullable<int> DepartmentId { get; set; }
         public Nullable<System.DateTime> OrderedDate { get; set; }
+        public Nullable<System.DateTime> DeliveryDate { get; set; }
         public Nullable<int> CollectionPointId { get; set; }
         public string Status { get; set; }
-        public Nullable<System.DateTime> DeliveryDate { get; set; }
     
         public virtual CollectionPoint CollectionPoint { get; set; }
         public virtual Department Department { get; set; }

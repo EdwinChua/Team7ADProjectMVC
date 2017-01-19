@@ -14,12 +14,6 @@ namespace Team7ADProjectMVC
     
     public partial class RequisitionDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RequisitionDetail()
-        {
-            this.DisbursementDetails = new HashSet<DisbursementDetail>();
-        }
-    
         public int RequisitionDetailId { get; set; }
         public Nullable<int> RequisitionId { get; set; }
         public string ItemNo { get; set; }
@@ -27,8 +21,6 @@ namespace Team7ADProjectMVC
         public Nullable<int> OutstandingQuantity { get; set; }
         public string DeliveryStatus { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DisbursementDetail> DisbursementDetails { get; set; }
         public virtual Inventory Inventory { get; set; }
         public virtual Requisition Requisition { get; set; }
     }

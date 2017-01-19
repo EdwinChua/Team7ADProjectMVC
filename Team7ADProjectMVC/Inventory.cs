@@ -21,12 +21,12 @@ namespace Team7ADProjectMVC
             this.DeliveryDetails = new HashSet<DeliveryDetail>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
             this.RequisitionDetails = new HashSet<RequisitionDetail>();
-            this.DisbursementDetails = new HashSet<DisbursementDetail>();
         }
     
         public string ItemNo { get; set; }
         public Nullable<int> CategoryId { get; set; }
         public string Description { get; set; }
+        public string BinNo { get; set; }
         public Nullable<int> ReorderLevel { get; set; }
         public Nullable<int> ReorderQuantity { get; set; }
         public Nullable<int> MeasurementId { get; set; }
@@ -38,7 +38,6 @@ namespace Team7ADProjectMVC
         public Nullable<decimal> Price2 { get; set; }
         public Nullable<int> SupplierId3 { get; set; }
         public Nullable<decimal> Price3 { get; set; }
-        public string BinNo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdjustmentDetail> AdjustmentDetails { get; set; }
@@ -53,7 +52,5 @@ namespace Team7ADProjectMVC
         public virtual Supplier Supplier { get; set; }
         public virtual Supplier Supplier1 { get; set; }
         public virtual Supplier Supplier2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DisbursementDetail> DisbursementDetails { get; set; }
     }
 }

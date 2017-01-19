@@ -73,6 +73,7 @@ namespace Team7ADProjectMVC.Models
             var query = from rq in db.Requisitions
                         where rq.RequisitionStatus != "Complete"
                         && rq.RequisitionStatus != "Pending"
+                        && rq.RequisitionStatus != "Rejected"
                         orderby rq.ApprovedDate
                         select rq;
 
@@ -141,48 +142,50 @@ namespace Team7ADProjectMVC.Models
         {
             System.Web.HttpContext.Current.Application.Lock();
             RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
-
-            rList.itemsToRetrieve = new List<RetrievalListItems>();
-
-            List<RetrievalListItems> unconsolidatedList = new List<RetrievalListItems>();
-
-            foreach (Requisition requisition in rList.requisitionList)
+            if (rList.itemsToRetrieve == null)
             {
-                foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                rList.itemsToRetrieve = new List<RetrievalListItems>();
+
+                List<RetrievalListItems> unconsolidatedList = new List<RetrievalListItems>();
+
+                foreach (Requisition requisition in rList.requisitionList)
                 {
-                    RetrievalListItems newItem = new RetrievalListItems();
-                    newItem.itemNo = reqDetails.ItemNo;
-                    newItem.requiredQuantity = (int)reqDetails.OutstandingQuantity;
-                    newItem.binNo = reqDetails.Inventory.BinNo;
-                    newItem.description = reqDetails.Inventory.Description;
-                    newItem.collectionStatus = false;
-                    unconsolidatedList.Add(newItem);
+                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                    {
+                        RetrievalListItems newItem = new RetrievalListItems();
+                        newItem.itemNo = reqDetails.ItemNo;
+                        newItem.requiredQuantity = (int)reqDetails.OutstandingQuantity;
+                        newItem.binNo = reqDetails.Inventory.BinNo;
+                        newItem.description = reqDetails.Inventory.Description;
+                        newItem.collectionStatus = false;
+                        unconsolidatedList.Add(newItem);
+                    }
+                }
+                RetrievalListItemsComparer comparer = new RetrievalListItemsComparer();
+                unconsolidatedList.Sort(comparer);
+
+                int i = 0;
+                foreach (var item in unconsolidatedList)
+                {
+                    if (i == 0)
+                    {
+                        rList.itemsToRetrieve.Add(item);
+                        i++;
+                    }
+                    else if (item.itemNo.Equals(rList.itemsToRetrieve[i - 1].itemNo))
+                    {
+                        rList.itemsToRetrieve[i - 1].requiredQuantity += item.requiredQuantity;
+                    }
+                    else
+                    {
+                        rList.itemsToRetrieve.Add(item);
+                        i++;
+                    }
                 }
             }
-            RetrievalListItemsComparer comparer = new RetrievalListItemsComparer();
-            unconsolidatedList.Sort(comparer);
 
-            int i = 0;
-            foreach (var item in unconsolidatedList)
-            {
-                if (i == 0)
-                {
-                    rList.itemsToRetrieve.Add(item);
-                    i++;
-                }
-                else if (item.itemNo.Equals(rList.itemsToRetrieve[i - 1].itemNo))
-                {
-                    rList.itemsToRetrieve[i - 1].requiredQuantity += item.requiredQuantity;
-                }
-                else
-                {
-                    rList.itemsToRetrieve.Add(item);
-                    i++;
-                }
-            }
-
-            System.Web.HttpContext.Current.Application["RetrievalList"] = rList;
-            System.Web.HttpContext.Current.Application.UnLock();
+            HttpContext.Current.Application["RetrievalList"] = rList;
+            HttpContext.Current.Application.UnLock();
         }
 
         public void ClearRetrievalList()
@@ -193,109 +196,131 @@ namespace Team7ADProjectMVC.Models
         public void AutoAllocateDisbursements()
         {
             System.Web.HttpContext.Current.Application.Lock();
-            RetrievalList rList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
+            RetrievalList retrievalList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
 
-            //var context = new EntityContext();
 
-            List<Requisition> requisitionListFromRList = rList.requisitionList;
+            List<Requisition> requisitionListFromRList = retrievalList.requisitionList;
             RequisitionComparer comparer = new RequisitionComparer();
-            requisitionListFromRList.Sort(comparer);
+            requisitionListFromRList.Sort(comparer); //Sorts by dept
 
-            List<DisbursementList> newDisbursementList = new List<DisbursementList>();
+            //List<DisbursementList> newDisbursementList = new List<DisbursementList>();
             DisbursementList dList = new DisbursementList();
             List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
+            HashSet<DisbursementDetail> DisbursementDetailHashSet;
+            List<DisbursementDetail> DisbursementDetailListNoDuplicates;
+            int? currentDisbursementListId = null;
 
             int i = 0;
             foreach (Requisition requisition in requisitionListFromRList)
             {
-                if (i == 0)
+                if (i == 0) // if its first time entering loop, create new disbursementlist for dept
                 {
-
                     Department d = db.Departments.Find(requisition.DepartmentId);
                     dList.DepartmentId = d.DepartmentId;
                     dList.CollectionPointId = d.CollectionPointId;
                     dList.OrderedDate = requisition.OrderedDate;
-                    dList.RetrievalId = rList.retrievalId;
+                    dList.RetrievalId = retrievalList.retrievalId;
                     dList.Status = "Pending Delivery";
                     dList.DeliveryDate = DateTime.Today.AddDays(2); //TODO: Place logic for date later
 
                     db.Set(typeof(DisbursementList)).Attach(dList);
                     db.DisbursementLists.Add(dList);
-                    db.SaveChanges();
+                    db.SaveChanges(); // creates new disbursementlist
 
-                    var currentDisbursementListId = dList.DepartmentId;
+                    currentDisbursementListId = dList.DepartmentId; //returns created disbursementlist Id
 
-                    tempDisbursementDetailList = new List<DisbursementDetail>();
 
                     foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
                     {
                         DisbursementDetail newDisbursementDetail = new DisbursementDetail();
-                        newDisbursementDetail.RequisitionDetailId = reqDetails.RequisitionDetailId;
-                        //tempDisbursementDetailList.Add(newDisbursementDetail);
+                        //newDisbursementDetail.RequisitionDetailId = reqDetails.RequisitionDetailId;
                         newDisbursementDetail.DisbursementListId = currentDisbursementListId;
-                        db.Set(typeof(DisbursementDetail)).Attach(newDisbursementDetail);
-                        db.DisbursementDetails.Add(newDisbursementDetail);
-                        db.SaveChanges();
+                        newDisbursementDetail.ItemNo = reqDetails.ItemNo;
+                        tempDisbursementDetailList.Add(newDisbursementDetail);
+                        //db.Set(typeof(DisbursementDetail)).Attach(newDisbursementDetail);
+                        //db.DisbursementDetails.Add(newDisbursementDetail);
+                        //db.SaveChanges();
                     }
 
-                    dList.DisbursementDetails = tempDisbursementDetailList;
-
-
-                    newDisbursementList.Add(dList);
                     i++;
                 }
                 else if (requisition.DepartmentId.Equals(dList.DepartmentId))
                 {
-                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                    DisbursementList currentDisbursementList = db.DisbursementLists.Find(currentDisbursementListId);
+                    foreach (DisbursementDetail dDetail in currentDisbursementList.DisbursementDetails) //check current disbursement detail for existing item
                     {
-                        
-                        DisbursementDetail newDisbursementDetail = new DisbursementDetail();
-                        newDisbursementDetail.RequisitionDetail = reqDetails;
-                        tempDisbursementDetailList.Add(newDisbursementDetail);
+                        foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                        {
+                            DisbursementDetail newDisbursementDetail = new DisbursementDetail();
+                            //newDisbursementDetail.RequisitionDetailId = reqDetails.RequisitionDetailId;
+                            newDisbursementDetail.DisbursementListId = currentDisbursementListId;
+                            newDisbursementDetail.ItemNo = reqDetails.ItemNo;
+                            tempDisbursementDetailList.Add(newDisbursementDetail);
+                            //db.Set(typeof(DisbursementDetail)).Attach(newDisbursementDetail);
+                            //db.DisbursementDetails.Add(newDisbursementDetail);
+                            //db.SaveChanges();
+                        }
                     }
                 }
-                else
+                else // different dept, create new disbursementlist
                 {
-                    db.Set(typeof(DisbursementList)).Attach(dList);
-                    db.DisbursementLists.Add(dList);
-                    
-                    db.SaveChanges();
-                    dList = new DisbursementList();
+                    DisbursementDetailHashSet = new HashSet<DisbursementDetail>(tempDisbursementDetailList);
+                    // remove duplicates
+                    DisbursementDetailListNoDuplicates = DisbursementDetailHashSet.ToList();
+
+                    foreach (DisbursementDetail newDisbursementDetail in DisbursementDetailListNoDuplicates)
+                    {
+                        db.Set(typeof(DisbursementDetail)).Attach(newDisbursementDetail);
+                        db.DisbursementDetails.Add(newDisbursementDetail);
+                        db.SaveChanges();
+                    }
+                    tempDisbursementDetailList.Clear();
+                    DisbursementDetailHashSet.Clear();
+                    DisbursementDetailListNoDuplicates.Clear();
 
                     Department d = db.Departments.Find(requisition.DepartmentId);
                     dList.DepartmentId = d.DepartmentId;
                     dList.CollectionPointId = d.CollectionPointId;
                     dList.OrderedDate = requisition.OrderedDate;
-                    dList.RetrievalId = rList.retrievalId;
+                    dList.RetrievalId = retrievalList.retrievalId;
                     dList.Status = "Pending Delivery";
                     dList.DeliveryDate = DateTime.Today.AddDays(2); //TODO: Place logic for date later
 
-                    tempDisbursementDetailList = new List<DisbursementDetail>();
+                    db.Set(typeof(DisbursementList)).Attach(dList);
+                    db.DisbursementLists.Add(dList);
+                    db.SaveChanges(); // creates new disbursementlist
+
+                    currentDisbursementListId = dList.DepartmentId; //returns created disbursementlist Id
 
                     foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
                     {
                         DisbursementDetail newDisbursementDetail = new DisbursementDetail();
-                        newDisbursementDetail.RequisitionDetail = reqDetails;
+                        newDisbursementDetail.ItemNo = reqDetails.ItemNo;
+                        //newDisbursementDetail.RequisitionDetailId = reqDetails.RequisitionDetailId;
+                        newDisbursementDetail.DisbursementListId = currentDisbursementListId;
                         tempDisbursementDetailList.Add(newDisbursementDetail);
+                        //db.Set(typeof(DisbursementDetail)).Attach(newDisbursementDetail);
+                        //db.DisbursementDetails.Add(newDisbursementDetail);
+                        //db.SaveChanges();
                     }
-
-                    dList.DisbursementDetails = tempDisbursementDetailList;
-
-
-                    newDisbursementList.Add(dList);
                 }
             }
-            db.Set(typeof(DisbursementList)).Attach(dList);
-            db.DisbursementLists.Add(dList);
+            DisbursementDetailHashSet = new HashSet<DisbursementDetail>(tempDisbursementDetailList);// remove duplicates
+            DisbursementDetailListNoDuplicates = DisbursementDetailHashSet.ToList();
 
-            db.SaveChanges();
-            dList = new DisbursementList();
-
-
-
-            foreach (RetrievalListItems retrievalListItem in rList.itemsToRetrieve)
+            foreach (DisbursementDetail newDisbursementDetail in DisbursementDetailListNoDuplicates)
             {
-                foreach (Requisition requisition in rList.requisitionList)
+                db.Set(typeof(DisbursementDetail)).Attach(newDisbursementDetail);
+                db.DisbursementDetails.Add(newDisbursementDetail);
+                db.SaveChanges();
+            }
+
+
+
+
+            foreach (RetrievalListItems retrievalListItem in retrievalList.itemsToRetrieve)
+            {
+                foreach (Requisition requisition in retrievalList.requisitionList)
                 {
                     foreach (RequisitionDetail requisitionDetail in requisition.RequisitionDetails)
                     {
@@ -312,8 +337,9 @@ namespace Team7ADProjectMVC.Models
                 }
             }
 
-            HttpContext.Current.Application["RetrievalList"] = rList;
+            HttpContext.Current.Application["RetrievalList"] = retrievalList;
             HttpContext.Current.Application.UnLock();
         }
+
     }
 }

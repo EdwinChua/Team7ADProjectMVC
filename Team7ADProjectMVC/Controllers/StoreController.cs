@@ -229,7 +229,7 @@ namespace Team7ADProjectMVC.TestControllers
         }
 
         public ActionResult GenerateRetrievalList()
-        {
+        {   
             inventorySvc.PopulateRetrievalList();
             inventorySvc.PopulateRetrievalListItems();
             return RedirectToAction("ViewRequisitions");

@@ -11,6 +11,16 @@ namespace Team7ADProjectMVC.Models
     {
         ProjectEntities db = new ProjectEntities();
 
+        public String GetItemCode(String itemDesc)
+        {
+            String startingLetter = itemDesc[0].ToString();
+            ItemCodeGenerator result= db.ItemCodeGenerators.Find(startingLetter);
+            result.itemcount++;
+            db.SaveChanges();
+            string fmt = "000";
+            return startingLetter + ((int)result.itemcount).ToString(fmt);
+        }
+
         public Inventory FindById(string id)
         {
             return db.Inventories.Find(id);

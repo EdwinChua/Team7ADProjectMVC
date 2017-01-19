@@ -51,7 +51,6 @@ namespace Team7ADProjectMVC
     }
 }
 
-
 [DataContract]
 public class WCFMsg
 {

@@ -144,8 +144,8 @@ namespace Team7ADProjectMVC
             var aList = from a in db.RequisitionDetails
                         where a.RequisitionId == rId
                         && a.Requisition.DepartmentId == dId
-                        && a.Requisition.RequisitionStatus != "Approved"
-                        && a.DeliveryStatus != "Delivered"
+                        && a.Requisition.RequisitionStatus == "Outstanding"
+                        && a.DeliveryStatus != "Delivered" 
                         orderby a.Inventory.Description ascending
                         select a;
 
@@ -183,7 +183,7 @@ namespace Team7ADProjectMVC
         {
             List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
             var disburse = from d in db.DisbursementLists
-                           where d.Status != "Delivered"
+                           where d.Status != "Completed"
                            select d;
 
             foreach (DisbursementList d in disburse)

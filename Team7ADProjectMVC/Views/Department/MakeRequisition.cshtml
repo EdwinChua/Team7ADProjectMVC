@@ -341,12 +341,12 @@ $(document).on('click', 'button.removebutton', function () {
 
 
     ///////////////////////////
-    var TableData = new Array();
+    TableData = new Array();
 
     $('#taskTable tr').each(function (row, tr) {
         TableData[row] = {
             "Item": $(tr).find('td:eq(0)').text()
-            , "Quantity": $(tr).find('td:eq(1)').text()
+            , "Quantity": $(tr).find('td:eq(1)').children().val()
             
         }
     });

@@ -13,17 +13,17 @@ using Team7ADProjectMVC.Models.ListAllRequisitionService;
 
 namespace Team7ADProjectMVC.TestControllers
 {
-  
-    
+
+
     public class HeadController : Controller
     {
         private IRequisitionService listsvc;
 
-        private  IDelegateRoleService depsvc;
-       private ProjectEntities db = new ProjectEntities();
+        private IDelegateRoleService depsvc;
+        private ProjectEntities db = new ProjectEntities();
         public HeadController()
         {
-            listsvc =new RequisitionService();
+            listsvc = new RequisitionService();
             depsvc = new DelegateRoleService();
         }
 
@@ -44,8 +44,8 @@ namespace Team7ADProjectMVC.TestControllers
         {
             var requisitions = listsvc.GetAllRequisition();
             ViewBag.req = requisitions.ToList();
-          
-                return View("ListAllEmployees", requisitions);
+
+            return View("ListAllEmployees", requisitions);
 
         }
 
@@ -57,8 +57,8 @@ namespace Team7ADProjectMVC.TestControllers
                 return HttpNotFound();
             }
 
-            
-            return View("Approve",r);
+
+            return View("Approve", r);
         }
         public ActionResult ApproveReject(int id)
         {
@@ -71,37 +71,22 @@ namespace Team7ADProjectMVC.TestControllers
 
             return View("Approve", r);
         }
-        public ActionResult MarkAsCollected(int? rid, string textcomments,string status)
+        public ActionResult MarkAsCollected(int? rid, string textcomments, string status)
         {
             Requisition r = listsvc.FindById(rid);
-            if (status.Equals("Approve")) {              
+            if (status.Equals("Approve"))
+            {
                 listsvc.UpdateApproveStatus(r, textcomments);
                 return RedirectToAction("ListAllEmployees");
             }
-           
-                listsvc.UpdateRejectStatus(r, textcomments);
-                return RedirectToAction("ListAllEmployees");
-           
+
+            listsvc.UpdateRejectStatus(r, textcomments);
+            return RedirectToAction("ListAllEmployees");
+
 
         }
 
 
-        //public ActionResult ApproveRequisition(int id)
-        //{
-
-        //    Requisition r = listsvc.FindById(id);
-
-        //    listsvc.UpdateApproveStatus(r);
-        //    return RedirectToAction("ListAllEmployees");
-
-        //}
-        //public ActionResult RejectRequisition(int id)
-        //{
-        //    Requisition r = listsvc.FindById(id);
-
-        //    listsvc.UpdateRejectStatus(r);
-        //    return RedirectToAction("ListAllEmployees");
-        //}
         //----------------------------Delegation Part----------------------------------start
         public ActionResult show()
         {
@@ -112,12 +97,13 @@ namespace Team7ADProjectMVC.TestControllers
             return View("DelegateRole");
 
         }
-        public ActionResult Manage(int? empId, string status,string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl)
+        public ActionResult Manage(int? empId, string status, string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl)
 
         {
 
-            String []  s = startDate.Split('/');
+            String[] s = startDate.Split('/');
             DateTime sdate = new DateTime(Int32.Parse(s[2]), Int32.Parse(s[1]), Int32.Parse(s[0]));
+
             String[] e = endDate.Split('/');
             DateTime edate = new DateTime(Int32.Parse(e[2]), Int32.Parse(e[1]), Int32.Parse(e[0]));
 
@@ -131,12 +117,12 @@ namespace Team7ADProjectMVC.TestControllers
                 bool makeReqint = true;
                 bool delegateRolint = true;
                 bool viewColDetlint = true;
-               
+
                 if (approveReq == null)
                 {
                     approveReqint = false;
                 }
-                if (changeCP==null)
+                if (changeCP == null)
                 {
                     changeCPint = false;
                 }
@@ -157,16 +143,37 @@ namespace Team7ADProjectMVC.TestControllers
                     viewColDetlint = false;
                 }
 
-                depsvc.manageDelegate(emp, sdate, edate, approveReqint,changeCPint,viewReqint,makeReqint,delegateRolint,viewColDetlint);
-                return RedirectToAction("ListAllEmployees");
+                depsvc.manageDelegate(emp, sdate, edate, approveReqint, changeCPint, viewReqint, makeReqint, delegateRolint, viewColDetlint);
+               List<Delegate> a = depsvc.getDelegate();
+                Delegate b = a.First() ;
+                return RedirectToAction("fill/"+b.DelegateId);
             }
 
-            //listsvc.manageTerminate();
             return RedirectToAction("ListAllEmployees");
 
 
         }
 
+        public ActionResult fill(string d)
 
+        {
+
+            
+            //Employee emp = depsvc.FindById(empId);
+            //ViewBag.empListPicker = e;
+            //ViewBag.s1 = d.StartDate;
+            //ViewBag.e1 = d.EndDate;
+            //ViewBag.approveReq = e.Permission.ApproveRequisition;
+            //ViewBag.changeCP = e.Permission.ChangeCollectionPoint;
+            //ViewBag.viewReq = e.Permission.ViewRequisition;
+            //ViewBag.makeReq = e.Permission.MakeRequisition;
+            //ViewBag.delegateRol = e.Permission.DelegateRole;
+            //ViewBag.viewColDetl = e.Permission.ViewCollectionDetails;
+            return View("TerminateRole");
+        }
+        public ActionResult Terminate(int? empId, string status, string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl)
+        {
+            return View("DelegateRole");
+        }
     }
 }

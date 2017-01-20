@@ -57,7 +57,16 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
 
 
         }
+        public List<Delegate> getDelegate()
+        {
 
+            var query= from t in db.Delegates
+                       orderby t.DelegateId ascending
+                       select t ;
+         
+
+            return (query.ToList());
+        }
         public List<Department> ListAllDepartments()
         {
             throw new NotImplementedException();

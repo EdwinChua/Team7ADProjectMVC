@@ -398,7 +398,6 @@
     <Content Include="Views\Department\Head\DelegateRole.cshtml" />
     <Content Include="Views\Department\Head\ListAllEmployees.cshtml" />
     <Content Include="Views\Department\Representative\ChangeCollectionPoint.cshtml" />
-    <Content Include="Views\Department\Representative\ConfirmDisbursementList.cshtml" />
     <Content Include="Views\Department\DepartmentEmployee.cshtml" />
     <Content Include="Views\Department\MakeRequisition.cshtml" />
     <Content Include="Views\Department\ViewRequisitionDetails.cshtml" />
@@ -427,7 +426,6 @@
     <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewDisbursement.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewRequisitions.cshtml" />
-    <Content Include="Views\Department\Representative\Details.cshtml" />
     <Content Include="Views\Department\Representative\Viewdisbursements.cshtml" />
     <Content Include="Views\DisbursementDetails\Create.cshtml" />
     <Content Include="Views\DisbursementDetails\Delete.cshtml" />
@@ -444,7 +442,7 @@
     <Content Include="Views\Inventory\Edit.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
     <Content Include="Views\Shared\_Layouthead.cshtml" />
-    <Content Include="Views\Department\Head\TerminateRole.cshtml" />
+	<Content Include="Views\Shared\_LayoutD.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

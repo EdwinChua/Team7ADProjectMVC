@@ -42,6 +42,7 @@ namespace Team7ADProjectMVC.TestControllers
                     unconsolidatedList.Add(newItem);
                 }
             }
+        }
 
 
         public void AutoAllocateDisbursements()

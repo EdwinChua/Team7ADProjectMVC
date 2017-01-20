@@ -25,68 +25,69 @@
             <h3>
                 Item List:
             </h3>
+            <div class="col-md-8">
+                <table class="table">
+                    <thead>
 
-            <table class="table">
-                <thead>
-
-                    <tr>
-                        <th>
-                            ItemNo
-                        </th>
-                        <th>
-                            Quantity
-                        </th>
-                        <th>
-                            Outstanding Quantity
-                        </th>
-                        <th>
-                            Delivery Status
-                        </th>
-                    </tr>
-
-                 
-                </thead>
-                <tbody>
-
-                    @foreach (var item in @ViewBag.rel)
-                    {
                         <tr>
-                            <td>
-                                @item.ItemNo
-                            </td>
-                            <td>
-                                @item.Quantity
-                            </td>
-                            <td>
-                                @item.OutstandingQuantity
-                            </td>
-                            <td>
-                                @item.DeliveryStatus
-                            </td>
-                           
+                            <th>
+                                Item
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Outstanding Quantity
+                            </th>
+                            <th>
+                                Delivery Status
+                            </th>
                         </tr>
-                    }
 
-                </tbody>
-             
+
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in @ViewBag.rel)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Inventory.Description
+                                </td>
+                                <td>
+                                    @item.Quantity
+                                </td>
+                                <td>
+                                    @item.OutstandingQuantity
+                                </td>
+                                <td>
+                                    @item.DeliveryStatus
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
 
                 </table>
 
 
-        
+                @*</div>*@
 
 
 
-            <h3>
-                Descriptions:
-            </h3>
+                <h3>
+                    Descriptions:
+                </h3>
 
-            <p>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam
-            </p>
-            <p>
-                <a class="btn" href="#">View details »</a>
-            </p>
-        </div>
+                <p>
+                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam
+                </p>
+                <p>
+                    <a class="btn" href="#">View details »</a>
+                </p>
+                </div>
+            </div>
     </div>
 </div>

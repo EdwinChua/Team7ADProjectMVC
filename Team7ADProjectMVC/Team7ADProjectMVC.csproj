@@ -340,6 +340,7 @@
     <Compile Include="Models\InventoryService\InventoryService.cs" />
     <Compile Include="Models\RequisitionService\IRequisitionService.cs" />
     <Compile Include="Models\RequisitionService\RequisitionService.cs" />
+    <Compile Include="Models\UtilityService\UtilityService.cs" />
     <Compile Include="Permission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

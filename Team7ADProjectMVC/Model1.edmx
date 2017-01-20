@@ -16,6 +16,7 @@
           <Property Name="SupervisorAuthorizedDate" Type="date" />
           <Property Name="HeadId" Type="int" />
           <Property Name="HeadAuthorizedDate" Type="date" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AdjustmentDetail">
           <Key>
@@ -248,8 +249,8 @@
           <Property Name="Address" Type="varchar" MaxLength="250" />
           <Property Name="GstRegistrationNo" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“Project.dbo.StockCard”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="StockCard">
           <Key>
             <PropertyRef Name="Date" />
@@ -821,6 +822,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="HeadId" Type="Int32" />
           <Property Name="HeadAuthorizedDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Employee" Relationship="Self.AdjustmentEmployeeId" FromRole="Adjustment" ToRole="Employee" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AdjustmentDetail">
           <Key>
@@ -1672,6 +1674,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <EntitySetMapping Name="Adjustments">
             <EntityTypeMapping TypeName="ProjectModel.Adjustment">
               <MappingFragment StoreEntitySet="Adjustment">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="AdjustmentId" ColumnName="AdjustmentId" />
                 <ScalarProperty Name="AdjustmentDate" ColumnName="AdjustmentDate" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />

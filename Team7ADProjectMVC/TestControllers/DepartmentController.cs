@@ -85,7 +85,8 @@ namespace Team7ADProjectMVC.TestControllers
             //var requisitions = db.Requisitions.ToList();
             var requisitions = depasvc.ListAllRequisition();
             ViewBag.Cat = requisitions;
-            return View();
+            ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+            return View(requisitions);
         }
         public ActionResult Search(int id)
         {
@@ -130,13 +131,20 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", requisition.EmployeeId);
 
             Requisition req = new Requisition();
+            var count = db.Requisitions.ToList();
+            int idd = count.Count()+1;
             ///fake
+            requisition.RequisitionId = idd;
             req.RequisitionStatus = "Pending";
             req.EmployeeId = 1;
             req.DepartmentId = 2;
             req.OrderedDate = DateTime.Today;
+           
+
+               
+           
             //
-            
+
 
 
             List<RequisitionDetail> redlis = new List<RequisitionDetail>();
@@ -150,37 +158,42 @@ namespace Team7ADProjectMVC.TestControllers
 
                 RequisitionDetail rd = new RequisitionDetail();
                 rd.Quantity = Int32.Parse(i.Quantity);
-                rd.ItemNo = i.Item;
+
+
+                rd.ItemNo = "C002";
                 rd.OutstandingQuantity = Int32.Parse(i.Quantity);
-                rd.RequisitionId = req.RequisitionId;
+                rd.RequisitionId = idd;
                 rd.DeliveryStatus = "Preparing";
+
+                redlis.Add(rd);
+
+                //db.RequisitionDetails.Add(rd);
+                //db.SaveChanges();
+
                 req.RequisitionDetails.Add(rd);
             }
 
+           
 
+            //List<RequisitionDetail> relis = db.RequisitionDetails.Take(3).ToList();
             if (ModelState.IsValid)
             {
-                db.Requisitions.Add(requisition);
-                db.SaveChanges();
 
+                db.Requisitions.Add(req);
+                db.SaveChanges();
+                //ViewBag.rel = relis;
                 return RedirectToAction("Index");
             }
-            //List<RequisitionDetail> relis = db.RequisitionDetails.Take(3).ToList();
-
-            //ViewBag.rel = relis;
-
-            
             return View(requisition);
             //var requisitions = db.Requisitions.ToList();
             //ViewBag.Cat = requisitions;
-
 
 
             ////List<RequisitionDetail> relis = db.RequisitionDetails.ToList();
 
             ////ViewBag.rel = relis;
 
-           
+
 
             //return View(requisitions);
         }
@@ -242,6 +255,8 @@ namespace Team7ADProjectMVC.TestControllers
 
         
             List<RequisitionDetail> relis = db.RequisitionDetails.Where(u => u.RequisitionId == id).ToList();
+
+            
 
             ViewBag.rel = relis;
 

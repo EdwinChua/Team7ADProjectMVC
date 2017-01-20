@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Team7ADProjectMVC.Employee>
+﻿@model Team7ADProjectMVC.Employee
 
     @{
         Layout = "~/Views/Shared/_Layouthead.cshtml";
@@ -9,7 +9,7 @@
     $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
 </script>*@
 
-<form role="form" action="/Head/Manage">
+<form role="form" action="/Head/Terminate">
     <div class="row">
         <div class="col-lg-4 col-xs-12">
             Choose Employee:
@@ -17,7 +17,10 @@
                 <select id="empListPicker" name="empId"
                         class="selectpicker show-tick form-control"
                         data-live-search="true" title="Retrieve by department head to view all employees">
-                    
+                    @foreach (var emp in ViewBag.empListPicker)
+                    {
+                        <option value="@emp.EmployeeId" >@emp.EmployeeName </option> 
+                     }
                 </select>
             </div>
 
@@ -32,7 +35,10 @@
                         Start Date:
                         <div style="overflow:hidden;">
                             <div class="form-group">
-                                <div class="row">
+                                <div 
+                                     
+                                     
+                                     class="row">
                                     <div class="col-md-8">
                                         <div id="datetimepicker1" ></div>
                                     </div>
@@ -65,22 +71,44 @@
 
             <br />
             <br />
-
+  
 
 
             <div>
                 <h5>
                    
-                    Start Date:<label id="s1" value="startDate"></label><br/>                    
-                    End Date::<label id="e1" value="endDate"></label><br/>
+                    Start Date:<label id="s1" value="startDate">ViewBag.s1</label><br/>                    
+                    End Date::<label id="e1" value="endDate">ViewBag.e1</label><br/>
 
-                    <input type="hidden" name="startDate" id="startDate" />
-                    <input type="hidden" name="endDate" id="endDate" /> 
-                    <input type="checkbox" name="approveReq" >Approve Requisition<br>
+                    @if (ViewBag.approveReq == "on")
+                    {  
+                        <input type="checkbox" name="approveReq" checked><h5>Approve Requisition</h5>
+                     }
+                    <input type="checkbox" name="approveReq">Approve Requisition<br>
+                    @if (ViewBag.approveReq == "on")
+                    {
+                        <input type="checkbox" name="changeCP" checked><h5>Change Collection Point</h5><br>
+                    }                    
                     <input type="checkbox" name="changeCP">Change Collection Point<br>
+                    @if (ViewBag.approveReq == "on")
+                    {
+                        <input type="checkbox" name="changeCP" checked><h5>View Requisiton </h5><br>
+                    }  
                     <input type="checkbox" name="viewReq">View Requisiton <br />
+                    @if (ViewBag.approveReq == "on")
+                    {
+                        <input type="checkbox" name="changeCP" checked><h5>Make Requisition</h5><br>
+                    }  
                     <input type="checkbox" name="makeReq">Make Requisition<br>
+                    @if (ViewBag.approveReq == "on")
+                    {
+                        <input type="checkbox" name="changeCP" checked><h5>Delegate Role</h5><br>
+                    }  
                     <input type="checkbox" name="delegateRol">Delegate Role<br />
+                    @if (ViewBag.approveReq == "on")
+                    {
+                        <input type="checkbox" name="changeCP" checked><h5>View Collection Details</h5><br>
+                    }  
                     <input type="checkbox" name="viewColDetl">View Collection Details<br />
 
                     <br />
@@ -88,15 +116,12 @@
 
                 </h5>
                 
-            <button type="submit" class="btn btn-success btn-lg" name="status" value="Delegate" id="submitButton" >
-                Delegate
-            </button>
-                @if (ViewBag.DelegatedEmployee != null)
-                {
+            
+               
             <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate" >
                 Terminate
             </button>
-                }
+              
         </div>
     </form>
     </>
@@ -127,17 +152,7 @@
                 $('#e1').text($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
             });
         });
-       
-         //$(document).ready(function(){
-         //    $("#submitButton").on("click",function()
-         //    {
-         //        alert('Your Message');
-         //    });
-
-         //});
-        
-
-        //alert("asdkjfhaksldj");
+   
     </script>
 
 

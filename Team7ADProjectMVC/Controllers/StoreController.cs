@@ -243,7 +243,7 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult DisburseItems()
         {
-            inventorySvc.AutoAllocateDisbursements();
+            inventorySvc.AutoAllocateDisbursementsByOrderOfRequisition();
             return RedirectToAction("Index");
         }
 

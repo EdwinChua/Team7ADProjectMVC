@@ -44,9 +44,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.CrystalReports.Engine">
+      <HintPath>..\..\..\..\..\..\program files (x86)\sap businessobjects\crystal reports for .net framework 4.0\common\sap businessobjects enterprise xi 4.0\win32_x86\dotnet\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource">
+      <HintPath>..\..\..\..\..\..\program files (x86)\sap businessobjects\crystal reports for .net framework 4.0\common\sap businessobjects enterprise xi 4.0\win32_x86\dotnet\CrystalDecisions.ReportSource.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared">
+      <HintPath>..\..\..\..\..\..\program files (x86)\sap businessobjects\crystal reports for .net framework 4.0\common\sap businessobjects enterprise xi 4.0\win32_x86\dotnet\CrystalDecisions.Shared.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -262,7 +268,6 @@
     <Compile Include="CollectionPoint.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\AdjustmentController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Delegate.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -335,6 +340,7 @@
     <Compile Include="Models\InventoryService\InventoryService.cs" />
     <Compile Include="Models\RequisitionService\IRequisitionService.cs" />
     <Compile Include="Models\RequisitionService\RequisitionService.cs" />
+    <Compile Include="Models\UtilityService\UtilityService.cs" />
     <Compile Include="Permission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -443,11 +449,7 @@
     <Content Include="Views\Inventory\Edit.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
     <Content Include="Views\Shared\_Layouthead.cshtml" />
-    <Content Include="Views\Adjustment\Create.cshtml" />
-    <Content Include="Views\Adjustment\Delete.cshtml" />
-    <Content Include="Views\Adjustment\Details.cshtml" />
-    <Content Include="Views\Adjustment\Edit.cshtml" />
-    <Content Include="Views\Adjustment\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutD.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

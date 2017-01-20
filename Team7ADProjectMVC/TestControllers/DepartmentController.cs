@@ -70,7 +70,7 @@ namespace Team7ADProjectMVC.TestControllers
         private IDelegateRoleService delpsvc;
         private ProjectEntities db = new ProjectEntities();
         List<String> Roles;
-
+       
         public DepartmentController()
         {
             
@@ -82,8 +82,17 @@ namespace Team7ADProjectMVC.TestControllers
         
         public ActionResult Index()
         {
+
+           ///* i*/nt currentPageIndex = page.HasValue ? page.Value - 1 : 0;
+           
             //var requisitions = db.Requisitions.ToList();
             var requisitions = depasvc.ListAllRequisition();
+
+           
+
+
+
+
             ViewBag.Cat = requisitions;
             ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
             return View(requisitions);

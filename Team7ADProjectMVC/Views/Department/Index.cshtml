@@ -1,4 +1,5 @@
-﻿@model Team7ADProjectMVC.Requisition
+﻿@model IEnumerable<Team7ADProjectMVC.Requisition>
+
 
 @{
     Page.Title = "View All requisitions";
@@ -112,15 +113,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*@foreach (var item in Model)
+                        @foreach (var item in Model)
                         {
                             <tr class="clickable-row" data-href="ViewRequisitionDetails/@item.RequisitionId">
 
                                 <td>
-                                    @item.DepartmentId
+                                    @item.Employee.Department.DepartmentName
                                 </td>
                                 <td>
-                                    @item.EmployeeId
+                                    @item.Employee.EmployeeName
                                 </td>
                                 <td>
                                     @item.ApprovedDate
@@ -134,9 +135,9 @@
 
                                 </td>
                             </tr>
-                        }*@
+                        }
 
-                        @foreach (var item in @ViewBag.Cat)
+                        @*@foreach (var item in @ViewBag.Cat)
                         {
                             <tr class="clickable-row" data-href="ViewRequisitionDetails/@item.RequisitionId">
 
@@ -158,7 +159,7 @@
 
                                 </td>
                             </tr>
-                        }
+                        }*@
 
 
                     </tbody>

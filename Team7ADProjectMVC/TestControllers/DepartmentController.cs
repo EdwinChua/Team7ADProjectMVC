@@ -86,7 +86,7 @@ namespace Team7ADProjectMVC.TestControllers
             var requisitions = depasvc.ListAllRequisition();
             ViewBag.Cat = requisitions;
             ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
-            return View();
+            return View(requisitions);
         }
         public ActionResult Search(int id)
         {

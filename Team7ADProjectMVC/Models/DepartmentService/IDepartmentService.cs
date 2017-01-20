@@ -14,5 +14,7 @@ namespace Team7ADProjectMVC.Models.DepartmentService
         List<Requisition> GetRequisitionByStatus(string status);
         List<Requisition> ListAllDepartment();
         List<Requisition> ListAllRequisition();
+        Department findDeptByID(int? id);
+        void changeDeptCp(Department department, int cpId);
       }
 }

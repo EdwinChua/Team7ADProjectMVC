@@ -41,5 +41,17 @@ namespace Team7ADProjectMVC.Models.DepartmentService
         {
             throw new NotImplementedException();
         }
+        public Department findDeptByID(int ? id)
+        {
+            return (db.Departments.Find(id));
+        }
+        public void changeDeptCp(Department department,int cpId)
+        {
+            
+            int id = department.DepartmentId;
+            db.Departments.Single(model => model.DepartmentId == id).CollectionPointId = cpId;
+
+            db.SaveChanges();
+        }
     }
 }

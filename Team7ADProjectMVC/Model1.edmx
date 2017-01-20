@@ -368,6 +368,18 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="DisbursementDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="DisbursementDetail" Type="Self.DisbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="DisbursementDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="DisbursementListCollectionPointId">
           <End Role="CollectionPoints" Type="Self.CollectionPoints" Multiplicity="0..1" />
           <End Role="DisbursementList" Type="Self.DisbursementList" Multiplicity="*" />
@@ -699,6 +711,10 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <AssociationSet Name="DepartmentId" Association="Self.DepartmentId">
             <End Role="Department" EntitySet="Department" />
             <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="DisbursementDetailItemNo" Association="Self.DisbursementDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="DisbursementDetail" EntitySet="DisbursementDetail" />
           </AssociationSet>
           <AssociationSet Name="DisbursementListCollectionPointId" Association="Self.DisbursementListCollectionPointId">
             <End Role="CollectionPoints" EntitySet="CollectionPoints" />

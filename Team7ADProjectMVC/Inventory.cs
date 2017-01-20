@@ -11,7 +11,8 @@ namespace Team7ADProjectMVC
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Inventory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,7 +24,8 @@ namespace Team7ADProjectMVC
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
             this.RequisitionDetails = new HashSet<RequisitionDetail>();
         }
-    
+
+        [RegularExpression("[A-Z][0-9]{3}", ErrorMessage = "Must be format A000")]
         public string ItemNo { get; set; }
         public Nullable<int> CategoryId { get; set; }
         public string Description { get; set; }

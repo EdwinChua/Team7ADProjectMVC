@@ -219,7 +219,6 @@ namespace Team7ADProjectMVC.Models
 
             int? currentDisbursementListId = null;
 
-            //int i = 0;
             foreach (Requisition requisition in requisitionListFromRList)
             {
                 var q = (from x in db.DisbursementLists
@@ -245,6 +244,15 @@ namespace Team7ADProjectMVC.Models
                 }
             }
             SaveDisbursementDetailsIntoDB(tempDisbursementDetailList);
+
+            foreach (Requisition r in requisitionListFromRList)
+            {
+                Requisition temp = db.Requisitions.Find(r.RequisitionId);
+                temp.RetrievalId = retrievalList.retrievalId;
+                temp.RequisitionStatus = "Pending Collection";
+                db.Entry(temp).State = EntityState.Modified;
+                db.SaveChanges();
+            }
 
             ClearRetrievalList();
             HttpContext.Current.Application.UnLock();
@@ -382,6 +390,89 @@ namespace Team7ADProjectMVC.Models
 
             ClearRetrievalList();
             HttpContext.Current.Application.UnLock();
+        }
+
+        public List<DisbursementDetail> GenerateListForManualAllocation()
+        {
+            int lastRetrievalListId = db.Retrievals
+                                        .OrderByDescending(x => x.RetrievalId)
+                                        .FirstOrDefault().RetrievalId;
+
+            var currentDisbursement = (from x in db.DisbursementLists
+                                       where x.RetrievalId == lastRetrievalListId
+                                       select x).ToList();
+
+            List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
+            List<DisbursementDetail> returnDisbursementDetailList = new List<DisbursementDetail>();
+            foreach (var x in currentDisbursement)
+            {
+                foreach (var y in x.DisbursementDetails)
+                {
+                    tempDisbursementDetailList.Add(y);
+                }
+            }
+
+            var consolidatedDisbursementList = tempDisbursementDetailList
+                                                .GroupBy(ac => new
+                                                {
+                                                    ac.ItemNo
+                                                })
+                                                .Select(ac => new DisbursementDetail
+                                                {
+                                                    ItemNo = ac.Key.ItemNo,
+                                                    PreparedQuantity = ac.Sum(acs => acs.PreparedQuantity)
+                                                });
+
+            List<RequisitionDetail> tempRequisitionDetailList = new List<RequisitionDetail>();
+
+            var test = (from x in db.Requisitions
+                        where x.RetrievalId == lastRetrievalListId
+                        select x).ToList();
+
+            foreach (var item in test)
+            {
+                foreach (var item2 in item.RequisitionDetails)
+                {
+                    tempRequisitionDetailList.Add(item2);
+                }
+            }
+
+            var consolidatedRequisitionList = tempRequisitionDetailList
+                                                .GroupBy(ac => new
+                                                {
+                                                    ac.ItemNo
+                                                })
+                                                .Select(ac => new RequisitionDetail
+                                                {
+                                                    ItemNo = ac.Key.ItemNo,
+                                                    OutstandingQuantity = ac.Sum(acs => acs.OutstandingQuantity),
+                                                });
+
+
+            foreach (var item in consolidatedDisbursementList)
+            {
+                var t = (from x in consolidatedRequisitionList
+                         where item.ItemNo == x.ItemNo
+                         select x).FirstOrDefault();
+                if (t.OutstandingQuantity == item.PreparedQuantity)
+                {
+                    //ignore item
+                    Console.WriteLine("Equal");
+                }
+                else if (t.OutstandingQuantity != item.PreparedQuantity)
+                {
+                    //do something
+                    Console.WriteLine("Not Equal");
+                    var x = (from y in tempDisbursementDetailList
+                             where y.ItemNo == item.ItemNo
+                             select y).ToList();
+                    foreach (var i2 in x)
+                    {
+                        returnDisbursementDetailList.Add(i2);
+                    }
+                }
+            }
+            return returnDisbursementDetailList;
         }
 
     }

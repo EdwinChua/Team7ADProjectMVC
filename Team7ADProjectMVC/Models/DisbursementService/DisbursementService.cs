@@ -131,9 +131,19 @@ namespace Team7ADProjectMVC.Models
         {
             return (db.DisbursementLists.Find(id).Status);
         }
-        //public ConfirmDisbursement(int? id)
-        //{
+        public void ConfirmDisbursement(int? id)
+        {
+            int rid = db.DisbursementLists.Find(id).Retrieval.RetrievalId;
+            List<RequisitionDetail> rdlist = db.Requisitions.Single(model => model.RetrievalId == rid).RequisitionDetails.ToList();
+            foreach (var item in rdlist)
+            {
+                db.RequisitionDetails.Find(item.RequisitionDetailId).DeliveryStatus = "Completed";
+            }
+            db.DisbursementLists.Find(id).Status = "Completed";
+            db.SaveChanges();
 
-        //}
+            
+        }
+        
     }
 }

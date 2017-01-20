@@ -8,7 +8,7 @@ namespace Team7ADProjectMVC.Models
     interface IDisbursementService
     {
         List<DisbursementList> GetAllDisbursements();
-       
+
 
         List<DisbursementList> GetDisbursementsBySearchCriteria(int? departmentId, String status);
         //Search for disbursements by department and status
@@ -22,6 +22,7 @@ namespace Team7ADProjectMVC.Models
         string findCptimeByDisburse(int? id);
         List<DisbursementList> FindDisbursementsBySearch(string date, string status);
         string findDisbursenmentStatus(int? id);
+        void ConfirmDisbursement(int? id);
 
     }
 }

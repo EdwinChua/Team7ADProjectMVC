@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Team7ADProjectMVC.Requisition>
 
+
 @{
     Page.Title = "View All requisitions";
     Layout = "~/Views/Shared/_LayoutD.cshtml";
@@ -95,7 +96,7 @@
                     <thead>
                         <tr>
                             <th>
-                                Department ID
+                                Department
                             </th>
                             <th>
                                 Employee
@@ -112,15 +113,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*@foreach (var item in Model)
+                        @foreach (var item in Model)
                         {
                             <tr class="clickable-row" data-href="ViewRequisitionDetails/@item.RequisitionId">
 
                                 <td>
-                                    @item.DepartmentId
+                                    @item.Employee.Department.DepartmentName
                                 </td>
                                 <td>
-                                    @item.EmployeeId
+                                    @item.Employee.EmployeeName
                                 </td>
                                 <td>
                                     @item.ApprovedDate
@@ -128,15 +129,20 @@
                                 <td>
                                     @item.RequisitionStatus
                                 </td>
-                            </tr>
-                        }*@
+                                <td>
 
-                        @foreach (var item in ViewBag.Cat)
+                                    @Html.ActionLink("Detail", "ViewRequisitionDetails", new { id = @item.RequisitionId })
+
+                                </td>
+                            </tr>
+                        }
+
+                        @*@foreach (var item in @ViewBag.Cat)
                         {
                             <tr class="clickable-row" data-href="ViewRequisitionDetails/@item.RequisitionId">
 
                                 <td>
-                                    @item.DepartmentId
+                                    @item.Employee.Department.DepartmentName
                                 </td>
                                 <td>
                                     @item.EmployeeId
@@ -153,7 +159,7 @@
 
                                 </td>
                             </tr>
-                        }
+                        }*@
 
 
                     </tbody>

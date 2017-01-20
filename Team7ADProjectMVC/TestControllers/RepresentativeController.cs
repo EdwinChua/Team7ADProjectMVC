@@ -6,17 +6,21 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
+using Team7ADProjectMVC.Models.DepartmentService;
 
 namespace Team7ADProjectMVC.TestControllers
 {
     public class RepresentativeController : Controller
     {
         private IDisbursementService disbursementSvc;
+        private IDepartmentService departmentSvc;
         private ProjectEntities db = new ProjectEntities();
+        
 
         public RepresentativeController()
         {
             disbursementSvc = new DisbursementService();
+            departmentSvc = new DepartmentService();
         }
         // GET: Representative
         public ActionResult Viewdisbursements()
@@ -53,23 +57,8 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult ViewDisbursementDetail(int id)
         {
 
-
-
-            int rid = db.DisbursementLists.Find(id).Retrieval.RetrievalId;
-            List<RequisitionDetail> rdlist= db.Requisitions.Single(model => model.RetrievalId == rid).RequisitionDetails.ToList();
-            foreach(var item in rdlist)
-            {
-                db.RequisitionDetails.Find(item.RequisitionDetailId).DeliveryStatus = "Completed";
-            }
-           
-
-
-            db.DisbursementLists.Find(id).Status = "Completed";
-            db.SaveChanges();
+            disbursementSvc.ConfirmDisbursement(id);
             return RedirectToAction("Viewdisbursements");
-
-
-
         }
 
 
@@ -80,8 +69,8 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee e = db.Employees.Find(id);
-            Department department = e.Department;
+
+            Department department = departmentSvc.findDeptByID(id);
 
             if (department == null)
             {
@@ -101,11 +90,10 @@ namespace Team7ADProjectMVC.TestControllers
             if (ModelState.IsValid)
             {
 
-                var r = Request.Form["radio"];
-                int id = department.DepartmentId;
-                db.Departments.Single(model => model.DepartmentId == id).CollectionPointId = int.Parse(r);
-
-                db.SaveChanges();
+                var rid = Request.Form["radio"];
+                
+                departmentSvc.changeDeptCp(department, int.Parse(rid));
+                                
 
                 return RedirectToAction("Viewdisbursements");
             }

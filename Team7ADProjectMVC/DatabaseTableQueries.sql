@@ -316,12 +316,13 @@ EmployeeId INT,
 SupervisorId INT,
 SupervisorAuthorizedDate DATE,
 HeadId INT,
-HeadAuthorizedDate DATE
+HeadAuthorizedDate DATE,
+[Status] VarChar(50)
 CONSTRAINT AdjustmentEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
 )
 
 INSERT INTO Adjustment
-VALUES ('2016-12-22',2,'','','',''), ('2016-12-31',3,'','','',''), ('2017-01-14',2,'','','','');
+VALUES ('2016-12-22',2,'','','','','Approved'), ('2016-12-31',3,'','','','','Pending Final Approval'), ('2017-01-14',2,'','','','','Pending Approval');
 
 -------------------------------------------------- AdjustmentDetail ----------------------------------------
 CREATE TABLE AdjustmentDetail

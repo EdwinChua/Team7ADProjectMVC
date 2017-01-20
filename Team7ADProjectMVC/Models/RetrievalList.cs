@@ -19,7 +19,7 @@ namespace Team7ADProjectMVC.Models
         }
         public RetrievalList(int retrievalListId)
         {
-            this.retrievalId = retrievalListId;
+            retrievalId = retrievalListId;
         }
     }
 

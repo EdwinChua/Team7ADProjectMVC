@@ -315,5 +315,50 @@ namespace Team7ADProjectMVC
             }
             return dDetail;
         }
+
+
+        public wcflogin getlogin(String userid , String password)
+        {
+            // do the proper login here.. 
+            // test case only.
+
+
+            wcflogin dDetail = new wcflogin();
+            if(userid.Equals("c1"))
+            {
+                dDetail.Deptid = "0";
+                dDetail.Role = "Clerk";
+                dDetail.Userid = "c1";
+                dDetail.Authenticate = "true";
+            }
+            else   if (userid.Equals("e1"))
+            {
+                dDetail.Deptid = "4";
+                dDetail.Role = "Employee";
+                dDetail.Userid = "e1";
+                dDetail.Authenticate = "true";
+            }
+            else if (userid.Equals("h1"))
+            {
+                dDetail.Deptid = "0";
+                dDetail.Role = "Boss";
+                dDetail.Userid = "h1";
+                dDetail.Authenticate ="true";
+            }
+            else if (userid.Equals("r1"))
+            {
+                dDetail.Deptid = "0";
+                dDetail.Role = "Representative";
+                dDetail.Userid = "r1";
+                dDetail.Authenticate = "true";
+            }
+            else
+                dDetail.Authenticate = "false";
+
+                
+
+                return dDetail;
+          
+        }
     }
 }

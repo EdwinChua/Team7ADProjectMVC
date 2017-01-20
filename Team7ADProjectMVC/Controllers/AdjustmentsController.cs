@@ -10,18 +10,18 @@ using Team7ADProjectMVC;
 
 namespace Team7ADProjectMVC.Controllers
 {
-    public class AdjustmentController : Controller
+    public class AdjustmentsController : Controller
     {
         private ProjectEntities db = new ProjectEntities();
 
-        // GET: Adjustment
+        // GET: Adjustments
         public ActionResult Index()
         {
             var adjustments = db.Adjustments.Include(a => a.Employee);
             return View(adjustments.ToList());
         }
 
-        // GET: Adjustment/Details/5
+        // GET: Adjustments/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,14 +36,14 @@ namespace Team7ADProjectMVC.Controllers
             return View(adjustment);
         }
 
-        // GET: Adjustment/Create
+        // GET: Adjustments/Create
         public ActionResult Create()
         {
             ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName");
             return View();
         }
 
-        // POST: Adjustment/Create
+        // POST: Adjustments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -61,7 +61,7 @@ namespace Team7ADProjectMVC.Controllers
             return View(adjustment);
         }
 
-        // GET: Adjustment/Edit/5
+        // GET: Adjustments/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,7 +77,7 @@ namespace Team7ADProjectMVC.Controllers
             return View(adjustment);
         }
 
-        // POST: Adjustment/Edit/5
+        // POST: Adjustments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -94,7 +94,7 @@ namespace Team7ADProjectMVC.Controllers
             return View(adjustment);
         }
 
-        // GET: Adjustment/Delete/5
+        // GET: Adjustments/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,7 +109,7 @@ namespace Team7ADProjectMVC.Controllers
             return View(adjustment);
         }
 
-        // POST: Adjustment/Delete/5
+        // POST: Adjustments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

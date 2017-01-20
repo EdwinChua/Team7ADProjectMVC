@@ -205,79 +205,39 @@ namespace Team7ADProjectMVC.Models
             System.Web.HttpContext.Current.Application["RetrievalList"] = new RetrievalList();
         }
 
-        public void AutoAllocateDisbursements()
+
+        public void AutoAllocateDisbursementsByOrderOfRequisition()
         {
             System.Web.HttpContext.Current.Application.Lock();
             RetrievalList retrievalList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
 
-            
             List<Requisition> requisitionListFromRList = retrievalList.requisitionList;
-            RequisitionComparer comparer = new RequisitionComparer();
-            requisitionListFromRList.Sort(comparer); //Sorts by dept
 
-            //List<DisbursementList> newDisbursementList = new List<DisbursementList>();
+
             DisbursementList dList = new DisbursementList();
             List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
 
-            List<DisbursementDetail> DisbursementDetailListNoDuplicates = null;
             int? currentDisbursementListId = null;
 
-            int i = 0;
+            //int i = 0;
             foreach (Requisition requisition in requisitionListFromRList)
             {
-                if (i == 0) // if its first time entering loop, create new disbursementlist for dept
+                var q = (from x in db.DisbursementLists
+                         where x.RetrievalId == retrievalList.retrievalId
+                         && x.DepartmentId == requisition.DepartmentId
+                         select x).FirstOrDefault();
+                if (q == null) // if its first time entering loop, create new disbursementlist for dept
                 {
-                    CreateNewDisbursementDetailByDepartment(dList, requisition, retrievalList, currentDisbursementListId);
-                    //Department d = db.Departments.Find(requisition.DepartmentId);
-                    //dList.DepartmentId = d.DepartmentId;
-                    //dList.CollectionPointId = d.CollectionPointId;
-                    //dList.OrderedDate = requisition.OrderedDate;
-                    //dList.RetrievalId = retrievalList.retrievalId;
-                    //dList.Status = "Pending Delivery";
-                    //dList.DeliveryDate = DateTime.Today.AddDays(2); //TODO: Place logic for date later
 
-                    //db.Set(typeof(DisbursementList)).Attach(dList);
-                    //db.DisbursementLists.Add(dList);
-                    //db.SaveChanges(); // creates new disbursementlist
+                    currentDisbursementListId = CreateNewDisbursementListForDepartment(dList, requisition, retrievalList, currentDisbursementListId);
 
-                    //currentDisbursementListId = db.DisbursementLists
-                    //                            .OrderByDescending(x => x.DisbursementListId)
-                    //                            .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
-
-
-                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
-                    {
-                        AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
-                        i++;
-                    }
-                }
-                else if (requisition.DepartmentId.Equals(dList.DepartmentId))
-                {
                     foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
                     {
                         AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
                     }
                 }
-                else if (!requisition.DepartmentId.Equals(dList.DepartmentId))// different dept, create new disbursementlist
+                else if (q.DepartmentId == requisition.DepartmentId)
                 {
-                    dList = new DisbursementList();
-                    CreateNewDisbursementDetailByDepartment(dList, requisition, retrievalList, currentDisbursementListId);
-                    //Department d = db.Departments.Find(requisition.DepartmentId);
-                    //dList.DepartmentId = d.DepartmentId;
-                    //dList.CollectionPointId = d.CollectionPointId;
-                    //dList.OrderedDate = requisition.OrderedDate;
-                    //dList.RetrievalId = retrievalList.retrievalId;
-                    //dList.Status = "Pending Delivery";
-                    //dList.DeliveryDate = DateTime.Today.AddDays(2); //TODO: Place logic for date later
-
-                    //db.Set(typeof(DisbursementList)).Attach(dList);
-                    //db.DisbursementLists.Add(dList);
-                    //db.SaveChanges(); // creates new disbursementlist
-
-                    //currentDisbursementListId = db.DisbursementLists
-                    //                            .OrderByDescending(x => x.DisbursementListId)
-                    //                            .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
-
                     foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
                     {
                         AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
@@ -285,7 +245,8 @@ namespace Team7ADProjectMVC.Models
                 }
             }
             SaveDisbursementDetailsIntoDB(tempDisbursementDetailList);
-            HttpContext.Current.Application["RetrievalList"] = new RetrievalList();
+
+            ClearRetrievalList();
             HttpContext.Current.Application.UnLock();
         }
 
@@ -313,7 +274,6 @@ namespace Team7ADProjectMVC.Models
                 db.SaveChanges();
             }
         }
-
         public void AddDisbursementDetailToTempList(int? currentDisbursementListId, RequisitionDetail reqDetails, RetrievalList retrievalList, List<DisbursementDetail> tempDisbursementDetailList)
         {
             DisbursementDetail newDisbursementDetail = new DisbursementDetail();
@@ -338,7 +298,7 @@ namespace Team7ADProjectMVC.Models
 
             tempDisbursementDetailList.Add(newDisbursementDetail);
         }
-        public void CreateNewDisbursementDetailByDepartment(DisbursementList dList, Requisition requisition, RetrievalList retrievalList, int? currentDisbursementListId)
+        public int? CreateNewDisbursementListForDepartment(DisbursementList dList, Requisition requisition, RetrievalList retrievalList, int? currentDisbursementListId)
         {
             Department d = db.Departments.Find(requisition.DepartmentId);
             dList.DepartmentId = d.DepartmentId;
@@ -355,9 +315,74 @@ namespace Team7ADProjectMVC.Models
             currentDisbursementListId = db.DisbursementLists
                                         .OrderByDescending(x => x.DisbursementListId)
                                         .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
-
+            return currentDisbursementListId;
         }
 
-        
+        //TODO: Historical code. To remove if nothing breaks
+        public void AutoAllocateDisbursements() //Unused
+        {
+            System.Web.HttpContext.Current.Application.Lock();
+            RetrievalList retrievalList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
+
+            List<Requisition> requisitionListFromRList = retrievalList.requisitionList;
+
+            RequisitionComparer comparer = new RequisitionComparer();
+            requisitionListFromRList.Sort(comparer); //Sorts by dept
+
+            DisbursementList dList = new DisbursementList();
+            List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
+
+            int? currentDisbursementListId = null;
+
+            int i = 0;
+            foreach (Requisition requisition in requisitionListFromRList)
+            {
+                var q = (from x in db.DisbursementLists
+                         where x.RetrievalId == requisition.RetrievalId
+                         && x.DepartmentId == requisition.DepartmentId
+                         select x).First();
+                if (i == 0) // if its first time entering loop, create new disbursementlist for dept
+                {
+
+                    CreateNewDisbursementListForDepartment(dList, requisition, retrievalList, currentDisbursementListId);
+
+                    currentDisbursementListId = db.DisbursementLists
+                                                .OrderByDescending(x => x.DisbursementListId)
+                                                .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
+
+                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                    {
+                        AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
+                        i++;
+                    }
+                }
+                else if (requisition.DepartmentId.Equals(dList.DepartmentId))
+                {
+                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                    {
+                        AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
+                    }
+                }
+                else if (!requisition.DepartmentId.Equals(dList.DepartmentId))// different dept, create new disbursementlist
+                {
+                    dList = new DisbursementList();
+                    CreateNewDisbursementListForDepartment(dList, requisition, retrievalList, currentDisbursementListId);
+
+                    currentDisbursementListId = db.DisbursementLists
+                                                .OrderByDescending(x => x.DisbursementListId)
+                                                .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
+
+                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
+                    {
+                        AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
+                    }
+                }
+            }
+            SaveDisbursementDetailsIntoDB(tempDisbursementDetailList);
+
+            ClearRetrievalList();
+            HttpContext.Current.Application.UnLock();
+        }
+
     }
 }

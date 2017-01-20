@@ -131,5 +131,9 @@ namespace Team7ADProjectMVC.Models
         {
             return (db.DisbursementLists.Find(id).Status);
         }
+        //public ConfirmDisbursement(int? id)
+        //{
+
+        //}
     }
 }

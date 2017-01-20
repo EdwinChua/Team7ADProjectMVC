@@ -40,5 +40,7 @@ namespace Team7ADProjectMVC.Models
         void AutoAllocateDisbursements();
 
         void AutoAllocateDisbursementsByOrderOfRequisition();
+
+        List<DisbursementDetail> GenerateListForManualAllocation();
     }
 }

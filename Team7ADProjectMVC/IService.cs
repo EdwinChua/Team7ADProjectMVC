@@ -69,6 +69,12 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcflogin?userid={userid}&password={password}", ResponseFormat = WebMessageFormat.Json)]
         wcflogin getlogin(String userid,String password);
 
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfChangecollectionpt?dept={deptid}&location={collectionptid}", ResponseFormat = WebMessageFormat.Json)]
+        String updatelocation(String deptid, String collectionptid);
+
+
     }
 }
 

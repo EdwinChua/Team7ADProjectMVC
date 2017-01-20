@@ -317,7 +317,7 @@ SupervisorId INT,
 SupervisorAuthorizedDate DATE,
 HeadId INT,
 HeadAuthorizedDate DATE,
-[Status] VarChar(20)
+[Status] VarChar(50)
 CONSTRAINT AdjustmentEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
 )
 

@@ -1,0 +1,184 @@
+﻿@model Team7ADProjectMVC.Employee
+
+@{
+    Layout = "~/Views/Shared/_Layouthead.cshtml";
+    Page.Title = "Delegate Acting Department-Head";
+}
+
+@*<script type="text/javascript">
+        $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
+    </script>*@
+
+<form role="form" action="/Head/ManageTerminate">
+    <div class="row">
+        <div class="col-lg-4 col-xs-12">
+            Delegated to:<label value="employeeName">@ViewBag.emp </label><br />
+        </div>
+    </div>
+
+
+
+    <table>
+        <tr>
+            <td>
+                Start Date:
+                <div style="overflow:hidden;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div id="datetimepicker1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </td>
+            <td>
+                <br />
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <br />
+            </td>
+            <td>
+                End Date:
+                <div style="overflow:hidden;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div id="datetimepicker2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+    <br />
+    <br />
+
+
+
+    <div>
+        <h5>
+
+            Start Date:<label id="s1" value="startDate">@ViewBag.s1</label><br />
+            End Date::<label id="e1" value="endDate">@ViewBag.e1</label><br />
+
+            @*@if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="approveReq" checked="checked"><h5>Approve Requisition</h5>
+            }
+           else 
+            {
+            <input type="checkbox" name="approveReq"><h5>Approve Requisition</h5>
+            }<br />
+            @if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="changeCP" checked><h5>Change Collection Point</h5>
+            }
+            else{<input type="checkbox" name="changeCP"><h5>Change Collection Point</h5>}<br />
+            @if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="changeCP" checked><h5>View Requisiton </h5>
+            }
+            else{<input type="checkbox" name="viewReq"><h5>View Requisiton </h5> }<br />
+            @if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="changeCP" checked><h5>Make Requisition</h5>
+            }
+            else{<input type="checkbox" name="makeReq"><h5>Make Requisition</h5>}<br />
+            @if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="changeCP" checked><h5>Delegate Role</h5>
+            }
+            else{ <input type="checkbox" name="delegateRol"><h5>Delegate Role</h5>}<br />
+            @if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="changeCP" checked><h5>View Collection Details</h5>
+            }
+            else{<input type="checkbox" name="viewColDetl"><h5>View Collection Details</h5>}
+
+            <br />
+            <br />
+
+        </h5>*@
+            @*@if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="approveReq" checked="checked"><h5>Approve Requisition</h5>
+            }
+           else
+            {
+            <input type="checkbox" name="approveReq"><h5>Approve Requisition</h5>
+            }<br />
+            @if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="changeCP" checked><h5>Change Collection Point</h5>
+            }
+            else{<input type="checkbox" name="changeCP"><h5>Change Collection Point</h5>}<br />
+            @if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="changeCP" checked><h5>View Requisiton </h5>
+            }
+            else{<input type="checkbox" name="viewReq"><h5>View Requisiton </h5> }<br />
+            @if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="changeCP" checked><h5>Make Requisition</h5>
+            }
+            else{<input type="checkbox" name="makeReq"><h5>Make Requisition</h5>}<br />
+            @if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="changeCP" checked><h5>Delegate Role</h5>
+            }
+            else{ <input type="checkbox" name="delegateRol"><h5>Delegate Role</h5>}<br />
+            @if (ViewBag.approveReq == true)
+            {
+                <input type="checkbox" name="changeCP" checked><h5>View Collection Details</h5>
+            }
+            else{<input type="checkbox" name="viewColDetl"><h5>View Collection Details</h5>}
+
+            <br />
+            <br />
+
+        </h5>*@
+
+        @*<input type="hidden" value="@item.RequisitionId" name="DelegateId" />*@
+        <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate">
+            Terminate
+        </button>
+
+    </div>
+</form>
+    </>
+
+
+<script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'DD/MM/YYYY HH:mm:ss',
+                inline: true,
+                sideBySide: false
+            });
+            $('#datetimepicker2').datetimepicker({
+
+                inline: true,
+                sideBySide: false
+            });
+
+            $("#datetimepicker1").on("dp.change", function (date, e) {
+                console.log($('#datetimepicker1').data("DateTimePicker").date());
+                $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+            });
+
+            $("#datetimepicker2").on("dp.change", function (date, e) {
+                console.log($('#datetimepicker2').data("DateTimePicker").date());
+                $('#endDate').val($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                $('#e1').text($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+            });
+        });
+
+</script>
+
+

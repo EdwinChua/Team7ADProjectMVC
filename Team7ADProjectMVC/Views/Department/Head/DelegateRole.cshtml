@@ -9,7 +9,7 @@
     $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
 </script>*@
 
-<form role="form" action="/Head/Manage">
+<form role="form" action="/Head/ManageDelegate">
     <div class="row">
         <div class="col-lg-4 col-xs-12">
             Choose Employee:
@@ -17,7 +17,11 @@
                 <select id="empListPicker" name="empId"
                         class="selectpicker show-tick form-control"
                         data-live-search="true" title="Retrieve by department head to view all employees">
-                    
+                    @foreach (var emp in ViewBag.empList)
+                    {
+                        <option value="@emp.EmployeeId">@emp.EmployeeName </option>
+                    }
+                
                 </select>
             </div>
 

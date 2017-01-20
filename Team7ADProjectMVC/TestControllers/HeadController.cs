@@ -18,7 +18,7 @@ namespace Team7ADProjectMVC.TestControllers
     public class HeadController : Controller
     {
         private IRequisitionService listsvc;
-
+        public static int count = 0;
         private IDelegateRoleService depsvc;
         private ProjectEntities db = new ProjectEntities();
         public HeadController()
@@ -97,7 +97,7 @@ namespace Team7ADProjectMVC.TestControllers
             return View("DelegateRole");
 
         }
-        public ActionResult Manage(int? empId, string status, string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl)
+        public ActionResult ManageDelegate(int? empId, string status, string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl)
 
         {
 
@@ -144,9 +144,9 @@ namespace Team7ADProjectMVC.TestControllers
                 }
 
                 depsvc.manageDelegate(emp, sdate, edate, approveReqint, changeCPint, viewReqint, makeReqint, delegateRolint, viewColDetlint);
-               List<Delegate> a = depsvc.getDelegate();
-                Delegate b = a.First() ;
-                return RedirectToAction("fill/"+b.DelegateId);
+                
+            
+                return RedirectToAction("fill");
             }
 
             return RedirectToAction("ListAllEmployees");
@@ -154,24 +154,31 @@ namespace Team7ADProjectMVC.TestControllers
 
         }
 
-        public ActionResult fill(string d)
+        public ActionResult fill()
 
         {
+            List<Delegate> a = depsvc.getDelegate();
 
-            
-            //Employee emp = depsvc.FindById(empId);
-            //ViewBag.empListPicker = e;
-            //ViewBag.s1 = d.StartDate;
-            //ViewBag.e1 = d.EndDate;
-            //ViewBag.approveReq = e.Permission.ApproveRequisition;
-            //ViewBag.changeCP = e.Permission.ChangeCollectionPoint;
-            //ViewBag.viewReq = e.Permission.ViewRequisition;
-            //ViewBag.makeReq = e.Permission.MakeRequisition;
-            //ViewBag.delegateRol = e.Permission.DelegateRole;
-            //ViewBag.viewColDetl = e.Permission.ViewCollectionDetails;
-            return View("TerminateRole");
+            foreach (var i in a)
+            {
+                count = count + 1;
+            }
+            Delegate b=a.ElementAt(count-1);
+            Delegate d = depsvc.FinddelegaterecordById(b.DelegateId);
+            Employee e = depsvc.FindById(d.EmployeeId);
+            ViewBag.emp = e.EmployeeName;
+            ViewBag.s1 = d.StartDate;
+            ViewBag.e1 = d.EndDate;
+            ViewBag.approveReq = e.Permission.ApproveRequisition;
+            ViewBag.changeCP = e.Permission.ChangeCollectionPoint;
+            ViewBag.viewReq = e.Permission.ViewRequisition;
+            ViewBag.makeReq = e.Permission.MakeRequisition;
+            ViewBag.delegateRol = e.Permission.DelegateRole;
+            ViewBag.viewColDetl = e.Permission.ViewCollectionDetails;
+            ViewBag.delegateId = d;
+            return View("Terminate");
         }
-        public ActionResult Terminate(int? empId, string status, string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl)
+        public ActionResult ManageTerminate(int? empId, string status, string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl)
         {
             return View("DelegateRole");
         }

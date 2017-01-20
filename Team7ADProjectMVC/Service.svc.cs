@@ -360,5 +360,19 @@ namespace Team7ADProjectMVC
                 return dDetail;
           
         }
+
+        public String updatelocation(String deptid, String collectionptid)
+        {
+    
+            return "gokul";
+        }
     }
+
+       
+
+
+
+
+
+
 }

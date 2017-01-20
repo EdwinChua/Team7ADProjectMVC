@@ -19,6 +19,7 @@ namespace Team7ADProjectMVC
         {
             this.AdjustmentDetails = new HashSet<AdjustmentDetail>();
             this.DeliveryDetails = new HashSet<DeliveryDetail>();
+            this.DisbursementDetails = new HashSet<DisbursementDetail>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
             this.RequisitionDetails = new HashSet<RequisitionDetail>();
         }
@@ -44,6 +45,8 @@ namespace Team7ADProjectMVC
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DisbursementDetail> DisbursementDetails { get; set; }
         public virtual Measurement Measurement { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }

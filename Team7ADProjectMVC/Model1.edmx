@@ -361,6 +361,18 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="DisbursementDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="DisbursementDetail" Type="Self.DisbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="DisbursementDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="DisbursementListCollectionPointId">
           <End Role="CollectionPoints" Type="Self.CollectionPoints" Multiplicity="0..1" />
           <End Role="DisbursementList" Type="Self.DisbursementList" Multiplicity="*" />
@@ -692,6 +704,10 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             <End Role="Department" EntitySet="Department" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
+          <AssociationSet Name="DisbursementDetailItemNo" Association="Self.DisbursementDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="DisbursementDetail" EntitySet="DisbursementDetail" />
+          </AssociationSet>
           <AssociationSet Name="DisbursementListCollectionPointId" Association="Self.DisbursementListCollectionPointId">
             <End Role="CollectionPoints" EntitySet="CollectionPoints" />
             <End Role="DisbursementList" EntitySet="DisbursementList" />
@@ -894,6 +910,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="PreparedQuantity" Type="Int32" />
           <Property Name="DeliveredQuantity" Type="Int32" />
           <Property Name="Remark" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inventory" Relationship="Self.DisbursementDetailItemNo" FromRole="DisbursementDetail" ToRole="Inventory" />
           <NavigationProperty Name="DisbursementList" Relationship="Self.DisbursementListId" FromRole="DisbursementDetail" ToRole="DisbursementList" />
         </EntityType>
         <EntityType Name="DisbursementList">
@@ -959,6 +976,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <NavigationProperty Name="AdjustmentDetails" Relationship="Self.AdjustmentDetailItemNo" FromRole="Inventory" ToRole="AdjustmentDetail" />
           <NavigationProperty Name="Category" Relationship="Self.CategoryId" FromRole="Inventory" ToRole="Category" />
           <NavigationProperty Name="DeliveryDetails" Relationship="Self.DeliveryDetailItemNo" FromRole="Inventory" ToRole="DeliveryDetail" />
+          <NavigationProperty Name="DisbursementDetails" Relationship="Self.DisbursementDetailItemNo" FromRole="Inventory" ToRole="DisbursementDetail" />
           <NavigationProperty Name="Measurement" Relationship="Self.MeasurementId" FromRole="Inventory" ToRole="Measurement" />
           <NavigationProperty Name="PurchaseDetails" Relationship="Self.PurchaseDetailItemNo" FromRole="Inventory" ToRole="PurchaseDetail" />
           <NavigationProperty Name="RequisitionDetails" Relationship="Self.RequisitionDetailItemNo" FromRole="Inventory" ToRole="RequisitionDetail" />
@@ -1262,6 +1280,18 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="DisbursementDetailItemNo">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="DisbursementDetail" Type="Self.DisbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ItemNo" />
+            </Principal>
+            <Dependent Role="DisbursementDetail">
+              <PropertyRef Name="ItemNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="DisbursementListId">
           <End Role="DisbursementList" Type="Self.DisbursementList" Multiplicity="0..1" />
           <End Role="DisbursementDetail" Type="Self.DisbursementDetail" Multiplicity="*" />
@@ -1544,6 +1574,10 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <AssociationSet Name="EmployeeId" Association="Self.EmployeeId">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="DisbursementDetailItemNo" Association="Self.DisbursementDetailItemNo">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="DisbursementDetail" EntitySet="DisbursementDetails" />
           </AssociationSet>
           <AssociationSet Name="DisbursementListId" Association="Self.DisbursementListId">
             <End Role="DisbursementList" EntitySet="DisbursementLists" />

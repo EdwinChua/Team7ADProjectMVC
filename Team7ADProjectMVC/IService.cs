@@ -64,6 +64,11 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfallocate/", ResponseFormat = WebMessageFormat.Json)]
         List<wcfallocate> getallocate();
 
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcflogin?userid={userid}&password={password}", ResponseFormat = WebMessageFormat.Json)]
+        wcflogin getlogin(String userid,String password);
+
     }
 }
 
@@ -355,6 +360,31 @@ public class wcfallocate
 
     [DataMember]
     public String DisbQty { get; set; }
+
+
+}
+
+
+public class wcflogin
+{
+    string authenticate;
+    string userid;
+    string role;
+    string deptid;
+
+
+    [DataMember]
+    public String Userid { get; set; }
+
+    [DataMember]
+    public String Role { get; set; }
+
+    [DataMember]
+    public String Deptid { get; set; }
+
+
+    [DataMember]
+    public string Authenticate { get; set; }
 
 
 }

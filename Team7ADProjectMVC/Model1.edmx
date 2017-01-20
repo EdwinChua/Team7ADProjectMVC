@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adjustment">
           <Key>
             <PropertyRef Name="AdjustmentId" />
@@ -142,6 +142,13 @@
           <Property Name="Price2" Type="decimal" Precision="8" Scale="2" />
           <Property Name="SupplierId3" Type="int" />
           <Property Name="Price3" Type="decimal" Precision="8" Scale="2" />
+        </EntityType>
+        <EntityType Name="ItemCodeGenerator">
+          <Key>
+            <PropertyRef Name="Letter" />
+          </Key>
+          <Property Name="Letter" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="itemcount" Type="int" />
         </EntityType>
         <EntityType Name="Measurement">
           <Key>
@@ -650,6 +657,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <EntitySet Name="DisbursementList" EntityType="Self.DisbursementList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemCodeGenerator" EntityType="Self.ItemCodeGenerator" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Measurement" EntityType="Self.Measurement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseDetail" EntityType="Self.PurchaseDetail" Schema="dbo" store:Type="Tables" />
@@ -797,8 +805,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             <End Role="Inventory" EntitySet="Inventory" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1647,7 +1654,15 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             <End Role="Retrieval" EntitySet="Retrievals" />
             <End Role="Requisition" EntitySet="Requisitions" />
           </AssociationSet>
+          <EntitySet Name="ItemCodeGenerators" EntityType="ProjectModel.ItemCodeGenerator" />
         </EntityContainer>
+        <EntityType Name="ItemCodeGenerator">
+          <Key>
+            <PropertyRef Name="Letter" />
+          </Key>
+          <Property Name="Letter" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="itemcount" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1922,6 +1937,14 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ItemCodeGenerators">
+            <EntityTypeMapping TypeName="ProjectModel.ItemCodeGenerator">
+              <MappingFragment StoreEntitySet="ItemCodeGenerator">
+                <ScalarProperty Name="itemcount" ColumnName="itemcount" />
+                <ScalarProperty Name="Letter" ColumnName="Letter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1939,7 +1962,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

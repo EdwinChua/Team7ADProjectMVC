@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace Team7ADProjectMVC.Models.DepartmentService
 {
-    interface IDelegateRoleService
+    interface IDepartmentService
     {
         List<Department> ListAllDepartments();
+        Requisition FindById(string id);
+        Requisition FindRequisitionById(string id);
+        List<Requisition> GetRequisitionByStatus(string status);
+        List<Requisition> ListAllDepartment();
+        List<Requisition> ListAllRequisition();
       }
 }

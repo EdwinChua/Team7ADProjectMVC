@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Team7ADProjectMVC.Requisition>
+﻿@model Team7ADProjectMVC.Requisition
 
 @{
     Page.Title = "View All requisitions";
@@ -95,7 +95,7 @@
                     <thead>
                         <tr>
                             <th>
-                                Department ID
+                                Department
                             </th>
                             <th>
                                 Employee
@@ -128,10 +128,15 @@
                                 <td>
                                     @item.RequisitionStatus
                                 </td>
+                                <td>
+
+                                    @Html.ActionLink("Detail", "ViewRequisitionDetails", new { id = @item.RequisitionId })
+
+                                </td>
                             </tr>
                         }*@
 
-                        @foreach (var item in ViewBag.Cat)
+                        @foreach (var item in @ViewBag.Cat)
                         {
                             <tr class="clickable-row" data-href="ViewRequisitionDetails/@item.RequisitionId">
 

@@ -15,6 +15,15 @@ namespace Team7ADProjectMVC.Models.DepartmentService
         {
             throw new NotImplementedException();
         }
+        public Department FinddeById(string id)
+        {
+            throw new NotImplementedException();
+        }
+        public Employee FindemplById(string id)
+        {
+            throw new NotImplementedException();
+        }
+        
 
         public Requisition FindRequisitionById(string id)
         {

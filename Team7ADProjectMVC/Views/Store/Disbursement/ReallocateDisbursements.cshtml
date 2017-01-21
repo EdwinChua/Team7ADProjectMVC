@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Team7ADProjectMVC.DisbursementDetail>
+
+@{
+    Layout = "~/_Layout1.cshtml";
+    DisbursementDetail item2 = new DisbursementDetail();
+    Page.Title = "Reallocation of Disbursements";
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        @if (Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+            <table class="table">
+                @if (item.ItemNo != item2.ItemNo)
+                {
+                    <thead>
+                        <tr class="active">
+                            <th>@item.ItemNo - @item.Inventory.Description</th>
+                            @{ item2 = item; }
+                        </tr>
+                        <tr class="info">
+                            <th class="col-md-2">Department</th>
+                            <th class="col-md-2">Prepared Quantity</th>
+                            <th class="col-md-2">Adjusted Quantity</th>
+                        </tr>
+                    </thead>
+                                }
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">@item.DisbursementList.Department.DepartmentName</td>
+                        <td class="col-md-2">@item.PreparedQuantity </td>
+                        <td class="col-md-2"><input class="form-control" type="number" max=" "/></td>
+                    </tr>
+                </tbody>
+            </table>
+                                    }
+                                }
+                                else
+                                {
+                <div><h4>There are no items to reallocate at this time</h4></div>
+                                }
+    </div>
+</div>
+@foreach (var item in Model)
+{
+    var x = (from i in item.DisbursementList.Retrieval.Requisitions
+             where i.RetrievalId == item.DisbursementList.RetrievalId
+             && i.DepartmentId == item.DisbursementList.DepartmentId
+             select i).ToList();
+    foreach (var it in x)
+    {
+        var x2 = (from i in it)
+    }
+}

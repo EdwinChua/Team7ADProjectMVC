@@ -219,8 +219,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="images\6.jpg" />
-    <Content Include="images\pattern.png" />
     <Content Include="Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
@@ -322,7 +320,7 @@
     <Compile Include="Models\DelegateRoleService\IDelegateRoleService.cs" />
     <Compile Include="Models\ReportService\IReportService.cs" />
     <Compile Include="Models\ReportService\ReportService.cs" />
-    <Compile Include="Models\RequisitionComparer.cs" />
+    <Compile Include="Models\CustomizedComparers.cs" />
     <Compile Include="Models\RetrievalList.cs" />
     <Compile Include="DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -455,8 +453,11 @@
     <Content Include="Views\Shared\_LayoutD.cshtml" />
     <Content Include="Views\Shared\_Layouthead.cshtml" />
     <Content Include="Views\Shared\_LayoutD.cshtml" />
-    <Content Include="Views\Department\Head\Terminate.cshtml" />
-    <Content Include="Views\Department\Viewdd.cshtml" />
+    <Content Include="Views\Adjustments\Create.cshtml" />
+    <Content Include="Views\Adjustments\Delete.cshtml" />
+    <Content Include="Views\Adjustments\Details.cshtml" />
+    <Content Include="Views\Adjustments\Edit.cshtml" />
+    <Content Include="Views\Adjustments\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

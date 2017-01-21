@@ -334,7 +334,7 @@ namespace Team7ADProjectMVC.Models
 
             List<Requisition> requisitionListFromRList = retrievalList.requisitionList;
 
-            RequisitionComparer comparer = new RequisitionComparer();
+            CustomizedComparers comparer = new CustomizedComparers();
             requisitionListFromRList.Sort(comparer); //Sorts by dept
 
             DisbursementList dList = new DisbursementList();
@@ -475,5 +475,19 @@ namespace Team7ADProjectMVC.Models
             return returnDisbursementDetailList;
         }
 
+
+        public int GetLastRetrievalListId()
+        {
+            int currentRetrievalListId = db.Retrievals
+                                        .OrderByDescending(x => x.RetrievalId)
+                                        .FirstOrDefault().RetrievalId;
+            return currentRetrievalListId;
+        }
+
+        public List<RequisitionDetail> GetRequisitionsSummedByDept(int currentRetrievalListId)
+        {
+
+            throw new NotImplementedException();
+        }
     }
 }

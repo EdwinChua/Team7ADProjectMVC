@@ -82,16 +82,29 @@ namespace Team7ADProjectMVC.TestControllers
         
         public ActionResult Index()
         {
+            var requisitions = depasvc.ListAllRequisition();
+            
+            
 
-           ///* i*/nt currentPageIndex = page.HasValue ? page.Value - 1 : 0;
-           
-            //var requisitions = db.Requisitions.ToList();
+            ViewBag.Cat = requisitions;
+            ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+            return View(requisitions);
+        }
+        [HttpPost]
+        public ActionResult Index(string searchString)
+        {
             var requisitions = depasvc.ListAllRequisition();
 
-           
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var q = db.Requisitions.Where(s => s.Employee.EmployeeName.Contains(searchString)
+                                       || s.ApprovedDate.ToString().Contains(searchString)
+                                       || s.Employee.Department.DepartmentName.Contains(searchString));
+                requisitions = q.ToList();
+            }
+            ///* i*/nt currentPageIndex = page.HasValue ? page.Value - 1 : 0;
 
-
-
+            //var requisitions = db.Requisitions.ToList();
 
             ViewBag.Cat = requisitions;
             ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
@@ -106,6 +119,16 @@ namespace Team7ADProjectMVC.TestControllers
 
             ViewBag.Cat = requisitions;
             return View("Index");
+        }
+        public ActionResult Viewdd()
+        {
+            //var inventories = inventorySvc.GetInventoryListByCategory(id);
+            //var categories = inventorySvc.GetAllCategories();
+            //ViewBag.Cat = categories.ToList();
+            var requisitions = db.Requisitions.ToList();
+
+            ViewBag.Cat = requisitions;
+            return View(requisitions);
         }
 
         // GET: TESTRequisitions/Create

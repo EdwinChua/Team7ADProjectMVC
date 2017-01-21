@@ -244,7 +244,17 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult DisburseItems()
         {
             inventorySvc.AutoAllocateDisbursementsByOrderOfRequisition();
-            return RedirectToAction("Index");
+            return RedirectToAction("ReallocateDisbursements");
+        }
+        public ActionResult ReallocateDisbursements()
+        {
+            List<DisbursementDetail> reallocationList = inventorySvc.GenerateListForManualAllocation();
+            DisbursementListComparer comparer = new DisbursementListComparer(); //sort by item no
+            reallocationList.Sort(comparer);
+            int currentRetrievalListId = inventorySvc.GetLastRetrievalListId();
+            List<RequisitionDetail> summedListByDepartment = inventorySvc.GetRequisitionsSummedByDept(currentRetrievalListId);
+
+            return View(reallocationList);
         }
 
         // ********************* Other *******************

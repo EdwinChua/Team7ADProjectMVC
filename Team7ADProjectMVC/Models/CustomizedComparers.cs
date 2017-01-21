@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Team7ADProjectMVC.Models
 {
-    public class RequisitionComparer : IComparer<Requisition>
+    public class CustomizedComparers : IComparer<Requisition>
     {
         public int Compare(Requisition x, Requisition y)
         {
@@ -21,6 +21,14 @@ namespace Team7ADProjectMVC.Models
             {
                 return +1;
             }
+        }
+    }
+
+    public class DisbursementListComparer : IComparer<DisbursementDetail>
+    {
+        public int Compare(DisbursementDetail x, DisbursementDetail y)
+        {
+            return (x.ItemNo.CompareTo(y.ItemNo));
         }
     }
 }

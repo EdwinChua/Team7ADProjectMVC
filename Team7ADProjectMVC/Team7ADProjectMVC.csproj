@@ -319,7 +319,7 @@
     <Compile Include="Models\DelegateRoleService\IDelegateRoleService.cs" />
     <Compile Include="Models\ReportService\IReportService.cs" />
     <Compile Include="Models\ReportService\ReportService.cs" />
-    <Compile Include="Models\RequisitionComparer.cs" />
+    <Compile Include="Models\CustomizedComparers.cs" />
     <Compile Include="Models\RetrievalList.cs" />
     <Compile Include="DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -456,6 +456,7 @@
     <Content Include="Views\Adjustments\Details.cshtml" />
     <Content Include="Views\Adjustments\Edit.cshtml" />
     <Content Include="Views\Adjustments\Index.cshtml" />
+    <Content Include="Views\Store\Disbursement\ReallocateDisbursements.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -42,5 +42,9 @@ namespace Team7ADProjectMVC.Models
         void AutoAllocateDisbursementsByOrderOfRequisition();
 
         List<DisbursementDetail> GenerateListForManualAllocation();
+
+        int GetLastRetrievalListId();
+
+        List<RequisitionDetail> GetRequisitionsSummedByDept(int currentRetrievalListId);
     }
 }

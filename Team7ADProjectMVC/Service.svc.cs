@@ -196,8 +196,8 @@ namespace Team7ADProjectMVC
                 wcfDisbursementList dl = new wcfDisbursementList();
                 dl.DeptName = d.Department.DepartmentName;
                 dl.CollectionPoint = d.CollectionPoint.PlaceName;
-                dl.DeliveryDate = d.DeliveryDate.ToString();
-                dl.DeliveryTime = d.CollectionPoint.CollectTime.ToString();
+                dl.DeliveryDatetime = d.DeliveryDate.ToString() + " " + d.CollectionPoint.CollectTime.ToString(); 
+               
                 dl.RepName = d.Department.Employee.EmployeeName.ToString();
                 dl.RepPhone = d.Department.Employee.PhNo.ToString();
                 dl.DisListID = d.DisbursementListId.ToString();
@@ -360,5 +360,33 @@ namespace Team7ADProjectMVC
                 return dDetail;
           
         }
+
+        public String updatelocation(String deptid, String collectionptid)
+        {
+       
+            int dId = Convert.ToInt32(deptid);
+            int cpoint = Convert.ToInt32(collectionptid);
+            Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
+            wcfItem.CollectionPointId = cpoint;
+            db.SaveChanges();
+
+            List<DisbursementList> lt = new List<DisbursementList>();
+            lt = db.DisbursementLists.Where(p => p.DepartmentId == dId).ToList();
+            foreach(DisbursementList l in lt )
+            {
+                l.CollectionPointId = cpoint;
+            }
+            db.SaveChanges();
+
+            return collectionptid;
+        }
     }
+
+       
+
+
+
+
+
+
 }

@@ -90,9 +90,12 @@
                     </div>
                 </div>
             </div>
-            <div class="well">
-
-                <table class="table">
+            <div id="page-content "class="well">
+                <span class="page-number clickable">1</span>
+                <span class="page-number clickable">2</span>
+                <span class="page-number clickable">3</span>
+                <span class="page-number clickable">4</span>
+                <table class="table paginated" >
                     <thead>
                         <tr>
                             <th>
@@ -164,28 +167,32 @@
 
                     </tbody>
                 </table>
-
-                <ul class="pagination">
-                    <li>
-                        <a href="#">Prev</a>
+                
+                <ul id="pagination-demo" class="pagination-sm pagination">
+                    <li class="page-item first">
+                        <a class="page-link" href="#">First</a>
                     </li>
-                    <li>
-                        <a href="#">1</a>
+                    <li class="page-item prev">
+                        <a href="#" class="page-link">Prev</a>
                     </li>
-                    <li>
-                        <a href="#">2</a>
+                    <li class="page-item">
+                        <a href="#" class="page-link">1</a>
                     </li>
-                    <li>
-                        <a href="#">3</a>
+                    <li class="page-item">
+                        <a href="#" class="page-link">2</a>
                     </li>
-                    <li>
-                        <a href="#">4</a>
+                    <li class="page-item">
+                        <a href="#" class="page-link">3</a>
                     </li>
-                    <li>
-                        <a href="#">5</a>
+                    <li class="page-item">
+                        <a href="#" class="page-link">4</a>
                     </li>
-                    <li>
-                        <a href="#">Next</a>
+                  
+                    <li class="page-item next">
+                        <a href="#" class="page-link">Next</a>
+                    </li>
+                    <li class="page-item last">
+                        <a class="page-link" href="#">Last</a>
                     </li>
                 </ul>
             </div>
@@ -209,4 +216,53 @@
             window.document.location = $(this).data("href");
         });
     });
+
+
+    //////////////////////////////////////////
+
+
+
+
+
+
+    //$('td', 'table').each(function (i) {
+    //    $(this).text(i + 1);
+    //});
+
+
+
+    $('table.paginated').each(function () {
+        var currentPage = 0;
+        var numPerPage = 5;
+        var $table = $(this);
+        $table.bind('repaginate', function () {
+            $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+        });
+        $table.trigger('repaginate');
+        var numRows = $table.find('tbody tr').length;
+        var numPages = Math.ceil(numRows / numPerPage);
+        var $pager = $('<div class="pager"></div>');
+        for (var page = 0; page < numPages; page++) {
+            $('<span class="page-number"></span>').text(page + 1).bind('click', {
+                newPage: page
+            }, function (event) {
+                currentPage = event.data['newPage'];
+                $table.trigger('repaginate');
+                $(this).addClass('active').siblings().removeClass('active');
+            }).appendTo($pager).addClass('clickable');
+        }
+        $pager.insertBefore($table).find('span.page-number:first').addClass('active');
+    });
+    //////////////////////////////////////
+   
+
+
+
+    //$('#pagination-demo').twbsPagination({
+    //    totalPages: 35,
+    //    visiblePages: 4,
+    //    onPageClick: function (event, page) {
+    //        $('#page-content').text('Page ' + page);
+    //    }
+    //});
 </script>

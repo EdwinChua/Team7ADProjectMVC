@@ -241,7 +241,6 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.twbsPagination.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -320,7 +319,7 @@
     <Compile Include="Models\DelegateRoleService\IDelegateRoleService.cs" />
     <Compile Include="Models\ReportService\IReportService.cs" />
     <Compile Include="Models\ReportService\ReportService.cs" />
-    <Compile Include="Models\CustomizedComparers.cs" />
+    <Compile Include="Models\RequisitionComparer.cs" />
     <Compile Include="Models\RetrievalList.cs" />
     <Compile Include="DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -452,12 +451,8 @@
     <Content Include="Views\Inventory\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutD.cshtml" />
     <Content Include="Views\Shared\_Layouthead.cshtml" />
-    <Content Include="Views\Shared\_LayoutD.cshtml" />
-    <Content Include="Views\Adjustments\Create.cshtml" />
-    <Content Include="Views\Adjustments\Delete.cshtml" />
-    <Content Include="Views\Adjustments\Details.cshtml" />
-    <Content Include="Views\Adjustments\Edit.cshtml" />
-    <Content Include="Views\Adjustments\Index.cshtml" />
+	<Content Include="Views\Shared\_LayoutD.cshtml" />
+	  <Content Include="Views\Department\Head\Terminate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

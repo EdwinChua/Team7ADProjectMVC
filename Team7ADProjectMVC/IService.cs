@@ -69,6 +69,12 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcflogin?userid={userid}&password={password}", ResponseFormat = WebMessageFormat.Json)]
         wcflogin getlogin(String userid,String password);
 
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfChangecollectionpt?dept={deptid}&location={collectionptid}", ResponseFormat = WebMessageFormat.Json)]
+        String updatelocation(String deptid, String collectionptid);
+
+
     }
 }
 
@@ -217,8 +223,7 @@ public class wcfDisbursementList
     string disListID;
     string deptName;
     string collectionPt;
-    string deliveryDate;
-    string deliveryTime;
+    string deliveryDatetime;
     string repName;
     string repPhone;
 
@@ -232,10 +237,8 @@ public class wcfDisbursementList
     public String CollectionPoint { get; set; }
 
     [DataMember]
-    public String DeliveryDate { get; set; }
+    public String DeliveryDatetime { get; set; }
 
-    [DataMember]
-    public String DeliveryTime { get; set; }
 
     [DataMember]
     public String RepName { get; set; }

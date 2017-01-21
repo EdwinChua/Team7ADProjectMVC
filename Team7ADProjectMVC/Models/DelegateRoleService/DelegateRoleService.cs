@@ -67,6 +67,11 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
 
             return (query.ToList());
         }
+        public Delegate FinddelegaterecordById(int count)
+        {
+
+            return db.Delegates.Find(count);
+        }
         public List<Department> ListAllDepartments()
         {
             throw new NotImplementedException();

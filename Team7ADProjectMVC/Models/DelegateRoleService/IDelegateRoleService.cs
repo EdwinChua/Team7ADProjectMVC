@@ -11,6 +11,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
         List<Delegate> getDelegate(); 
         List<Employee> GetAllEmployeebyDepId(int depId);
         Employee FindById(int? empid);
+        Delegate FinddelegaterecordById(int count);
         void manageDelegate(Employee e, DateTime startDate, DateTime endDate, bool approveReq, bool changeCP, bool viewReq, bool makeReq, bool delegateRol, bool viewColDetl);
     }
 }

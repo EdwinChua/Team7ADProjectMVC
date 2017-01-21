@@ -190,13 +190,18 @@ namespace Team7ADProjectMVC
                            where d.Status != "Completed"
                            orderby d.DeliveryDate ascending
                            select d;
-
+            String beforesplit = "";
+             String aftersplit = "";
+             Char delimiter = ' ';
             foreach (DisbursementList d in disburse)
             {
                 wcfDisbursementList dl = new wcfDisbursementList();
                 dl.DeptName = d.Department.DepartmentName;
                 dl.CollectionPoint = d.CollectionPoint.PlaceName;
-                dl.DeliveryDatetime = d.DeliveryDate.ToString() + " " + d.CollectionPoint.CollectTime.ToString(); 
+                beforesplit = d.DeliveryDate.ToString();
+                String[] substrings = beforesplit.Split(delimiter);
+                aftersplit = substrings[0];
+                dl.DeliveryDatetime = aftersplit + " ( " + d.CollectionPoint.CollectTime.ToString()+" )"; 
                
                 dl.RepName = d.Department.Employee.EmployeeName.ToString();
                 dl.RepPhone = d.Department.Employee.PhNo.ToString();
@@ -218,6 +223,8 @@ namespace Team7ADProjectMVC
             foreach (DisbursementDetail d in disDetail)
             {
                 wcfDisbursementListDetail dd = new wcfDisbursementListDetail();
+                dd.Ddid = d.DisbursementDetailId.ToString();
+                dd.Itemid = d.ItemNo;
                 dd.ItemName = d.Inventory.Description;
                 dd.PreQty = d.PreparedQuantity.ToString();
                 dd.DisbQty = d.DeliveredQuantity.ToString();
@@ -340,14 +347,14 @@ namespace Team7ADProjectMVC
             }
             else if (userid.Equals("h1"))
             {
-                dDetail.Deptid = "0";
+                dDetail.Deptid = "4";
                 dDetail.Role = "Boss";
                 dDetail.Userid = "h1";
                 dDetail.Authenticate ="true";
             }
             else if (userid.Equals("r1"))
             {
-                dDetail.Deptid = "0";
+                dDetail.Deptid = "4";
                 dDetail.Role = "Representative";
                 dDetail.Userid = "r1";
                 dDetail.Authenticate = "true";
@@ -380,7 +387,23 @@ namespace Team7ADProjectMVC
 
             return collectionptid;
         }
+
+
+        public void updatedqun(wcfDisbursementListDetail c )
+        {
+
+            int dId = Convert.ToInt32(c.Ddid);
+            int dId1 = Convert.ToInt32(c.DisbQty);
+             DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
+             dd.Remark =c.Remarks;
+             dd.DeliveredQuantity = dId1;
+             db.SaveChanges();
+           
+          
+        }
     }
+
+  
 
        
 

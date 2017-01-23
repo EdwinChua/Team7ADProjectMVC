@@ -83,8 +83,8 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult Index()
         {
             var requisitions = depasvc.ListAllRequisition();
-            
-            
+
+            Session["npg"] = 4;
 
             ViewBag.Cat = requisitions;
             ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
@@ -97,34 +97,11 @@ namespace Team7ADProjectMVC.TestControllers
 
 
 
-            //ViewBag.NameSortParm1 = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
             //ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             //ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
-
-
-            string userName = Session["UserName"].ToString();
-
-            // Convert sort order
-            ViewBag.NameSort = sortOrder == "Name" ? "Name_desc" : "Name";
-            var re = from s in db.Requisitions
-                           select s;
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    re = re.OrderByDescending(s => s.Employee.Department.DepartmentName);
-                    break;
-                case "Date":
-                    re = re.OrderBy(s => s.Employee.EmployeeName);
-                    break;
-                case "date_desc":
-                    re = re.OrderByDescending(s => s.ApprovedDate);
-                    break;
-                default:
-                    re = re.OrderBy(s => s.RequisitionStatus);
-                    break;
-            }
 
 
 
@@ -142,6 +119,50 @@ namespace Team7ADProjectMVC.TestControllers
 
             ViewBag.Cat = requisitions;
             ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            string userName = Session["UserName"].ToString();
+
+            // Convert sort order
+            ViewBag.NameSort = sortOrder == "Name" ? "Name_desc" : "Name";
+            var re = from s in db.Requisitions
+                           select s;
+            switch ("Name_desc")
+            {
+                case "Name_desc":
+                    re = re.OrderByDescending(s => s.Employee.Department.DepartmentName);
+                    break;
+                case "Date":
+                    re = re.OrderBy(s => s.Employee.EmployeeName);
+                    break;
+                case "date_desc":
+                    re = re.OrderByDescending(s => s.ApprovedDate);
+                    break;
+                default:
+                    re = re.OrderBy(s => s.RequisitionStatus);
+                    break;
+            }
+
+
+            requisitions = re.ToList();
+
+
+            ViewBag.Cat = requisitions;
+            ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+
+
             return View(requisitions);
         }
         public ActionResult Search(int id)

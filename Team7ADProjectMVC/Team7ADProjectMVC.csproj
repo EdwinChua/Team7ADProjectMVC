@@ -343,7 +343,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\PushNotification.cs" />
+    <Compile Include="Models\Adjustment.cs" />
+    <Compile Include="Models\AdjustmentDetail.cs" />
     <Compile Include="Permission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -365,17 +366,7 @@
     <Compile Include="Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="IService.cs" />
     <Compile Include="Models\PushNotification.cs" />
-    <Compile Include="Permission.cs" />
-    <Compile Include="PurchaseDetail.cs" />
-    <Compile Include="PurchaseOrder.cs" />
-    <Compile Include="Requisition.cs" />
-    <Compile Include="RequisitionDetail.cs" />
-    <Compile Include="Retrieval.cs" />
-    <Compile Include="Role.cs" />
-    <Compile Include="Services\Adjustment.cs" />
-    <Compile Include="Services\AdjustmentDetail.cs" />
     <Compile Include="Services\CustomizedComparers.cs" />
     <Compile Include="Services\DelegateRoleService\DelegateRoleService.cs" />
     <Compile Include="Services\DelegateRoleService\IDelegateRoleService.cs" />
@@ -486,7 +477,6 @@
     <Content Include="Views\Adjustments\Create.cshtml" />
     <Content Include="Views\Adjustments\Delete.cshtml" />
     <Content Include="Views\Adjustments\Details.cshtml" />
-    <Content Include="Views\Adjustments\Edit.cshtml" />
     <Content Include="Views\Adjustments\Index.cshtml" />
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />

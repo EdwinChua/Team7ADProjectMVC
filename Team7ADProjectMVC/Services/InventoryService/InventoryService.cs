@@ -313,7 +313,7 @@ namespace Team7ADProjectMVC.Models
             dList.DepartmentId = d.DepartmentId;
             dList.OrderedDate = requisition.OrderedDate;
             dList.RetrievalId = retrievalList.retrievalId;
-            dList.Status = "Pending Delivery";
+            dList.Status = "Processing";
             dList.DeliveryDate = DateTime.Today.AddDays(2); //TODO: Place logic for date later
 
             db.Set(typeof(DisbursementList)).Attach(dList);
@@ -524,6 +524,40 @@ namespace Team7ADProjectMVC.Models
                 returnList.Add(req);
             }
             return returnList;
+        }
+
+        public void ManuallyAllocateDisbursements(int[] departmentId, int[] preparedQuantity, int[] disbursementListId, int[] disbursementDetailId, string[] itemNo)
+        {
+
+            int deptId;
+            int prepQty;
+            int disburseListId;
+            int disburseDetailId;
+            string itemNumber;
+            
+            for (int i = 0; i < departmentId.Length; i++)
+            {
+                deptId = departmentId[i];
+                prepQty = preparedQuantity[i];
+                disburseListId = disbursementListId[i];
+                disburseDetailId = disbursementDetailId[i];
+                itemNumber = itemNo[i];
+
+                //var q = (from x in db.DisbursementLists
+                //        where x.DepartmentId == deptId
+                //        && x.DisbursementListId == disburseListId
+                //        select x).ToList();
+                var q = (from x in db.DisbursementDetails
+                         where x.DisbursementList.DepartmentId == deptId
+                         && x.DisbursementListId == disburseListId
+                         && x.DisbursementDetailId == disburseDetailId
+                         && x.ItemNo == itemNumber
+                         select x).SingleOrDefault();
+                q.PreparedQuantity = prepQty;
+                db.Entry(q).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
         }
     }
 }

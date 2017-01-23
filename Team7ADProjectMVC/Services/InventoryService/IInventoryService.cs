@@ -45,6 +45,6 @@ namespace Team7ADProjectMVC.Models
 
         int GetLastRetrievalListId();
 
-        List<RequisitionDetail> GetRequisitionsSummedByDept(int currentRetrievalListId);
+        List<Requisition> GetRequisitionsSummedByDept(int currentRetrievalListId);
     }
 }

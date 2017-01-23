@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adjustment">
           <Key>
             <PropertyRef Name="AdjustmentId" />
@@ -109,7 +109,6 @@
           <Property Name="DepartmentId" Type="int" />
           <Property Name="OrderedDate" Type="date" />
           <Property Name="DeliveryDate" Type="date" />
-          <Property Name="CollectionPointId" Type="int" />
           <Property Name="Status" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Employee">
@@ -218,7 +217,6 @@
           <Property Name="ItemNo" Type="varchar" MaxLength="50" />
           <Property Name="Quantity" Type="int" />
           <Property Name="OutstandingQuantity" Type="int" />
-          <Property Name="DeliveryStatus" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Retrieval">
           <Key>
@@ -249,8 +247,8 @@
           <Property Name="Address" Type="varchar" MaxLength="250" />
           <Property Name="GstRegistrationNo" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“Project.dbo.StockCard”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="StockCard">
           <Key>
             <PropertyRef Name="Date" />
@@ -378,18 +376,6 @@
             </Principal>
             <Dependent Role="DisbursementDetail">
               <PropertyRef Name="ItemNo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="DisbursementListCollectionPointId">
-          <End Role="CollectionPoints" Type="Self.CollectionPoints" Multiplicity="0..1" />
-          <End Role="DisbursementList" Type="Self.DisbursementList" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CollectionPoints">
-              <PropertyRef Name="CollectionPointId" />
-            </Principal>
-            <Dependent Role="DisbursementList">
-              <PropertyRef Name="CollectionPointId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -717,10 +703,6 @@
             <End Role="Inventory" EntitySet="Inventory" />
             <End Role="DisbursementDetail" EntitySet="DisbursementDetail" />
           </AssociationSet>
-          <AssociationSet Name="DisbursementListCollectionPointId" Association="Self.DisbursementListCollectionPointId">
-            <End Role="CollectionPoints" EntitySet="CollectionPoints" />
-            <End Role="DisbursementList" EntitySet="DisbursementList" />
-          </AssociationSet>
           <AssociationSet Name="DisbursementListDepartmentId" Association="Self.DisbursementListDepartmentId">
             <End Role="Department" EntitySet="Department" />
             <End Role="DisbursementList" EntitySet="DisbursementList" />
@@ -806,7 +788,8 @@
             <End Role="Inventory" EntitySet="Inventory" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -821,8 +804,8 @@
           <Property Name="SupervisorAuthorizedDate" Type="DateTime" Precision="0" />
           <Property Name="HeadId" Type="Int32" />
           <Property Name="HeadAuthorizedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Employee" Relationship="Self.AdjustmentEmployeeId" FromRole="Adjustment" ToRole="Employee" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.AdjustmentEmployeeId" FromRole="Adjustment" ToRole="Employee" />
         </EntityType>
         <EntityType Name="AdjustmentDetail">
           <Key>
@@ -852,7 +835,6 @@
           <Property Name="CollectTime" Type="Time" Precision="7" />
           <Property Name="EmployeeId" Type="Int32" />
           <NavigationProperty Name="Departments" Relationship="Self.CollectionPointId" FromRole="CollectionPoints" ToRole="Department" />
-          <NavigationProperty Name="DisbursementLists" Relationship="Self.DisbursementListCollectionPointId" FromRole="CollectionPoints" ToRole="DisbursementList" />
           <NavigationProperty Name="Employee" Relationship="Self.eid" FromRole="CollectionPoints" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Delegate">
@@ -931,9 +913,7 @@
           <Property Name="DepartmentId" Type="Int32" />
           <Property Name="OrderedDate" Type="DateTime" Precision="0" />
           <Property Name="DeliveryDate" Type="DateTime" Precision="0" />
-          <Property Name="CollectionPointId" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CollectionPoint" Relationship="Self.DisbursementListCollectionPointId" FromRole="DisbursementList" ToRole="CollectionPoints" />
           <NavigationProperty Name="Department" Relationship="Self.DisbursementListDepartmentId" FromRole="DisbursementList" ToRole="Department" />
           <NavigationProperty Name="DisbursementDetails" Relationship="Self.DisbursementListId" FromRole="DisbursementList" ToRole="DisbursementDetail" />
           <NavigationProperty Name="Retrieval" Relationship="Self.RetrievalId" FromRole="DisbursementList" ToRole="Retrieval" />
@@ -992,6 +972,13 @@
           <NavigationProperty Name="Supplier" Relationship="Self.SupplierId1" FromRole="Inventory" ToRole="Supplier" />
           <NavigationProperty Name="Supplier1" Relationship="Self.SupplierId2" FromRole="Inventory" ToRole="Supplier" />
           <NavigationProperty Name="Supplier2" Relationship="Self.SupplierId3" FromRole="Inventory" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="ItemCodeGenerator">
+          <Key>
+            <PropertyRef Name="Letter" />
+          </Key>
+          <Property Name="Letter" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="itemcount" Type="Int32" />
         </EntityType>
         <EntityType Name="Measurement">
           <Key>
@@ -1070,7 +1057,6 @@
           <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="OutstandingQuantity" Type="Int32" />
-          <Property Name="DeliveryStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Inventory" Relationship="Self.RequisitionDetailItemNo" FromRole="RequisitionDetail" ToRole="Inventory" />
           <NavigationProperty Name="Requisition" Relationship="Self.RequisitionId" FromRole="RequisitionDetail" ToRole="Requisition" />
         </EntityType>
@@ -1165,18 +1151,6 @@
               <PropertyRef Name="CollectionPointId" />
             </Principal>
             <Dependent Role="Department">
-              <PropertyRef Name="CollectionPointId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="DisbursementListCollectionPointId">
-          <End Role="CollectionPoints" Type="Self.CollectionPoint" Multiplicity="0..1" />
-          <End Role="DisbursementList" Type="Self.DisbursementList" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CollectionPoints">
-              <PropertyRef Name="CollectionPointId" />
-            </Principal>
-            <Dependent Role="DisbursementList">
               <PropertyRef Name="CollectionPointId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1518,6 +1492,7 @@
           <EntitySet Name="DisbursementLists" EntityType="Self.DisbursementList" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Inventories" EntityType="Self.Inventory" />
+          <EntitySet Name="ItemCodeGenerators" EntityType="Self.ItemCodeGenerator" />
           <EntitySet Name="Measurements" EntityType="Self.Measurement" />
           <EntitySet Name="Permissions" EntityType="Self.Permission" />
           <EntitySet Name="PurchaseDetails" EntityType="Self.PurchaseDetail" />
@@ -1543,10 +1518,6 @@
           <AssociationSet Name="CollectionPointId" Association="Self.CollectionPointId">
             <End Role="CollectionPoints" EntitySet="CollectionPoints" />
             <End Role="Department" EntitySet="Departments" />
-          </AssociationSet>
-          <AssociationSet Name="DisbursementListCollectionPointId" Association="Self.DisbursementListCollectionPointId">
-            <End Role="CollectionPoints" EntitySet="CollectionPoints" />
-            <End Role="DisbursementList" EntitySet="DisbursementLists" />
           </AssociationSet>
           <AssociationSet Name="eid" Association="Self.eid">
             <End Role="Employee" EntitySet="Employees" />
@@ -1656,15 +1627,7 @@
             <End Role="Retrieval" EntitySet="Retrievals" />
             <End Role="Requisition" EntitySet="Requisitions" />
           </AssociationSet>
-          <EntitySet Name="ItemCodeGenerators" EntityType="ProjectModel.ItemCodeGenerator" />
         </EntityContainer>
-        <EntityType Name="ItemCodeGenerator">
-          <Key>
-            <PropertyRef Name="Letter" />
-          </Key>
-          <Property Name="Letter" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="itemcount" Type="Int32" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1674,7 +1637,6 @@
           <EntitySetMapping Name="Adjustments">
             <EntityTypeMapping TypeName="ProjectModel.Adjustment">
               <MappingFragment StoreEntitySet="Adjustment">
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="AdjustmentId" ColumnName="AdjustmentId" />
                 <ScalarProperty Name="AdjustmentDate" ColumnName="AdjustmentDate" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -1682,6 +1644,7 @@
                 <ScalarProperty Name="SupervisorAuthorizedDate" ColumnName="SupervisorAuthorizedDate" />
                 <ScalarProperty Name="HeadId" ColumnName="HeadId" />
                 <ScalarProperty Name="HeadAuthorizedDate" ColumnName="HeadAuthorizedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1783,7 +1746,6 @@
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="OrderedDate" ColumnName="OrderedDate" />
                 <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
-                <ScalarProperty Name="CollectionPointId" ColumnName="CollectionPointId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1819,6 +1781,14 @@
                 <ScalarProperty Name="Price2" ColumnName="Price2" />
                 <ScalarProperty Name="SupplierId3" ColumnName="SupplierId3" />
                 <ScalarProperty Name="Price3" ColumnName="Price3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemCodeGenerators">
+            <EntityTypeMapping TypeName="ProjectModel.ItemCodeGenerator">
+              <MappingFragment StoreEntitySet="ItemCodeGenerator">
+                <ScalarProperty Name="Letter" ColumnName="Letter" />
+                <ScalarProperty Name="itemcount" ColumnName="itemcount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1893,7 +1863,6 @@
                 <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="OutstandingQuantity" ColumnName="OutstandingQuantity" />
-                <ScalarProperty Name="DeliveryStatus" ColumnName="DeliveryStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1940,14 +1909,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ItemCodeGenerators">
-            <EntityTypeMapping TypeName="ProjectModel.ItemCodeGenerator">
-              <MappingFragment StoreEntitySet="ItemCodeGenerator">
-                <ScalarProperty Name="itemcount" ColumnName="itemcount" />
-                <ScalarProperty Name="Letter" ColumnName="Letter" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1965,7 +1926,7 @@
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

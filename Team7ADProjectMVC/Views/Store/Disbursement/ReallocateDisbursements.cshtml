@@ -4,6 +4,7 @@
     Layout = "~/_Layout1.cshtml";
     DisbursementDetail item2 = new DisbursementDetail();
     Page.Title = "Reallocation of Disbursements";
+    int prodmax = 0;
 }
 
 
@@ -24,6 +25,7 @@
                         <tr class="info">
                             <th class="col-md-2">Department</th>
                             <th class="col-md-2">Prepared Quantity</th>
+                            <th class="col-md-2">Required Quantity (Max)</th>
                             <th class="col-md-2">Adjusted Quantity</th>
                         </tr>
                     </thead>
@@ -32,7 +34,23 @@
                     <tr>
                         <td class="col-md-2">@item.DisbursementList.Department.DepartmentName</td>
                         <td class="col-md-2">@item.PreparedQuantity </td>
-                        <td class="col-md-2"><input class="form-control" type="number" max=" "/></td>
+                        <td class="col-md-2">
+                            @{
+                                foreach (var itemxyz in ViewBag.MaxQuantityOfEachItem)
+                                {
+                                    foreach (var itemabc in itemxyz.RequisitionDetails)
+                                    {
+                                        if(itemabc.ItemNo == item.ItemNo && itemxyz.DepartmentId == item.DisbursementList.DepartmentId)
+                                        {
+                                            prodmax = itemabc.OutstandingQuantity;
+                                            <p>@prodmax</p>
+                                        }
+                                    }
+                                }
+
+                            }
+                        </td>
+                        <td class="col-md-2"><input class="form-control" type="number" max="@prodmax"/></td>
                     </tr>
                 </tbody>
             </table>
@@ -44,14 +62,4 @@
                                 }
     </div>
 </div>
-@foreach (var item in Model)
-{
-    var x = (from i in item.DisbursementList.Retrieval.Requisitions
-             where i.RetrievalId == item.DisbursementList.RetrievalId
-             && i.DepartmentId == item.DisbursementList.DepartmentId
-             select i).ToList();
-    foreach (var it in x)
-    {
-        var x2 = (from i in it)
-    }
-}
+

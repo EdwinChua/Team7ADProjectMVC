@@ -226,8 +226,8 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -292,6 +292,7 @@
     <Compile Include="Employee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Inventory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -316,54 +317,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\DelegateRoleService\DelegateRoleService.cs" />
-    <Compile Include="Models\DelegateRoleService\IDelegateRoleService.cs" />
-    <Compile Include="Models\ReportService\IReportService.cs" />
-    <Compile Include="Models\ReportService\ReportService.cs" />
-    <Compile Include="Models\CustomizedComparers.cs" />
-    <Compile Include="Models\RetrievalList.cs" />
-    <Compile Include="DataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="ExtendedRazorViewEngine.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="IService.cs" />
-    <Compile Include="Models\DepartmentService\DepartmentService.cs" />
-    <Compile Include="Models\DepartmentService\IDepartmentService.cs" />
-    <Compile Include="Models\DisbursementService\DisbursementService.cs" />
-    <Compile Include="Models\DisbursementService\IDisbursementService.cs" />
-    <Compile Include="Models\InventoryAdjustmentService\IInventoryAdjustmentService.cs" />
-    <Compile Include="Models\InventoryAdjustmentService\InventoryAdjustmentService.cs" />
-    <Compile Include="Models\InventoryService\IInventoryService.cs" />
-    <Compile Include="Models\InventoryService\InventoryService.cs" />
-    <Compile Include="Models\RequisitionService\IRequisitionService.cs" />
-    <Compile Include="Models\RequisitionService\RequisitionService.cs" />
-    <Compile Include="Models\UtilityService\UtilityService.cs" />
     <Compile Include="Permission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="PurchaseOrder.cs">
       <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\CrystalReport1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CrystalReport1.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\CrystalReport2.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CrystalReport2.rpt</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Requisition.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -376,6 +337,48 @@
     </Compile>
     <Compile Include="Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Adjustment.cs" />
+    <Compile Include="Services\AdjustmentDetail.cs" />
+    <Compile Include="Services\DelegateRoleService\DelegateRoleService.cs" />
+    <Compile Include="Services\DelegateRoleService\IDelegateRoleService.cs" />
+    <Compile Include="Services\ReportService\IReportService.cs" />
+    <Compile Include="Services\ReportService\ReportService.cs" />
+    <Compile Include="Services\CustomizedComparers.cs" />
+    <Compile Include="Services\RetrievalList.cs" />
+    <Compile Include="DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ExtendedRazorViewEngine.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="IService.cs" />
+    <Compile Include="Services\DepartmentService\DepartmentService.cs" />
+    <Compile Include="Services\DepartmentService\IDepartmentService.cs" />
+    <Compile Include="Services\DisbursementService\DisbursementService.cs" />
+    <Compile Include="Services\DisbursementService\IDisbursementService.cs" />
+    <Compile Include="Services\InventoryAdjustmentService\IInventoryAdjustmentService.cs" />
+    <Compile Include="Services\InventoryAdjustmentService\InventoryAdjustmentService.cs" />
+    <Compile Include="Services\InventoryService\IInventoryService.cs" />
+    <Compile Include="Services\InventoryService\InventoryService.cs" />
+    <Compile Include="Services\RequisitionService\IRequisitionService.cs" />
+    <Compile Include="Services\RequisitionService\RequisitionService.cs" />
+    <Compile Include="Services\UtilityService\UtilityService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\CrystalReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalReport1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CrystalReport2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalReport2.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>
@@ -458,6 +461,9 @@
     <Content Include="Views\Adjustments\Details.cshtml" />
     <Content Include="Views\Adjustments\Edit.cshtml" />
     <Content Include="Views\Adjustments\Index.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentList.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentDetail.cshtml" />
+    <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

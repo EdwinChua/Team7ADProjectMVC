@@ -16,30 +16,15 @@
 @using (Html.BeginForm())
 {
     <div class="jumbotron">
-        <div id="main" class="panel panel-primary">
 
-            <div class="panel-heading"> <h3 class="panel-title">Adjustment Builder</h3></div>
-            <div class="panel-body">
-
-                <fieldset>
-                    @Html.LabelFor(model => model.AdjustmentDate)
-                    @Html.EditorFor(model => model.AdjustmentDate)
-
-                    @Html.LabelFor(model => model.Status)
-                    @Html.EditorFor(model => model.Status)
-
-                </fieldset>
-
-            </div>
-        </div>
 
     </div>
 
 
-        <h3>Adjustment</h3>
-        @Html.EditorFor(x => x)
-        <input type="button" id="add-detail" value="Add" />
-        <h3>Adjustment Detail</h3>
+    <h3>Adjustment</h3>
+    @Html.EditorFor(x => x)
+    <input type="button" id="add-detail" value="Add" />
+    <h3>Adjustment Detail</h3>
         <div id="detail-list">
             @Html.EditorForMany(x => x.Details, x => x.Index)
         </div>
@@ -66,6 +51,17 @@
             jQuery.get('/Adjustments/AddDetail').done(function (html) {
                 $('#detail-list').append(html);
             });
+
         });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#detail-list').on('click', 'button.delete-detail', function () {
+            var EntryToRemove = $(this).closest('div.editorRow');
+            EntryToRemove.prev('input[type=hidden]').remove();
+            EntryToRemove.remove();
+        });
+
     });
 </script>

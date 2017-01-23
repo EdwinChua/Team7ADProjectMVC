@@ -6,7 +6,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
-using Team7ADProjectMVC.Models.DepartmentService;
+using Team7ADProjectMVC.Services;
+using Team7ADProjectMVC.Services.DepartmentService;
 
 namespace Team7ADProjectMVC.TestControllers
 {
@@ -130,7 +131,7 @@ namespace Team7ADProjectMVC.TestControllers
             if (ModelState.IsValid)
             {
                 inventorySvc.UpdateInventory(inventory);
-                return RedirectToAction("ViewInventory");
+                return RedirectToAction("Inventory");
             }
             ViewBag.CategoryId = new SelectList(inventorySvc.GetAllCategories(), "CategoryId", "CategoryName", inventory.CategoryId);
             ViewBag.MeasurementId = new SelectList(inventorySvc.GetAllMeasurements(), "MeasurementId", "UnitOfMeasurement", inventory.MeasurementId);

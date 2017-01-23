@@ -125,30 +125,34 @@
                 <span class="page-number clickable">4</span>*@
                 <table class="table paginated" >
                     <thead>
+                    <thead>
                         <tr>
                             @*new{id = item.MovieID}*@
                             @*<th>
-                                <a href="@Url.Action("Dispatch", "Calls", new { userName = Session["UserName"], new { sortOrder ="Name" })">Department</a>
-                            </th>*@
+                    <a href="@Url.Action("Dispatch", "Calls", new { userName = Session["UserName"], new { sortOrder ="Name" })">Department</a>
+                </th>*@
                             <th>
                                 @Html.ActionLink("Department", "Index", new { sortOrder = ViewBag.NameSortParm })
                             </th>
-                           
+
                             <th>
-                                @Html.ActionLink("Employee", "Index", new { sortOrder = ViewBag.DateSortParm })
+                                @Html.ActionLink("Employee", "Index", new { sortOrder = ViewBag.emeSortParm })
                             </th>
                             <th>
                                 @Html.ActionLink("ApproveDate", "Index", new { sortOrder = ViewBag.DateSortParm })
                             </th>
 
                             <th>
-                                @Html.ActionLink("Requisiton Status", "Index", new { sortOrder = ViewBag.DateSortParm })
+                                @Html.ActionLink("Requisiton Status", "Index", new { sortOrder = ViewBag.remeSortParm })
                             </th>
                             <th>
                                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParm">@Html.DisplayNameFor(model => model.Employee.Department.DepartmentName)</a>
                             </th>
-                           
+
                         </tr>
+
+
+                    </thead>
 
                        
                     </thead>

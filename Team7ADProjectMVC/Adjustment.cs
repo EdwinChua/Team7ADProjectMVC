@@ -14,6 +14,12 @@ namespace Team7ADProjectMVC
     
     public partial class Adjustment
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Adjustment()
+        {
+            this.AdjustmentDetails = new HashSet<AdjustmentDetail>();
+        }
+    
         public int AdjustmentId { get; set; }
         public Nullable<System.DateTime> AdjustmentDate { get; set; }
         public Nullable<int> EmployeeId { get; set; }
@@ -23,6 +29,8 @@ namespace Team7ADProjectMVC
         public Nullable<System.DateTime> HeadAuthorizedDate { get; set; }
         public string Status { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AdjustmentDetail> AdjustmentDetails { get; set; }
         public virtual Employee Employee { get; set; }
     }
 }

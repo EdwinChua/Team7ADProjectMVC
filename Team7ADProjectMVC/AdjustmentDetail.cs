@@ -20,6 +20,7 @@ namespace Team7ADProjectMVC
         public Nullable<int> Quantity { get; set; }
         public string Reason { get; set; }
     
+        public virtual Adjustment Adjustment { get; set; }
         public virtual Inventory Inventory { get; set; }
     }
 }

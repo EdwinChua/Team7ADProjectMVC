@@ -331,7 +331,8 @@ AdjustmentId INT,
 ItemNo VARCHAR(50),
 Quantity INT,
 Reason VARCHAR(250),
-CONSTRAINT AdjustmentDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(ItemNo)
+CONSTRAINT AdjustmentDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(ItemNo),
+CONSTRAINT AdjustmentDetailAdjustmentId FOREIGN KEY(AdjustmentId) REFERENCES Adjustment(AdjustmentId)
 )
 
 INSERT INTO AdjustmentDetail
@@ -571,3 +572,5 @@ where e.RoleId=r.RoleId and e.DepartmentId=d.DepartmentId
 select * from role
 
 select * from Department
+
+select * from Requisition

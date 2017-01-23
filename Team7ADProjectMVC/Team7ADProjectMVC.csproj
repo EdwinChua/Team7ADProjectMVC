@@ -269,6 +269,7 @@
     <Compile Include="CollectionPoint.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AdjustmentDetailsController.cs" />
     <Compile Include="Controllers\AdjustmentsController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Delegate.cs">
@@ -461,9 +462,14 @@
     <Content Include="Views\Adjustments\Details.cshtml" />
     <Content Include="Views\Adjustments\Edit.cshtml" />
     <Content Include="Views\Adjustments\Index.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentList.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentDetail.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\Adjustment.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\AdjustmentDetail.cshtml" />
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
+    <Content Include="Views\AdjustmentDetails\Create.cshtml" />
+    <Content Include="Views\AdjustmentDetails\Delete.cshtml" />
+    <Content Include="Views\AdjustmentDetails\Details.cshtml" />
+    <Content Include="Views\AdjustmentDetails\Edit.cshtml" />
+    <Content Include="Views\AdjustmentDetails\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

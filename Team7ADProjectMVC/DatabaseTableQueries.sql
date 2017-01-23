@@ -284,7 +284,6 @@ RequisitionId INT,
 ItemNo VARCHAR(50),
 Quantity INT,
 OutstandingQuantity INT,
-DeliveryStatus VARCHAR(50),
 CONSTRAINT RequisitionId FOREIGN KEY(RequisitionId) REFERENCES Requisition(RequisitionId),
 CONSTRAINT RequisitionDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(ItemNo)
 )
@@ -402,16 +401,16 @@ VALUES (1,4,'','','2017-01-15','Pending','',null)
 
 -------------------------------------------------- Add data to Requisition Detail ------------------------------
 INSERT INTO RequisitionDetail
-VALUES	(1,'C001',10,0,'Delivered'), (1,'C002',10,0,'Delivered'), (1,'E001',10,0,'Delivered'),
-		(2,'C001',10,0,'Delivered'), (2,'C002',10,0,'Delivered'), (2,'E001',10,0,'Delivered'),
-		(3,'C001',10,0,'Delivered'), (3,'C002',10,0,'Delivered'), (3,'E001',10,0,'Delivered'),
+VALUES	(1,'C001',10,0), (1,'C002',10,0), (1,'E001',10,0),
+		(2,'C001',10,0), (2,'C002',10,0), (2,'E001',10,0),
+		(3,'C001',10,0), (3,'C002',10,0), (3,'E001',10,0),
 
-		(4,'C001',10,0,'Preparing'), (4,'C002',10,0,'Preparing'), (4,'E001',10,0,'Preparing'),
-		(5,'C001',5,0,'Preparing'), (5,'C002',5,0,'Preparing'), (5,'E001',5,0,'Preparing'),
+		(4,'C001',10,0), (4,'C002',10,0), (4,'E001',10,0),
+		(5,'C001',5,0), (5,'C002',5,0), (5,'E001',5,0),
 
-		(6,'C002',10,0,'Delivered'), (6,'E020',10,0,'Delivered'), (6,'F020',10,0,'Delivered'),
+		(6,'C002',10,0), (6,'E020',10,0), (6,'F020',10,0),
 
-		(7,'E020',10,0,'Delivered'), (7,'F020',10,0,'Delivered'), (7,'E001',10,0,'Delivered');
+		(7,'E020',10,0), (7,'F020',10,0), (7,'E001',10,0);
 
 -------------------------------------------------- PruchaseDetail ----------------------------------------
 CREATE TABLE PurchaseDetail
@@ -439,19 +438,17 @@ RetrievalId INT,
 DepartmentId INT,
 OrderedDate DATE,
 DeliveryDate DATE,
-CollectionPointId INT,
 [Status] VARCHAR(50),
 CONSTRAINT RetrievalId FOREIGN KEY (RetrievalId) REFERENCES Retrieval (RetrievalId),
 CONSTRAINT DisbursementListDepartmentId FOREIGN KEY (DepartmentId) REFERENCES Department (DepartmentId),
-CONSTRAINT DisbursementListCollectionPointId FOREIGN KEY (CollectionPointId) REFERENCES CollectionPoints (CollectionPointId)
 )
 
-INSERT INTO DisbursementList(RetrievalId, DepartmentId,  OrderedDate, DeliveryDate, CollectionPointId, [Status])
-VALUES	(1, 4, '2017-01-03', '2017-01-05', 1, 'Delivered'), 
-		(2, 4, '2017-01-01', '2017-01-03', 2, 'Delivered'), 
-		(3, 4, '2017-01-03', '2017-01-06', 1, 'Delivered'),
-		(4, 5, '2017-01-10', '2017-01-13', 3, 'Delivered'),
-		(5, 3, '2017-01-11', '2017-01-14', 5, 'Delivered');
+INSERT INTO DisbursementList(RetrievalId, DepartmentId,  OrderedDate, DeliveryDate, [Status])
+VALUES	(1, 4, '2017-01-03', '2017-01-05', 'Delivered'), 
+		(2, 4, '2017-01-01', '2017-01-03', 'Delivered'), 
+		(3, 4, '2017-01-03', '2017-01-06', 'Delivered'),
+		(4, 5, '2017-01-10', '2017-01-13', 'Delivered'),
+		(5, 3, '2017-01-11', '2017-01-14', 'Delivered');
 
 -------------------------------------------------- DisbursementDetail ----------------------------------------
 CREATE TABLE DisbursementDetail

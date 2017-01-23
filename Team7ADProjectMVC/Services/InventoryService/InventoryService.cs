@@ -310,7 +310,6 @@ namespace Team7ADProjectMVC.Models
         {
             Department d = db.Departments.Find(requisition.DepartmentId);
             dList.DepartmentId = d.DepartmentId;
-            dList.CollectionPointId = d.CollectionPointId;
             dList.OrderedDate = requisition.OrderedDate;
             dList.RetrievalId = retrievalList.retrievalId;
             dList.Status = "Pending Delivery";

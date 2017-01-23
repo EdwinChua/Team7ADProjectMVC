@@ -229,7 +229,6 @@ namespace Team7ADProjectMVC.TestControllers
                 rd.ItemNo = "C002";
                 rd.OutstandingQuantity = Int32.Parse(i.Quantity);
                 rd.RequisitionId = idd;
-                rd.DeliveryStatus = "Preparing";
 
                 redlis.Add(rd);
 

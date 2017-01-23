@@ -151,7 +151,7 @@ namespace Team7ADProjectMVC.Controllers
             var ad = new Models.Adjustment();
             ad.Details.Add(new Models.AdjustmentDetail());
 
-            return PartialView(ad);
+            return View(ad);
         }
     }
 }

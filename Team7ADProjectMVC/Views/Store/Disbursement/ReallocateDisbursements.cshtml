@@ -5,61 +5,85 @@
     DisbursementDetail item2 = new DisbursementDetail();
     Page.Title = "Reallocation of Disbursements";
     int prodmax = 0;
+    int formcount=0;
+    string formname = "form"+formcount;
 }
 
-
+<form id="form_@formcount" action="test">
 <div class="container-fluid">
     <div class="row">
-        @if (Model.Count() > 0)
-        {
+            @if (Model.Count() > 0)
+            {
             foreach (var item in Model)
             {
+
             <table class="table">
                 @if (item.ItemNo != item2.ItemNo)
                 {
-                    <thead>
-                        <tr class="active">
-                            <th>@item.ItemNo - @item.Inventory.Description</th>
-                            @{ item2 = item; }
-                        </tr>
-                        <tr class="info">
-                            <th class="col-md-2">Department</th>
-                            <th class="col-md-2">Prepared Quantity</th>
-                            <th class="col-md-2">Required Quantity (Max)</th>
-                            <th class="col-md-2">Adjusted Quantity</th>
-                        </tr>
-                    </thead>
-                                }
+                <thead>
+                    <tr class="active">
+                        <th>@item.ItemNo - @item.Inventory.Description</th>
+
+                    </tr>
+                    <tr class="info">
+                        <th class="col-md-2">Department</th>
+                        <th class="col-md-2">Prepared Quantity</th>
+                        <th class="col-md-2">Required Quantity (Max)</th>
+                        <th class="col-md-2">Adjusted Quantity</th>
+                    </tr>
+                </thead>
+                }
                 <tbody>
                     <tr>
                         <td class="col-md-2">@item.DisbursementList.Department.DepartmentName</td>
                         <td class="col-md-2">@item.PreparedQuantity </td>
                         <td class="col-md-2">
                             @{
-                                foreach (var itemxyz in ViewBag.MaxQuantityOfEachItem)
-                                {
-                                    foreach (var itemabc in itemxyz.RequisitionDetails)
-                                    {
-                                        if(itemabc.ItemNo == item.ItemNo && itemxyz.DepartmentId == item.DisbursementList.DepartmentId)
-                                        {
-                                            prodmax = itemabc.OutstandingQuantity;
-                                            <p>@prodmax</p>
-                                        }
-                                    }
-                                }
+                            foreach (var itemxyz in ViewBag.MaxQuantityOfEachItem)
+                            {
+                            foreach (var itemabc in itemxyz.RequisitionDetails)
+                            {
+                            if(itemabc.ItemNo == item.ItemNo && itemxyz.DepartmentId == item.DisbursementList.DepartmentId)
+                            {
+                            prodmax = itemabc.OutstandingQuantity;
+                            <p>@prodmax</p>
+                            <input type="hidden" name="departmentId" value="@item.DisbursementList.Department.DepartmentId" />
+                            <input type="hidden" name="disbursementListId" value="@item.DisbursementListId" />
+                            <input type="hidden" name="disbursementDetailId" value="@item.DisbursementDetailId" />
+                            <input type="hidden" name="itemNo" value="@item.ItemNo" />
+                            }
+                            }
+                            }
 
                             }
                         </td>
-                        <td class="col-md-2"><input class="form-control" type="number" max="@prodmax"/></td>
+                        <td class="col-md-2"><input class="form-control" name="preparedQuantity" type="number" max="@prodmax" /></td>
                     </tr>
+                    @if (item.ItemNo == item2.ItemNo)
+                    {
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><input type="submit" class="btn btn-primary" value="Allocate" /></td>
+                    </tr>
+                    }
+
                 </tbody>
             </table>
-                                    }
-                                }
-                                else
-                                {
-                <div><h4>There are no items to reallocate at this time</h4></div>
-                                }
+
+            { item2 = item; formcount++;}
+            <script>
+                $('#form_@formcount input[type="number"]').each(function () {
+                    // Do your magic here
+                });
+            </script>
+
+            }
+
+            } else { <div><h4>There are no items to reallocate at this time</h4></div> }
+
     </div>
-</div>
+</div
+</form>
 

@@ -265,5 +265,12 @@ namespace Team7ADProjectMVC.TestControllers
             return View();
         }
 
+
+        public ActionResult Test(int[] departmentId, int[] preparedQuantity,int [] disbursementListId, int[] disbursementDetailId, string[] itemNo)
+        {
+            inventorySvc.ManuallyAllocateDisbursements( departmentId, preparedQuantity, disbursementListId, disbursementDetailId, itemNo);
+            
+            return RedirectToAction("ReallocateDisbursements");
+        }
     }
 }

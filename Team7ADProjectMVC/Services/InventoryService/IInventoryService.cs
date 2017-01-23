@@ -46,5 +46,7 @@ namespace Team7ADProjectMVC.Models
         int GetLastRetrievalListId();
 
         List<Requisition> GetRequisitionsSummedByDept(int currentRetrievalListId);
+
+        void ManuallyAllocateDisbursements(int[] departmentId, int[] preparedQuantity, int[] disbursementListId, int[] disbursementDetailId, string[] itemNo);
     }
 }

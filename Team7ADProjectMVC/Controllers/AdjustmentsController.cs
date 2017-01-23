@@ -37,29 +37,29 @@ namespace Team7ADProjectMVC.Controllers
         }
 
         // GET: Adjustments/Create
-        public ActionResult Create()
-        {
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName");
-            return View();
-        }
+        //public ActionResult Create()
+        //{
+        //    ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName");
+        //    return View();
+        //}
 
-        // POST: Adjustments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AdjustmentId,AdjustmentDate,EmployeeId,SupervisorId,SupervisorAuthorizedDate,HeadId,HeadAuthorizedDate")] Adjustment adjustment)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Adjustments.Add(adjustment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //// POST: Adjustments/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "AdjustmentId,AdjustmentDate,EmployeeId,SupervisorId,SupervisorAuthorizedDate,HeadId,HeadAuthorizedDate")] Adjustment adjustment)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Adjustments.Add(adjustment);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", adjustment.EmployeeId);
-            return View(adjustment);
-        }
+        //    ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", adjustment.EmployeeId);
+        //    return View(adjustment);
+        //}
 
         // GET: Adjustments/Edit/5
         public ActionResult Edit(int? id)
@@ -127,6 +127,31 @@ namespace Team7ADProjectMVC.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        [HttpGet]
+        public ActionResult Create()
+        {
+            var ad = new Models.Adjustment();
+
+            ad.Details.Add(new Models.AdjustmentDetail());
+
+
+            return View(ad);
+        }
+
+        [HttpPost]
+        public ActionResult Create([Bind] Models.Adjustment ad)
+        {
+            return View(ad);
+        }
+
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public ActionResult AddDetail()
+        {
+            var ad = new Models.Adjustment();
+            ad.Details.Add(new Models.AdjustmentDetail());
+
+            return PartialView(ad);
         }
     }
 }

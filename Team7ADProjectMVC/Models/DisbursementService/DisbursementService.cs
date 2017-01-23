@@ -135,9 +135,11 @@ namespace Team7ADProjectMVC.Models
         {
             int rid = db.DisbursementLists.Find(id).Retrieval.RetrievalId;
             List<RequisitionDetail> rdlist = db.Requisitions.Single(model => model.RetrievalId == rid).RequisitionDetails.ToList();
+
             foreach (var item in rdlist)
             {
-                db.RequisitionDetails.Find(item.RequisitionDetailId).DeliveryStatus = "Completed";
+                db.RequisitionDetails.Find(item.RequisitionDetailId).OutstandingQuantity = item.Quantity-db.DisbursementLists.Find(id).DisbursementDetails.Single(model=>model.ItemNo==item.ItemNo).DeliveredQuantity;
+
             }
             db.DisbursementLists.Find(id).Status = "Completed";
             db.SaveChanges();

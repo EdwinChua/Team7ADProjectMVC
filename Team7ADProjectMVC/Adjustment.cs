@@ -24,5 +24,6 @@ namespace Team7ADProjectMVC
         public string Status { get; set; }
     
         public virtual Employee Employee { get; set; }
+
     }
 }

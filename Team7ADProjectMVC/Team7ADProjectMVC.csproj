@@ -292,6 +292,7 @@
     <Compile Include="Employee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Inventory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -316,6 +317,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Adjustment.cs" />
+    <Compile Include="Models\AdjustmentDetail.cs" />
     <Compile Include="Models\DelegateRoleService\DelegateRoleService.cs" />
     <Compile Include="Models\DelegateRoleService\IDelegateRoleService.cs" />
     <Compile Include="Models\ReportService\IReportService.cs" />
@@ -458,6 +461,9 @@
     <Content Include="Views\Adjustments\Details.cshtml" />
     <Content Include="Views\Adjustments\Edit.cshtml" />
     <Content Include="Views\Adjustments\Index.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentList.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentDetail.cshtml" />
+    <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -91,9 +91,43 @@ namespace Team7ADProjectMVC.TestControllers
             return View(requisitions);
         }
         [HttpPost]
-        public ActionResult Index(string searchString)
+        public ActionResult Index(string searchString, string sortOrder)
         {
             var requisitions = depasvc.ListAllRequisition();
+
+
+
+            //ViewBag.NameSortParm1 = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+
+
+            string userName = Session["UserName"].ToString();
+
+            // Convert sort order
+            ViewBag.NameSort = sortOrder == "Name" ? "Name_desc" : "Name";
+            var re = from s in db.Requisitions
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    re = re.OrderByDescending(s => s.Employee.Department.DepartmentName);
+                    break;
+                case "Date":
+                    re = re.OrderBy(s => s.Employee.EmployeeName);
+                    break;
+                case "date_desc":
+                    re = re.OrderByDescending(s => s.ApprovedDate);
+                    break;
+                default:
+                    re = re.OrderBy(s => s.RequisitionStatus);
+                    break;
+            }
+
+
+
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -195,7 +229,6 @@ namespace Team7ADProjectMVC.TestControllers
                 rd.ItemNo = "C002";
                 rd.OutstandingQuantity = Int32.Parse(i.Quantity);
                 rd.RequisitionId = idd;
-                rd.DeliveryStatus = "Preparing";
 
                 redlis.Add(rd);
 

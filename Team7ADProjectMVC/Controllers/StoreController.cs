@@ -252,8 +252,8 @@ namespace Team7ADProjectMVC.TestControllers
             DisbursementListComparer comparer = new DisbursementListComparer(); //sort by item no
             reallocationList.Sort(comparer);
             int currentRetrievalListId = inventorySvc.GetLastRetrievalListId();
-            List<RequisitionDetail> summedListByDepartment = inventorySvc.GetRequisitionsSummedByDept(currentRetrievalListId);
-
+            List<Requisition> summedListByDepartment = inventorySvc.GetRequisitionsSummedByDept(currentRetrievalListId);
+            ViewBag.MaxQuantityOfEachItem = summedListByDepartment;
             return View(reallocationList);
         }
 

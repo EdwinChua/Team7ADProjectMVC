@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Team7ADProjectMVC.Models.DepartmentService
+namespace Team7ADProjectMVC.Services.DepartmentService
 {
     class DepartmentService : IDepartmentService
     {

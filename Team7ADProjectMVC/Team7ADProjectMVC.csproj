@@ -365,8 +365,8 @@
     <Compile Include="Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Services\Adjustment.cs" />
-    <Compile Include="Services\AdjustmentDetail.cs" />
+    <Compile Include="Models\Adjustment.cs" />
+    <Compile Include="Models\AdjustmentDetail.cs" />
     <Compile Include="Services\CustomizedComparers.cs" />
     <Compile Include="Services\DelegateRoleService\DelegateRoleService.cs" />
     <Compile Include="Services\DelegateRoleService\IDelegateRoleService.cs" />
@@ -481,6 +481,8 @@
     <Content Include="Views\Adjustments\Index.cshtml" />
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\_Adjustment.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentDetail.cshtml" />
     <Content Include="Views\Adjustments\EditorTemplates\Adjustment.cshtml" />
     <Content Include="Views\Adjustments\EditorTemplates\AdjustmentDetail.cshtml" />
     <None Include="Web.Debug.config">

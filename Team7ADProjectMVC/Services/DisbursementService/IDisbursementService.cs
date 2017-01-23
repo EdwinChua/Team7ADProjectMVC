@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Team7ADProjectMVC.Models
+namespace Team7ADProjectMVC.Services
 {
     interface IDisbursementService
     {

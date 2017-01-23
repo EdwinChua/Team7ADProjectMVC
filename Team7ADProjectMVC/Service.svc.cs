@@ -54,7 +54,6 @@ namespace Team7ADProjectMVC
             var reqItem= from req in db.RequisitionDetails
                          where req.Requisition.DepartmentId == dId
                         && req.RequisitionId==rId
-                        orderby req.DeliveryStatus ascending
                         select req;
             
             foreach (RequisitionDetail rr in reqItem)
@@ -84,8 +83,8 @@ namespace Team7ADProjectMVC
                 if(item.DeliveryDate.Equals(DateTime.Today))
                 {
                     wcfTodayCollectionlist itemTemp = new wcfTodayCollectionlist();
-                    itemTemp.Collectionpt = item.CollectionPoint.PlaceName;
-                    itemTemp.Time = item.CollectionPoint.CollectTime.ToString();
+                    itemTemp.Collectionpt = item.Department.CollectionPoint.PlaceName;
+                    itemTemp.Time = item.Department.CollectionPoint.CollectTime.ToString();
                     itemTemp.DisbursementListID = item.DisbursementListId.ToString();
                     making.Add(itemTemp);
                 }
@@ -149,7 +148,6 @@ namespace Team7ADProjectMVC
                         where a.RequisitionId == rId
                         && a.Requisition.DepartmentId == dId
                         && a.Requisition.RequisitionStatus != "Approved"
-                        && a.DeliveryStatus != "Delivered" 
                         orderby a.Inventory.Description ascending
                         select a;
 
@@ -171,12 +169,11 @@ namespace Team7ADProjectMVC
             int dId = Convert.ToInt32(deptid);
              var collectionLocation = from c in db.DisbursementLists
                                     where c.DepartmentId == dId
-                                    orderby c.CollectionPoint.PlaceName ascending
                                     select c;
             String s;
              foreach (DisbursementList d in collectionLocation)
             {
-                s= d.CollectionPoint.PlaceName +" "+ d.CollectionPoint.CollectTime;
+                s= d.Department.CollectionPoint.PlaceName +" "+ d.Department.CollectionPoint.CollectTime;
                sl.Add(s);
             }
          
@@ -190,13 +187,18 @@ namespace Team7ADProjectMVC
                            where d.Status != "Completed"
                            orderby d.DeliveryDate ascending
                            select d;
-
+            String beforesplit = "";
+             String aftersplit = "";
+             Char delimiter = ' ';
             foreach (DisbursementList d in disburse)
             {
                 wcfDisbursementList dl = new wcfDisbursementList();
                 dl.DeptName = d.Department.DepartmentName;
-                dl.CollectionPoint = d.CollectionPoint.PlaceName;
-                dl.DeliveryDatetime = d.DeliveryDate.ToString() + " " + d.CollectionPoint.CollectTime.ToString(); 
+                dl.CollectionPoint = d.Department.CollectionPoint.PlaceName;
+                beforesplit = d.DeliveryDate.ToString();
+                String[] substrings = beforesplit.Split(delimiter);
+                aftersplit = substrings[0];
+                dl.DeliveryDatetime = aftersplit + " ( " + d.Department.CollectionPoint.CollectTime.ToString()+" )"; 
                
                 dl.RepName = d.Department.Employee.EmployeeName.ToString();
                 dl.RepPhone = d.Department.Employee.PhNo.ToString();
@@ -218,6 +220,8 @@ namespace Team7ADProjectMVC
             foreach (DisbursementDetail d in disDetail)
             {
                 wcfDisbursementListDetail dd = new wcfDisbursementListDetail();
+                dd.Ddid = d.DisbursementDetailId.ToString();
+                dd.Itemid = d.ItemNo;
                 dd.ItemName = d.Inventory.Description;
                 dd.PreQty = d.PreparedQuantity.ToString();
                 dd.DisbQty = d.DeliveredQuantity.ToString();
@@ -340,14 +344,14 @@ namespace Team7ADProjectMVC
             }
             else if (userid.Equals("h1"))
             {
-                dDetail.Deptid = "0";
+                dDetail.Deptid = "4";
                 dDetail.Role = "Boss";
                 dDetail.Userid = "h1";
                 dDetail.Authenticate ="true";
             }
             else if (userid.Equals("r1"))
             {
-                dDetail.Deptid = "0";
+                dDetail.Deptid = "4";
                 dDetail.Role = "Representative";
                 dDetail.Userid = "r1";
                 dDetail.Authenticate = "true";
@@ -374,13 +378,28 @@ namespace Team7ADProjectMVC
             lt = db.DisbursementLists.Where(p => p.DepartmentId == dId).ToList();
             foreach(DisbursementList l in lt )
             {
-                l.CollectionPointId = cpoint;
             }
             db.SaveChanges();
 
             return collectionptid;
         }
+
+
+        public void updatedqun(wcfDisbursementListDetail c )
+        {
+
+            int dId = Convert.ToInt32(c.Ddid);
+            int dId1 = Convert.ToInt32(c.DisbQty);
+             DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
+             dd.Remark =c.Remarks;
+             dd.DeliveredQuantity = dId1;
+             db.SaveChanges();
+           
+          
+        }
     }
+
+  
 
        
 

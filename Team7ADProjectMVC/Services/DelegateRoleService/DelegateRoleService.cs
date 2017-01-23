@@ -20,6 +20,11 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
                                 select t;
             return (queryBydepId.ToList());
         }
+        
+        public Permission FindPermissionRecordById(Employee e)
+        {
+            return db.Permissions.Find(e.PermissionId);
+        }
         public Employee FindById(int? empid)
         {
             return db.Employees.Find(empid);
@@ -57,6 +62,47 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
 
 
         }
+        public void updateDelegate(Employee e, Delegate d,Permission p, DateTime startDate, DateTime endDate, bool approveReq, bool changeCP, bool viewReq, bool makeReq, bool delegateRol, bool viewColDetl)
+        {     
+
+
+            //d.EmployeeId = d.EmployeeId;
+            d.StartDate = startDate.Date;
+            d.EndDate = endDate.Date;
+            d.ActualEndDate = endDate.Date;
+            d.ApprovedBy = 8;//default dep head id
+            d.ApprovedDate = DateTime.Today;
+            db.Entry(d).State = EntityState.Modified;
+            db.SaveChanges();
+
+          
+            p.ApproveRequisition = approveReq;
+            p.ChangeCollectionPoint = changeCP;
+            p.ViewRequisition = viewReq;
+            p.MakeRequisition = makeReq;
+            p.DelegateRole = delegateRol;
+            p.ViewCollectionDetails = viewColDetl;
+
+            db.Entry(p).State = EntityState.Modified;
+            db.SaveChanges();
+           
+
+        }
+        public void TerminateDelegate(Employee emp, Delegate d, Permission p)
+        {
+            d.ActualEndDate = DateTime.Today;
+            db.Entry(d).State = EntityState.Modified;
+            db.SaveChanges();
+
+            p.ApproveRequisition = false;
+            p.ChangeCollectionPoint = false;
+            p.ViewRequisition = false;
+            p.MakeRequisition = false;
+            p.DelegateRole = false;
+            p.ViewCollectionDetails = false;
+            db.Entry(p).State = EntityState.Modified;
+            db.SaveChanges();
+        }
         public List<Delegate> getDelegate()
         {
 
@@ -67,7 +113,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
 
             return (query.ToList());
         }
-        public Delegate FinddelegaterecordById(int count)
+        public Delegate FinddelegaterecordById(int? count)
         {
 
             return db.Delegates.Find(count);

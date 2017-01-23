@@ -82,16 +82,63 @@ namespace Team7ADProjectMVC.TestControllers
         
         public ActionResult Index()
         {
+            var requisitions = depasvc.ListAllRequisition();
+            
+            
 
-           ///* i*/nt currentPageIndex = page.HasValue ? page.Value - 1 : 0;
-           
-            //var requisitions = db.Requisitions.ToList();
+            ViewBag.Cat = requisitions;
+            ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+            return View(requisitions);
+        }
+        [HttpPost]
+        public ActionResult Index(string searchString, string sortOrder)
+        {
             var requisitions = depasvc.ListAllRequisition();
 
-           
+
+
+            //ViewBag.NameSortParm1 = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
 
 
+            string userName = Session["UserName"].ToString();
+
+            // Convert sort order
+            ViewBag.NameSort = sortOrder == "Name" ? "Name_desc" : "Name";
+            var re = from s in db.Requisitions
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    re = re.OrderByDescending(s => s.Employee.Department.DepartmentName);
+                    break;
+                case "Date":
+                    re = re.OrderBy(s => s.Employee.EmployeeName);
+                    break;
+                case "date_desc":
+                    re = re.OrderByDescending(s => s.ApprovedDate);
+                    break;
+                default:
+                    re = re.OrderBy(s => s.RequisitionStatus);
+                    break;
+            }
+
+
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var q = db.Requisitions.Where(s => s.Employee.EmployeeName.Contains(searchString)
+                                       || s.ApprovedDate.ToString().Contains(searchString)
+                                       || s.Employee.Department.DepartmentName.Contains(searchString));
+                requisitions = q.ToList();
+            }
+            ///* i*/nt currentPageIndex = page.HasValue ? page.Value - 1 : 0;
+
+            //var requisitions = db.Requisitions.ToList();
 
             ViewBag.Cat = requisitions;
             ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
@@ -106,6 +153,16 @@ namespace Team7ADProjectMVC.TestControllers
 
             ViewBag.Cat = requisitions;
             return View("Index");
+        }
+        public ActionResult Viewdd()
+        {
+            //var inventories = inventorySvc.GetInventoryListByCategory(id);
+            //var categories = inventorySvc.GetAllCategories();
+            //ViewBag.Cat = categories.ToList();
+            var requisitions = db.Requisitions.ToList();
+
+            ViewBag.Cat = requisitions;
+            return View(requisitions);
         }
 
         // GET: TESTRequisitions/Create
@@ -172,7 +229,6 @@ namespace Team7ADProjectMVC.TestControllers
                 rd.ItemNo = "C002";
                 rd.OutstandingQuantity = Int32.Parse(i.Quantity);
                 rd.RequisitionId = idd;
-                rd.DeliveryStatus = "Preparing";
 
                 redlis.Add(rd);
 

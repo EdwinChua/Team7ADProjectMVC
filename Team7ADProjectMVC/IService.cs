@@ -75,6 +75,13 @@ namespace Team7ADProjectMVC
         String updatelocation(String deptid, String collectionptid);
 
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/UpdateDisbQty", Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void updatedqun(wcfDisbursementListDetail c );
+
+
     }
 }
 
@@ -249,10 +256,17 @@ public class wcfDisbursementList
 
 public class wcfDisbursementListDetail
 {
+    string ddid;
+    string itemid;
     string itemName;
     string preQty;
     string disbQty;
     string remarks;
+
+    [DataMember]
+    public String Ddid { get; set; }
+    [DataMember]
+    public String Itemid { get; set; }
 
     [DataMember]
     public String ItemName { get; set; }

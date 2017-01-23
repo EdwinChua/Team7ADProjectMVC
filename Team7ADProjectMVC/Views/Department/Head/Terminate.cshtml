@@ -9,7 +9,7 @@
         $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
     </script>*@
 
-<form role="form" action="/Head/ManageTerminate">
+<form role="form" action="/Head/ManageDelegate">
     <div class="row">
         <div class="col-lg-4 col-xs-12">
             Delegated to:<label value="employeeName">@ViewBag.emp </label><br />
@@ -63,48 +63,12 @@
     <div>
         <h5>
 
-            Start Date:<label id="s1" value="startDate">@ViewBag.s1</label><br />
+            Start Date:<label id="s1" value="startDate" >@ViewBag.s1</label><br />
             End Date::<label id="e1" value="endDate">@ViewBag.e1</label><br />
 
-            @*@if (ViewBag.approveReq == true)
-            {
-                <input type="checkbox" name="approveReq" checked="checked"><h5>Approve Requisition</h5>
-            }
-           else 
-            {
-            <input type="checkbox" name="approveReq"><h5>Approve Requisition</h5>
-            }<br />
-            @if (ViewBag.approveReq == true)
-            {
-                <input type="checkbox" name="changeCP" checked><h5>Change Collection Point</h5>
-            }
-            else{<input type="checkbox" name="changeCP"><h5>Change Collection Point</h5>}<br />
-            @if (ViewBag.approveReq == true)
-            {
-                <input type="checkbox" name="changeCP" checked><h5>View Requisiton </h5>
-            }
-            else{<input type="checkbox" name="viewReq"><h5>View Requisiton </h5> }<br />
-            @if (ViewBag.approveReq == true)
-            {
-                <input type="checkbox" name="changeCP" checked><h5>Make Requisition</h5>
-            }
-            else{<input type="checkbox" name="makeReq"><h5>Make Requisition</h5>}<br />
-            @if (ViewBag.approveReq == true)
-            {
-                <input type="checkbox" name="changeCP" checked><h5>Delegate Role</h5>
-            }
-            else{ <input type="checkbox" name="delegateRol"><h5>Delegate Role</h5>}<br />
-            @if (ViewBag.approveReq == true)
-            {
-                <input type="checkbox" name="changeCP" checked><h5>View Collection Details</h5>
-            }
-            else{<input type="checkbox" name="viewColDetl"><h5>View Collection Details</h5>}
-
-            <br />
-            <br />
-
-        </h5>*@
-            @*@if (ViewBag.approveReq == true)
+            <input type="hidden" name="startDate" id="startDate" />@*something need to think*@
+            <input type="hidden"  name="endDate" id="endDate" /> 
+            @{if (ViewBag.approveReq == true)
             {
                 <input type="checkbox" name="approveReq" checked="checked"><h5>Approve Requisition</h5>
             }
@@ -112,38 +76,46 @@
             {
             <input type="checkbox" name="approveReq"><h5>Approve Requisition</h5>
             }<br />
-            @if (ViewBag.approveReq == true)
+            if (ViewBag.changeCP == true)
             {
                 <input type="checkbox" name="changeCP" checked><h5>Change Collection Point</h5>
             }
             else{<input type="checkbox" name="changeCP"><h5>Change Collection Point</h5>}<br />
-            @if (ViewBag.approveReq == true)
+            if (ViewBag.viewReq == true)
             {
                 <input type="checkbox" name="changeCP" checked><h5>View Requisiton </h5>
             }
             else{<input type="checkbox" name="viewReq"><h5>View Requisiton </h5> }<br />
-            @if (ViewBag.approveReq == true)
+            if (ViewBag.makeReq == true)
             {
                 <input type="checkbox" name="changeCP" checked><h5>Make Requisition</h5>
             }
             else{<input type="checkbox" name="makeReq"><h5>Make Requisition</h5>}<br />
-            @if (ViewBag.approveReq == true)
+           if (ViewBag.delegateRol == true)
             {
                 <input type="checkbox" name="changeCP" checked><h5>Delegate Role</h5>
             }
             else{ <input type="checkbox" name="delegateRol"><h5>Delegate Role</h5>}<br />
-            @if (ViewBag.approveReq == true)
-            {
-                <input type="checkbox" name="changeCP" checked><h5>View Collection Details</h5>
-            }
-            else{<input type="checkbox" name="viewColDetl"><h5>View Collection Details</h5>}
 
+            if  (ViewBag.viewColDetl == true)
+                {
+                <input type = "checkbox" name = "changeCP" checked>< h5 > View Collection Details</ h5 >
+                }
+                else
+                {<input type = "checkbox" name = "viewColDetl" >< h5 > View Collection Details</ h5 > }
+                    
+            
+                }
             <br />
             <br />
 
-        </h5>*@
+        </h5 >
 
-        @*<input type="hidden" value="@item.RequisitionId" name="DelegateId" />*@
+       <input type="hidden" value= "@ViewBag.delegateId"  name="DelegateId" />
+        <input type="hidden" value="@ViewBag.empid  " name="empId" />
+        <button type="submit" class="btn btn-success btn-lg"  name="status" value="Update">
+            Update
+        </button>
         <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate">
             Terminate
         </button>

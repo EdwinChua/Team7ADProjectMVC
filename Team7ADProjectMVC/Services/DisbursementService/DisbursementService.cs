@@ -121,11 +121,11 @@ namespace Team7ADProjectMVC.Models
         }
         public string findCpnameByDisburse(int? id)
         {
-            return (db.DisbursementLists.Find(id).CollectionPoint.PlaceName);
+            return (db.DisbursementLists.Find(id).Department.CollectionPoint.PlaceName);
         }
         public string findCptimeByDisburse(int? id)
         {
-            return (db.DisbursementLists.Find(id).CollectionPoint.CollectTime.ToString());
+            return (db.DisbursementLists.Find(id).Department.CollectionPoint.CollectTime.ToString());
         }
         public string findDisbursenmentStatus(int? id)
         {
@@ -135,9 +135,11 @@ namespace Team7ADProjectMVC.Models
         {
             int rid = db.DisbursementLists.Find(id).Retrieval.RetrievalId;
             List<RequisitionDetail> rdlist = db.Requisitions.Single(model => model.RetrievalId == rid).RequisitionDetails.ToList();
+
             foreach (var item in rdlist)
             {
-                db.RequisitionDetails.Find(item.RequisitionDetailId).DeliveryStatus = "Completed";
+                db.RequisitionDetails.Find(item.RequisitionDetailId).OutstandingQuantity = item.Quantity-db.DisbursementLists.Find(id).DisbursementDetails.Single(model=>model.ItemNo==item.ItemNo).DeliveredQuantity;
+
             }
             db.DisbursementLists.Find(id).Status = "Completed";
             db.SaveChanges();

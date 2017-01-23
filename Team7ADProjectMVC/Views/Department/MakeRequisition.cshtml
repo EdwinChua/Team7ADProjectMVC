@@ -57,7 +57,7 @@
 
                             <select id="lecturerId" name="lecturerId"
                                     class="selectpicker show-tick form-control"
-                                    data-live-search="true" required multiple>
+                                    data-live-search="true" required>
                                 <optgroup label="all">
 
                                     @foreach (var item in ViewBag.MembershipList)
@@ -80,7 +80,9 @@
                             <label for="exampleInputPassword1">
                                 Quantity:
                             </label>
-                            <input type="text" class="form-control" id="QTY" />
+                            <input type="number" class="form-control" id="QTY" required/>
+                            
+                           
                         </div>
                         <div class="form-group">
 
@@ -190,6 +192,27 @@
 <script>
 
 
+    ////////////////////////////validate for number
+    //function validate(evt) {
+    //    var theEvent = evt || window.event;
+    //    var key = theEvent.keyCode || theEvent.which;
+    //    key = String.fromCharCode(key);
+    //    var regex = /[0-9]|\./;
+    //    if (!regex.test(key)) {
+    //        theEvent.returnValue = false;
+    //        if (theEvent.preventDefault) theEvent.preventDefault();
+    //    }
+    //}
+
+
+
+    $('#addNew').on('click', function () {
+        var value = $('#QTY').text();
+        return $.isNumeric(value);
+    });
+
+
+
 ////////ok///////////////////////
     var da = $('#demo').val();
     var TableData = new Array();
@@ -225,6 +248,9 @@ $(document).ready(function(){
 
 
   $("#addNew").click(function(){
+
+      
+
       addNewRow();
 
 
@@ -299,7 +325,7 @@ function addNewRow() {
     var numRows = $('#taskTable tr').length;
     $('#taskTable').append('<tr id="myTableRow">\
            <td class="hihi" value="' + option + '">' + option + '</td>\
-           <td><input type="text" id="description-' + numRows + '" class="hihi" placeholder="Task Description" value="' + qty + '"/></td>\
+           <td><input type="number" id="description-' + numRows + '" class="hihi" placeholder="Task Description" value="' + qty + ' required"/></td>\
            <td><button type="button" id="' + numRows + '" class="removebutton" title="Remove this row">Delete</button></td>\
            </tr>\
    ');
@@ -422,6 +448,10 @@ function submitForm() {
     $(function () {
         $('#cl').click(function (e) {
 
+            if (TableData.length == 0) {
+                alert("you have not choose any of item"+TableData.length);
+                return false;
+            }
             var jsonObject = {
                 "Name": "Rami",
                 

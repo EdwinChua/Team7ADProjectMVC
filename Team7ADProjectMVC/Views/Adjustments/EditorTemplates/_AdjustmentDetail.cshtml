@@ -1,14 +1,15 @@
 ﻿@model Team7ADProjectMVC.Models.AdjustmentDetail
 
-<div class="editorRow">
+ <div class="editorRow">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>AdjustmentDetail</h4>
+            
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 
             <div class="form-group">
                 @Html.LabelFor(model => model.ItemNo, "ItemNo", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -33,12 +34,9 @@
                     @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="form-actions ">
+                <input type="button" value="Delete" class="btn btn-danger delete-detail" /> 
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="button" value="Delete" class="btn btn-danger delete-detail" />
-
-                </div>
             </div>
         </div>
     }

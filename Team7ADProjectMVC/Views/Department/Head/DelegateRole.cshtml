@@ -9,7 +9,7 @@
     $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
 </script>*@
 
-<form role="form" action="/Head/ManageDelegate">
+<form role="form" action="/Head/ManageDelegation">
     <div class="row">
         <div class="col-lg-4 col-xs-12">
             Choose Employee:
@@ -75,11 +75,13 @@
             <div>
                 <h5>
                    
-                    Start Date:<label id="s1" value="startDate"></label><br/>                    
-                    End Date::<label id="e1" value="endDate"></label><br/>
-
+                    Start Date:<label id="s1" name="s" value="startDate"></label><br/>  
                     <input type="hidden" name="startDate" id="startDate" />
-                    <input type="hidden" name="DelegateId" id="d" value="0"/>
+                  
+                                     
+                    End Date::<label id="e1" name="e" value="endDate"></label><br/>
+                    <input type="hidden" name="DelegateId" id="d" value="0" />
+                   
                     <input type="hidden" name="endDate" id="endDate" /> 
                     <input type="checkbox" name="approveReq" >Approve Requisition<br>
                     <input type="checkbox" name="changeCP">Change Collection Point<br>
@@ -96,36 +98,92 @@
             <button type="submit" class="btn btn-success btn-lg" name="status" value="Delegate" id="submitButton" >
                 Delegate
             </button>
-                @if (ViewBag.DelegatedEmployee != null)
+                @*@if (ViewBag.DelegatedEmployee != null)
+            {
+        <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate" >
+            Terminate
+        </button>
+    </div > }*@
+           
+            @*@{
+                string startDate = Request["s"];
+                String[] s = startDate.Split('/');
+                DateTime sdate = new DateTime(Int32.Parse(s[2]), Int32.Parse(s[1]), Int32.Parse(s[0]));
+
+                if (sdate < DateTime.Today)
                 {
-            <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate" >
-                Terminate
-            </button>
+                    Response.Write("<script>alert('Hello');</script>");
                 }
-        </div>
+
+            }*@
+
+                
     </form>
     </>
 
 
     <script type="text/javascript">
         $(function () {
+
             $('#datetimepicker1').datetimepicker({
                 format: 'DD/MM/YYYY HH:mm:ss',
                 inline: true,
-                sideBySide: false
+                sideBySide: false,
+                minDate: new Date()
             });
+       
+
+            //$.datepicker.setDefaults({
+            //    showOn: 'button',
+            //    buttonImage: 'images/calendar.gif',
+            //    buttonImageOnly: true,
+            //    dateFormat: 'yy-mm-dd',
+            //    minDate: '2013-09-10',
+            //    maxDate: '2013-10-10'
+            //});
+
+            //$('#datetimepicker1').datepicker({
+            //    onSelect: function (selectedDate) {
+            //        $('#datetimepicker2').datepicker('option', new Date(), selectedDate || new Date());
+            //    }
+            //});
+            //$('#datetimepicker2').datepicker({
+            //    onSelect: function (selectedDate) {
+            //        $('#datetimepicker1').datepicker('option', new Date(), selectedDate || new Date());
+            //    }
+            //});
+
+            //$("#datetimepicker1").datepicker({
+            //    defaultDate: new Date(),
+            //    minDate: new Date(),
+            //    onSelect: function(dateStr) 
+            //    {         
+            //        $("#datetimepicker2").val(dateStr);
+            //        $("#datetimepicker2").datepicker("option",{ minDate: new Date(dateStr)})
+            //    }
+            //});
+
+
+
+
+
+            $("#datetimepicker1").on("dp.change", function (date, e) {
+                {
+                    $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                    $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                    //var da = $('#datetimepicker1').data("DateTimePicker").date().format('YYY-MM-DD').toString();
+                    //String s=(String)da.toString();
+                }
+                
+            });
+           
             $('#datetimepicker2').datetimepicker({
                 
                 inline: true,
-                sideBySide: false
-            });
+                sideBySide: false,
+                minDate: new Date()
 
-            $("#datetimepicker1").on("dp.change", function (date, e) {
-                console.log($('#datetimepicker1').data("DateTimePicker").date());
-                $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
-                $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
             });
-
             $("#datetimepicker2").on("dp.change", function (date, e) {
                 console.log($('#datetimepicker2').data("DateTimePicker").date());
                 $('#endDate').val($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
@@ -133,16 +191,17 @@
             });
         });
        
-         //$(document).ready(function(){
-         //    $("#submitButton").on("click",function()
-         //    {
-         //        alert('Your Message');
-         //    });
+        //$(document).ready(function () {
 
-         //});
+        //    $("#datetimepicker1").on("click", function ()
+        //     {                 
+        //         alert('The start date must be current date or after current date');
+        //     });
+
+        // });
         
 
-        //alert("asdkjfhaksldj");
+       
     </script>
 
 

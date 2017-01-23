@@ -29,6 +29,7 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
             
             r.RequisitionStatus = "Approved";
             r.Comment = c;
+            r.ApprovedDate = DateTime.Today;
             
             db.Entry(r).State = EntityState.Modified;
             db.SaveChanges();

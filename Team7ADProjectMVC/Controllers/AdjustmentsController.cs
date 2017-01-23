@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Team7ADProjectMVC;
+using Team7ADProjectMVC.Services;
 
 namespace Team7ADProjectMVC.Controllers
 {
@@ -131,16 +131,16 @@ namespace Team7ADProjectMVC.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var ad = new Models.Adjustment();
+            var ad = new Adjustment();
 
-            ad.AdjustmentDetails.Add(new Models.AdjustmentDetail());
+            ad.AdjustmentDetails.Add(new AdjustmentDetail());
 
 
             return View(ad);
         }
 
         [HttpPost]
-        public ActionResult Create([Bind] Models.Adjustment ad)
+        public ActionResult Create([Bind] Adjustment ad)
         {
             return View(ad);
         }
@@ -148,8 +148,8 @@ namespace Team7ADProjectMVC.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult AddDetail()
         {
-            var ad = new Models.Adjustment();
-            ad.AdjustmentDetails.Add(new Models.AdjustmentDetail());
+            var ad = new Adjustment();
+            ad.AdjustmentDetails.Add(new AdjustmentDetail());
 
             return View(ad);
         }

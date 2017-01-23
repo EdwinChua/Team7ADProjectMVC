@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Team7ADProjectMVC.Exceptions;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Services;
 using Team7ADProjectMVC.Services.DepartmentService;
@@ -131,7 +132,7 @@ namespace Team7ADProjectMVC.TestControllers
             if (ModelState.IsValid)
             {
                 inventorySvc.UpdateInventory(inventory);
-                return RedirectToAction("ViewInventory");
+                return RedirectToAction("Inventory");
             }
             ViewBag.CategoryId = new SelectList(inventorySvc.GetAllCategories(), "CategoryId", "CategoryName", inventory.CategoryId);
             ViewBag.MeasurementId = new SelectList(inventorySvc.GetAllMeasurements(), "MeasurementId", "UnitOfMeasurement", inventory.MeasurementId);
@@ -255,6 +256,11 @@ namespace Team7ADProjectMVC.TestControllers
             int currentRetrievalListId = inventorySvc.GetLastRetrievalListId();
             List<Requisition> summedListByDepartment = inventorySvc.GetRequisitionsSummedByDept(currentRetrievalListId);
             ViewBag.MaxQuantityOfEachItem = summedListByDepartment;
+            if (TempData["PrepQtyException"] != null)
+            {
+                ViewBag.PrepQtyException = TempData["PrepQtyException"].ToString();
+            }  
+
             return View(reallocationList);
         }
 
@@ -267,10 +273,17 @@ namespace Team7ADProjectMVC.TestControllers
         }
 
 
-        public ActionResult Test(int[] departmentId, int[] preparedQuantity,int [] disbursementListId, int[] disbursementDetailId, string[] itemNo)
+        public ActionResult Test(int[] departmentId, int[] preparedQuantity,int [] disbursementListId, int[] disbursementDetailId, string[] itemNo, int[] adjustedQuantity)
         {
-            inventorySvc.ManuallyAllocateDisbursements( departmentId, preparedQuantity, disbursementListId, disbursementDetailId, itemNo);
-            
+            try
+            {
+                inventorySvc.ManuallyAllocateDisbursements(departmentId, preparedQuantity, adjustedQuantity, disbursementListId, disbursementDetailId, itemNo);
+            }
+            catch (PreparedQuantityNotEqualAdjustedQuantityException e)
+            {
+                TempData["PrepQtyException"] = e;
+            }
+
             return RedirectToAction("ReallocateDisbursements");
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
-
+using Team7ADProjectMVC.Exceptions;
 
 namespace Team7ADProjectMVC.Models
 {
@@ -526,38 +526,81 @@ namespace Team7ADProjectMVC.Models
             return returnList;
         }
 
-        public void ManuallyAllocateDisbursements(int[] departmentId, int[] preparedQuantity, int[] disbursementListId, int[] disbursementDetailId, string[] itemNo)
+        public void ManuallyAllocateDisbursements(int[] departmentId, int[] preparedQuantity, int[] adjustedQuantity, int[] disbursementListId, int[] disbursementDetailId, string[] itemNo)
         {
 
             int deptId;
             int prepQty;
+            int adjustedQty;
             int disburseListId;
             int disburseDetailId;
             string itemNumber;
-            
-            for (int i = 0; i < departmentId.Length; i++)
-            {
-                deptId = departmentId[i];
-                prepQty = preparedQuantity[i];
-                disburseListId = disbursementListId[i];
-                disburseDetailId = disbursementDetailId[i];
-                itemNumber = itemNo[i];
 
-                //var q = (from x in db.DisbursementLists
-                //        where x.DepartmentId == deptId
-                //        && x.DisbursementListId == disburseListId
-                //        select x).ToList();
-                var q = (from x in db.DisbursementDetails
-                         where x.DisbursementList.DepartmentId == deptId
-                         && x.DisbursementListId == disburseListId
-                         && x.DisbursementDetailId == disburseDetailId
-                         && x.ItemNo == itemNumber
-                         select x).SingleOrDefault();
-                q.PreparedQuantity = prepQty;
-                db.Entry(q).State = EntityState.Modified;
-                db.SaveChanges();
+            if (CheckIfInputQtyExceedsCollectedQty(itemNo, preparedQuantity, adjustedQuantity))
+            {
+                for (int i = 0; i < departmentId.Length; i++)
+                {
+                    deptId = departmentId[i];
+                    adjustedQty = adjustedQuantity[i];
+                    disburseListId = disbursementListId[i];
+                    disburseDetailId = disbursementDetailId[i];
+                    itemNumber = itemNo[i];
+
+                    var q = (from x in db.DisbursementDetails
+                             where x.DisbursementList.DepartmentId == deptId
+                             && x.DisbursementListId == disburseListId
+                             && x.DisbursementDetailId == disburseDetailId
+                             && x.ItemNo == itemNumber
+                             select x).SingleOrDefault();
+                    q.PreparedQuantity = adjustedQty;
+                    db.Entry(q).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            } else
+            {
+                throw new PreparedQuantityNotEqualAdjustedQuantityException();
             }
 
+        }
+
+        public bool CheckIfInputQtyExceedsCollectedQty(string[] itemNo, int[] preparedQuantity, int[] adjustedQuantity)
+        {
+            bool status = false;
+            string itemNumber = null;
+            int prepQty = 0;
+            int adjQty = 0;
+            for (int i = 0; i < itemNo.Count(); i++)
+            {
+                if (itemNumber == null)
+                {
+                    itemNumber = itemNo[i];
+                    prepQty = preparedQuantity[i];
+                    adjQty = adjustedQuantity[i];
+                }else if (itemNumber == itemNo[i])
+                {
+                    prepQty += preparedQuantity[i];
+                    adjQty += adjustedQuantity[i];
+                    if (adjQty == prepQty)
+                    {
+                        status = true;
+                    }
+                    else
+                    {
+                        status = false;
+                    }
+                }
+                else if (itemNumber != itemNo[i])
+                {
+                    if (adjQty == prepQty)
+                    {
+                        status = true;
+                    }else
+                    {
+                        status = false;
+                    }
+                }
+            }
+            return status;
         }
     }
 }

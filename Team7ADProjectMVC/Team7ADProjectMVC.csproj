@@ -308,6 +308,7 @@
     <Compile Include="Employee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\PreparedQuantityNotEqualAdjustedQuantityException.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -343,8 +344,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Adjustment.cs" />
-    <Compile Include="Models\AdjustmentDetail.cs" />
+    <Compile Include="Models\PushNotification.cs" />
     <Compile Include="Permission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -366,7 +366,6 @@
     <Compile Include="Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PushNotification.cs" />
     <Compile Include="Services\CustomizedComparers.cs" />
     <Compile Include="Services\DelegateRoleService\DelegateRoleService.cs" />
     <Compile Include="Services\DelegateRoleService\IDelegateRoleService.cs" />
@@ -477,11 +476,13 @@
     <Content Include="Views\Adjustments\Create.cshtml" />
     <Content Include="Views\Adjustments\Delete.cshtml" />
     <Content Include="Views\Adjustments\Details.cshtml" />
+    <Content Include="Views\Adjustments\Edit.cshtml" />
     <Content Include="Views\Adjustments\Index.cshtml" />
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />
     <Content Include="Views\Adjustments\EditorTemplates\Adjustment.cshtml" />
     <Content Include="Views\Adjustments\EditorTemplates\AdjustmentDetail.cshtml" />
+    <Content Include="Views\Store\Disbursement\ReallocateDisbursements.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

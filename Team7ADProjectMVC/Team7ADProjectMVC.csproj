@@ -458,6 +458,7 @@
     <Content Include="Views\Adjustments\Details.cshtml" />
     <Content Include="Views\Adjustments\Edit.cshtml" />
     <Content Include="Views\Adjustments\Index.cshtml" />
+    <Content Include="Views\Department\Head\Terminate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

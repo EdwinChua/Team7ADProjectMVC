@@ -77,10 +77,59 @@ namespace Team7ADProjectMVC.TestControllers
             listsvc = new RequisitionService();
             delpsvc = new DelegateRoleService();
             depasvc = new DepartmentService();
-            mododo = new PersonModel();
+            //mododo = new PersonModel();
         }
         
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
+        {
+            var requisitions = depasvc.ListAllRequisition();
+
+
+
+
+
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            ViewBag.emeSortParm = String.IsNullOrEmpty(sortOrder) ? "e_desc" : "";
+           
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.remeSortParm = String.IsNullOrEmpty(sortOrder) ? "s_desc" : "";
+
+            Session["npg"] = 4;
+
+
+
+          
+            var re = from s in db.Requisitions
+                     select s;
+            switch (sortOrder)
+            {
+                case "Name_desc":
+                    re = re.OrderByDescending(s => s.Employee.Department.DepartmentName);
+                    break;
+                case "e_desc":
+                    re = re.OrderBy(s => s.Employee.EmployeeName);
+                    break;
+                case "Date":
+                    re = re.OrderByDescending(s => s.ApprovedDate);
+                    break;
+                default:
+                    re = re.OrderBy(s => s.RequisitionStatus);
+                    break;
+            }
+
+
+            requisitions = re.ToList();
+
+
+
+
+
+            ViewBag.Cat = requisitions;
+            ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+            return View(requisitions);
+        }
+        public ActionResult DepartmentEmployee()
         {
             var requisitions = depasvc.ListAllRequisition();
 
@@ -157,6 +206,60 @@ namespace Team7ADProjectMVC.TestControllers
 
 
             requisitions = re.ToList();
+
+
+            ViewBag.Cat = requisitions;
+            ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+
+
+            return View(requisitions);
+        }
+        [HttpPost]
+        public ActionResult DepartmentEmployee(string searchString)
+        {
+            var requisitions = depasvc.ListAllRequisition();
+
+
+
+         
+            //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+
+
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var q = db.Requisitions.Where(s => s.Employee.EmployeeName.Contains(searchString)
+                                       || s.ApprovedDate.ToString().Contains(searchString)
+                                       || s.Employee.Department.DepartmentName.Contains(searchString));
+                requisitions = q.ToList();
+            }
+            ///* i*/nt currentPageIndex = page.HasValue ? page.Value - 1 : 0;
+
+            //var requisitions = db.Requisitions.ToList();
+
+            ViewBag.Cat = requisitions;
+            ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            string userName = Session["UserName"].ToString();
+
+        
+
+            //requisitions = re.ToList();
 
 
             ViewBag.Cat = requisitions;
@@ -302,7 +405,11 @@ namespace Team7ADProjectMVC.TestControllers
         [HttpPost]
         public ActionResult AddUser(PersonModel model)
         {
-        //    model.Items[0];
+            Requisition requisition = new Requisition();
+
+            mododo = new PersonModel();
+
+            //    model.Items[0];
             if (model != null)
             {
                 mododo = model;

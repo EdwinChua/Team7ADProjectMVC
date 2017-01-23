@@ -54,7 +54,6 @@ namespace Team7ADProjectMVC
             var reqItem= from req in db.RequisitionDetails
                          where req.Requisition.DepartmentId == dId
                         && req.RequisitionId==rId
-                        orderby req.DeliveryStatus ascending
                         select req;
             
             foreach (RequisitionDetail rr in reqItem)
@@ -84,8 +83,8 @@ namespace Team7ADProjectMVC
                 if(item.DeliveryDate.Equals(DateTime.Today))
                 {
                     wcfTodayCollectionlist itemTemp = new wcfTodayCollectionlist();
-                    itemTemp.Collectionpt = item.CollectionPoint.PlaceName;
-                    itemTemp.Time = item.CollectionPoint.CollectTime.ToString();
+                    itemTemp.Collectionpt = item.Department.CollectionPoint.PlaceName;
+                    itemTemp.Time = item.Department.CollectionPoint.CollectTime.ToString();
                     itemTemp.DisbursementListID = item.DisbursementListId.ToString();
                     making.Add(itemTemp);
                 }
@@ -149,7 +148,6 @@ namespace Team7ADProjectMVC
                         where a.RequisitionId == rId
                         && a.Requisition.DepartmentId == dId
                         && a.Requisition.RequisitionStatus != "Approved"
-                        && a.DeliveryStatus != "Delivered" 
                         orderby a.Inventory.Description ascending
                         select a;
 
@@ -171,12 +169,11 @@ namespace Team7ADProjectMVC
             int dId = Convert.ToInt32(deptid);
              var collectionLocation = from c in db.DisbursementLists
                                     where c.DepartmentId == dId
-                                    orderby c.CollectionPoint.PlaceName ascending
                                     select c;
             String s;
              foreach (DisbursementList d in collectionLocation)
             {
-                s= d.CollectionPoint.PlaceName +" "+ d.CollectionPoint.CollectTime;
+                s= d.Department.CollectionPoint.PlaceName +" "+ d.Department.CollectionPoint.CollectTime;
                sl.Add(s);
             }
          
@@ -197,11 +194,11 @@ namespace Team7ADProjectMVC
             {
                 wcfDisbursementList dl = new wcfDisbursementList();
                 dl.DeptName = d.Department.DepartmentName;
-                dl.CollectionPoint = d.CollectionPoint.PlaceName;
+                dl.CollectionPoint = d.Department.CollectionPoint.PlaceName;
                 beforesplit = d.DeliveryDate.ToString();
                 String[] substrings = beforesplit.Split(delimiter);
                 aftersplit = substrings[0];
-                dl.DeliveryDatetime = aftersplit + " ( " + d.CollectionPoint.CollectTime.ToString()+" )"; 
+                dl.DeliveryDatetime = aftersplit + " ( " + d.Department.CollectionPoint.CollectTime.ToString()+" )"; 
                
                 dl.RepName = d.Department.Employee.EmployeeName.ToString();
                 dl.RepPhone = d.Department.Employee.PhNo.ToString();
@@ -381,7 +378,6 @@ namespace Team7ADProjectMVC
             lt = db.DisbursementLists.Where(p => p.DepartmentId == dId).ToList();
             foreach(DisbursementList l in lt )
             {
-                l.CollectionPointId = cpoint;
             }
             db.SaveChanges();
 

@@ -9,11 +9,8 @@ using System.Web.Mvc;
 using Team7ADProjectMVC;
 
 using Team7ADProjectMVC.Models.DelegateRoleService;
-using Team7ADProjectMVC.Models.DepartmentService;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
-
-
-
+using Team7ADProjectMVC.Services.DepartmentService;
 
 namespace Team7ADProjectMVC.TestControllers
 {

@@ -247,8 +247,8 @@
           <Property Name="Address" Type="varchar" MaxLength="250" />
           <Property Name="GstRegistrationNo" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“Project.dbo.StockCard”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="StockCard">
           <Key>
             <PropertyRef Name="Date" />
@@ -259,6 +259,18 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="ItemNo" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="varchar" MaxLength="250" />
         </EntityType>
+        <Association Name="AdjustmentDetailAdjustmentId">
+          <End Role="Adjustment" Type="Self.Adjustment" Multiplicity="0..1" />
+          <End Role="AdjustmentDetail" Type="Self.AdjustmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adjustment">
+              <PropertyRef Name="AdjustmentId" />
+            </Principal>
+            <Dependent Role="AdjustmentDetail">
+              <PropertyRef Name="AdjustmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="AdjustmentDetailItemNo">
           <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
           <End Role="AdjustmentDetail" Type="Self.AdjustmentDetail" Multiplicity="*" />
@@ -663,6 +675,10 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
     [StockCard].[Description] AS [Description]
     FROM [dbo].[StockCard] AS [StockCard]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="AdjustmentDetailAdjustmentId" Association="Self.AdjustmentDetailAdjustmentId">
+            <End Role="Adjustment" EntitySet="Adjustment" />
+            <End Role="AdjustmentDetail" EntitySet="AdjustmentDetail" />
+          </AssociationSet>
           <AssociationSet Name="AdjustmentDetailItemNo" Association="Self.AdjustmentDetailItemNo">
             <End Role="Inventory" EntitySet="Inventory" />
             <End Role="AdjustmentDetail" EntitySet="AdjustmentDetail" />
@@ -804,6 +820,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="HeadId" Type="Int32" />
           <Property Name="HeadAuthorizedDate" Type="DateTime" Precision="0" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AdjustmentDetails" Relationship="Self.AdjustmentDetailAdjustmentId" FromRole="Adjustment" ToRole="AdjustmentDetail" />
           <NavigationProperty Name="Employee" Relationship="Self.AdjustmentEmployeeId" FromRole="Adjustment" ToRole="Employee" />
         </EntityType>
         <EntityType Name="AdjustmentDetail">
@@ -815,6 +832,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="Reason" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Adjustment" Relationship="Self.AdjustmentDetailAdjustmentId" FromRole="AdjustmentDetail" ToRole="Adjustment" />
           <NavigationProperty Name="Inventory" Relationship="Self.AdjustmentDetailItemNo" FromRole="AdjustmentDetail" ToRole="Inventory" />
         </EntityType>
         <EntityType Name="Category">
@@ -1106,6 +1124,18 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="ItemNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="AdjustmentDetailAdjustmentId">
+          <End Role="Adjustment" Type="Self.Adjustment" Multiplicity="0..1" />
+          <End Role="AdjustmentDetail" Type="Self.AdjustmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adjustment">
+              <PropertyRef Name="AdjustmentId" />
+            </Principal>
+            <Dependent Role="AdjustmentDetail">
+              <PropertyRef Name="AdjustmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="AdjustmentEmployeeId">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="Adjustment" Type="Self.Adjustment" Multiplicity="*" />
@@ -1502,6 +1532,10 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
           <EntitySet Name="StockCards" EntityType="Self.StockCard" />
+          <AssociationSet Name="AdjustmentDetailAdjustmentId" Association="Self.AdjustmentDetailAdjustmentId">
+            <End Role="Adjustment" EntitySet="Adjustments" />
+            <End Role="AdjustmentDetail" EntitySet="AdjustmentDetails" />
+          </AssociationSet>
           <AssociationSet Name="AdjustmentEmployeeId" Association="Self.AdjustmentEmployeeId">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Adjustment" EntitySet="Adjustments" />

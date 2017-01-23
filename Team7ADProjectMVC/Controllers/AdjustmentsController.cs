@@ -133,7 +133,7 @@ namespace Team7ADProjectMVC.Controllers
         {
             var ad = new Models.Adjustment();
 
-            ad.Details.Add(new Models.AdjustmentDetail());
+            ad.AdjustmentDetails.Add(new Models.AdjustmentDetail());
 
 
             return View(ad);
@@ -149,9 +149,9 @@ namespace Team7ADProjectMVC.Controllers
         public ActionResult AddDetail()
         {
             var ad = new Models.Adjustment();
-            ad.Details.Add(new Models.AdjustmentDetail());
+            ad.AdjustmentDetails.Add(new Models.AdjustmentDetail());
 
-            return PartialView(ad);
+            return View(ad);
         }
     }
 }

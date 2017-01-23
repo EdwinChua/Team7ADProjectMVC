@@ -14,43 +14,49 @@
 
 @using Team7ADProjectMVC.Extensions
 @using (Html.BeginForm())
-{
+{ @Html.AntiForgeryToken()
     <div class="jumbotron">
-        <div id="main" class="panel panel-primary">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <h3>Adjustment</h3>
+            @Html.EditorFor(x => x)
 
-            <div class="panel-heading"> <h3 class="panel-title">Adjustment Builder</h3></div>
-            <div class="panel-body">
-
-                <fieldset>
-                    @Html.LabelFor(model => model.AdjustmentDate)
-                    @Html.EditorFor(model => model.AdjustmentDate)
-
-                    @Html.LabelFor(model => model.Status)
-                    @Html.EditorFor(model => model.Status)
-
-                </fieldset>
-
-            </div>
         </div>
 
+        @*<input type="button" id="add-detail" value="Add" />*@
+        <h3>Adjustment Detail</h3>
+        <table class="table table-bordered table-condensed table-hover table-responsive table-striped">
+            <thead>
+                <tr>
+                    <td>
+                        <label class="control-label">ItemNo</label>
+                    </td>
+                    <td>
+                        <label class="control-label">Quantity</label>
+                    </td>
+                    <td>
+                        <label class="control-label">Reason</label>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        <button class="btn-sm btn-danger" style="border-radius: 50%; background-color: red;" name="add" type="button" id="add-detail">+</button>
+                    </td>
+                    <td id="detail-list">
+                        @Html.EditorForMany(x => x.AdjustmentDetails, x => x.Index)
+                    </td>
+                </tr>
+            </thead>
     </div>
 
 
-        <h3>Adjustment</h3>
-        @Html.EditorFor(x => x)
-        <input type="button" id="add-detail" value="Add" />
-        <h3>Adjustment Detail</h3>
-        <div id="detail-list">
-            @Html.EditorForMany(x => x.Details, x => x.Index)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
         </div>
-
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+    </div>
 
 }
 
@@ -66,6 +72,17 @@
             jQuery.get('/Adjustments/AddDetail').done(function (html) {
                 $('#detail-list').append(html);
             });
+
         });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#detail-list').on('click', '.delete-detail', function () {
+            var EntryToRemove = $(this).closest('.editorRow');
+            EntryToRemove.prev('input[type=hidden]').remove();
+            EntryToRemove.remove();
+        });
+
     });
 </script>

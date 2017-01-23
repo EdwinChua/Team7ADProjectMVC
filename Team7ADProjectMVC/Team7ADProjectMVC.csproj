@@ -230,6 +230,7 @@
     <Content Include="DataSet1.xss">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -237,7 +238,6 @@
     <Content Include="Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\gokul.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Model1.Context.tt">
@@ -309,9 +309,19 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ExtendedRazorViewEngine.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Inventory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="IService.cs" />
     <Compile Include="ItemCodeGenerator.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -333,14 +343,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet1.xsd</DependentUpon>
+    <Compile Include="Models\PushNotification.cs" />
+    <Compile Include="Permission.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ExtendedRazorViewEngine.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
+    <Compile Include="PurchaseDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrder.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Requisition.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequisitionDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Retrieval.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="IService.cs" />
     <Compile Include="Models\PushNotification.cs" />
@@ -465,10 +488,10 @@
     <Content Include="Views\Adjustments\Details.cshtml" />
     <Content Include="Views\Adjustments\Edit.cshtml" />
     <Content Include="Views\Adjustments\Index.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentList.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentDetail.cshtml" />
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\Adjustment.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\AdjustmentDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

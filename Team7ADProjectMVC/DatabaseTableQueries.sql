@@ -48,21 +48,15 @@ Name VARCHAR(100),
 )
 
 INSERT INTO [Role]
-VALUES ('Store Clerk', 'Staff')
+VALUES ('Store Clerk', 'Store Clerk')
 INSERT INTO [Role]
 VALUES ('Department Head', 'Head')
 INSERT INTO [Role]
-VALUES ('Supervisor', 'Staff')
+VALUES ('Employee', 'Normal Staff')
 INSERT INTO [Role]
-VALUES ('Representative', 'Rep')
+VALUES ('Representative', 'Department Representative')
 INSERT INTO [Role]
-VALUES ('Tutor', 'Department Employee')
-INSERT INTO [Role]
-VALUES ('Cleaner', 'Staff')
-INSERT INTO [Role]
-VALUES ('Admin', 'Staff')
-INSERT INTO [Role]
-VALUES ('Registrar', 'Staff')
+VALUES ('Store Supervisor', 'Store sup')
 
 ----------------------------------------- Permission -----------------------------------------
 CREATE TABLE Permission
@@ -141,54 +135,60 @@ VALUES ('ENGL','English Department','Mrs Pamela Kow','874 2234','892 2234',5,1,1
 INSERT INTO Department
 VALUES ('CPSC','Computer Science','Mr. Wee Kian Fatt','890 1235','892 1457',6,1,12)
 INSERT INTO Department
-VALUES ('COMM','Commerce Department','MrMohd. Azman','874 1284','892 1256',7,1,13)
+VALUES ('COMM','Commerce Department','Mr Mohd. Azman','874 1284','892 1256',7,1,13)
 INSERT INTO Department
 VALUES ('REGR','Registrar Department','Ms Helen Ho','890 1266','892 1465',8,1,14)
 INSERT INTO Department
 VALUES ('ZOOL','Zoology Department','Mr. Peter Tan Ah Meng','890 1266','892 1465',9,1,15)
 INSERT INTO Department
-VALUES ('STO','STORE','Mr. Dino Thunder','890 6656','891 9912',10,1,1)
+VALUES ('STO','STORE','Jenny Wong Mei Lin','890 6656','891 9912',10,1,1)
 
 ----------------------------------------- Add Employee -----------------------------------------
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Jenny Wong Mei Lin','jenny@logicuniversity',4,1,1,'11111111') -- registrar
+VALUES ('Jenny Wong Mei Lin','youngmountain7@gmail.com',6,4,1,'11111111') -- registrar
 
 INSERT INTO Employee
-VALUES ('Feng Teng','ft@logicuniversity',6,2,2,'22222222') -- store 6 store clerk 2
+VALUES ('Feng Teng','youngmountain7@gmail.com',6,1,2,'22222222') -- store 6 store clerk 2
 INSERT INTO Employee
-VALUES ('Min Yew','@logicuniversity',6,2,3,'33333333')
+VALUES ('Min Yew','youngmountain7@gmail.com',6,1,3,'33333333')
 INSERT INTO Employee
-VALUES ('Lao Lao','@logicuniversity',6,2,4,'44444444')
+VALUES ('Lao Lao','youngmountain7@gmail.com',6,1,4,'44444444')
 
 INSERT INTO Employee
-VALUES ('Mrs Pamela Kow','@logicuniversity',1,3,5,'55555555') -- english 1 Head 3
+VALUES ('Mrs Pamela Kow','youngmountain7@gmail.com',1,2,5,'55555555') -- english 1 Head 3
 INSERT INTO Employee
-VALUES ('Dr. Soh Kian Wee','@logicuniversity',2,3,6,'66666666')-- com science 2 
+VALUES ('Dr. Soh Kian Wee','youngmountain7@gmail.com',2,2,6,'66666666')-- com science 2 
 INSERT INTO Employee
-VALUES ('MrMohd. Azman','@logicuniversity',3,3,7,'77777777') -- commerce 3
+VALUES ('MrMohd. Azman','youngmountain7@gmail.com',3,2,7,'77777777') -- commerce 3
 INSERT INTO Employee
-VALUES ('Mrs Low Kway Boo','@logicuniversity',4,3,8,'88888888') -- registrar 4
+VALUES ('Mrs Low Kway Boo','youngmountain7@gmail.com',4,2,8,'88888888') -- registrar 4
 INSERT INTO Employee
-VALUES ('Mr. Peter Tan Ah Meng','@logicuniversity',5,3,9,'99999999') -- zoo 5
+VALUES ('Mr. Peter Tan Ah Meng','youngmountain7@gmail.com',5,2,9,'99999999') -- zoo 5
 INSERT INTO Employee
-VALUES ('Mr. Sander','@logicuniversity',6,3,10,'10101010') -- store 6
+VALUES ('Mr. Sander','youngmountain7@gmail.com',6,2,10,'10101010') -- store 6
 
 INSERT INTO Employee
-VALUES ('Prof Ezra Pound','@logicuniversity',1,4,11,'11111111') -- eng 1 rep 4
+VALUES ('Prof Ezra Pound','youngmountain7@gmail.com',1,4,11,'11111111') -- eng 1 rep 4
 INSERT INTO Employee
-VALUES ('Mr. Ar Phyan Kwee','@logicuniversity',2,4,12,'12121212') -- com science 2
+VALUES ('Mr. Ar Phyan Kwee','youngmountain7@gmail.com',2,4,12,'12121212') -- com science 2
 INSERT INTO Employee
-VALUES ('Dr. Chia Leow Bee','@logicuniversity',3,4,13,'13131313') -- commerce 3
+VALUES ('Dr. Chia Leow Bee','youngmountain7@gmail.com',3,4,13,'13131313') -- commerce 3
 INSERT INTO Employee
-VALUES ('Prof Tan','@logicuniversity',4,4,14,'14141414') -- registrar 4
+VALUES ('Prof Tan','youngmountain7@gmail.com',4,4,14,'14141414') -- registrar 4
 INSERT INTO Employee
-VALUES ('Mr. Tay Shout Pann','@logicuniversity',5,4,15,'15151515') -- zoo 5
+VALUES ('Mr. Tay Shout Pann','youngmountain7@gmail.com',5,4,15,'15151515') -- zoo 5
 
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo) -- employeeid 16 dept zoo 5
-VALUES ('Tang Wo Long','tan@logicuniversity',5,3,16,'16161616')
+INSERT INTO Employee
+VALUES ('Mr Alan','youngmountain7@gmail.com',1,3,5,'55555555') -- english 1 Head 3
+INSERT INTO Employee
+VALUES ('Mr Bob','youngmountain7@gmail.com',2,3,6,'66666666')-- com science 2 
+INSERT INTO Employee
+VALUES ('Mr Charlie','youngmountain7@gmail.com',3,3,7,'77777777') -- commerce 3
+INSERT INTO Employee
+VALUES ('Ms Delia','youngmountain7@gmail.com',4,3,8,'88888888') -- registrar 4
+INSERT INTO Employee
+VALUES ('Ms Eve','youngmountain7@gmail.com',5,3,9,'99999999') -- zoo 5
 
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo) -- employee 17 dept commerce 3
-VALUES ('Ngyuen Feng','ngfg@logicuniversity',3,3,17,'17171717')
 
 ----------------------------------------- End of Adding Employee ----------------------------------------------------------------------------
 
@@ -331,7 +331,8 @@ AdjustmentId INT,
 ItemNo VARCHAR(50),
 Quantity INT,
 Reason VARCHAR(250),
-CONSTRAINT AdjustmentDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(ItemNo)
+CONSTRAINT AdjustmentDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(ItemNo),
+CONSTRAINT AdjustmentDetailAdjustmentId FOREIGN KEY(AdjustmentId) REFERENCES Adjustment(AdjustmentId)
 )
 
 INSERT INTO AdjustmentDetail
@@ -564,3 +565,12 @@ and rd.ItemNo=i.ItemNo
 and i.CategoryId=c.CategoryId
 and r.EmployeeId=e.EmployeeId 
 and e.DepartmentId=d.DepartmentId 
+
+select e.EmployeeId,e.EmployeeName,d.DepartmentName,r.Name from Employee e, role r, Department d
+where e.RoleId=r.RoleId and e.DepartmentId=d.DepartmentId
+
+select * from role
+
+select * from Department
+
+select * from Requisition

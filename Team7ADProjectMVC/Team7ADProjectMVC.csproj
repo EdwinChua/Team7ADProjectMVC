@@ -465,10 +465,10 @@
     <Content Include="Views\Adjustments\Details.cshtml" />
     <Content Include="Views\Adjustments\Edit.cshtml" />
     <Content Include="Views\Adjustments\Index.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentList.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentDetail.cshtml" />
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\Adjustment.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\AdjustmentDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

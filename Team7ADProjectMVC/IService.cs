@@ -61,8 +61,8 @@ namespace Team7ADProjectMVC
         List<wcfRetrivalList> getRetrivalList();
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcfallocate/", ResponseFormat = WebMessageFormat.Json)]
-        List<wcfallocate> getallocate();
+        [WebGet(UriTemplate = "/wcfallocate", ResponseFormat = WebMessageFormat.Json)]
+        String getallocate();
 
 
         [OperationContract]

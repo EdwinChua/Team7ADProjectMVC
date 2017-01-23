@@ -297,27 +297,19 @@ namespace Team7ADProjectMVC
         }
 
 
-        public List<wcfallocate> getallocate()
+        public String getallocate()
         {
-
-            // call his method to update and get the list from him and do it here!
-            // this below is just for testing!
-            List<wcfallocate> dDetail = new List<wcfallocate>();
-         
-            var disDetail = from dd in db.DisbursementDetails
-       
-                            orderby dd.Inventory.Description ascending
-                            select dd;
-
-            foreach (DisbursementDetail d in disDetail)
+            String rt = "false";
+            try
             {
-                wcfallocate dd = new wcfallocate();
-                dd.ItemName = d.Inventory.Description;
-                dd.PreQty = d.PreparedQuantity.ToString();
-                dd.DisbQty = d.DeliveredQuantity.ToString();
-                dDetail.Add(dd);
+                invService.AutoAllocateDisbursementsByOrderOfRequisition();
+                rt = "true";
             }
-            return dDetail;
+            catch(Exception e)
+            {
+                rt = "false";
+            }
+            return rt;
         }
 
 
@@ -374,12 +366,12 @@ namespace Team7ADProjectMVC
             wcfItem.CollectionPointId = cpoint;
             db.SaveChanges();
 
-            List<DisbursementList> lt = new List<DisbursementList>();
-            lt = db.DisbursementLists.Where(p => p.DepartmentId == dId).ToList();
-            foreach(DisbursementList l in lt )
-            {
-            }
-            db.SaveChanges();
+            //List<DisbursementList> lt = new List<DisbursementList>();
+            //lt = db.DisbursementLists.Where(p => p.DepartmentId == dId).ToList();
+            //foreach(DisbursementList l in lt )
+            //{
+            //}
+            //db.SaveChanges();
 
             return collectionptid;
         }

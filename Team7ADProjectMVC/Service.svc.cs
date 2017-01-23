@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using Team7ADProjectMVC.Models;
+using Team7ADProjectMVC.Models.ListAllRequisitionService;
 
 namespace Team7ADProjectMVC
 {
@@ -15,6 +16,8 @@ namespace Team7ADProjectMVC
         ProjectEntities db = new ProjectEntities();
 
         InventoryService invService = new InventoryService();
+        IRequisitionService reqService = new RequisitionService(); 
+
         public List<WCFMsg> DoWork()
         {
             List<WCFMsg> l = new List<WCFMsg>();
@@ -312,6 +315,13 @@ namespace Team7ADProjectMVC
             return rt;
         }
 
+        //public String approveReq(string reqId, string remarks)
+        //{
+        //    string result= "false";
+            
+        //    reqService.UpdateApproveStatus(r, remarks);
+            
+        //}
 
         public wcflogin getlogin(String userid , String password)
         {
@@ -386,8 +396,44 @@ namespace Team7ADProjectMVC
              dd.Remark =c.Remarks;
              dd.DeliveredQuantity = dId1;
              db.SaveChanges();
-           
-          
+        }
+
+        public string approveReq(String reqId)
+        {
+            string result = "False";
+            try {
+                int rId = Convert.ToInt32(reqId);
+                Requisition r = db.Requisitions.Where(p => p.RequisitionId == rId).First();
+                r.RequisitionStatus = "Approved";
+                r.ApprovedDate = DateTime.Today;
+                db.SaveChanges();
+                result = "True";
+            }
+            catch (Exception e)
+            {
+                result = "False";
+            }
+            return result;
+        }
+
+        public string rejectReq(String reqId, String remarks)
+        {
+            string result = "False";
+            try
+            {
+                int rId = Convert.ToInt32(reqId);
+                Requisition r = db.Requisitions.Where(p => p.RequisitionId == rId).First();
+                r.Comment = remarks;
+                r.RequisitionStatus = "Rejected";
+                r.ApprovedDate = DateTime.Today;
+                db.SaveChanges();
+                result = "True";
+            }
+            catch (Exception e)
+            {
+                result = "False";
+            }
+            return result;
         }
     }
 

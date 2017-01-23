@@ -81,6 +81,13 @@ namespace Team7ADProjectMVC
             ResponseFormat = WebMessageFormat.Json)]
         void updatedqun(wcfDisbursementListDetail c );
 
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfSubmitApproveReq?reqId={reqId}", ResponseFormat = WebMessageFormat.Json)]
+        String approveReq(String reqId);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfSubmitRejectReq?reqId={reqId}&remarks={remarks}", ResponseFormat = WebMessageFormat.Json)]
+        String rejectReq(String reqId, String remarks);
 
     }
 }

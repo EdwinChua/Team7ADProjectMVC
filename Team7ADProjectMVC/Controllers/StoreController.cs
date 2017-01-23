@@ -130,7 +130,7 @@ namespace Team7ADProjectMVC.TestControllers
             if (ModelState.IsValid)
             {
                 inventorySvc.UpdateInventory(inventory);
-                return RedirectToAction("ViewInventory");
+                return RedirectToAction("Inventory");
             }
             ViewBag.CategoryId = new SelectList(inventorySvc.GetAllCategories(), "CategoryId", "CategoryName", inventory.CategoryId);
             ViewBag.MeasurementId = new SelectList(inventorySvc.GetAllMeasurements(), "MeasurementId", "UnitOfMeasurement", inventory.MeasurementId);

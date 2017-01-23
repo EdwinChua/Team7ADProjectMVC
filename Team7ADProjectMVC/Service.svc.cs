@@ -128,6 +128,7 @@ namespace Team7ADProjectMVC
             var aList = from a in db.Requisitions
                           where a.DepartmentId == did
                           && a.RequisitionStatus != "Approved"
+                          && a.RequisitionStatus != "Rejected"
                           orderby a.OrderedDate
                           select a;
 
@@ -436,14 +437,4 @@ namespace Team7ADProjectMVC
             return result;
         }
     }
-
-  
-
-       
-
-
-
-
-
-
 }

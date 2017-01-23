@@ -80,6 +80,8 @@ namespace Team7ADProjectMVC.TestControllers
                 return RedirectToAction("ListAllEmployees");
             }
 
+
+
             listsvc.UpdateRejectStatus(r, textcomments);
             return RedirectToAction("ListAllEmployees");
 
@@ -97,7 +99,7 @@ namespace Team7ADProjectMVC.TestControllers
             return View("DelegateRole");
 
         }
-        public ActionResult ManageDelegate(int? empId, string status, string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl,int? DelegateId)
+        public ActionResult ManageDelegation(int? empId, string status, string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl,int? DelegateId)
 
         {
 

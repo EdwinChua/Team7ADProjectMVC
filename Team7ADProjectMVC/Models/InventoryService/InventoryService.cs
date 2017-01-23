@@ -484,10 +484,46 @@ namespace Team7ADProjectMVC.Models
             return currentRetrievalListId;
         }
 
-        public List<RequisitionDetail> GetRequisitionsSummedByDept(int currentRetrievalListId)
+        public List<Requisition> GetRequisitionsSummedByDept(int currentRetrievalListId)
         {
+            List<Requisition> returnList = new List<Requisition>();
+            //get current retrieval list
+            var q = (from x in db.Requisitions
+                    where x.RetrievalId == currentRetrievalListId
+                    select x).ToList();
+            HashSet<Department> test = new HashSet<Department>();
 
-            throw new NotImplementedException();
+            foreach (var x in q.ToList())
+            {
+                Department d = db.Departments.Find(x.DepartmentId);
+                test.Add(d);
+            }
+
+            foreach (Department d in test)
+            {
+                var q2 = from x in db.RequisitionDetails
+                         where x.Requisition.RetrievalId == currentRetrievalListId
+                         && x.Requisition.DepartmentId == d.DepartmentId
+                         select x;
+
+                var pp = q2.ToList();
+
+                var q3 = pp
+                        .GroupBy(ac => new
+                        {
+                            ac.ItemNo,
+                        })
+                        .Select(ac => new RequisitionDetail
+                        {
+                            ItemNo = ac.Key.ItemNo,
+                            OutstandingQuantity = ac.Sum(acs => acs.OutstandingQuantity),
+                        });
+                Requisition req = new Requisition();
+                req.RequisitionDetails = q3.ToList();
+                req.DepartmentId = d.DepartmentId;
+                returnList.Add(req);
+            }
+            return returnList;
         }
     }
 }

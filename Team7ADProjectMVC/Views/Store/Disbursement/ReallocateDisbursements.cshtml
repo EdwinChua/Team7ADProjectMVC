@@ -4,6 +4,7 @@
     Layout = "~/_Layout1.cshtml";
     DisbursementDetail item2 = new DisbursementDetail();
     Page.Title = "Reallocation of Disbursements";
+    int prodmax = 0;
 }
 
 
@@ -41,7 +42,7 @@
                                     {
                                         if(itemabc.ItemNo == item.ItemNo && itemxyz.DepartmentId == item.DisbursementList.DepartmentId)
                                         {
-                                            var prodmax = itemabc.OutstandingQuantity;
+                                            prodmax = itemabc.OutstandingQuantity;
                                             <p>@prodmax</p>
                                         }
                                     }
@@ -49,7 +50,7 @@
 
                             }
                         </td>
-                        <td class="col-md-2"><input class="form-control" type="number" max=" "/></td>
+                        <td class="col-md-2"><input class="form-control" type="number" max="@prodmax"/></td>
                     </tr>
                 </tbody>
             </table>

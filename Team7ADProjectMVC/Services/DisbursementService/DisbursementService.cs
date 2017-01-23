@@ -121,11 +121,11 @@ namespace Team7ADProjectMVC.Models
         }
         public string findCpnameByDisburse(int? id)
         {
-            return (db.DisbursementLists.Find(id).CollectionPoint.PlaceName);
+            return (db.DisbursementLists.Find(id).Department.CollectionPoint.PlaceName);
         }
         public string findCptimeByDisburse(int? id)
         {
-            return (db.DisbursementLists.Find(id).CollectionPoint.CollectTime.ToString());
+            return (db.DisbursementLists.Find(id).Department.CollectionPoint.CollectTime.ToString());
         }
         public string findDisbursenmentStatus(int? id)
         {

@@ -239,6 +239,7 @@ namespace Team7ADProjectMVC.Models
                 {
                     foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
                     {
+                        currentDisbursementListId = q.DisbursementListId;
                         AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
                     }
                 }
@@ -295,13 +296,13 @@ namespace Team7ADProjectMVC.Models
             {
                 newDisbursementDetail.PreparedQuantity = reqDetails.OutstandingQuantity;
                 newDisbursementDetail.DeliveredQuantity = newDisbursementDetail.PreparedQuantity;
-                x.collectedQuantity -= (int)reqDetails.OutstandingQuantity;
+                x.collectedQuantity = x.collectedQuantity - (int)reqDetails.OutstandingQuantity;
             }
             else
             {
                 newDisbursementDetail.PreparedQuantity = x.collectedQuantity;
                 newDisbursementDetail.DeliveredQuantity = newDisbursementDetail.PreparedQuantity;
-                x.collectedQuantity -= (int)newDisbursementDetail.PreparedQuantity;
+                x.collectedQuantity = x.collectedQuantity - (int)newDisbursementDetail.PreparedQuantity;
             }
 
             tempDisbursementDetailList.Add(newDisbursementDetail);
@@ -310,7 +311,6 @@ namespace Team7ADProjectMVC.Models
         {
             Department d = db.Departments.Find(requisition.DepartmentId);
             dList.DepartmentId = d.DepartmentId;
-            dList.CollectionPointId = d.CollectionPointId;
             dList.OrderedDate = requisition.OrderedDate;
             dList.RetrievalId = retrievalList.retrievalId;
             dList.Status = "Pending Delivery";

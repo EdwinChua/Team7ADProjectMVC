@@ -66,6 +66,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
@@ -118,6 +130,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="DatabaseTableQueries.sql" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -207,6 +220,8 @@
     <Content Include="DataSet1.xsc">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
     <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -222,12 +237,13 @@
     <Content Include="Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\gokul.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -269,7 +285,6 @@
     <Compile Include="CollectionPoint.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\AdjustmentDetailsController.cs" />
     <Compile Include="Controllers\AdjustmentsController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Delegate.cs">
@@ -318,14 +333,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Adjustment.cs" />
-    <Compile Include="Models\AdjustmentDetail.cs" />
-    <Compile Include="Models\DelegateRoleService\DelegateRoleService.cs" />
-    <Compile Include="Models\DelegateRoleService\IDelegateRoleService.cs" />
-    <Compile Include="Models\ReportService\IReportService.cs" />
-    <Compile Include="Models\ReportService\ReportService.cs" />
-    <Compile Include="Models\CustomizedComparers.cs" />
-    <Compile Include="Models\RetrievalList.cs" />
     <Compile Include="DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -336,27 +343,34 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IService.cs" />
-    <Compile Include="Models\DepartmentService\DepartmentService.cs" />
-    <Compile Include="Models\DepartmentService\IDepartmentService.cs" />
-    <Compile Include="Models\DisbursementService\DisbursementService.cs" />
-    <Compile Include="Models\DisbursementService\IDisbursementService.cs" />
-    <Compile Include="Models\InventoryAdjustmentService\IInventoryAdjustmentService.cs" />
-    <Compile Include="Models\InventoryAdjustmentService\InventoryAdjustmentService.cs" />
-    <Compile Include="Models\InventoryService\IInventoryService.cs" />
-    <Compile Include="Models\InventoryService\InventoryService.cs" />
-    <Compile Include="Models\RequisitionService\IRequisitionService.cs" />
-    <Compile Include="Models\RequisitionService\RequisitionService.cs" />
-    <Compile Include="Models\UtilityService\UtilityService.cs" />
-    <Compile Include="Permission.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\PushNotification.cs" />
+    <Compile Include="Permission.cs" />
+    <Compile Include="PurchaseDetail.cs" />
+    <Compile Include="PurchaseOrder.cs" />
+    <Compile Include="Requisition.cs" />
+    <Compile Include="RequisitionDetail.cs" />
+    <Compile Include="Retrieval.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="Services\Adjustment.cs" />
+    <Compile Include="Services\AdjustmentDetail.cs" />
+    <Compile Include="Services\CustomizedComparers.cs" />
+    <Compile Include="Services\DelegateRoleService\DelegateRoleService.cs" />
+    <Compile Include="Services\DelegateRoleService\IDelegateRoleService.cs" />
+    <Compile Include="Services\DepartmentService\DepartmentService.cs" />
+    <Compile Include="Services\DepartmentService\IDepartmentService.cs" />
+    <Compile Include="Services\DisbursementService\DisbursementService.cs" />
+    <Compile Include="Services\DisbursementService\IDisbursementService.cs" />
+    <Compile Include="Services\InventoryAdjustmentService\IInventoryAdjustmentService.cs" />
+    <Compile Include="Services\InventoryAdjustmentService\InventoryAdjustmentService.cs" />
+    <Compile Include="Services\InventoryService\IInventoryService.cs" />
+    <Compile Include="Services\InventoryService\InventoryService.cs" />
+    <Compile Include="Services\ReportService\IReportService.cs" />
+    <Compile Include="Services\ReportService\ReportService.cs" />
+    <Compile Include="Services\RequisitionService\IRequisitionService.cs" />
+    <Compile Include="Services\RequisitionService\RequisitionService.cs" />
+    <Compile Include="Services\RetrievalList.cs" />
+    <Compile Include="Services\UtilityService\UtilityService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PurchaseDetail.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PurchaseOrder.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Reports\CrystalReport1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -369,18 +383,6 @@
       <DependentUpon>CrystalReport2.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Requisition.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RequisitionDetail.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Retrieval.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Role.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>
     </Compile>
@@ -392,6 +394,7 @@
     </Compile>
     <Compile Include="TestControllers\DepartmentController.cs" />
     <Compile Include="TestControllers\EmployeesController.cs" />
+    <Compile Include="TestControllers\FCMController.cs" />
     <Compile Include="TestControllers\HeadController.cs" />
     <Compile Include="TestControllers\InventoriesController.cs" />
     <Compile Include="TestControllers\RepresentativeController.cs" />
@@ -462,14 +465,10 @@
     <Content Include="Views\Adjustments\Details.cshtml" />
     <Content Include="Views\Adjustments\Edit.cshtml" />
     <Content Include="Views\Adjustments\Index.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\Adjustment.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\AdjustmentDetail.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentList.cshtml" />
+    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentDetail.cshtml" />
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
-    <Content Include="Views\AdjustmentDetails\Create.cshtml" />
-    <Content Include="Views\AdjustmentDetails\Delete.cshtml" />
-    <Content Include="Views\AdjustmentDetails\Details.cshtml" />
-    <Content Include="Views\AdjustmentDetails\Edit.cshtml" />
-    <Content Include="Views\AdjustmentDetails\Index.cshtml" />
+    <Content Include="Views\Department\Head\Terminate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -480,6 +479,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\FCM\" />
     <Folder Include="Views\StoreTest\" />
   </ItemGroup>
   <ItemGroup>

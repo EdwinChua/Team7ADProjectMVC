@@ -252,8 +252,20 @@
 
 <script>
 
+    //var n = localStorage['npg'];
+    //if (!yetVisited) {
+    //    // open popup
+    //    localStorage['npg'] = 4;
+    //}
 
-    var numPerPage;
+
+
+    var numPerPage = 4;
+
+
+
+
+
     $(document).ready(function ($) {
         $(".clickable-row").click(function () {
             window.document.location = $(this).data("href");
@@ -312,12 +324,27 @@
             $(document).ready(function () {
                 $("a").click(function () {
                     alert($(this).text());
+
+                    localStorage['npg'] = parseInt($(this).text());
+
+                    //$table.trigger('repaginate');
+
+
+
                     numPerPage = parseInt($(this).text());
                     numPages = Math.ceil(numRows / numPerPage);
+
+
                     //location.reload();
                 });
             });
+            //if(numPerPage==4||numPerPage==null){
+            
             numPerPage = 4;
+            //   }else{
+            //numPerPage = numPerPage;
+            // }
+            //numPerPage = localStorage['npg'];
 
 
 

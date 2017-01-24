@@ -288,7 +288,7 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 inventorySvc.ManuallyAllocateDisbursements(departmentId, preparedQuantity, adjustedQuantity, disbursementListId, disbursementDetailId, itemNo);
             }
-            catch (DisbursementMismatchException e)
+            catch (InventoryAndDisbursementUpdateException e)
             {
                 TempData["PrepQtyException"] = e;
             }

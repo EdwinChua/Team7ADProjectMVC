@@ -5,13 +5,13 @@ using System.Web;
 
 namespace Team7ADProjectMVC.Exceptions
 {
-    public class DisbursementMismatchException : Exception
+    public class InventoryAndDisbursementUpdateException : Exception
     {
-        public DisbursementMismatchException()
+        public InventoryAndDisbursementUpdateException()
         {
         }
 
-        public DisbursementMismatchException(string message)
+        public InventoryAndDisbursementUpdateException(string message)
         : base(message)
         {
         }

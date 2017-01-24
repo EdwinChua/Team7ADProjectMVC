@@ -211,9 +211,12 @@ namespace Team7ADProjectMVC.Models
             System.Web.HttpContext.Current.Application.Lock();
             RetrievalList retrievalList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
 
+            foreach (var itemsCollected in retrievalList.itemsToRetrieve)
+            {
+                UpdateInventoryQuantity(itemsCollected.itemNo, itemsCollected.collectedQuantity);
+            }
+
             List<Requisition> requisitionListFromRList = retrievalList.requisitionList;
-
-
             DisbursementList dList = new DisbursementList();
             List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
 
@@ -250,7 +253,7 @@ namespace Team7ADProjectMVC.Models
             {
                 Requisition temp = db.Requisitions.Find(r.RequisitionId);
                 temp.RetrievalId = retrievalList.retrievalId;
-                temp.RequisitionStatus = "Pending Collection";
+                temp.RequisitionStatus = "Pending";
                 db.Entry(temp).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -259,6 +262,24 @@ namespace Team7ADProjectMVC.Models
             HttpContext.Current.Application.UnLock();
         }
 
+        //supplementary method (not declared in interface)
+        private void UpdateInventoryQuantity(string itemNo, int collectedQuantity) 
+        {
+            Inventory i = db.Inventories.Find(itemNo);
+            i.Quantity -= collectedQuantity;
+            if (i.Quantity >= 0)
+            {
+                db.Entry(i).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                throw new InventoryAndDisbursementUpdateException("The quantity of " + itemNo + " " + i.Description+ " collected was more than the available quantity. Please try again.");
+                //Shouldn't happen because html5 validation will check first
+            }
+        }
+
+        //supplementary method (not declared in interface)
         public void SaveDisbursementDetailsIntoDB(List<DisbursementDetail> tempDisbursementDetailList)
         {
             var q = tempDisbursementDetailList
@@ -283,6 +304,8 @@ namespace Team7ADProjectMVC.Models
                 db.SaveChanges();
             }
         }
+        
+        //supplementary method (not declared in interface)
         public void AddDisbursementDetailToTempList(int? currentDisbursementListId, RequisitionDetail reqDetails, RetrievalList retrievalList, List<DisbursementDetail> tempDisbursementDetailList)
         {
             DisbursementDetail newDisbursementDetail = new DisbursementDetail();
@@ -558,7 +581,7 @@ namespace Team7ADProjectMVC.Models
                 }
             } else
             {
-                throw new DisbursementMismatchException("Adjusted quantity exceeds collected quantity.");
+                throw new InventoryAndDisbursementUpdateException("Adjusted quantity exceeds collected quantity.");
             }
 
         }
@@ -620,12 +643,12 @@ namespace Team7ADProjectMVC.Models
                     db.SaveChanges();
                 } else if (disbursementDetail.DisbursementList.Status == "Completed")
                 {
-                    throw new DisbursementMismatchException("The disbursement has been completed. Unable to make further changes.");
+                    throw new InventoryAndDisbursementUpdateException("The disbursement has been completed. Unable to make further changes.");
                     //This should not happen, because the submit button is hidden when status = completed
                 }
                 else 
                 {
-                    throw new DisbursementMismatchException("Prepared quantity is greater than adjusted quantity"); 
+                    throw new InventoryAndDisbursementUpdateException("Prepared quantity is greater than adjusted quantity"); 
                     //This should not happen, because html5 validation is in use
                 }
 

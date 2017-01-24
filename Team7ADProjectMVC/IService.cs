@@ -64,16 +64,13 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfallocate", ResponseFormat = WebMessageFormat.Json)]
         String getallocate();
 
-
         [OperationContract]
         [WebGet(UriTemplate = "/wcflogin?userid={userid}&password={password}", ResponseFormat = WebMessageFormat.Json)]
         wcflogin getlogin(String userid,String password);
 
-
         [OperationContract]
         [WebGet(UriTemplate = "/wcfChangecollectionpt?dept={deptid}&location={collectionptid}", ResponseFormat = WebMessageFormat.Json)]
         String updatelocation(String deptid, String collectionptid);
-
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/UpdateDisbQty", Method = "POST",
@@ -88,7 +85,10 @@ namespace Team7ADProjectMVC
         [OperationContract]
         [WebGet(UriTemplate = "/wcfSubmitRejectReq?reqId={reqId}&remarks={remarks}", ResponseFormat = WebMessageFormat.Json)]
         String rejectReq(String reqId, String remarks);
-
+        
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfStoreRequisitions", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfStoreRequisitions> getStoreRequistions();
     }
 }
 
@@ -388,7 +388,6 @@ public class wcfallocate
 
 }
 
-
 public class wcflogin
 {
     string authenticate;
@@ -410,5 +409,28 @@ public class wcflogin
     [DataMember]
     public string Authenticate { get; set; }
 
+}
+
+public class wcfStoreRequisitions
+{
+    string deptName;
+    string approvalDate;
+    string reqStatus;
+    string btnstatus;
+
+
+    [DataMember]
+    public String DeptName { get; set; }
+
+    [DataMember]
+    public String ApprovalDate { get; set; }
+
+    [DataMember]
+    public String ReqStatus { get; set; }
+
+    [DataMember]
+    public String Btnstatus { get; set; }
 
 }
+
+

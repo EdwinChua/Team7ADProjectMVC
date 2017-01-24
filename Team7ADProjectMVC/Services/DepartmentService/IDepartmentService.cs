@@ -15,7 +15,7 @@ namespace Team7ADProjectMVC.Services.DepartmentService
         List<Requisition> ListAllDepartment();
         List<Requisition> ListAllRequisition();
         Department FinddeById(string id);
-        Employee FindemplById(string id);
+        Employee FindEmployeeById(int id);
         Department findDeptByID(int? id);
         void changeDeptCp(Department department, int cpId);
     }

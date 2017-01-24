@@ -375,7 +375,6 @@ namespace Team7ADProjectMVC
              db.SaveChanges();
              invService.UpdateInventoryQuantity(dd.ItemNo, math);
         }
-        }
 
         public string approveReq(String reqId)
         {

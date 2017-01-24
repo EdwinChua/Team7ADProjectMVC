@@ -130,12 +130,14 @@
             $('#datetimepicker1').datetimepicker({
                 format: 'DD/MM/YYYY HH:mm:ss',
                 inline: true,
-                sideBySide: false
+                sideBySide: false,
+                minDate: new Date()
             });
             $('#datetimepicker2').datetimepicker({
 
                 inline: true,
-                sideBySide: false
+                sideBySide: false,
+                minDate: new Date()
             });
 
             $("#datetimepicker1").on("dp.change", function (date, e) {

@@ -17,19 +17,24 @@ namespace Team7ADProjectMVC.TestControllers
 
     public class HeadController : Controller
     {
+        
         private IRequisitionService listsvc;
         public static int count = 0;
         private IDelegateRoleService depsvc;
         private ProjectEntities db = new ProjectEntities();
+        private Employee u;
         public HeadController()
         {
             listsvc = new RequisitionService();
             depsvc = new DelegateRoleService();
+            //u = (Employee)System.Web.HttpContext.Current.Session["user"];
+            //u = depsvc.FindById(1);
         }
 
         // GET: Head
         public ActionResult Index()
         {
+            
             return View();
         }
         public ActionResult Approve()
@@ -44,7 +49,7 @@ namespace Team7ADProjectMVC.TestControllers
         {
             var requisitions = listsvc.GetAllRequisition();
             ViewBag.req = requisitions.ToList();
-
+            ViewBag.Employee = u;
             return View("ListAllEmployees", requisitions);
 
         }
@@ -91,14 +96,21 @@ namespace Team7ADProjectMVC.TestControllers
 
         //----------------------------Delegation Part----------------------------------start
         public ActionResult show()
-        {
-            //var Employeelist = depsvc.GetAllEmployee();
-            ViewBag.empList = depsvc.GetAllEmployeebyDepId(4);
-            //Find employee with delegated role
-            //ViewBag.DelegatedEmployee
-            return View("DelegateRole");
+        {            
+           
+            Delegate delegatedEmployee= depsvc.getDelegatedEmployee(4);
+            if(delegatedEmployee == null)
+            {
+                ViewBag.empList = depsvc.GetAllEmployeebyDepId(4);
+                return View("DelegateRole");
+             
+            }
+            return RedirectToAction("fill");
+
 
         }
+
+
         public ActionResult ManageDelegation(int? empId, string status, string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl,int? DelegateId)
 
         {
@@ -146,7 +158,9 @@ namespace Team7ADProjectMVC.TestControllers
                     viewColDetlint = false;
                 }
 
-                depsvc.manageDelegate(emp, sdate, edate, approveReqint, changeCPint, viewReqint, makeReqint, delegateRolint, viewColDetlint);            
+                depsvc.manageDelegate(emp, sdate, edate, approveReqint, changeCPint, viewReqint, makeReqint, delegateRolint, viewColDetlint);
+                Delegate delegatedEmployee = depsvc.getDelegatedEmployee(4);//need dynamic id
+                ViewBag.depIdFromLogin = delegatedEmployee;
                 return RedirectToAction("fill");
             }
             else if (status.Equals("Update"))
@@ -204,14 +218,20 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult fill()
 
         {
-            List<Delegate> a = depsvc.getDelegate();
+            // DateTime today = DateTime.Today;
 
-            foreach (var i in a)
-            {
-                count = count + 1;
-            }
-            Delegate b=a.ElementAt(count-1);
-            Delegate d = depsvc.FinddelegaterecordById(b.DelegateId);
+            //List<Delegate> a = depsvc.getDelegate(tda);
+
+            //foreach (var i in a)
+            //{
+            //    count = count + 1;
+            //}
+            //Delegate b=a.ElementAt(count-1);
+            //  Delegate d = depsvc.FinddelegaterecordById(b.DelegateId);
+
+
+
+            Delegate d = depsvc.getDelegatedEmployee(4);
             Employee e = depsvc.FindById(d.EmployeeId);
             ViewBag.emp = e.EmployeeName;
             ViewBag.empid = e.EmployeeId;

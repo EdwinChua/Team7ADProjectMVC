@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Exceptions;
 using Team7ADProjectMVC.Models;
+using Team7ADProjectMVC.Models.DelegateRoleService;
 using Team7ADProjectMVC.Services;
 using Team7ADProjectMVC.Services.DepartmentService;
 
@@ -17,12 +18,14 @@ namespace Team7ADProjectMVC.TestControllers
         private IInventoryService inventorySvc;
         private IDisbursementService disbursementSvc;
         private IDepartmentService deptSvc;
+        private IDelegateRoleService delegateSvc;
 
         public StoreController()
         {
             inventorySvc = new InventoryService();
             disbursementSvc = new DisbursementService();
             deptSvc = new DepartmentService();
+            delegateSvc = new DelegateRoleService();
         }
 
         //**************** INVENTORY ********************
@@ -44,7 +47,7 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult InventoryItem(String id)
         {
-            Inventory inventory = inventorySvc.FindById(id);
+            Inventory inventory = inventorySvc.FindIventoryItemById(id);
             if (inventory == null)
             {
                 return HttpNotFound();
@@ -109,7 +112,7 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Inventory inventory = inventorySvc.FindById(id);
+            Inventory inventory = inventorySvc.FindIventoryItemById(id);
             if (inventory == null)
             {
                 return HttpNotFound();
@@ -162,7 +165,7 @@ namespace Team7ADProjectMVC.TestControllers
         {
             DisbursementList dl = disbursementSvc.GetDisbursementById(id);
             ViewBag.disbursementListInfo = dl;
-            //TODO: EDWIN - Retrieval list info required
+            ViewBag.Representative = deptSvc.FindEmployeeById((int)dl.Department.RepresentativeId);
             return View(dl);
         }
 
@@ -171,6 +174,12 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.Departments = deptSvc.ListAllDepartments();
 
             return View("ViewDisbursements", disbursementSvc.GetDisbursementsBySearchCriteria(id, status));
+        }
+
+        public ActionResult UpdateDisbursement(int disbursementListId, string[] itemNo, int[] originalPreparedQty, int[] adjustedQuantity, string[] remarks)
+        {
+            inventorySvc.UpdateDisbursementListDetails(disbursementListId, itemNo, originalPreparedQty, adjustedQuantity, remarks);
+            return RedirectToAction("ViewDisbursements");
         }
 
         // ********************* ADJUSTMENTS *******************
@@ -279,7 +288,7 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 inventorySvc.ManuallyAllocateDisbursements(departmentId, preparedQuantity, adjustedQuantity, disbursementListId, disbursementDetailId, itemNo);
             }
-            catch (PreparedQuantityNotEqualAdjustedQuantityException e)
+            catch (InventoryAndDisbursementUpdateException e)
             {
                 TempData["PrepQtyException"] = e;
             }

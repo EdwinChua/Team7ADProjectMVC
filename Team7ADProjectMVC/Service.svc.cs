@@ -433,14 +433,32 @@ namespace Team7ADProjectMVC
         public List<wcfStoreRequisitions> getStoreRequistions()
         {
             List<wcfStoreRequisitions> storeReq = new List<wcfStoreRequisitions>();
-            List<Requisition> reqList = invService.GetOutStandingRequisitions(); 
-           
+            List<Requisition> reqList = invService.GetOutStandingRequisitions();
+            RetrievalList rList=invService.GetRetrievalList();
+            String beforesplit = "";
+            String aftersplit = "";
+            Char delimiter = ' ';
             foreach (Requisition req in reqList)
             {
                 wcfStoreRequisitions rl = new wcfStoreRequisitions();
-                rl.DeptName = req.Retrieval.Employee.Department.DepartmentName;
+                beforesplit = req.Employee.Department.DepartmentName;
+                String[] substrings = beforesplit.Split(delimiter);
+                aftersplit = substrings[0];
+                rl.DeptName = aftersplit;
+
+                beforesplit =req.ApprovedDate.ToString();
+                String[] substrings1 = beforesplit.Split(delimiter);
+                aftersplit = substrings1[0];
+                rl.ApprovalDate = aftersplit;
+
                 rl.ReqStatus = req.RequisitionStatus;
-                rl.ApprovalDate = req.ApprovedDate.ToString();
+                
+                if(rList.requisitionList == null)
+                {
+                    rl.Btnstatus = "generate";
+                }
+                else
+                    rl.Btnstatus = "view";
                 storeReq.Add(rl);
             }
             return storeReq;

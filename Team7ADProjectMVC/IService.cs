@@ -88,7 +88,7 @@ namespace Team7ADProjectMVC
         
         [OperationContract]
         [WebGet(UriTemplate = "/wcfStoreRequisitions", ResponseFormat = WebMessageFormat.Json)]
-        String getStoreRequistions();
+        List<wcfStoreRequisitions> getStoreRequistions();
     }
 }
 
@@ -416,6 +416,7 @@ public class wcfStoreRequisitions
     string deptName;
     string approvalDate;
     string reqStatus;
+    string btnstatus;
 
 
     [DataMember]
@@ -426,6 +427,9 @@ public class wcfStoreRequisitions
 
     [DataMember]
     public String ReqStatus { get; set; }
+
+    [DataMember]
+    public String Btnstatus { get; set; }
 
 }
 

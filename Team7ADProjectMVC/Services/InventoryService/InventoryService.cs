@@ -81,7 +81,7 @@ namespace Team7ADProjectMVC.Models
         public List<Requisition> GetOutStandingRequisitions()
         {
             var query = from rq in db.Requisitions
-                        where rq.RequisitionStatus != "Pending"
+                        where rq.RequisitionStatus != "Pending Approval"
                         && rq.RequisitionStatus != "Rejected"
                         && rq.RequisitionStatus != "Processing"
                         && rq.RequisitionStatus != "Completed"

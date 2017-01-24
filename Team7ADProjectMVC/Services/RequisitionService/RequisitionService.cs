@@ -14,7 +14,7 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
         public List<Requisition> GetAllRequisition()
         {
             var queryByStatus = from t in db.Requisitions 
-                                  where t.RequisitionStatus == "Pending" 
+                                  where t.RequisitionStatus == "Pending" && t.DepartmentId== 4
                                   orderby t.RequisitionId ascending
                                   select t;
             return (queryByStatus.ToList());

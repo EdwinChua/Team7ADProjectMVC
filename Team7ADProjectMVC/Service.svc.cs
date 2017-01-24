@@ -95,7 +95,6 @@ namespace Team7ADProjectMVC
             return making;
            
         }
-      //  List<wcfTodayCollectionDetail> collectionDetail = new List<wcfTodayCollectionDetail>();
 
         public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String disListID)
         {
@@ -127,8 +126,7 @@ namespace Team7ADProjectMVC
 
             var aList = from a in db.Requisitions
                           where a.DepartmentId == did
-                          && a.RequisitionStatus != "Approved"
-                          && a.RequisitionStatus != "Rejected"
+                          && a.RequisitionStatus == "Pending Approval"
                           orderby a.OrderedDate
                           select a;
 
@@ -151,7 +149,7 @@ namespace Team7ADProjectMVC
             var aList = from a in db.RequisitionDetails
                         where a.RequisitionId == rId
                         && a.Requisition.DepartmentId == dId
-                        && a.Requisition.RequisitionStatus != "Approved"
+                        && a.Requisition.RequisitionStatus == "Pending Approval"
                         orderby a.Inventory.Description ascending
                         select a;
 
@@ -166,21 +164,19 @@ namespace Team7ADProjectMVC
             return approvalList.ToList();
         }
 
-
         public List<String> getCollectionPoint(String deptid)
         {
             List<String> sl = new List<string>();
             int dId = Convert.ToInt32(deptid);
-             var collectionLocation = from c in db.DisbursementLists
-                                    where c.DepartmentId == dId
-                                    select c;
+            var collectionLocation = from c in db.DisbursementLists
+                                     where c.DepartmentId == dId
+                                     select c;
             String s;
-             foreach (DisbursementList d in collectionLocation)
+            foreach (DisbursementList d in collectionLocation)
             {
-                s= d.Department.CollectionPoint.PlaceName +" "+ d.Department.CollectionPoint.CollectTime;
+                s = d.Department.CollectionPoint.PlaceName +" "+ d.Department.CollectionPoint.CollectTime;
                sl.Add(s);
             }
-         
             return sl;
         }
 
@@ -189,11 +185,13 @@ namespace Team7ADProjectMVC
             List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
             var disburse = from d in db.DisbursementLists
                            where d.Status != "Completed"
+                           && d.Status != "Pending Approval"
+                           && d.Status != "Rejected"
                            orderby d.DeliveryDate ascending
                            select d;
             String beforesplit = "";
-             String aftersplit = "";
-             Char delimiter = ' ';
+            String aftersplit = "";
+            Char delimiter = ' ';
             foreach (DisbursementList d in disburse)
             {
                 wcfDisbursementList dl = new wcfDisbursementList();
@@ -203,7 +201,6 @@ namespace Team7ADProjectMVC
                 String[] substrings = beforesplit.Split(delimiter);
                 aftersplit = substrings[0];
                 dl.DeliveryDatetime = aftersplit + " ( " + d.Department.CollectionPoint.CollectTime.ToString()+" )"; 
-               
                 dl.RepName = d.Department.Employee.EmployeeName.ToString();
                 dl.RepPhone = d.Department.Employee.PhNo.ToString();
                 dl.DisListID = d.DisbursementListId.ToString();
@@ -246,7 +243,7 @@ namespace Team7ADProjectMVC
             foreach (Inventory i in reOrders)
             {
                 wcfStockReorder inv = new wcfStockReorder();
-                inv.ItemName = i.Description;
+                inv.ItemName = "#" + i.ItemNo+" "+ i.Description;
                 inv.ActualQty = i.Quantity.ToString();
                 inv.ReorderLevel = i.ReorderLevel.ToString();
                 inv.ReorderQty = i.ReorderQuantity.ToString();
@@ -265,18 +262,16 @@ namespace Team7ADProjectMVC
             return soList;
         }
 
-
         public List<wcfRetrivalList> getRetrivalList()
         {
             List<wcfRetrivalList> retrialList = new List<wcfRetrivalList>();
-            
             RetrievalList reList = new RetrievalList();
-            invService.PopulateRetrievalList();
-            invService.PopulateRetrievalListItems();
+            //invService.PopulateRetrievalList();
+            //invService.PopulateRetrievalListItems();
             reList = invService.GetRetrievalList();
             int? rid =reList.retrievalId;
             List<RetrievalListItems> itemsToR = reList.itemsToRetrieve;
-
+   
             foreach (RetrievalListItems r in itemsToR)
             {
                 wcfRetrivalList rl = new wcfRetrivalList();
@@ -300,14 +295,13 @@ namespace Team7ADProjectMVC
             return retrialList;
         }
 
-
         public String getallocate()
         {
             String rt = "false";
             try
             {
                 invService.AutoAllocateDisbursementsByOrderOfRequisition();
-                rt = "true";
+                rt = "True";
             }
             catch(Exception e)
             {
@@ -322,7 +316,6 @@ namespace Team7ADProjectMVC
             // do the proper login here.. 
             // test case only.
 
-
             wcflogin dDetail = new wcflogin();
             if(userid.Equals("c1"))
             {
@@ -331,7 +324,7 @@ namespace Team7ADProjectMVC
                 dDetail.Userid = "c1";
                 dDetail.Authenticate = "true";
             }
-            else   if (userid.Equals("e1"))
+            else if (userid.Equals("e1"))
             {
                 dDetail.Deptid = "4";
                 dDetail.Role = "Employee";
@@ -354,43 +347,35 @@ namespace Team7ADProjectMVC
             }
             else
                 dDetail.Authenticate = "false";
-
-                
-
                 return dDetail;
-          
         }
 
         public String updatelocation(String deptid, String collectionptid)
         {
-       
             int dId = Convert.ToInt32(deptid);
             int cpoint = Convert.ToInt32(collectionptid);
             Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
             wcfItem.CollectionPointId = cpoint;
             db.SaveChanges();
-
-            //List<DisbursementList> lt = new List<DisbursementList>();
-            //lt = db.DisbursementLists.Where(p => p.DepartmentId == dId).ToList();
-            //foreach(DisbursementList l in lt )
-            //{
-            //}
-            //db.SaveChanges();
-
             return collectionptid;
         }
 
-
         public void updatedqun(wcfDisbursementListDetail c )
         {
+         
 
             int dId = Convert.ToInt32(c.Ddid);
             int dId1 = Convert.ToInt32(c.DisbQty);
-             DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
-             dd.Remark =c.Remarks;
-             dd.DeliveredQuantity = dId1;
-             db.SaveChanges();
+            int math;
             
+             DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
+
+             math = dId1-(int)dd.DeliveredQuantity;              
+             dd.DeliveredQuantity = dId1;
+             dd.Remark = c.Remarks;
+             db.SaveChanges();
+             invService.UpdateInventoryQuantity(dd.ItemNo, math);
+        
         }
 
         public string approveReq(String reqId)
@@ -435,7 +420,7 @@ namespace Team7ADProjectMVC
         {
             List<wcfStoreRequisitions> storeReq = new List<wcfStoreRequisitions>();
             List<Requisition> reqList = invService.GetOutStandingRequisitions();
-            RetrievalList rList=invService.GetRetrievalList();
+
             String beforesplit = "";
             String aftersplit = "";
             Char delimiter = ' ';
@@ -447,22 +432,76 @@ namespace Team7ADProjectMVC
                 aftersplit = substrings[0];
                 rl.DeptName = aftersplit;
 
-                beforesplit =req.ApprovedDate.ToString();
+                beforesplit = req.ApprovedDate.ToString();
                 String[] substrings1 = beforesplit.Split(delimiter);
                 aftersplit = substrings1[0];
                 rl.ApprovalDate = aftersplit;
 
                 rl.ReqStatus = req.RequisitionStatus;
-                
-                if(rList.requisitionList == null)
-                {
-                    rl.Btnstatus = "generate";
-                }
-                else
-                    rl.Btnstatus = "view";
                 storeReq.Add(rl);
             }
-            return storeReq;
+                return storeReq;
+           
+
         }
+        public String wcfBtnReqList()
+        {
+            RetrievalList rList = invService.GetRetrievalList();
+              String result="";
+                if(rList.requisitionList == null)
+                {
+                    result= "generate";
+                }
+                else
+                   result = "view";
+
+                return result;
+               
+            }
+
+        public String wcfGenetateBtnOK()
+        {
+            try
+            {
+                invService.PopulateRetrievalList();
+                invService.PopulateRetrievalListItems();
+                return "true";
+            }
+            catch(Exception e)
+            {
+                return "false";
+            }
+           
+           
+        }
+
+
+        public String wcfClearListBtnOK()
+        {
+            try
+            {
+                invService.ClearRetrievalList();
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+        public String wcfAcceptCollection(String DisListId)
+        {
+            try
+            {
+                //write the var connection to update the status of which ever table as needed.
+                // change return to true..
+                return DisListId;
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
+        
     }
 }

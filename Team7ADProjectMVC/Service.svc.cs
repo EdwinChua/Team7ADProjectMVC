@@ -390,6 +390,7 @@ namespace Team7ADProjectMVC
              dd.Remark =c.Remarks;
              dd.DeliveredQuantity = dId1;
              db.SaveChanges();
+            
         }
 
         public string approveReq(String reqId)

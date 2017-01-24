@@ -98,6 +98,9 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult show()
         {            
            
+
+
+
             Delegate delegatedEmployee= depsvc.getDelegatedEmployee(4);
             if(delegatedEmployee == null)
             {
@@ -111,7 +114,7 @@ namespace Team7ADProjectMVC.TestControllers
         }
 
 
-        public ActionResult ManageDelegation(int? empId, string status, string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl,int? DelegateId)
+        public ActionResult ManageDelegation(int? empId, string status, string startDate, string endDate, int? DelegateId /*, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl,*/ )
 
         {
 
@@ -121,89 +124,92 @@ namespace Team7ADProjectMVC.TestControllers
 
             if (status.Equals("Delegate"))
             {
+              
                 String[] s = startDate.Split('/');
                 DateTime sdate = new DateTime(Int32.Parse(s[2]), Int32.Parse(s[1]), Int32.Parse(s[0]));
 
                 String[] e = endDate.Split('/');
                 DateTime edate = new DateTime(Int32.Parse(e[2]), Int32.Parse(e[1]), Int32.Parse(e[0]));
-                bool approveReqint = true;
-                bool changeCPint = true;
-                bool viewReqint = true;
-                bool makeReqint = true;
-                bool delegateRolint = true;
-                bool viewColDetlint = true;
 
-                if (approveReq == null)
-                {
-                    approveReqint = false;
-                }
-                if (changeCP == null)
-                {
-                    changeCPint = false;
-                }
-                if (viewReq == null)
-                {
-                    viewReqint = false;
-                }
-                if (makeReq == null)
-                {
-                    makeReqint = false;
-                }
-                if (delegateRol == null)
-                {
-                    delegateRolint = false;
-                }
-                if (viewColDetl == null)
-                {
-                    viewColDetlint = false;
-                }
+                //bool approveReqint = true;
+                //bool changeCPint = true;
+                //bool viewReqint = true;
+                //bool makeReqint = true;
+                //bool delegateRolint = true;
+                //bool viewColDetlint = true;
 
-                depsvc.manageDelegate(emp, sdate, edate, approveReqint, changeCPint, viewReqint, makeReqint, delegateRolint, viewColDetlint);
+                //if (approveReq == null)
+                //{
+                //    approveReqint = false;
+                //}
+                //if (changeCP == null)
+                //{
+                //    changeCPint = false;
+                //}
+                //if (viewReq == null)
+                //{
+                //    viewReqint = false;
+                //}
+                //if (makeReq == null)
+                //{
+                //    makeReqint = false;
+                //}
+                //if (delegateRol == null)
+                //{
+                //    delegateRolint = false;
+                //}
+                //if (viewColDetl == null)
+                //{
+                //    viewColDetlint = false;
+                //}
+
+                depsvc.manageDelegate(emp, sdate, edate/*, approveReqint, changeCPint, viewReqint, makeReqint, delegateRolint, viewColDetlint*/);
                 Delegate delegatedEmployee = depsvc.getDelegatedEmployee(4);//need dynamic id
-                ViewBag.depIdFromLogin = delegatedEmployee;
+          
                 return RedirectToAction("fill");
             }
             else if (status.Equals("Update"))
             {
-
+               
                 String[] s = startDate.Split('/');
                 DateTime sdate = new DateTime(Int32.Parse(s[2]), Int32.Parse(s[1]), Int32.Parse(s[0]));
-
+               
                 String[] e = endDate.Split('/');
                 DateTime edate = new DateTime(Int32.Parse(e[2]), Int32.Parse(e[1]), Int32.Parse(e[0]));
-                bool approveReqint = true;
-                bool changeCPint = true;
-                bool viewReqint = true;
-                bool makeReqint = true;
-                bool delegateRolint = true;
-                bool viewColDetlint = true;
+               
+                //bool approveReqint = true;
+                //bool changeCPint = true;
+                //bool viewReqint = true;
+                //bool makeReqint = true;
+                //bool delegateRolint = true;
+                //bool viewColDetlint = true;
 
-                if (approveReq == null)
-                {
-                    approveReqint = false;
-                }
-                if (changeCP == null)
-                {
-                    changeCPint = false;
-                }
-                if (viewReq == null)
-                {
-                    viewReqint = false;
-                }
-                if (makeReq == null)
-                {
-                    makeReqint = false;
-                }
-                if (delegateRol == null)
-                {
-                    delegateRolint = false;
-                }
-                if (viewColDetl == null)
-                {
-                    viewColDetlint = false;
-                }
+                //if (approveReq == null)
+                //{
+                //    approveReqint = false;
+                //}
+                //if (changeCP == null)
+                //{
+                //    changeCPint = false;
+                //}
+                //if (viewReq == null)
+                //{
+                //    viewReqint = false;
+                //}
+                //if (makeReq == null)
+                //{
+                //    makeReqint = false;
+                //}
+                //if (delegateRol == null)
+                //{
+                //    delegateRolint = false;
+                //}
+                //if (viewColDetl == null)
+                //{
+                //    viewColDetlint = false;
+                //}
            
-                depsvc.updateDelegate(emp,d,p, sdate, edate, approveReqint, changeCPint, viewReqint, makeReqint, delegateRolint, viewColDetlint);
+                depsvc.updateDelegate(emp,d, sdate, edate /*approveReqint, changeCPint, viewReqint, makeReqint, delegateRolint, viewColDetlint*/);
 
 
                 return RedirectToAction("ListAllEmployees");
@@ -237,16 +243,16 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.empid = e.EmployeeId;
             ViewBag.s1 = d.StartDate;
             ViewBag.e1 = d.EndDate;
-            ViewBag.approveReq = e.Permission.ApproveRequisition;
-            ViewBag.changeCP = e.Permission.ChangeCollectionPoint;
-            ViewBag.viewReq = e.Permission.ViewRequisition;
-            ViewBag.makeReq = e.Permission.MakeRequisition;
-            ViewBag.delegateRol = e.Permission.DelegateRole;
-            ViewBag.viewColDetl = e.Permission.ViewCollectionDetails;
+            //ViewBag.approveReq = e.Permission.ApproveRequisition;
+            //ViewBag.changeCP = e.Permission.ChangeCollectionPoint;
+            //ViewBag.viewReq = e.Permission.ViewRequisition;
+            //ViewBag.makeReq = e.Permission.MakeRequisition;
+            //ViewBag.delegateRol = e.Permission.DelegateRole;
+            //ViewBag.viewColDetl = e.Permission.ViewCollectionDetails;
             ViewBag.delegateId = d.DelegateId;
             return View("Terminate");
         }
-        public ActionResult ManageTerminate(int? empId, string status, string startDate, string endDate, string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl)
+        public ActionResult ManageTerminate(int? empId, string status, string startDate, string endDate/* string approveReq, string changeCP, string viewReq, string makeReq, string delegateRol, string viewColDetl*/)
         {
             return View("DelegateRole");
         }

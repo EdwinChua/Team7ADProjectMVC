@@ -20,7 +20,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
             var q2 = queryBydepId.ToList();
             foreach (var xyz in q2)
             {
-                if (xyz.EndDate.Equals(xyz.ActualEndDate) && xyz.EndDate>= DateTime.Today)
+                if (xyz.EndDate.Equals(xyz.ActualEndDate) &&(xyz.ActualEndDate > DateTime.Today || xyz.ActualEndDate.Equals(DateTime.Today)))
                 {
                     return xyz;
                 }
@@ -28,7 +28,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
             }
             return null;
         }
-        
+       
         public List<Employee> GetAllEmployeebyDepId(int depId)
         {
             var queryBydepId= from t in db.Employees
@@ -46,7 +46,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
         {
             return db.Employees.Find(empid);
         }
-        public  void manageDelegate(Employee e, DateTime startDate, DateTime endDate, bool approveReq, bool changeCP, bool viewReq, bool makeReq, bool delegateRol, bool viewColDetl)
+        public  void manageDelegate(Employee e, DateTime startDate, DateTime endDate/*, bool approveReq, bool changeCP, bool viewReq, bool makeReq, bool delegateRol, bool viewColDetl*/)
         {
               
             Permission p = new Permission();
@@ -62,28 +62,27 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
             db.SaveChanges();
 
            
-            p.ApproveRequisition = approveReq;
-            p.ChangeCollectionPoint = changeCP;
-            p.ViewRequisition = viewReq;
-            p.MakeRequisition = makeReq;
-            p.DelegateRole = delegateRol;
-            p.ViewCollectionDetails = viewColDetl;
+            //p.ApproveRequisition = approveReq;
+            //p.ChangeCollectionPoint = changeCP;
+            //p.ViewRequisition = viewReq;
+            //p.MakeRequisition = makeReq;
+            //p.DelegateRole = delegateRol;
+            //p.ViewCollectionDetails = viewColDetl;
 
-            db.Permissions.Add(p);
-            db.SaveChanges();
+            //db.Permissions.Add(p);
+            //db.SaveChanges();
 
             e.RoleId = 3;
-            e.PermissionId = p.PermissionId;
+          //  e.PermissionId = p.PermissionId;
             db.Entry(e).State = EntityState.Modified;
             db.SaveChanges();
 
 
         }
-        public void updateDelegate(Employee e, Delegate d,Permission p, DateTime startDate, DateTime endDate, bool approveReq, bool changeCP, bool viewReq, bool makeReq, bool delegateRol, bool viewColDetl)
+        public void updateDelegate(Employee e, Delegate d,DateTime startDate, DateTime endDate/*, bool approveReq, bool changeCP, bool viewReq, bool makeReq, bool delegateRol, bool viewColDetl*/)
         {     
 
 
-            //d.EmployeeId = d.EmployeeId;
             d.StartDate = startDate.Date;
             d.EndDate = endDate.Date;
             d.ActualEndDate = endDate.Date;
@@ -93,15 +92,15 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
             db.SaveChanges();
 
           
-            p.ApproveRequisition = approveReq;
-            p.ChangeCollectionPoint = changeCP;
-            p.ViewRequisition = viewReq;
-            p.MakeRequisition = makeReq;
-            p.DelegateRole = delegateRol;
-            p.ViewCollectionDetails = viewColDetl;
+            //p.ApproveRequisition = approveReq;
+            //p.ChangeCollectionPoint = changeCP;
+            //p.ViewRequisition = viewReq;
+            //p.MakeRequisition = makeReq;
+            //p.DelegateRole = delegateRol;
+            //p.ViewCollectionDetails = viewColDetl;
 
-            db.Entry(p).State = EntityState.Modified;
-            db.SaveChanges();
+            //db.Entry(p).State = EntityState.Modified;
+            //db.SaveChanges();
            
 
         }
@@ -111,14 +110,14 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
             db.Entry(d).State = EntityState.Modified;
             db.SaveChanges();
 
-            p.ApproveRequisition = false;
-            p.ChangeCollectionPoint = false;
-            p.ViewRequisition = false;
-            p.MakeRequisition = false;
-            p.DelegateRole = false;
-            p.ViewCollectionDetails = false;
-            db.Entry(p).State = EntityState.Modified;
-            db.SaveChanges();
+            //p.ApproveRequisition = false;
+            //p.ChangeCollectionPoint = false;
+            //p.ViewRequisition = false;
+            //p.MakeRequisition = false;
+            //p.DelegateRole = false;
+            //p.ViewCollectionDetails = false;
+            //db.Entry(p).State = EntityState.Modified;
+            //db.SaveChanges();
         }
         public List<Delegate> getDelegate()
         {

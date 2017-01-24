@@ -375,7 +375,7 @@ namespace Team7ADProjectMVC
              dd.Remark = c.Remarks;
              db.SaveChanges();
              invService.UpdateInventoryQuantity(dd.ItemNo, math);
-        }
+        
         }
 
         public string approveReq(String reqId)
@@ -420,7 +420,7 @@ namespace Team7ADProjectMVC
         {
             List<wcfStoreRequisitions> storeReq = new List<wcfStoreRequisitions>();
             List<Requisition> reqList = invService.GetOutStandingRequisitions();
-            RetrievalList rList=invService.GetRetrievalList();
+
             String beforesplit = "";
             String aftersplit = "";
             Char delimiter = ' ';
@@ -432,22 +432,31 @@ namespace Team7ADProjectMVC
                 aftersplit = substrings[0];
                 rl.DeptName = aftersplit;
 
-                beforesplit =req.ApprovedDate.ToString();
+                beforesplit = req.ApprovedDate.ToString();
                 String[] substrings1 = beforesplit.Split(delimiter);
                 aftersplit = substrings1[0];
                 rl.ApprovalDate = aftersplit;
 
                 rl.ReqStatus = req.RequisitionStatus;
-                
+            }
+                return storeReq;
+           
+
+        }
+        public String wcfBtnReqList()
+        {
+            RetrievalList rList = invService.GetRetrievalList();
+              String result="";
                 if(rList.requisitionList == null)
                 {
-                    rl.Btnstatus = "generate";
+                    result= "generate";
                 }
                 else
-                    rl.Btnstatus = "view";
-                storeReq.Add(rl);
+                   result = "view";
+
+                return result;
+               
             }
-            return storeReq;
-        }
+        
     }
 }

@@ -291,7 +291,6 @@ namespace Team7ADProjectMVC
                 rl.Status = st;
                 retrialList.Add(rl);
             }
-            //List<Requisition> reqList = retrivallist.requisitionList;
             return retrialList;
         }
 

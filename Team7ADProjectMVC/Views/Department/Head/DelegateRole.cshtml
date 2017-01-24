@@ -16,13 +16,14 @@
             <div>
                 <select id="empListPicker" name="empId"
                         class="selectpicker show-tick form-control"
-                        data-live-search="true" title="Retrieve by department head to view all employees">
+                        data-live-search="true" title="Select employee to delegate" >
                     @foreach (var emp in ViewBag.empList)
                     {
-                        <option value="@emp.EmployeeId">@emp.EmployeeName </option>
+                        <option value="@emp.EmployeeId" >@emp.EmployeeName </option>
                     }
                 
                 </select>
+               
             </div>
 
         </div>
@@ -72,8 +73,7 @@
 
 
 
-            <div>
-                <h5>
+                            <h5>
                    
                     Start Date:<label id="s1" name="s" value="startDate"></label><br/>  
                     <input type="hidden" name="startDate" id="startDate" />
@@ -82,41 +82,23 @@
                     End Date::<label id="e1" name="e" value="endDate"></label><br/>
                     <input type="hidden" name="DelegateId" id="d" value="0" />
                    
-                    <input type="hidden" name="endDate" id="endDate" /> 
-                    <input type="checkbox" name="approveReq" >Approve Requisition<br>
-                    <input type="checkbox" name="changeCP">Change Collection Point<br>
-                    <input type="checkbox" name="viewReq">View Requisiton <br />
-                    <input type="checkbox" name="makeReq">Make Requisition<br>
-                    <input type="checkbox" name="delegateRol">Delegate Role<br />
-                    <input type="checkbox" name="viewColDetl">View Collection Details<br />
+                   <input type="hidden" name="endDate" id="endDate" /> 
+                    @*<input type="checkbox" name="approveReq" >Approve Requisition<br>
+    <input type="checkbox" name="changeCP">Change Collection Point<br>
+    <input type="checkbox" name="viewReq">View Requisiton <br />
+    <input type="checkbox" name="makeReq">Make Requisition<br>
+    <input type="checkbox" name="delegateRol">Delegate Role<br />
+    <input type="checkbox" name="viewColDetl">View Collection Details<br />
 
-                    <br />
-                    <br />
+    <br />
+    <br />*@
 
                 </h5>
                 
             <button type="submit" class="btn btn-success btn-lg" name="status" value="Delegate" id="submitButton" >
-                Delegate
-            </button>
-                @*@if (ViewBag.DelegatedEmployee != null)
-            {
-        <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate" >
-            Terminate
-        </button>
-    </div > }*@
-           
-            @*@{
-                string startDate = Request["s"];
-                String[] s = startDate.Split('/');
-                DateTime sdate = new DateTime(Int32.Parse(s[2]), Int32.Parse(s[1]), Int32.Parse(s[0]));
-
-                if (sdate < DateTime.Today)
-                {
-                    Response.Write("<script>alert('Hello');</script>");
-                }
-
-            }*@
-
+                Delegate</button>
+    
+               
                 
     </form>
     </>
@@ -132,45 +114,12 @@
                 minDate: new Date()
             });
        
-
-            //$.datepicker.setDefaults({
-            //    showOn: 'button',
-            //    buttonImage: 'images/calendar.gif',
-            //    buttonImageOnly: true,
-            //    dateFormat: 'yy-mm-dd',
-            //    minDate: '2013-09-10',
-            //    maxDate: '2013-10-10'
-            //});
-
-            //$('#datetimepicker1').datepicker({
-            //    onSelect: function (selectedDate) {
-            //        $('#datetimepicker2').datepicker('option', new Date(), selectedDate || new Date());
-            //    }
-            //});
-            //$('#datetimepicker2').datepicker({
-            //    onSelect: function (selectedDate) {
-            //        $('#datetimepicker1').datepicker('option', new Date(), selectedDate || new Date());
-            //    }
-            //});
-
-            //$("#datetimepicker1").datepicker({
-            //    defaultDate: new Date(),
-            //    minDate: new Date(),
-            //    onSelect: function(dateStr) 
-            //    {         
-            //        $("#datetimepicker2").val(dateStr);
-            //        $("#datetimepicker2").datepicker("option",{ minDate: new Date(dateStr)})
-            //    }
-            //});
-
-
-
-
-
             $("#datetimepicker1").on("dp.change", function (date, e) {
                 {
                     $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
                     $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                    $('#datetimepicker2').data("DateTimePicker").minDate(date.date);
+                    
                     //var da = $('#datetimepicker1').data("DateTimePicker").date().format('YYY-MM-DD').toString();
                     //String s=(String)da.toString();
                 }
@@ -180,16 +129,17 @@
             $('#datetimepicker2').datetimepicker({
                 
                 inline: true,
-                sideBySide: false,
-                minDate: new Date()
-
+                sideBySide: false
             });
             $("#datetimepicker2").on("dp.change", function (date, e) {
                 console.log($('#datetimepicker2').data("DateTimePicker").date());
                 $('#endDate').val($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
                 $('#e1').text($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+
             });
         });
+
+
        
         //$(document).ready(function () {
 

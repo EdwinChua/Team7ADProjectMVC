@@ -29,7 +29,7 @@ namespace Team7ADProjectMVC.Models
         public adjustment()
         {
             Status = "Pending";
-            AdjustmentDate = DateTime.Now;
+            AdjustmentDate = DateTime.Today;
             this.AdjustmentDetails = new HashSet<adjustmentdetail>();
 
         }

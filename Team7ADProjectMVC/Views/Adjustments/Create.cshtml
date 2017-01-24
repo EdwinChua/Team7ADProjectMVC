@@ -9,60 +9,53 @@
     Page.Title = "Inventory Adjustment";
 }
 
-<h2>Create New</h2>
-<hr />
 
 @using Team7ADProjectMVC.Extensions
 @using (Html.BeginForm())
 { @Html.AntiForgeryToken()
-    <div class="jumbotron">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <h3>Adjustment</h3>
-            @Html.EditorFor(x => x)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.EditorFor(x => x)
+    </div>
 
+    <h3>Adjustment Detail </h3>
+    <div class="row">
+        <div class="col-md-5">
+            <input type="button" id="add-detail" value="Add " class="btn btn-default" />
         </div>
-        </div>
-
-        @*<input type="button" id="add-detail" value="Add" />*@
-        <h3>Adjustment Detail</h3>
+    </div>
         <table class="table">
             <thead>
                 <tr>
                     <th>
-                        <label class="control-label">ItemNo</label>
+                        <div class="col-md-3  ">ItemNo</div>
                     </th>
                     <th>
-                        <label class="control-label">Quantity</label>
+                        <div class="col-md-3 ">Quantity</div>
                     </th>
                     <th>
-                        <label class="control-label">Reason</label>
+                        <div class="col-md-3 ">Reason</div>
+                    </th>
+                    <th>
+                        <div class="col-md-3 "></div>
                     </th>
                 </tr>
             <thead />
         </table>
-
-                
-                    <button class="btn-sm btn-danger" style="border-radius: 50%; background-color: red;" name="add" type="button" id="add-detail">+</button>
-                
-
-                <div id="detail-list">
-                    @Html.EditorForMany(x => x.AdjustmentDetails, x => x.Index)
-                </div>
-            
-        
-    
-
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+        <div id="detail-list">
+            @Html.EditorForMany(x => x.AdjustmentDetails, x => x.Index)
         </div>
-    </div>
+        <hr />
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-5">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
 
 }
-
+<br/>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

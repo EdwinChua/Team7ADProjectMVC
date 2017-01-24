@@ -81,8 +81,10 @@ namespace Team7ADProjectMVC.Models
         public List<Requisition> GetOutStandingRequisitions()
         {
             var query = from rq in db.Requisitions
-                        where rq.RequisitionStatus == "Oustanding"
-                        && rq.RequisitionStatus == "Approved"
+                        where rq.RequisitionStatus != "Pending"
+                        && rq.RequisitionStatus != "Rejected"
+                        && rq.RequisitionStatus != "Processing"
+                        && rq.RequisitionStatus != "Completed"
                         orderby rq.ApprovedDate
                         select rq;
 
@@ -260,10 +262,10 @@ namespace Team7ADProjectMVC.Models
         }
 
         
-        public void UpdateInventoryQuantity(string itemNo, int collectedQuantity) 
+        public void UpdateInventoryQuantity(string itemNo, int modifiedQuantity) 
         {
             Inventory i = db.Inventories.Find(itemNo);
-            i.Quantity -= collectedQuantity;
+            i.Quantity -= modifiedQuantity;
             if (i.Quantity >= 0)
             {
                 db.Entry(i).State = EntityState.Modified;
@@ -277,7 +279,7 @@ namespace Team7ADProjectMVC.Models
         }
 
         //supplementary method (not declared in interface)
-        public void SaveDisbursementDetailsIntoDB(List<DisbursementDetail> tempDisbursementDetailList)
+        private void SaveDisbursementDetailsIntoDB(List<DisbursementDetail> tempDisbursementDetailList)
         {
             var q = tempDisbursementDetailList
                     .GroupBy(ac => new
@@ -303,7 +305,7 @@ namespace Team7ADProjectMVC.Models
         }
         
         //supplementary method (not declared in interface)
-        public void AddDisbursementDetailToTempList(int? currentDisbursementListId, RequisitionDetail reqDetails, RetrievalList retrievalList, List<DisbursementDetail> tempDisbursementDetailList)
+        private void AddDisbursementDetailToTempList(int? currentDisbursementListId, RequisitionDetail reqDetails, RetrievalList retrievalList, List<DisbursementDetail> tempDisbursementDetailList)
         {
             DisbursementDetail newDisbursementDetail = new DisbursementDetail();
             newDisbursementDetail.DisbursementListId = currentDisbursementListId;
@@ -327,7 +329,7 @@ namespace Team7ADProjectMVC.Models
 
             tempDisbursementDetailList.Add(newDisbursementDetail);
         }
-        public int? CreateNewDisbursementListForDepartment(DisbursementList dList, Requisition requisition, RetrievalList retrievalList, int? currentDisbursementListId)
+        private int? CreateNewDisbursementListForDepartment(DisbursementList dList, Requisition requisition, RetrievalList retrievalList, int? currentDisbursementListId)
         {
             Department d = db.Departments.Find(requisition.DepartmentId);
             dList.DepartmentId = d.DepartmentId;

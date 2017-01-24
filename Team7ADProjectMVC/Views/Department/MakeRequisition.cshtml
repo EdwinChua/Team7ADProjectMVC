@@ -27,10 +27,15 @@
 
 
                                 <div>
-                                    <span>OrderedDate:</span> <p id="demo"></p>
+                                    <span>OrderedDate:</span> <span id="demo">@ViewBag.time</span>
+                                    
                                     <script>
-                                            var d = new Date();
-                                            document.getElementById("demo").innerHTML = d.toDateString();
+                                        var d = new Date();
+                                        
+                                        document.getElementById("demo").innerHTML = $.date(d);
+
+                                       
+
                                     </script>
                                 </div>
                             </div>
@@ -80,7 +85,7 @@
                             <label for="exampleInputPassword1">
                                 Quantity:
                             </label>
-                            <input type="number" class="form-control" id="QTY" required/>
+                            <input type="number" value="0" min="1" max="500" class="form-control" id="QTY" required/>
                             
                            
                         </div>
@@ -190,7 +195,21 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script>
+    $.date = function (dateObject) {
+        var d = new Date(dateObject);
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = day + "/" + month + "/" + year;
 
+        return date;
+    };
 
     ////////////////////////////validate for number
     //function validate(evt) {
@@ -205,9 +224,11 @@
     //}
 
 
-
+    //validate
     $('#addNew').on('click', function () {
         var value = $('#QTY').text();
+
+
         return $.isNumeric(value);
     });
 
@@ -223,8 +244,8 @@
 
     //json = myObjectd.toJSONString();
     //alert(json);
-    var json = JSON.stringify(myObject);
-    alert(json);
+    //var json = JSON.stringify(myObject);
+    //alert(json);//////////////show the big json for debug
 
     var myObjt = {};
 //////////////////////////////////////
@@ -235,7 +256,7 @@
 
         ]
     };
-    alert(data.items);
+   // alert(data.items);
 
 
 
@@ -249,9 +270,20 @@ $(document).ready(function(){
 
   $("#addNew").click(function(){
 
-      
+      //var value = $('#QTY').text();
 
-      addNewRow();
+      var value = $('input[type = number]').val();
+
+      alert("please choose a quantity" + value);
+      if (value==null||value==0) {
+          alert("please choose a quantity" + value);
+          return false;
+      } else {
+          addNewRow();
+      }
+     
+
+     
 
 
 
@@ -319,13 +351,20 @@ $(document).ready(function(){
 // Add a new row when Add Task button is clicked
 function addNewRow() {
 
+    var value = $('input[type = number]').val();
+
+
+    //var value = $('#QTY').text();
+    //alert("please choose a quantity" + value);
+
+
     var qty = $('#QTY').val();
     var option = $('#lecturerId').val();
     ///////////////////////////////////////
     var numRows = $('#taskTable tr').length;
     $('#taskTable').append('<tr id="myTableRow">\
            <td class="hihi" value="' + option + '">' + option + '</td>\
-           <td><input type="number" id="description-' + numRows + '" class="hihi" placeholder="Task Description" value="' + qty + ' required"/></td>\
+           <td><input type="number" id="description-' + numRows + '" class="hihi" placeholder="Task Description" value="' + parseInt(value) + '" required min="1" max="500"/></td>\
            <td><button type="button" id="' + numRows + '" class="removebutton" title="Remove this row">Delete</button></td>\
            </tr>\
    ');
@@ -475,7 +514,7 @@ function submitForm() {
                 alert(response.responseText);
             },
             success: function (response) {
-                alert(response);
+                //alert(response);
             }
         });
 

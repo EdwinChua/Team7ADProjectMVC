@@ -95,6 +95,21 @@ namespace Team7ADProjectMVC
         [OperationContract]
         [WebGet(UriTemplate = "/wcfBtnReqList", ResponseFormat = WebMessageFormat.Json)]
         String wcfBtnReqList();
+
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfGenerateBtnOk", ResponseFormat = WebMessageFormat.Json)]
+        String wcfGenetateBtnOK();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfClearListBtnOK", ResponseFormat = WebMessageFormat.Json)]
+        String wcfClearListBtnOK();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfAcceptCollection?DisbursementListID={DisListID}", ResponseFormat = WebMessageFormat.Json)]
+        String wcfAcceptCollection(String DisListID);
+
+
     }
 }
 
@@ -157,6 +172,7 @@ public class wcfRequisitionItem
     string itemname;
     string quantity;
     string uom;
+
 
 
     [DataMember]

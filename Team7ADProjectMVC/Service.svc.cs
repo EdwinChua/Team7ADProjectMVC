@@ -243,7 +243,7 @@ namespace Team7ADProjectMVC
             foreach (Inventory i in reOrders)
             {
                 wcfStockReorder inv = new wcfStockReorder();
-                inv.ItemName = i.Description;
+                inv.ItemName = "#" + i.ItemNo+" "+ i.Description;
                 inv.ActualQty = i.Quantity.ToString();
                 inv.ReorderLevel = i.ReorderLevel.ToString();
                 inv.ReorderQty = i.ReorderQuantity.ToString();
@@ -266,8 +266,8 @@ namespace Team7ADProjectMVC
         {
             List<wcfRetrivalList> retrialList = new List<wcfRetrivalList>();
             RetrievalList reList = new RetrievalList();
-            invService.PopulateRetrievalList();
-            invService.PopulateRetrievalListItems();
+            //invService.PopulateRetrievalList();
+            //invService.PopulateRetrievalListItems();
             reList = invService.GetRetrievalList();
             int? rid =reList.retrievalId;
             List<RetrievalListItems> itemsToR = reList.itemsToRetrieve;
@@ -301,7 +301,7 @@ namespace Team7ADProjectMVC
             try
             {
                 invService.AutoAllocateDisbursementsByOrderOfRequisition();
-                rt = "true";
+                rt = "True";
             }
             catch(Exception e)
             {
@@ -438,6 +438,7 @@ namespace Team7ADProjectMVC
                 rl.ApprovalDate = aftersplit;
 
                 rl.ReqStatus = req.RequisitionStatus;
+                storeReq.Add(rl);
             }
                 return storeReq;
            
@@ -457,6 +458,50 @@ namespace Team7ADProjectMVC
                 return result;
                
             }
+
+        public String wcfGenetateBtnOK()
+        {
+            try
+            {
+                invService.PopulateRetrievalList();
+                invService.PopulateRetrievalListItems();
+                return "true";
+            }
+            catch(Exception e)
+            {
+                return "false";
+            }
+           
+           
+        }
+
+
+        public String wcfClearListBtnOK()
+        {
+            try
+            {
+                invService.ClearRetrievalList();
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+        public String wcfAcceptCollection(String DisListId)
+        {
+            try
+            {
+                //write the var connection to update the status of which ever table as needed.
+                // change return to true..
+                return DisListId;
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
         
     }
 }

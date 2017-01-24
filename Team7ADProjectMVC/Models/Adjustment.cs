@@ -23,14 +23,14 @@ namespace Team7ADProjectMVC.Models
     //        Details = new List<AdjustmentDetail>();
     //    }
     //}
-    public partial class Adjustment
+    public  class adjustment
     {
         
-        public Adjustment()
+        public adjustment()
         {
             Status = "Pending";
             AdjustmentDate = DateTime.Now;
-            this.AdjustmentDetails = new HashSet<AdjustmentDetail>();
+            this.AdjustmentDetails = new HashSet<adjustmentdetail>();
 
         }
         [Key]
@@ -39,17 +39,12 @@ namespace Team7ADProjectMVC.Models
         public Nullable<System.DateTime> AdjustmentDate { get; set; }
         [Required]
         public Nullable<int> EmployeeId { get; set; }
-        
-        public Nullable<int> SupervisorId { get; set; }
-        
-        public Nullable<System.DateTime> SupervisorAuthorizedDate { get; set; }
-        public Nullable<int> HeadId { get; set; }
-        public Nullable<System.DateTime> HeadAuthorizedDate { get; set; }
+      
         [Required]
         public string Status { get; set; }
 
         
-        public virtual ICollection<AdjustmentDetail> AdjustmentDetails { get; set; }
+        public virtual ICollection<adjustmentdetail> AdjustmentDetails { get; set; }
         public virtual Employee Employee { get; set; }
     }
 }

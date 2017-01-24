@@ -120,7 +120,9 @@ namespace Team7ADProjectMVC.TestControllers
 
             Employee emp = depsvc.FindById(empId);
             Delegate d = depsvc.FinddelegaterecordById(DelegateId);
-            Permission p = depsvc.FindPermissionRecordById(emp);
+          
+
+
 
             if (status.Equals("Delegate"))
             {
@@ -215,7 +217,7 @@ namespace Team7ADProjectMVC.TestControllers
                 return RedirectToAction("ListAllEmployees");
             }
 
-            depsvc.TerminateDelegate(emp, d, p);
+            depsvc.TerminateDelegate(emp, d);
             return RedirectToAction("ListAllEmployees");
 
 

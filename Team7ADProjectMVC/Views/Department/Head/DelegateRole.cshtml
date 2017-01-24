@@ -16,13 +16,14 @@
             <div>
                 <select id="empListPicker" name="empId"
                         class="selectpicker show-tick form-control"
-                        data-live-search="true" title="Retrieve by department head to view all employees">
+                        data-live-search="true" title="Select employee to delegate" >
                     @foreach (var emp in ViewBag.empList)
                     {
-                        <option value="@emp.EmployeeId">@emp.EmployeeName </option>
+                        <option value="@emp.EmployeeId" >@emp.EmployeeName </option>
                     }
                 
                 </select>
+               
             </div>
 
         </div>
@@ -95,8 +96,8 @@
                 </h5>
                 
             <button type="submit" class="btn btn-success btn-lg" name="status" value="Delegate" id="submitButton" >
-                Delegate
-            </button>
+                Delegate</button>
+    
                
                 
     </form>

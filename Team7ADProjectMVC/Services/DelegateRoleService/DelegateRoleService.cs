@@ -104,7 +104,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
            
 
         }
-        public void TerminateDelegate(Employee emp, Delegate d, Permission p)
+        public void TerminateDelegate(Employee emp, Delegate d)
         {
             d.ActualEndDate = DateTime.Today;
             db.Entry(d).State = EntityState.Modified;

@@ -81,9 +81,8 @@ namespace Team7ADProjectMVC.Models
         public List<Requisition> GetOutStandingRequisitions()
         {
             var query = from rq in db.Requisitions
-                        where rq.RequisitionStatus != "Complete"
-                        && rq.RequisitionStatus != "Pending"
-                        && rq.RequisitionStatus != "Rejected"
+                        where rq.RequisitionStatus == "Oustanding"
+                        && rq.RequisitionStatus == "Approved"
                         orderby rq.ApprovedDate
                         select rq;
 
@@ -230,7 +229,6 @@ namespace Team7ADProjectMVC.Models
                          select x).FirstOrDefault();
                 if (q == null) // if its first time entering loop, create new disbursementlist for dept
                 {
-
                     currentDisbursementListId = CreateNewDisbursementListForDepartment(dList, requisition, retrievalList, currentDisbursementListId);
 
                     foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)

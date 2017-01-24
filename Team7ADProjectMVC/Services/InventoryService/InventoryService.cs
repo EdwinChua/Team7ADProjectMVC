@@ -204,7 +204,6 @@ namespace Team7ADProjectMVC.Models
             System.Web.HttpContext.Current.Application["RetrievalList"] = new RetrievalList();
         }
 
-
         public void AutoAllocateDisbursementsByOrderOfRequisition()
         {
             System.Web.HttpContext.Current.Application.Lock();
@@ -260,8 +259,8 @@ namespace Team7ADProjectMVC.Models
             HttpContext.Current.Application.UnLock();
         }
 
-        //supplementary method (not declared in interface)
-        private void UpdateInventoryQuantity(string itemNo, int collectedQuantity) 
+        
+        public void UpdateInventoryQuantity(string itemNo, int collectedQuantity) 
         {
             Inventory i = db.Inventories.Find(itemNo);
             i.Quantity -= collectedQuantity;

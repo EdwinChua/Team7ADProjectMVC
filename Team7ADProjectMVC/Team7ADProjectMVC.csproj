@@ -310,7 +310,7 @@
     <Compile Include="Employee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Exceptions\PreparedQuantityNotEqualAdjustedQuantityException.cs" />
+    <Compile Include="Exceptions\QuantityMismatchException.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>

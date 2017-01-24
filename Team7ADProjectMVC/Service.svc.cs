@@ -188,7 +188,7 @@ namespace Team7ADProjectMVC
         {
             List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
             var disburse = from d in db.DisbursementLists
-                           where d.Status != "Delivered"
+                           where d.Status != "Completed"
                            orderby d.DeliveryDate ascending
                            select d;
             String beforesplit = "";
@@ -316,7 +316,6 @@ namespace Team7ADProjectMVC
             return rt;
         }
 
-       
 
         public wcflogin getlogin(String userid , String password)
         {
@@ -429,6 +428,22 @@ namespace Team7ADProjectMVC
                 result = "False";
             }
             return result;
+        }
+
+        public List<wcfStoreRequisitions> getStoreRequistions()
+        {
+            List<wcfStoreRequisitions> storeReq = new List<wcfStoreRequisitions>();
+            List<Requisition> reqList = invService.GetOutStandingRequisitions(); 
+           
+            foreach (Requisition req in reqList)
+            {
+                wcfStoreRequisitions rl = new wcfStoreRequisitions();
+                rl.DeptName = req.Retrieval.Employee.Department.DepartmentName;
+                rl.ReqStatus = req.RequisitionStatus;
+                rl.ApprovalDate = req.ApprovedDate.ToString();
+                storeReq.Add(rl);
+            }
+            return storeReq;
         }
     }
 }

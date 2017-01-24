@@ -21,7 +21,7 @@ namespace Team7ADProjectMVC.Models
             return startingLetter + ((int)result.itemcount).ToString(fmt);
         }
 
-        public Inventory FindById(string id)
+        public Inventory FindIventoryItemById(string id)
         {
             return db.Inventories.Find(id);
         }
@@ -558,7 +558,7 @@ namespace Team7ADProjectMVC.Models
                 }
             } else
             {
-                throw new PreparedQuantityNotEqualAdjustedQuantityException();
+                throw new DisbursementMismatchException("Adjusted quantity exceeds collected quantity.");
             }
 
         }
@@ -601,6 +601,35 @@ namespace Team7ADProjectMVC.Models
                 }
             }
             return status;
+        }
+
+        public void UpdateDisbursementListDetails(int disbursementListId, string[] itemNo, int[] originalPreparedQty, int[] adjustedQuantity, string[] remarks)
+        {
+            for (int i =0; i < itemNo.Count();i++)
+            {
+                var tempItemNo = itemNo[i];
+                var disbursementDetail = (from x in db.DisbursementDetails
+                                         where x.DisbursementListId == disbursementListId
+                                         && x.ItemNo == tempItemNo
+                                          select x).FirstOrDefault();
+                if(originalPreparedQty[i] >= adjustedQuantity[i] && disbursementDetail.DisbursementList.Status != "Completed")
+                {
+                    disbursementDetail.DeliveredQuantity = adjustedQuantity[i];
+                    disbursementDetail.Remark = remarks[i];
+                    db.Entry(disbursementDetail).State = EntityState.Modified;
+                    db.SaveChanges();
+                } else if (disbursementDetail.DisbursementList.Status == "Completed")
+                {
+                    throw new DisbursementMismatchException("The disbursement has been completed. Unable to make further changes.");
+                    //This should not happen, because the submit button is hidden when status = completed
+                }
+                else 
+                {
+                    throw new DisbursementMismatchException("Prepared quantity is greater than adjusted quantity"); 
+                    //This should not happen, because html5 validation is in use
+                }
+
+            }
         }
     }
 }

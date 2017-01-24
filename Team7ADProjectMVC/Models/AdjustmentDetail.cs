@@ -18,7 +18,7 @@ namespace Team7ADProjectMVC.Models
     //    public string Index { get; set; }
 
     //}
-    public  class AdjustmentDetail
+    public  class adjustmentdetail
     {
         [Key]
         public int AdjustmentDetailId { get; set; }
@@ -29,7 +29,7 @@ namespace Team7ADProjectMVC.Models
         [Required]
         public string Reason { get; set; }
         public string Index { get; set; }
-        public virtual Adjustment Adjustment { get; set; }
+        public virtual adjustment Adjustment { get; set; }
         
 
     }

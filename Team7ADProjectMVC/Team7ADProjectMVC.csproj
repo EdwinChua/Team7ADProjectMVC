@@ -132,6 +132,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CreateUserWizard.aspx" />
     <Content Include="DatabaseTableQueries.sql" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -235,6 +236,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Login.aspx" />
     <Content Include="Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
@@ -288,7 +290,15 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AdjustmentsController.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="CreateUserWizard.aspx.cs">
+      <DependentUpon>CreateUserWizard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateUserWizard.aspx.designer.cs">
+      <DependentUpon>CreateUserWizard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Delegate.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -327,6 +337,13 @@
     <Compile Include="IService.cs" />
     <Compile Include="ItemCodeGenerator.cs">
       <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Measurement.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -480,7 +497,6 @@
     <Content Include="Views\Adjustments\Create.cshtml" />
     <Content Include="Views\Adjustments\Delete.cshtml" />
     <Content Include="Views\Adjustments\Details.cshtml" />
-    <Content Include="Views\Adjustments\Edit.cshtml" />
     <Content Include="Views\Adjustments\Index.cshtml" />
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />
@@ -497,6 +513,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Auth\" />
     <Folder Include="Views\FCM\" />
     <Folder Include="Views\StoreTest\" />
   </ItemGroup>

@@ -361,12 +361,20 @@ namespace Team7ADProjectMVC
 
         public void updatedqun(wcfDisbursementListDetail c )
         {
+         
+
             int dId = Convert.ToInt32(c.Ddid);
             int dId1 = Convert.ToInt32(c.DisbQty);
-            DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
-             dd.Remark =c.Remarks;
+            int math;
+            
+             DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
+
+             math = dId1-(int)dd.DeliveredQuantity;              
              dd.DeliveredQuantity = dId1;
-             db.SaveChanges(); 
+             dd.Remark = c.Remarks;
+             db.SaveChanges();
+             invService.UpdateInventoryQuantity(dd.ItemNo, math);
+        }
         }
 
         public string approveReq(String reqId)

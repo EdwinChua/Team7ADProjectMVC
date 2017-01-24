@@ -10,6 +10,7 @@ using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.DelegateRoleService;
 using Team7ADProjectMVC.Services;
 using Team7ADProjectMVC.Services.DepartmentService;
+using Team7ADProjectMVC.Services.SupplierService;
 
 namespace Team7ADProjectMVC.TestControllers
 {
@@ -19,6 +20,7 @@ namespace Team7ADProjectMVC.TestControllers
         private IDisbursementService disbursementSvc;
         private IDepartmentService deptSvc;
         private IDelegateRoleService delegateSvc;
+        private ISupplierService supplierSvc;
 
         public StoreController()
         {
@@ -26,6 +28,7 @@ namespace Team7ADProjectMVC.TestControllers
             disbursementSvc = new DisbursementService();
             deptSvc = new DepartmentService();
             delegateSvc = new DelegateRoleService();
+            supplierSvc = new SupplierService();
         }
 
         //**************** INVENTORY ********************
@@ -122,6 +125,7 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.SupplierId1 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId1);
             ViewBag.SupplierId2 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId2);
             ViewBag.SupplierId3 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId3);
+            ViewBag.inv = inventory;
             return View("UpdateStockCard",inventory);
         }
 
@@ -142,6 +146,7 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.SupplierId1 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId1);
             ViewBag.SupplierId2 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId2);
             ViewBag.SupplierId3 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId3);
+            ViewBag.inv = inventory;
             return View("UpdateStockCard",inventory);
         }
 
@@ -186,27 +191,69 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult InventoryAdjustment()
         {
-            //TODO: EDWIN - Implementation code here
+            //TODO: EDWIN - CX and Seng doing?
+
             return View();
         }
 
         public ActionResult CreateNewAdjustment()
         {
-            //TODO: EDWIN - Implementation code here
+            //TODO: EDWIN - CX and Seng doing?
             return View();
         }
 
         // ********************* MAINTAIN *******************
         public ActionResult SupplierList()
         {
-            //TODO: EDWIN - Implementation code here
-            return View();
+            return View(supplierSvc.GetAllSuppliers());
         }
 
-        public ActionResult Supplier(String id)
+        public ActionResult Supplier(int? id)
         {
-            //TODO: EDWIN - Implementation code here
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Supplier supplier = supplierSvc.FindSupplierById(id);
+            List<Inventory> listOfItemsFromSupplier = supplierSvc.FindInventoryItemsBySupplier(id);
+            ViewBag.SupplierItems = listOfItemsFromSupplier;
+            ViewBag.SupplierId = supplier.SupplierId;
+            if (supplier == null)
+            {
+                return HttpNotFound();
+            }
+            return View(supplier);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Supplier([Bind(Include = "SupplierId,SupplierCode,SupplierName,ContactName,PhNo,FaxNo,Address,GstRegistrationNo")] Supplier supplier)
+        {
+            if (ModelState.IsValid)
+            {
+
+                supplierSvc.UpdateSupplier(supplier);
+                return RedirectToAction("SupplierList");
+            }
+            return View("Supplier",supplier);
+        }
+
+        public ActionResult AddSupplier()
+        {
+            return View("Supplier");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSupplier([Bind(Include = "SupplierId,SupplierCode,SupplierName,ContactName,PhNo,FaxNo,Address,GstRegistrationNo")] Supplier supplier)
+        {
+            //if (ModelState.IsValid)
+            //{
+                supplierSvc.AddNewSupplier(supplier);
+                return RedirectToAction("SupplierList");
+            //}
+
+            //return View("Supplier", supplier);
         }
 
 
@@ -214,19 +261,19 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult GeneratePO()
         {
-            //TODO: EDWIN - Implementation code here
+            //TODO: EDWIN - CX and Seng doing?
             return View();
         }
 
         public ActionResult PurchaseOrderSummary(String id)
         {
-            //TODO: EDWIN - Implementation code here
+            //TODO: EDWIN - CX and Seng doing?
             return View();
         }
 
         public ActionResult ViewReceiveOrder(String id)
         {
-            //TODO: EDWIN - Implementation code here
+            //TODO: EDWIN - CX and Seng doing?
             return View();
         }
 
@@ -277,7 +324,7 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult GenerateReports()
         {
-            //TODO: EDWIN - Implementation code here
+            //Seng has done. To wire up with view
             return View();
         }
 

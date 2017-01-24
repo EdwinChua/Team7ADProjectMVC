@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/_Layout1.cshtml";
-    Page.Title = " Update Stock Card - {item id, name}";
+    Page.Title = "Update Stock Card - " + @ViewBag.inv.ItemNo + " " + @ViewBag.inv.Description;
 }
 
 

@@ -348,72 +348,6 @@ namespace Team7ADProjectMVC.Models
             return currentDisbursementListId;
         }
 
-        //TODO: Historical code. To remove if nothing breaks
-        public void AutoAllocateDisbursements() //Unused
-        {
-            System.Web.HttpContext.Current.Application.Lock();
-            RetrievalList retrievalList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
-
-            List<Requisition> requisitionListFromRList = retrievalList.requisitionList;
-
-            CustomizedComparers comparer = new CustomizedComparers();
-            requisitionListFromRList.Sort(comparer); //Sorts by dept
-
-            DisbursementList dList = new DisbursementList();
-            List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
-
-            int? currentDisbursementListId = null;
-
-            int i = 0;
-            foreach (Requisition requisition in requisitionListFromRList)
-            {
-                var q = (from x in db.DisbursementLists
-                         where x.RetrievalId == requisition.RetrievalId
-                         && x.DepartmentId == requisition.DepartmentId
-                         select x).First();
-                if (i == 0) // if its first time entering loop, create new disbursementlist for dept
-                {
-
-                    CreateNewDisbursementListForDepartment(dList, requisition, retrievalList, currentDisbursementListId);
-
-                    currentDisbursementListId = db.DisbursementLists
-                                                .OrderByDescending(x => x.DisbursementListId)
-                                                .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
-
-                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
-                    {
-                        AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
-                        i++;
-                    }
-                }
-                else if (requisition.DepartmentId.Equals(dList.DepartmentId))
-                {
-                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
-                    {
-                        AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
-                    }
-                }
-                else if (!requisition.DepartmentId.Equals(dList.DepartmentId))// different dept, create new disbursementlist
-                {
-                    dList = new DisbursementList();
-                    CreateNewDisbursementListForDepartment(dList, requisition, retrievalList, currentDisbursementListId);
-
-                    currentDisbursementListId = db.DisbursementLists
-                                                .OrderByDescending(x => x.DisbursementListId)
-                                                .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
-
-                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
-                    {
-                        AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
-                    }
-                }
-            }
-            SaveDisbursementDetailsIntoDB(tempDisbursementDetailList);
-
-            ClearRetrievalList();
-            HttpContext.Current.Application.UnLock();
-        }
-
         public List<DisbursementDetail> GenerateListForManualAllocation()
         {
             int lastRetrievalListId = db.Retrievals
@@ -496,7 +430,6 @@ namespace Team7ADProjectMVC.Models
             }
             return returnDisbursementDetailList;
         }
-
 
         public int GetLastRetrievalListId()
         {
@@ -636,10 +569,13 @@ namespace Team7ADProjectMVC.Models
                                           select x).FirstOrDefault();
                 if(originalPreparedQty[i] >= adjustedQuantity[i] && disbursementDetail.DisbursementList.Status != "Completed")
                 {
+                    int updateAmount = adjustedQuantity[i]- (int)disbursementDetail.DeliveredQuantity;
+                    UpdateInventoryQuantity(tempItemNo, updateAmount);
                     disbursementDetail.DeliveredQuantity = adjustedQuantity[i];
                     disbursementDetail.Remark = remarks[i];
                     db.Entry(disbursementDetail).State = EntityState.Modified;
                     db.SaveChanges();
+               
                 } else if (disbursementDetail.DisbursementList.Status == "Completed")
                 {
                     throw new InventoryAndDisbursementUpdateException("The disbursement has been completed. Unable to make further changes.");

@@ -188,7 +188,7 @@ namespace Team7ADProjectMVC
         {
             List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
             var disburse = from d in db.DisbursementLists
-                           where d.Status != "Completed"
+                           where d.Status != "Delivered"
                            orderby d.DeliveryDate ascending
                            select d;
             String beforesplit = "";
@@ -316,13 +316,7 @@ namespace Team7ADProjectMVC
             return rt;
         }
 
-        //public String approveReq(string reqId, string remarks)
-        //{
-        //    string result= "false";
-            
-        //    reqService.UpdateApproveStatus(r, remarks);
-            
-        //}
+       
 
         public wcflogin getlogin(String userid , String password)
         {

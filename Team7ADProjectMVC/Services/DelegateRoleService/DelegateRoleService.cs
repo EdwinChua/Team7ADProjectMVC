@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Team7ADProjectMVC.Models.DelegateRoleService
 {
@@ -11,7 +12,23 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
     {
         ProjectEntities db = new ProjectEntities();
 
-       
+         public  Delegate getDelegatedEmployee(int depId)
+        {
+            var queryBydepId = from t in db.Delegates
+                               where t.Employee.DepartmentId == depId 
+                               select t;
+            var q2 = queryBydepId.ToList();
+            foreach (var xyz in q2)
+            {
+                if (xyz.EndDate.Equals(xyz.ActualEndDate) && xyz.EndDate>= DateTime.Today)
+                {
+                    return xyz;
+                }
+    
+            }
+            return null;
+        }
+        
         public List<Employee> GetAllEmployeebyDepId(int depId)
         {
             var queryBydepId= from t in db.Employees
@@ -71,7 +88,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
             d.EndDate = endDate.Date;
             d.ActualEndDate = endDate.Date;
             d.ApprovedBy = 8;//default dep head id
-            d.ApprovedDate = DateTime.Today;
+            d.ApprovedDate = DateTime.Today.Date;
             db.Entry(d).State = EntityState.Modified;
             db.SaveChanges();
 
@@ -122,5 +139,6 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
         {
             throw new NotImplementedException();
         }
+
     }
 }

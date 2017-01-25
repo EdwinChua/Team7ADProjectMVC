@@ -50,16 +50,19 @@ namespace Team7ADProjectMVC.Models
 
                 tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
 
+                
+
                 var data = new
-                {
-                    to = token,
-                    notification = new
-                    {
-                        title = title,
-                        body = message,
-                   
-                    }
-                };
+                  {
+                      //single device
+                      to = token,
+              
+                      notification = new
+                      {
+                          title = title,
+                          body = message,                      
+                      }
+                  };
 
                 var serializer = new JavaScriptSerializer();
                 var json = serializer.Serialize(data);

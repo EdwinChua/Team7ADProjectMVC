@@ -339,30 +339,39 @@ namespace Team7ADProjectMVC
         }
         public wcflogin getlogin(String userid , String password, String token)
         {
-           wcflogin dDetail = new wcflogin();
-           int empid = Convert.ToInt32(userid);
-           bool result = Membership.ValidateUser(userid, password);
-           if (result == true)
-           {
-               Employee emp = db.Employees.Where(x => x.EmployeeId == empid).First();
-               dDetail.Role = emp.Role.Description;
-               dDetail.Deptid= emp.DepartmentId.ToString();
-               dDetail.Userid = userid;
-               dDetail.EmpName = emp.EmployeeName;
-               dDetail.Authenticate = "true";
-               Permission makePerm = db.Permissions.Where(x => x.PermissionId == emp.PermissionId).First();
-               dDetail.Permission = makePermissionstring(makePerm.ViewRequisition.ToString()) + "-" + makePermissionstring(makePerm.ApproveRequisition.ToString() )+ "-" +
-                   makePermissionstring(makePerm.ChangeCollectionPoint.ToString()) + "-" +makePermissionstring( makePerm.ViewCollectionDetails.ToString());
-                emp.Token = token;
+            wcflogin dDetail = new wcflogin();
+            try
+            {
+               
+                int empid = Convert.ToInt32(userid);
+                bool result = Membership.ValidateUser(userid, password);
+                if (result == true)
+                {
+                    Employee emp = db.Employees.Where(x => x.EmployeeId == empid).First();
+                    dDetail.Role = emp.Role.Description;
+                    dDetail.Deptid = emp.DepartmentId.ToString();
+                    dDetail.Userid = userid;
+                    dDetail.EmpName = emp.EmployeeName;
+                    dDetail.Authenticate = "true";
+                    Permission makePerm = db.Permissions.Where(x => x.PermissionId == emp.PermissionId).First();
+                    dDetail.Permission = makePermissionstring(makePerm.ViewRequisition.ToString()) + "-" + makePermissionstring(makePerm.ApproveRequisition.ToString()) + "-" +
+                        makePermissionstring(makePerm.ChangeCollectionPoint.ToString()) + "-" + makePermissionstring(makePerm.ViewCollectionDetails.ToString());
+                    emp.Token = token;
 
-                db.SaveChanges();
+                    db.SaveChanges();
+                }
+                else
+                {
+                    dDetail.Authenticate = "false";
+
+                }
+                return dDetail;
             }
-           else
-           {
-               dDetail.Authenticate = "false";
-
-           }
-           return dDetail;
+            catch(Exception e)
+            {
+                dDetail.Authenticate = "false";
+                return dDetail;
+            }
         }
 
         public String updatelocation(String deptid, String collectionptid)
@@ -518,6 +527,8 @@ namespace Team7ADProjectMVC
             DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
             int deptit= (int)disb.DepartmentId;
             Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
+
+          //  Employee emp = db.Employees.Where(W => W.EmployeeId==14).First();
             String token = emp.Token;
             fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", token);
             return "true";

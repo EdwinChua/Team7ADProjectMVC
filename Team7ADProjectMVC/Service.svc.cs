@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
+using Team7ADProjectMVC.Services;
 
 namespace Team7ADProjectMVC
 {
@@ -16,7 +17,8 @@ namespace Team7ADProjectMVC
         ProjectEntities db = new ProjectEntities();
 
         InventoryService invService = new InventoryService();
-        IRequisitionService reqService = new RequisitionService(); 
+        IRequisitionService reqService = new RequisitionService();
+        IDisbursementService disService = new DisbursementService(); 
 
         public List<WCFMsg> DoWork()
         {
@@ -500,9 +502,9 @@ namespace Team7ADProjectMVC
         {
             try
             {
-                //write the var connection to update the status of which ever table as needed.
-                // change return to true..
-                return DisListId;
+                int disId = Convert.ToInt32(DisListId);
+                disService.ConfirmDisbursement(disId); 
+                return "true";
             }
             catch (Exception e)
             {

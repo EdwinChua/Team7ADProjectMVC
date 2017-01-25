@@ -362,7 +362,9 @@ EmployeeId INT,
 OrderStatus varchar(20),
 AuthorizedBy INT,
 AuthorizedDate DATE,
-CONSTRAINT PurchaseOrderEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
+CONSTRAINT PurchaseOrderEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId),
+CONSTRAINT PurchaseOrderSupplierId FOREIGN KEY(SupplierId) REFERENCES Supplier(SupplierId),
+CONSTRAINT PurchaseOrderAuthorizedBy FOREIGN KEY(AuthorizedBy) REFERENCES Employee(EmployeeId)
 )
 
 INSERT INTO PurchaseOrder

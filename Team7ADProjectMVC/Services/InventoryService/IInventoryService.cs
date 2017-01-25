@@ -12,7 +12,7 @@ namespace Team7ADProjectMVC.Models
 
         List<Category> GetAllCategories();
 
-        Inventory FindById(String id);
+        Inventory FindIventoryItemById(String id);
 
         List<Measurement> GetAllMeasurements();
 
@@ -37,8 +37,6 @@ namespace Team7ADProjectMVC.Models
 
         void ClearRetrievalList();
 
-        void AutoAllocateDisbursements();
-
         void AutoAllocateDisbursementsByOrderOfRequisition();
 
         List<DisbursementDetail> GenerateListForManualAllocation();
@@ -48,5 +46,7 @@ namespace Team7ADProjectMVC.Models
         List<Requisition> GetRequisitionsSummedByDept(int currentRetrievalListId);
 
         void ManuallyAllocateDisbursements(int[] departmentId, int[] preparedQuantity, int[] adjustedQuantity, int[] disbursementListId, int[] disbursementDetailId, string[] itemNo);
+        void UpdateDisbursementListDetails(int disbursementListId, string[] itemNo, int[] originalPreparedQty, int[] adjustedQuantity, string[] remarks);
+        void UpdateInventoryQuantity(string itemNo, int collectedQuantity);
     }
 }

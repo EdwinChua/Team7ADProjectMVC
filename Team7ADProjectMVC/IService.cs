@@ -64,16 +64,13 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfallocate", ResponseFormat = WebMessageFormat.Json)]
         String getallocate();
 
-
         [OperationContract]
         [WebGet(UriTemplate = "/wcflogin?userid={userid}&password={password}", ResponseFormat = WebMessageFormat.Json)]
         wcflogin getlogin(String userid,String password);
 
-
         [OperationContract]
         [WebGet(UriTemplate = "/wcfChangecollectionpt?dept={deptid}&location={collectionptid}", ResponseFormat = WebMessageFormat.Json)]
         String updatelocation(String deptid, String collectionptid);
-
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/UpdateDisbQty", Method = "POST",
@@ -88,6 +85,30 @@ namespace Team7ADProjectMVC
         [OperationContract]
         [WebGet(UriTemplate = "/wcfSubmitRejectReq?reqId={reqId}&remarks={remarks}", ResponseFormat = WebMessageFormat.Json)]
         String rejectReq(String reqId, String remarks);
+        
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfStoreRequisitions", ResponseFormat = WebMessageFormat.Json)]
+        List<wcfStoreRequisitions> getStoreRequistions();
+
+
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfBtnReqList", ResponseFormat = WebMessageFormat.Json)]
+        String wcfBtnReqList();
+
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfGenerateBtnOk", ResponseFormat = WebMessageFormat.Json)]
+        String wcfGenetateBtnOK();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfClearListBtnOK", ResponseFormat = WebMessageFormat.Json)]
+        String wcfClearListBtnOK();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfAcceptCollection?DisbursementListID={DisListID}", ResponseFormat = WebMessageFormat.Json)]
+        String wcfAcceptCollection(String DisListID);
+
 
     }
 }
@@ -151,6 +172,7 @@ public class wcfRequisitionItem
     string itemname;
     string quantity;
     string uom;
+
 
 
     [DataMember]
@@ -351,6 +373,7 @@ public class wcfRetrivalList
     string requestedQty;
     string retrievedQty;
     string status;
+    string binNo;
 
     [DataMember]
     public String ItemNo { get; set; }
@@ -367,7 +390,10 @@ public class wcfRetrivalList
     [DataMember]
     public String Status { get; set; }
 
-   }
+    [DataMember]
+    public String BinNo { get; set; }
+
+}
 
 public class wcfallocate
 {
@@ -387,7 +413,6 @@ public class wcfallocate
 
 
 }
-
 
 public class wcflogin
 {
@@ -410,5 +435,25 @@ public class wcflogin
     [DataMember]
     public string Authenticate { get; set; }
 
+}
+
+public class wcfStoreRequisitions
+{
+    string deptName;
+    string approvalDate;
+    string reqStatus;
+   
+
+
+    [DataMember]
+    public String DeptName { get; set; }
+
+    [DataMember]
+    public String ApprovalDate { get; set; }
+
+    [DataMember]
+    public String ReqStatus { get; set; }
 
 }
+
+

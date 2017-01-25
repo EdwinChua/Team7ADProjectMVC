@@ -20,9 +20,9 @@ namespace Team7ADProjectMVC.Services.DepartmentService
         {
             throw new NotImplementedException();
         }
-        public Employee FindemplById(string id)
+        public Employee FindEmployeeById(int id)
         {
-            throw new NotImplementedException();
+            return (db.Employees.Find(id));
         }
         
 

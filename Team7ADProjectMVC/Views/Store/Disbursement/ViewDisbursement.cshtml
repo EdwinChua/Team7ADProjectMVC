@@ -3,19 +3,16 @@
 @{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Disbursement for " + @ViewBag.disbursementListInfo.Department.DepartmentName;
-
+    int? disbursementListId = null;
     //TODO: EDWIN - Logic for disbursement
 }
 
 
-<h2>Collection Point: @Model.CollectionPoint.PlaceName ( @Model.CollectionPoint.CollectTime ) </h2>
-<form role="form">
+<h2>Collection Point: @Model.Department.CollectionPoint.PlaceName ( @Model.Department.CollectionPoint.CollectTime ) </h2>
+<form role="form" id="form1" action="../UpdateDisbursement">
     <table class="table">
         <thead>
             <tr>
-                <th>
-                    #
-                </th>
                 <th>
                     Product
                 </th>
@@ -25,28 +22,35 @@
                 <th>
                     Received Quantity
                 </th>
+                <th>
+                    Remarks
+                </th>
             </tr>
         </thead>
         <tbody>
         @foreach (var item in Model.DisbursementDetails)
         {
             <tr>
-                <td>
-                    1
+                <td class="col-md-3">
+                    @item.ItemNo @item.Inventory.Description
+                </td>
+                <td class="col-md-2">
+                    @item.PreparedQuantity
+                </td>
+                <td class="col-md-2">
+                    @{ disbursementListId = item.DisbursementListId;}
+                    <input type="hidden" value="@item.ItemNo" name="itemNo" />
+                    <input type="hidden" value="@item.PreparedQuantity" name="originalPreparedQty" />
+                    <input type="number" class="form-control" name="adjustedQuantity" value="@item.PreparedQuantity" max="@item.PreparedQuantity"/>
                 </td>
                 <td>
-                    @item.RequisitionDetail.ItemNo @item.RequisitionDetail.Inventory.Description
-                </td>
-                <td>
-                    8
-                </td>
-                <td>
-                    <input type="number" class="form-control" value="8" />
+                    <input type="text" class="form-control" name="remarks" />
                 </td>
             </tr>
         }
         </tbody>
     </table>
+    <input type="hidden" value="@disbursementListId" name="disbursementListId" />
     <div class="row">
         <div class="col-md-12">
 
@@ -58,23 +62,33 @@
                         </label>
                     </div>
                     <div class="col-lg-3">
-                        <select id="lecturerId" name="lecturerId"
-                                class="selectpicker show-tick form-control"
-                                data-live-search="true" required>
-                            <option></option>
-                            <option data-subtext="Computer Science Department">Edward Tan Ee Meng</option>
-                        </select>
+                        @ViewBag.Representative.EmployeeName (Tel no: @ViewBag.Representative.PhNo)
                     </div>
                 </div>
             </div>
-
-            <button class="btn btn-primary">
-                Send for Confirmation
+            
+            <button id="submitbutton" class="btn btn-primary" >
+                Update Disbursement
             </button>
-            <button class="btn btn-danger">
+            
+            <button class="btn btn-danger" onclick="window.history.back()">
                 Cancel
             </button>
 
         </div>
     </div>
 </form>
+@if (Model.Status == "Completed")
+{
+<script>
+    $('#form1 input[type="number"]').each(function () {
+        $(this).attr('disabled', 'disabled');
+    });
+    $('#form1 input[type="text"]').each(function () {
+        $(this).attr('disabled', 'disabled');
+    });
+
+        $('#submitbutton').attr('disabled', 'disabled');
+    
+</script>
+}

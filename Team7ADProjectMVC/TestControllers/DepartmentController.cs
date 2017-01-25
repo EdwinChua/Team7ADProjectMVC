@@ -65,6 +65,7 @@ namespace Team7ADProjectMVC.TestControllers
         private IRequisitionService listsvc;
         private IDepartmentService depasvc;
         private IDelegateRoleService delpsvc;
+        private static string gsearchString;
         private ProjectEntities db = new ProjectEntities();
         List<String> Roles;
        
@@ -74,50 +75,75 @@ namespace Team7ADProjectMVC.TestControllers
             listsvc = new RequisitionService();
             delpsvc = new DelegateRoleService();
             depasvc = new DepartmentService();
+            gsearchString = "";
             //mododo = new PersonModel();
         }
         
         public ActionResult Index(string sortOrder)
+
         {
             var requisitions = depasvc.ListAllRequisition();
 
-
-
-
-
+            gsearchString = "";
 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
             ViewBag.emeSortParm = String.IsNullOrEmpty(sortOrder) ? "e_desc" : "";
-           
+
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             ViewBag.remeSortParm = String.IsNullOrEmpty(sortOrder) ? "s_desc" : "";
 
             Session["npg"] = 4;
+            //Session["UserName"]="joe";
+            if (Session["searchstr"] != null){
+                gsearchString = Session["searchstr"].ToString();
+
+            }
+     
 
 
 
-          
+           
             var re = from s in db.Requisitions
                      select s;
-            switch (sortOrder)
+            if (sortOrder != null)
             {
-                case "Name_desc":
-                    re = re.OrderByDescending(s => s.Employee.Department.DepartmentName);
-                    break;
-                case "e_desc":
-                    re = re.OrderBy(s => s.Employee.EmployeeName);
-                    break;
-                case "Date":
-                    re = re.OrderByDescending(s => s.ApprovedDate);
-                    break;
-                default:
-                    re = re.OrderBy(s => s.RequisitionStatus);
-                    break;
+                switch (sortOrder)
+                {
+                    case "Name_desc":
+                        re = re.OrderByDescending(s => s.Employee.Department.DepartmentName);
+                        break;
+                    case "e_desc":
+                        re = re.OrderBy(s => s.Employee.EmployeeName);
+                        break;
+                    case "Date":
+                        re = re.OrderByDescending(s => s.ApprovedDate);
+                        break;
+                    default:
+                        re = re.OrderBy(s => s.RequisitionStatus);
+                        break;
+                }
+
+
+                if (!String.IsNullOrEmpty(gsearchString))
+                {
+                    var q = re.Where(s => s.Employee.EmployeeName.Contains(gsearchString)
+                                           || s.ApprovedDate.ToString().Contains(gsearchString)
+                                           || s.Employee.Department.DepartmentName.Contains(gsearchString));
+                    requisitions = q.ToList();
+                }
+                else {
+
+                    requisitions = re.ToList();
+
+                }
+
+
+               
             }
 
 
-            requisitions = re.ToList();
 
+           
 
 
 
@@ -144,9 +170,10 @@ namespace Team7ADProjectMVC.TestControllers
 
 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
-            //ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            //ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.emeSortParm = String.IsNullOrEmpty(sortOrder) ? "e_desc" : "";
+
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.remeSortParm = String.IsNullOrEmpty(sortOrder) ? "s_desc" : "";
 
 
 
@@ -158,13 +185,16 @@ namespace Team7ADProjectMVC.TestControllers
                                        || s.ApprovedDate.ToString().Contains(searchString)
                                        || s.Employee.Department.DepartmentName.Contains(searchString));
                 requisitions = q.ToList();
+
+
+                Session["searchstr"] = searchString;
             }
             ///* i*/nt currentPageIndex = page.HasValue ? page.Value - 1 : 0;
 
             //var requisitions = db.Requisitions.ToList();
 
-            ViewBag.Cat = requisitions;
-            ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+            //ViewBag.Cat = requisitions;
+            //ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
 
 
 
@@ -179,30 +209,33 @@ namespace Team7ADProjectMVC.TestControllers
 
 
 
-            string userName = Session["UserName"].ToString();
+            //string userName = Session["UserName"].ToString();
 
             // Convert sort order
             ViewBag.NameSort = sortOrder == "Name" ? "Name_desc" : "Name";
             var re = from s in db.Requisitions
                            select s;
-            switch ("Name_desc")
+            if (sortOrder!=null) {
+            switch (sortOrder)
             {
                 case "Name_desc":
                     re = re.OrderByDescending(s => s.Employee.Department.DepartmentName);
                     break;
-                case "Date":
+                case "e_desc":
                     re = re.OrderBy(s => s.Employee.EmployeeName);
                     break;
-                case "date_desc":
+                case "Date":
                     re = re.OrderByDescending(s => s.ApprovedDate);
                     break;
                 default:
                     re = re.OrderBy(s => s.RequisitionStatus);
                     break;
             }
+                requisitions = re.ToList();
+            }
 
 
-            requisitions = re.ToList();
+           
 
 
             ViewBag.Cat = requisitions;
@@ -236,8 +269,8 @@ namespace Team7ADProjectMVC.TestControllers
 
             //var requisitions = db.Requisitions.ToList();
 
-            ViewBag.Cat = requisitions;
-            ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+            //ViewBag.Cat = requisitions;
+            //ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
 
 
 
@@ -304,6 +337,11 @@ namespace Team7ADProjectMVC.TestControllers
             //ViewBag.clips = query.ToList();
 
 
+
+
+                   DateTime d= DateTime.Today;
+
+            ViewBag.time = d.ToShortDateString();
             ViewBag.rel = relis;
 
             return View();
@@ -327,7 +365,7 @@ namespace Team7ADProjectMVC.TestControllers
             req.DepartmentId = 2;
             req.OrderedDate = DateTime.Today;
            
-
+          
                
            
             //

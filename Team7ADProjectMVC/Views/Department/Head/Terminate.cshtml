@@ -68,7 +68,7 @@
 
             <input type="hidden" name="startDate" id="startDate" />@*something need to think*@
             <input type="hidden"  name="endDate" id="endDate" /> 
-            @{if (ViewBag.approveReq == true)
+            @*@{if (ViewBag.approveReq == true)
             {
                 <input type="checkbox" name="approveReq" checked="checked"><h5>Approve Requisition</h5>
             }
@@ -99,15 +99,15 @@
 
             if  (ViewBag.viewColDetl == true)
                 {
-                <input type = "checkbox" name = "changeCP" checked>< h5 > View Collection Details</ h5 >
+                <input type = "checkbox" name = "changeCP" checked><h5 > View Collection Details</h5 >
                 }
                 else
-                {<input type = "checkbox" name = "viewColDetl" >< h5 > View Collection Details</ h5 > }
+                {<input type = "checkbox" name = "viewColDetl" ><h5 > View Collection Details</h5 > }
                     
             
                 }
             <br />
-            <br />
+            <br />*@
 
         </h5 >
 
@@ -130,12 +130,14 @@
             $('#datetimepicker1').datetimepicker({
                 format: 'DD/MM/YYYY HH:mm:ss',
                 inline: true,
-                sideBySide: false
+                sideBySide: false,
+                minDate: new Date()
             });
             $('#datetimepicker2').datetimepicker({
 
                 inline: true,
-                sideBySide: false
+                sideBySide: false,
+                minDate: new Date()
             });
 
             $("#datetimepicker1").on("dp.change", function (date, e) {

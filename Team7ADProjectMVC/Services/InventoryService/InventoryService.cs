@@ -21,7 +21,7 @@ namespace Team7ADProjectMVC.Models
             return startingLetter + ((int)result.itemcount).ToString(fmt);
         }
 
-        public Inventory FindById(string id)
+        public Inventory FindIventoryItemById(string id)
         {
             return db.Inventories.Find(id);
         }
@@ -81,9 +81,10 @@ namespace Team7ADProjectMVC.Models
         public List<Requisition> GetOutStandingRequisitions()
         {
             var query = from rq in db.Requisitions
-                        where rq.RequisitionStatus != "Complete"
-                        && rq.RequisitionStatus != "Pending"
+                        where rq.RequisitionStatus != "Pending Approval"
                         && rq.RequisitionStatus != "Rejected"
+                        && rq.RequisitionStatus != "Processing"
+                        && rq.RequisitionStatus != "Completed"
                         orderby rq.ApprovedDate
                         select rq;
 
@@ -205,15 +206,17 @@ namespace Team7ADProjectMVC.Models
             System.Web.HttpContext.Current.Application["RetrievalList"] = new RetrievalList();
         }
 
-
         public void AutoAllocateDisbursementsByOrderOfRequisition()
         {
             System.Web.HttpContext.Current.Application.Lock();
             RetrievalList retrievalList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
 
+            foreach (var itemsCollected in retrievalList.itemsToRetrieve)
+            {
+                UpdateInventoryQuantity(itemsCollected.itemNo, itemsCollected.collectedQuantity);
+            }
+
             List<Requisition> requisitionListFromRList = retrievalList.requisitionList;
-
-
             DisbursementList dList = new DisbursementList();
             List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
 
@@ -227,7 +230,6 @@ namespace Team7ADProjectMVC.Models
                          select x).FirstOrDefault();
                 if (q == null) // if its first time entering loop, create new disbursementlist for dept
                 {
-
                     currentDisbursementListId = CreateNewDisbursementListForDepartment(dList, requisition, retrievalList, currentDisbursementListId);
 
                     foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
@@ -250,7 +252,7 @@ namespace Team7ADProjectMVC.Models
             {
                 Requisition temp = db.Requisitions.Find(r.RequisitionId);
                 temp.RetrievalId = retrievalList.retrievalId;
-                temp.RequisitionStatus = "Pending Collection";
+                temp.RequisitionStatus = "Processing";
                 db.Entry(temp).State = EntityState.Modified;
                 db.SaveChanges();
             }
@@ -259,7 +261,25 @@ namespace Team7ADProjectMVC.Models
             HttpContext.Current.Application.UnLock();
         }
 
-        public void SaveDisbursementDetailsIntoDB(List<DisbursementDetail> tempDisbursementDetailList)
+        
+        public void UpdateInventoryQuantity(string itemNo, int modifiedQuantity) 
+        {
+            Inventory i = db.Inventories.Find(itemNo);
+            i.Quantity -= modifiedQuantity;
+            if (i.Quantity >= 0)
+            {
+                db.Entry(i).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                throw new InventoryAndDisbursementUpdateException("The quantity of " + itemNo + " " + i.Description+ " collected was more than the available quantity. Please try again.");
+                //Shouldn't happen because html5 validation will check first
+            }
+        }
+
+        //supplementary method (not declared in interface)
+        private void SaveDisbursementDetailsIntoDB(List<DisbursementDetail> tempDisbursementDetailList)
         {
             var q = tempDisbursementDetailList
                     .GroupBy(ac => new
@@ -283,7 +303,9 @@ namespace Team7ADProjectMVC.Models
                 db.SaveChanges();
             }
         }
-        public void AddDisbursementDetailToTempList(int? currentDisbursementListId, RequisitionDetail reqDetails, RetrievalList retrievalList, List<DisbursementDetail> tempDisbursementDetailList)
+        
+        //supplementary method (not declared in interface)
+        private void AddDisbursementDetailToTempList(int? currentDisbursementListId, RequisitionDetail reqDetails, RetrievalList retrievalList, List<DisbursementDetail> tempDisbursementDetailList)
         {
             DisbursementDetail newDisbursementDetail = new DisbursementDetail();
             newDisbursementDetail.DisbursementListId = currentDisbursementListId;
@@ -307,7 +329,7 @@ namespace Team7ADProjectMVC.Models
 
             tempDisbursementDetailList.Add(newDisbursementDetail);
         }
-        public int? CreateNewDisbursementListForDepartment(DisbursementList dList, Requisition requisition, RetrievalList retrievalList, int? currentDisbursementListId)
+        private int? CreateNewDisbursementListForDepartment(DisbursementList dList, Requisition requisition, RetrievalList retrievalList, int? currentDisbursementListId)
         {
             Department d = db.Departments.Find(requisition.DepartmentId);
             dList.DepartmentId = d.DepartmentId;
@@ -324,72 +346,6 @@ namespace Team7ADProjectMVC.Models
                                         .OrderByDescending(x => x.DisbursementListId)
                                         .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
             return currentDisbursementListId;
-        }
-
-        //TODO: Historical code. To remove if nothing breaks
-        public void AutoAllocateDisbursements() //Unused
-        {
-            System.Web.HttpContext.Current.Application.Lock();
-            RetrievalList retrievalList = (RetrievalList)System.Web.HttpContext.Current.Application["RetrievalList"];
-
-            List<Requisition> requisitionListFromRList = retrievalList.requisitionList;
-
-            CustomizedComparers comparer = new CustomizedComparers();
-            requisitionListFromRList.Sort(comparer); //Sorts by dept
-
-            DisbursementList dList = new DisbursementList();
-            List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
-
-            int? currentDisbursementListId = null;
-
-            int i = 0;
-            foreach (Requisition requisition in requisitionListFromRList)
-            {
-                var q = (from x in db.DisbursementLists
-                         where x.RetrievalId == requisition.RetrievalId
-                         && x.DepartmentId == requisition.DepartmentId
-                         select x).First();
-                if (i == 0) // if its first time entering loop, create new disbursementlist for dept
-                {
-
-                    CreateNewDisbursementListForDepartment(dList, requisition, retrievalList, currentDisbursementListId);
-
-                    currentDisbursementListId = db.DisbursementLists
-                                                .OrderByDescending(x => x.DisbursementListId)
-                                                .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
-
-                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
-                    {
-                        AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
-                        i++;
-                    }
-                }
-                else if (requisition.DepartmentId.Equals(dList.DepartmentId))
-                {
-                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
-                    {
-                        AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
-                    }
-                }
-                else if (!requisition.DepartmentId.Equals(dList.DepartmentId))// different dept, create new disbursementlist
-                {
-                    dList = new DisbursementList();
-                    CreateNewDisbursementListForDepartment(dList, requisition, retrievalList, currentDisbursementListId);
-
-                    currentDisbursementListId = db.DisbursementLists
-                                                .OrderByDescending(x => x.DisbursementListId)
-                                                .FirstOrDefault().DisbursementListId; //returns created disbursementlist Id
-
-                    foreach (RequisitionDetail reqDetails in requisition.RequisitionDetails)
-                    {
-                        AddDisbursementDetailToTempList(currentDisbursementListId, reqDetails, retrievalList, tempDisbursementDetailList);
-                    }
-                }
-            }
-            SaveDisbursementDetailsIntoDB(tempDisbursementDetailList);
-
-            ClearRetrievalList();
-            HttpContext.Current.Application.UnLock();
         }
 
         public List<DisbursementDetail> GenerateListForManualAllocation()
@@ -475,7 +431,6 @@ namespace Team7ADProjectMVC.Models
             return returnDisbursementDetailList;
         }
 
-
         public int GetLastRetrievalListId()
         {
             int currentRetrievalListId = db.Retrievals
@@ -558,7 +513,7 @@ namespace Team7ADProjectMVC.Models
                 }
             } else
             {
-                throw new PreparedQuantityNotEqualAdjustedQuantityException();
+                throw new InventoryAndDisbursementUpdateException("Adjusted quantity exceeds collected quantity.");
             }
 
         }
@@ -601,6 +556,38 @@ namespace Team7ADProjectMVC.Models
                 }
             }
             return status;
+        }
+
+        public void UpdateDisbursementListDetails(int disbursementListId, string[] itemNo, int[] originalPreparedQty, int[] adjustedQuantity, string[] remarks)
+        {
+            for (int i =0; i < itemNo.Count();i++)
+            {
+                var tempItemNo = itemNo[i];
+                var disbursementDetail = (from x in db.DisbursementDetails
+                                         where x.DisbursementListId == disbursementListId
+                                         && x.ItemNo == tempItemNo
+                                          select x).FirstOrDefault();
+                if(originalPreparedQty[i] >= adjustedQuantity[i] && disbursementDetail.DisbursementList.Status != "Completed")
+                {
+                    int updateAmount = adjustedQuantity[i]- (int)disbursementDetail.DeliveredQuantity;
+                    UpdateInventoryQuantity(tempItemNo, updateAmount);
+                    disbursementDetail.DeliveredQuantity = adjustedQuantity[i];
+                    disbursementDetail.Remark = remarks[i];
+                    db.Entry(disbursementDetail).State = EntityState.Modified;
+                    db.SaveChanges();
+               
+                } else if (disbursementDetail.DisbursementList.Status == "Completed")
+                {
+                    throw new InventoryAndDisbursementUpdateException("The disbursement has been completed. Unable to make further changes.");
+                    //This should not happen, because the submit button is hidden when status = completed
+                }
+                else 
+                {
+                    throw new InventoryAndDisbursementUpdateException("Prepared quantity is greater than adjusted quantity"); 
+                    //This should not happen, because html5 validation is in use
+                }
+
+            }
         }
     }
 }

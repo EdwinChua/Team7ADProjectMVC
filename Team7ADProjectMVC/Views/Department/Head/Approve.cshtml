@@ -9,19 +9,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <h5>
-                        Requisition Form#: DDS/111/999
+                      Ordered Date: @Html.DisplayFor(model => model.OrderedDate)
                         </h5>
                         <div>
                             
-                            Dept Name:@Html.DisplayFor(model => model.Employee.Department.DepartmentName)
+                            Department Name:@Html.DisplayFor(model => model.Employee.Department.DepartmentName)
                             <div>
                                 <h5>
 
                                  
                                     Employee Name:@Html.DisplayFor(model => model.Employee.EmployeeName)
-                                    <br />
-                                    <br />
-                                    Employee Number:@Html.DisplayFor(model => model.Employee.EmployeeId)
                                     <br />
                                     <br />
                                     Employee Email Address:<a href="mailto:Address:Jenny@LogicUniversity">@Html.DisplayFor(model => model.Employee.Email)</a>
@@ -68,7 +65,10 @@
                         </h5>
                     <form id="form1" action="../MarkAsCollected">
                         <p>
-                            &nbsp;<input type="text" id="Text" aria-autocomplete="none" aria-disabled="False" aria-multiline="True" aria-multiselectable="True" aria-orientation="vertical" name="textcomments" rows="3" cols="50"/>
+                            &nbsp;@*<input type="text" id="Text" aria-autocomplete="none" aria-disabled="False" aria-multiline="True" aria-multiselectable="True" aria-orientation="vertical" name="textcomments" rows="1000000" cols="1000000"/>*@
+                            <textarea name="textcomments" form="form1" id="Text" rows="4" cols="100">Enter comment here...</textarea>
+                            Try it Yourself »
+
                         </p>
 
                         <input type="hidden" value="@Model.RequisitionId" name="rid" />

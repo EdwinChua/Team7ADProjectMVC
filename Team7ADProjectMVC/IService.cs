@@ -377,6 +377,7 @@ public class wcfRetrivalList
     string requestedQty;
     string retrievedQty;
     string status;
+    string binNo;
 
     [DataMember]
     public String ItemNo { get; set; }
@@ -393,7 +394,10 @@ public class wcfRetrivalList
     [DataMember]
     public String Status { get; set; }
 
-   }
+    [DataMember]
+    public String BinNo { get; set; }
+
+}
 
 public class wcfallocate
 {

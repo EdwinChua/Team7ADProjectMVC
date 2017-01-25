@@ -1,10 +1,11 @@
 ﻿@model Team7ADProjectMVC.Supplier
 
 @{
+    ViewBag.Title = "Edit";
     Layout = "~/_Layout1.cshtml";
-    Page.Title = "Supplier Details";
-    
 }
+
+<h2>Edit</h2>
 
 
 @using (Html.BeginForm())
@@ -12,6 +13,8 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
+        <h4>Supplier</h4>
+        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.SupplierId)
 
@@ -76,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                </div>
             <div class="col-lg-6">
 
                 <div class="form-group">
@@ -130,71 +133,13 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <button class="btn btn-primary">
-        Update
-    </button>
-    <button class="btn btn-danger">
-        Delete
-    </button>
-}
+            </div></div>
+            }
 
+            <div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
 
-<div><br /></div>
-@if (ViewBag.SupplierId != null)
-{
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Item Code
-                </th>
-                <th>
-                    Description
-                </th>
-                <th>
-                    Category
-                </th>
-                <th>
-                    Tender Price
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            
-                @foreach (var item in ViewBag.SupplierItems)
-                {
-                    decimal x = 0;
-            <tr>
-                <td>
-                    @item.ItemNo
-                </td>
-                <td>
-                    @item.Description
-                </td>
-                <td>
-                    @item.Category.CategoryName
-                </td>
-                
-                    @if (ViewBag.SupplierId == item.SupplierId1)
-                    {
-                        x = @item.Price1;
-                    }
-                    else if (ViewBag.SupplierId == item.SupplierId1)
-                    {
-                        x = @item.Price2;
-                    }
-                    else if (ViewBag.SupplierId == item.SupplierId3)
-                    {
-                        x = @item.Price3;
-                    }
-                <td>@x</td>   
-            </tr>
-                }
-            
-        </tbody>
-    </table>
-</div>
-}
+            <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+            <script src="~/Scripts/jquery.validate.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

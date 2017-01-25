@@ -15,9 +15,9 @@ namespace Team7ADProjectMVC.Services
 
         public List<DisbursementList> GetAllDisbursements()
         {
-            var disbursementList=from d in db.DisbursementLists
-                                 orderby d.Status
-                                 select d;
+            var disbursementList = from d in db.DisbursementLists
+                                   orderby d.Status
+                                   select d;
 
             return (disbursementList.ToList());
         }
@@ -40,7 +40,7 @@ namespace Team7ADProjectMVC.Services
             {
                 var queryResults = from d in db.DisbursementLists
                                    where d.DepartmentId == departmentId
-                                   orderby d.OrderedDate
+                                   orderby d.DeliveryDate
                                    select d;
                 return (queryResults.ToList());
             }
@@ -48,7 +48,7 @@ namespace Team7ADProjectMVC.Services
             {
                 var queryResults = from d in db.DisbursementLists
                                    where d.Status == status
-                                   orderby d.OrderedDate
+                                   orderby d.DeliveryDate
                                    select d;
                 return (queryResults.ToList());
             }
@@ -57,7 +57,7 @@ namespace Team7ADProjectMVC.Services
                 var queryResults = from d in db.DisbursementLists
                                    where d.DepartmentId == departmentId
                                    && d.Status == status
-                                   orderby d.OrderedDate
+                                   orderby d.DeliveryDate
                                    select d;
                 return (queryResults.ToList());
             }
@@ -81,7 +81,7 @@ namespace Team7ADProjectMVC.Services
             else if (status == null || status == "")
             {
                 List<String> datesplit = date.Split('/').ToList<String>();
-                DateTime selected = new DateTime(Int32.Parse((datesplit[0])), Int32.Parse((datesplit[1])), Int32.Parse((datesplit[2])));
+                DateTime selected = new DateTime(Int32.Parse((datesplit[2])), Int32.Parse((datesplit[1])), Int32.Parse((datesplit[0])));
                 var queryResults = from d in db.DisbursementLists
                                    where d.DeliveryDate == selected
                                    orderby d.Status
@@ -99,7 +99,7 @@ namespace Team7ADProjectMVC.Services
             else
             {
                 List<String> datesplit = date.Split('/').ToList<String>();
-                DateTime selected = new DateTime(Int32.Parse((datesplit[0])), Int32.Parse((datesplit[1])), Int32.Parse((datesplit[2])));
+                DateTime selected = new DateTime(Int32.Parse((datesplit[2])), Int32.Parse((datesplit[1])), Int32.Parse((datesplit[0])));
                 var queryResults = from d in db.DisbursementLists
                                    where d.Status.Equals(status)
                                    && d.DeliveryDate == selected
@@ -131,21 +131,109 @@ namespace Team7ADProjectMVC.Services
         {
             return (db.DisbursementLists.Find(id).Status);
         }
-        public void ConfirmDisbursement(int? id)
+        public void ConfirmDisbursement(int? disburseid)
         {
-            int rid = db.DisbursementLists.Find(id).Retrieval.RetrievalId;
-            List<RequisitionDetail> rdlist = db.Requisitions.Single(model => model.RetrievalId == rid).RequisitionDetails.ToList();
+            var deptid = db.DisbursementLists.Find(disburseid).DepartmentId;
+            int rid = db.DisbursementLists.Find(disburseid).Retrieval.RetrievalId;
+            List<Requisition> requisitionlist = db.Requisitions.Where(model => model.RetrievalId == rid).ToList();
+
+
+            List<RequisitionDetail> rdlist = (from x in db.RequisitionDetails
+                          where x.Requisition.RetrievalId == rid
+                          && x.Requisition.DepartmentId == deptid
+                          select x).ToList();
+
+            var itlist = (from x in rdlist
+
+                          group x by x.ItemNo into g
+                          select new
+                          {
+                              ItemNo = g.Key,
+                              OutstandingQuantity = g.Sum(x => x.OutstandingQuantity)
+                          }).ToList();
+
+            foreach (var total in itlist)
+
+            {
+                //var total = (from x in rdlist
+                //             where x.ItemNo == item.ItemNo
+                //             select x.OutstandingQuantity).Sum();
+
+                //var total = rdlist.Where(x => x.ItemNo == item.ItemNo).Sum(y => y.OutstandingQuantity);
+                var deliveryquantity = db.DisbursementLists.Find(disburseid).DisbursementDetails.Single(model => model.ItemNo == total.ItemNo).DeliveredQuantity;
+
+                var samelist = (from x in rdlist
+                                where x.ItemNo == total.ItemNo
+                                orderby x.Requisition.RequisitionId
+                                select x
+                                ).ToList();
+
+
+                // var deliveryquantity = db.DisbursementLists.Find(disburseid).DisbursementDetails.Single(model => model.ItemNo == item.ItemNo).DeliveredQuantity;
+                if (total.OutstandingQuantity <= deliveryquantity)
+                {
+                    foreach (var item in samelist)
+                    {
+                        db.RequisitionDetails.Find(item.RequisitionDetailId).OutstandingQuantity = 0;
+                    }
+                }
+                else
+
+                {
+                    //var samelist = (from x in rdlist
+                    //                where x.ItemNo == item.ItemNo
+                    //                orderby x.Requisition.RequisitionId
+                    //                select x
+                    //                ).ToList();
+
+                    for (int i = 0; i < samelist.Count(); i++)
+                    {
+
+                        if (samelist[i].OutstandingQuantity > deliveryquantity)
+                        {
+                            db.RequisitionDetails.Find(samelist[i].RequisitionDetailId).OutstandingQuantity -= deliveryquantity;
+                            break;
+                        }
+                        else
+                        {
+                            deliveryquantity -= samelist[i].OutstandingQuantity;
+                            db.RequisitionDetails.Find(samelist[i].RequisitionDetailId).OutstandingQuantity = 0;
+
+                        }
+
+
+                    }
+
+
+                }
+
+
+            }
+            db.DisbursementLists.Find(disburseid).Status = "Completed";
+
+            foreach (var item in requisitionlist)
+            {
+
+                item.RequisitionStatus = "Completed";
+
+            }
 
             foreach (var item in rdlist)
             {
-                db.RequisitionDetails.Find(item.RequisitionDetailId).OutstandingQuantity = item.Quantity-db.DisbursementLists.Find(id).DisbursementDetails.Single(model=>model.ItemNo==item.ItemNo).DeliveredQuantity;
 
+
+                if (item.OutstandingQuantity != 0)
+                {
+                    item.Requisition.RequisitionStatus = "Outstanding";
+                    break;
+
+                }
             }
-            db.DisbursementLists.Find(id).Status = "Completed";
+
             db.SaveChanges();
 
-            
+
         }
-        
+
     }
 }

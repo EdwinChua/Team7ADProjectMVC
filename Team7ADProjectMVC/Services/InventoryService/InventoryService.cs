@@ -333,7 +333,6 @@ namespace Team7ADProjectMVC.Models
         {
             Department d = db.Departments.Find(requisition.DepartmentId);
             dList.DepartmentId = d.DepartmentId;
-            dList.OrderedDate = requisition.OrderedDate;
             dList.RetrievalId = retrievalList.retrievalId;
             dList.Status = "Processing";
             dList.DeliveryDate = DateTime.Today.AddDays(2); //TODO: Place logic for date later

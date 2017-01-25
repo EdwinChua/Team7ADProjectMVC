@@ -408,6 +408,7 @@
     <Compile Include="Models\RetrievalList.cs" />
     <Compile Include="Services\SupplierAndPOService\ISupplierAndPurchaseOrderService.cs" />
     <Compile Include="Services\SupplierAndPOService\SupplierAndPurchaseOrderService.cs" />
+    <Compile Include="Services\UtilityService\IUtilityService.cs" />
     <Compile Include="Services\UtilityService\UtilityService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\CrystalReport1.cs">
@@ -440,6 +441,7 @@
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="TestControllers\RptController.cs" />
     <Compile Include="TestControllers\SuppliersController.cs" />
+    <Compile Include="TestControllers\TESTPurchaseOrdersController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -514,6 +516,11 @@
     <Content Include="Views\Suppliers\Details.cshtml" />
     <Content Include="Views\Suppliers\Edit.cshtml" />
     <Content Include="Views\Suppliers\Index.cshtml" />
+    <Content Include="Views\TESTPurchaseOrders\Create.cshtml" />
+    <Content Include="Views\TESTPurchaseOrders\Delete.cshtml" />
+    <Content Include="Views\Store\Resupply\PurchaseOrder.cshtml" />
+    <Content Include="Views\TESTPurchaseOrders\Edit.cshtml" />
+    <Content Include="Views\TESTPurchaseOrders\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -271,6 +271,7 @@
     <Content Include="Service.svc" />
     <Content Include="Views\Adjustments\EditorTemplates\Adjustment.cshtml" />
     <Content Include="Views\Adjustments\EditorTemplates\AdjustmentDetail.cshtml" />
+    <Content Include="Views\Department\HtmlPage1.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -486,6 +487,7 @@
     <Content Include="Views\Store\Disbursement\ReallocateDisbursements.cshtml" />
     <Content Include="Views\Adjustments\EditorTemplates\_Adjustment.cshtml" />
     <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentDetail.cshtml" />
+    <Content Include="Views\Department\HtmlPage1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -84,6 +84,7 @@ namespace Team7ADProjectMVC.TestControllers
 
 
 
+
         {
             var requisitions = depasvc.ListAllRequisition();
 
@@ -500,6 +501,10 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.rel = relis;
 
             return View(requisition);
+        }
+        public ActionResult HtmlPage1() {
+
+            return View();
         }
     }
 }

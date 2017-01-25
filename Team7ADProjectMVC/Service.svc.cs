@@ -18,7 +18,8 @@ namespace Team7ADProjectMVC
 
         InventoryService invService = new InventoryService();
         IRequisitionService reqService = new RequisitionService();
-        IDisbursementService disService = new DisbursementService(); 
+        IDisbursementService disService = new DisbursementService();
+        PushNotification fcm = new PushNotification(); 
 
         public List<WCFMsg> DoWork()
         {
@@ -511,6 +512,30 @@ namespace Team7ADProjectMVC
                 return "false";
             }
         }
-        
+
+        public String wcfSendForConfirmation(String DisbListId)
+        {
+            try
+            {
+
+            int dId = Convert.ToInt32(DisbListId);
+
+            DisbursementList disb = (DisbursementList)from d in db.DisbursementLists
+                       where dId == d.DisbursementListId
+                       select d;
+
+            var token = from t in db.DisbursementLists
+                        where t.DepartmentId == disb.DepartmentId
+                        select t.Department.Employee.Token;
+                
+          
+                return token.ToString();
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
     }
 }

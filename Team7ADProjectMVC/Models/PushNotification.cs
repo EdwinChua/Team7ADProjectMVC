@@ -59,7 +59,6 @@ namespace Team7ADProjectMVC.Models
                     {
                         title = title,
                         body = message,
-                        
                     }
                 };
 

@@ -356,20 +356,18 @@ CREATE TABLE PurchaseOrder
 (
 PurchaseOrderId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 OrderDate DATE,
-DeliveredDate DATE,
 SupplierId INT,
 EmployeeId INT,
-ReceivedBy INT,
+OrderStatus varchar(20),
 AuthorizedBy INT,
 AuthorizedDate DATE,
-CONSTRAINT PurchaseOrderEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId),
-CONSTRAINT PurchaseOrderReceivedBy FOREIGN KEY(ReceivedBy) REFERENCES Employee(EmployeeId)
+CONSTRAINT PurchaseOrderEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
 )
 
 INSERT INTO PurchaseOrder
-VALUES ('2016-12-30','2017-01-02',1,3,2,10,'2017-12-30'),
-		('2016-12-31','2017-01-04',1,2,2,10,'2017-01-04'),
-		('2016-01-06','2017-01-10',1,2,3,10,'2017-01-10');
+VALUES ('2016-12-30',1,3,'Pending',10,'2017-12-30'),
+		('2016-12-31',1,2,'Approved',10,'2017-01-04'),
+		('2016-01-06',1,2,'Rejected',10,'2017-01-10');
 
 -------------------------------------------------- Retrieval ----------------------------------------
 CREATE TABLE Retrieval
@@ -570,16 +568,14 @@ PurchaseDetailId  INT NOT NULL IDENTITY(1,1)  PRIMARY KEY,
 PurchaseOrderId INT,
 ItemNo VARCHAR(50),
 Quantity INT,
-Price DECIMAL(8,2),
-Amount INT,
 SupplierId INT,
 CONSTRAINT PurchaseDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(ItemNo),
 CONSTRAINT PurchaseDetailSupplierId FOREIGN KEY(SupplierId) REFERENCES Supplier(SupplierId),
 )
 
 INSERT INTO PurchaseDetail
-VALUES (1,'C001',100, 2,200,1), (1,'E001',100, 0.5,50,1), 
-		(2,'C002',100, 2.2,220,1),(2,'F001',100, 0.8,80,1);
+VALUES (1,'C001',100,1), (1,'E001',100,1), 
+		(2,'C002',100,1),(2,'F001',100,1);
 
 -------------------------------------------------- DisbursementList ----------------------------------------
 CREATE TABLE DisbursementList
@@ -587,50 +583,49 @@ CREATE TABLE DisbursementList
 DisbursementListId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 RetrievalId INT,
 DepartmentId INT,
-OrderedDate DATE,
 DeliveryDate DATE,
 [Status] VARCHAR(50),
 CONSTRAINT RetrievalId FOREIGN KEY (RetrievalId) REFERENCES Retrieval (RetrievalId),
 CONSTRAINT DisbursementListDepartmentId FOREIGN KEY (DepartmentId) REFERENCES Department (DepartmentId),
 )
 
-INSERT INTO DisbursementList(RetrievalId, DepartmentId,  OrderedDate, DeliveryDate, [Status])
+INSERT INTO DisbursementList(RetrievalId, DepartmentId,DeliveryDate, [Status])
 VALUES
-(1,1,null,'2016-06-21','Complete'),
-(1,2,null,'2016-07-21','Complete'),
-(1,3,null,'2016-08-21','Complete'),
-(1,4,null,'2016-09-21','Complete'),
-(1,5,null,'2016-10-21','Complete'),
-(2,1,null,'2016-11-21','Complete'),
-(2,2,null,'2016-12-21','Complete'),
-(2,3,null,'2016-06-21','Complete'),
-(2,4,null,'2016-07-21','Complete'),
-(2,5,null,'2016-08-21','Complete'),
-(3,1,null,'2016-09-21','Complete'),
-(3,2,null,'2016-10-21','Complete'),
-(3,3,null,'2016-11-21','Complete'),
-(3,4,null,'2016-12-21','Complete'),
-(3,5,null,'2016-06-21','Complete'),
-(4,1,null,'2016-07-21','Complete'),
-(4,2,null,'2016-08-21','Complete'),
-(4,3,null,'2016-09-21','Complete'),
-(4,4,null,'2016-10-21','Complete'),
-(4,5,null,'2016-11-21','Complete'),
-(5,1,null,'2016-12-21','Complete'),
-(5,2,null,'2016-06-21','Complete'),
-(5,3,null,'2016-07-21','Complete'),
-(5,4,null,'2016-08-21','Complete'),
-(5,5,null,'2016-09-21','Complete'),
-(6,1,null,'2016-10-21','Complete'),
-(6,2,null,'2016-11-21','Complete'),
-(6,3,null,'2016-12-21','Complete'),
-(6,4,null,'2016-06-21','Complete'),
-(6,5,null,'2016-07-21','Complete'),
-(7,1,null,'2016-08-21','Complete'),
-(7,2,null,'2016-09-21','Complete'),
-(7,3,null,'2016-10-21','Complete'),
-(7,4,null,'2016-11-21','Complete'),
-(7,5,null,'2016-12-21','Complete');
+(1,1,'2016-06-21','Complete'),
+(1,2,'2016-07-21','Complete'),
+(1,3,'2016-08-21','Complete'),
+(1,4,'2016-09-21','Complete'),
+(1,5,'2016-10-21','Complete'),
+(2,1,'2016-11-21','Complete'),
+(2,2,'2016-12-21','Complete'),
+(2,3,'2016-06-21','Complete'),
+(2,4,'2016-07-21','Complete'),
+(2,5,'2016-08-21','Complete'),
+(3,1,'2016-09-21','Complete'),
+(3,2,'2016-10-21','Complete'),
+(3,3,'2016-11-21','Complete'),
+(3,4,'2016-12-21','Complete'),
+(3,5,'2016-06-21','Complete'),
+(4,1,'2016-07-21','Complete'),
+(4,2,'2016-08-21','Complete'),
+(4,3,'2016-09-21','Complete'),
+(4,4,'2016-10-21','Complete'),
+(4,5,'2016-11-21','Complete'),
+(5,1,'2016-12-21','Complete'),
+(5,2,'2016-06-21','Complete'),
+(5,3,'2016-07-21','Complete'),
+(5,4,'2016-08-21','Complete'),
+(5,5,'2016-09-21','Complete'),
+(6,1,'2016-10-21','Complete'),
+(6,2,'2016-11-21','Complete'),
+(6,3,'2016-12-21','Complete'),
+(6,4,'2016-06-21','Complete'),
+(6,5,'2016-07-21','Complete'),
+(7,1,'2016-08-21','Complete'),
+(7,2,'2016-09-21','Complete'),
+(7,3,'2016-10-21','Complete'),
+(7,4,'2016-11-21','Complete'),
+(7,5,'2016-12-21','Complete');
 
 -------------------------------------------------- DisbursementDetail ----------------------------------------
 CREATE TABLE DisbursementDetail

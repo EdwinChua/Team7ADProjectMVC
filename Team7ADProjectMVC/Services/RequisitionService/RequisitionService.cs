@@ -11,11 +11,11 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
         ProjectEntities db = new ProjectEntities();
       
 
-        public List<Requisition> GetAllRequisition()
+        public List<Requisition> GetAllRequisition(int depId)
         {
             var queryByStatus = from t in db.Requisitions 
-                                  where t.RequisitionStatus == "Pending" && t.DepartmentId== 4
-                                  orderby t.RequisitionId ascending
+                                  where t.RequisitionStatus == "Pending Approval" && t.DepartmentId == depId
+                                orderby t.RequisitionId ascending
                                   select t;
             return (queryByStatus.ToList());
         }
@@ -24,12 +24,13 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
         {
             return db.Requisitions.Find(id);
         }
+        
         public void  UpdateApproveStatus(Requisition r,String c)
         {
             
             r.RequisitionStatus = "Approved";
             r.Comment = c;
-            r.ApprovedDate = DateTime.Today;
+            r.ApprovedDate = DateTime.Today.Date;
             
             db.Entry(r).State = EntityState.Modified;
             db.SaveChanges();
@@ -38,7 +39,7 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
         {
            
             r.Comment = c;
-
+            r.ApprovedDate = DateTime.Today.Date;
             r.RequisitionStatus = "Rejected";
             db.Entry(r).State = EntityState.Modified;
             db.SaveChanges();

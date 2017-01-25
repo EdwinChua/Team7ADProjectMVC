@@ -35,7 +35,7 @@
                                     <i class="fa fa-calendar">
                                     </i>
                                 </div>
-                                <input class="form-control" id="date" name="date" placeholder="YYYY/MM/DD" type="text" />
+                                <input class="form-control" id="date" name="date" placeholder="DD/MM/YYYY" type="text" />
                             </div>
                         </div>
                         <label class="control-label col-md-2 " for="status">
@@ -94,12 +94,12 @@
                             @Html.DisplayFor(modelItem => item.Department.DepartmentName)
                         </td>
                         <td>
-                            @Convert.ToString(string.Format("{0:yyyy/MM/dd}", item.OrderedDate))
+                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.OrderedDate))
                         </td>
 
                         <td>
                             
-                            @Convert.ToString(string.Format("{0:yyyy/MM/dd}", item.DeliveryDate))
+                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DeliveryDate))
                         </td>
 
                         <td>
@@ -132,7 +132,7 @@
         var date_input = $('input[name="date"]'); //our date input has the name "date"
         var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
         var options = {
-            format: 'yyyy/mm/dd',
+            format: 'dd/mm/yyyy',
             container: container,
             todayHighlight: true,
             autoclose: true,

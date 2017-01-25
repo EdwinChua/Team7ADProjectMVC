@@ -140,6 +140,7 @@ public class wcfRequisitionList
     string employeename;
     string status;
     string deptID;
+    string orderDate;
 
     [DataMember]
     public string Employeename
@@ -153,6 +154,9 @@ public class wcfRequisitionList
 
     [DataMember]
     public String Id { get; set; }
+
+    [DataMember]
+    public String OrderDate { get; set; }
     
     public static wcfRequisitionList Make(string name, string s)
     {
@@ -373,6 +377,7 @@ public class wcfRetrivalList
     string requestedQty;
     string retrievedQty;
     string status;
+    string binNo;
 
     [DataMember]
     public String ItemNo { get; set; }
@@ -389,7 +394,10 @@ public class wcfRetrivalList
     [DataMember]
     public String Status { get; set; }
 
-   }
+    [DataMember]
+    public String BinNo { get; set; }
+
+}
 
 public class wcfallocate
 {
@@ -416,6 +424,7 @@ public class wcflogin
     string userid;
     string role;
     string deptid;
+    string permission;
 
 
     [DataMember]
@@ -430,6 +439,9 @@ public class wcflogin
 
     [DataMember]
     public string Authenticate { get; set; }
+
+    [DataMember]
+    public String Permission { get; set; }
 
 }
 

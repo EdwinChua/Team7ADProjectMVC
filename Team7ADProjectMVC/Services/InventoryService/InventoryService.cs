@@ -252,7 +252,7 @@ namespace Team7ADProjectMVC.Models
             {
                 Requisition temp = db.Requisitions.Find(r.RequisitionId);
                 temp.RetrievalId = retrievalList.retrievalId;
-                temp.RequisitionStatus = "Pending";
+                temp.RequisitionStatus = "Processing";
                 db.Entry(temp).State = EntityState.Modified;
                 db.SaveChanges();
             }

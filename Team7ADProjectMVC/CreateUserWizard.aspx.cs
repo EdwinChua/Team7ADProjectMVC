@@ -13,5 +13,10 @@ namespace Team7ADProjectMVC
         {
 
         }
+
+        protected void CreateUserWizard1_CreatedUser(object sender, EventArgs e)
+        {
+
+        }
     }
 }

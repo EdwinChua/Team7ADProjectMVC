@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
+using Team7ADProjectMVC.Services;
 
 namespace Team7ADProjectMVC
 {
@@ -16,7 +17,8 @@ namespace Team7ADProjectMVC
         ProjectEntities db = new ProjectEntities();
 
         InventoryService invService = new InventoryService();
-        IRequisitionService reqService = new RequisitionService(); 
+        IRequisitionService reqService = new RequisitionService();
+        IDisbursementService disService = new DisbursementService(); 
 
         public List<WCFMsg> DoWork()
         {
@@ -26,8 +28,8 @@ namespace Team7ADProjectMVC
             l.Add(new WCFMsg("ok3"));
             Console.Write(l.ToString());
             return l;
-
         }
+         
 
         public List<wcfRequisitionList> RequisitionList(string deptid)
         {
@@ -35,15 +37,22 @@ namespace Team7ADProjectMVC
             int departmentId = Convert.ToInt32(deptid);
             var reqList = from req in db.Requisitions
                           where req.DepartmentId == departmentId
-                          orderby req.RequisitionStatus descending
+                          && req.RequisitionStatus != "Completed"
+                          orderby req.RequisitionStatus ascending
                           select req;
-
+            String beforesplit = "";
+            String aftersplit = "";
+            Char delimiter = ' ';
          foreach(Requisition rr in reqList)
          {
              wcfRequisitionList rl = new wcfRequisitionList();
              rl.Employeename = rr.Employee.EmployeeName;
              rl.Status = rr.RequisitionStatus;
              rl.Id = rr.RequisitionId.ToString();
+             beforesplit = rr.OrderedDate.ToString();
+             String[] substrings = beforesplit.Split(delimiter);
+             aftersplit = substrings[0];
+             rl.OrderDate = aftersplit;         
              making.Add(rl);
          }
          return making.ToList();
@@ -64,7 +73,7 @@ namespace Team7ADProjectMVC
                 wcfRequisitionItem rl = new wcfRequisitionItem();
                 rl.Itemname = rr.Inventory.Description;
                 rl.Quantity = rr.Quantity.ToString();
-                rl.Uom = rr.OutstandingQuantity.ToString();
+                rl.Uom = rr.Inventory.Measurement.UnitOfMeasurement;
                 making.Add(rl);
             }
             return making;
@@ -93,7 +102,6 @@ namespace Team7ADProjectMVC
                 }
             }
             return making;
-           
         }
 
         public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String disListID)
@@ -129,12 +137,18 @@ namespace Team7ADProjectMVC
                           && a.RequisitionStatus == "Pending Approval"
                           orderby a.OrderedDate
                           select a;
-
+            String beforesplit = "";
+            String aftersplit = "";
+            Char delimiter = ' ';
             foreach (Requisition req in aList)
             {
                 wcfApproveRequisitions cd = new wcfApproveRequisitions();
                 cd.EmpName = req.Employee.EmployeeName.ToString();
-                cd.ReqDate = req.OrderedDate.ToString();
+                beforesplit = req.OrderedDate.ToString();
+                String[] substrings = beforesplit.Split(delimiter);
+                aftersplit = substrings[0];
+                cd.ReqDate = aftersplit ; 
+              
                 cd.ReqID = req.RequisitionId.ToString();
                 approvalList.Add(cd);
             }
@@ -266,8 +280,6 @@ namespace Team7ADProjectMVC
         {
             List<wcfRetrivalList> retrialList = new List<wcfRetrivalList>();
             RetrievalList reList = new RetrievalList();
-            //invService.PopulateRetrievalList();
-            //invService.PopulateRetrievalListItems();
             reList = invService.GetRetrievalList();
             int? rid =reList.retrievalId;
             List<RetrievalListItems> itemsToR = reList.itemsToRetrieve;
@@ -277,8 +289,10 @@ namespace Team7ADProjectMVC
                 wcfRetrivalList rl = new wcfRetrivalList();
                 rl.ItemNo = r.itemNo;
                 rl.ItemName = r.description;
+                rl.BinNo = r.binNo;
                 rl.RequestedQty = r.requiredQuantity.ToString();
                 rl.RetrievedQty = r.collectedQuantity.ToString();
+             
                 String st = "";
                 if(r.collectionStatus.ToString().Equals("False"))
                 {
@@ -291,7 +305,6 @@ namespace Team7ADProjectMVC
                 rl.Status = st;
                 retrialList.Add(rl);
             }
-            //List<Requisition> reqList = retrivallist.requisitionList;
             return retrialList;
         }
 
@@ -323,6 +336,10 @@ namespace Team7ADProjectMVC
                 dDetail.Role = "Clerk";
                 dDetail.Userid = "c1";
                 dDetail.Authenticate = "true";
+                dDetail.Permission = "1-1-0-1";
+               
+            
+
             }
             else if (userid.Equals("e1"))
             {
@@ -344,6 +361,7 @@ namespace Team7ADProjectMVC
                 dDetail.Role = "Representative";
                 dDetail.Userid = "r1";
                 dDetail.Authenticate = "true";
+                dDetail.Permission = "1-0-0-1";
             }
             else
                 dDetail.Authenticate = "false";
@@ -362,8 +380,6 @@ namespace Team7ADProjectMVC
 
         public void updatedqun(wcfDisbursementListDetail c )
         {
-         
-
             int dId = Convert.ToInt32(c.Ddid);
             int dId1 = Convert.ToInt32(c.DisbQty);
             int math;
@@ -375,7 +391,6 @@ namespace Team7ADProjectMVC
              dd.Remark = c.Remarks;
              db.SaveChanges();
              invService.UpdateInventoryQuantity(dd.ItemNo, math);
-        
         }
 
         public string approveReq(String reqId)
@@ -441,8 +456,6 @@ namespace Team7ADProjectMVC
                 storeReq.Add(rl);
             }
                 return storeReq;
-           
-
         }
         public String wcfBtnReqList()
         {
@@ -453,10 +466,8 @@ namespace Team7ADProjectMVC
                     result= "generate";
                 }
                 else
-                   result = "view";
-
+                result = "view";
                 return result;
-               
             }
 
         public String wcfGenetateBtnOK()
@@ -471,7 +482,6 @@ namespace Team7ADProjectMVC
             {
                 return "false";
             }
-           
            
         }
 
@@ -492,9 +502,9 @@ namespace Team7ADProjectMVC
         {
             try
             {
-                //write the var connection to update the status of which ever table as needed.
-                // change return to true..
-                return DisListId;
+                int disId = Convert.ToInt32(DisListId);
+                disService.ConfirmDisbursement(disId); 
+                return "true";
             }
             catch (Exception e)
             {

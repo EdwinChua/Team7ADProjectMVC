@@ -99,6 +99,67 @@
                         </div>
 
 
+
+
+
+
+
+
+
+
+
+                        <div class="col-md-4">
+                            <table class="table col-md-4" id="taskTable">
+                                <thead>
+
+                                    <tr>
+                                        <th>
+                                            Item
+                                        </th>
+                                        <th>
+                                            Quantity
+                                        </th>
+
+                                    </tr>
+
+
+                                </thead>
+                                <tbody>
+
+                                            @*@foreach (var item in ViewBag.rel)
+                                                        {
+                                                              <tr>
+                                                                <td>
+                                                                    @item.ItemNo
+                                                                </td>
+                                                                <td>
+                                                                    @item.Quantity
+                                                                </td>
+                           
+
+                                                            </tr>
+                                                        }*@
+
+                                </tbody>
+
+
+                            </table>
+
+
+
+
+
+
+                            <button id="cl" type="submit" class="btn btn-default">
+                                Submit
+                            </button>
+                            <div>
+                                @Html.ActionLink("Back to List", "Index")
+                            </div>
+                        </div>
+                        
+
+                       
                         @*</form>*@
 
 
@@ -110,12 +171,521 @@
 
                     <div class="col-md-4">
                         <div class="panel panel-default">
+
+                            @*//hahaha*@
+
+                           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             <div class="panel-heading">
-                                NEWS
+                                Category List
                             </div>
-                            <div class="panel-body">
-                                <p>Mun Kew received his PhD from Stanford University. He has more than 25 years of R&D and commercial experience in IT. He was Chair and Editor of the ISO/JTC1/WG2/24800 JPSearch international standard, editor or past editor of the Journal of Information Retrieval, Information Processing and Management Journal, member of the advisory board for the School of IIT at Temasek Polytechnic, the IRAL and AIRS symposium series, and formerly Adjunct Assoc. Prof at the National Institute of Education.</p>
+
+
+
+
+
+
+                          
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="panel panel-group" id="main">
+                                            <div class="panel-body">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#main" href="#accordion"><span class="glyphicon glyphicon-folder-close"></span> Make Selection</a>
+                                                    </h4>
+                                                </div>
+                                                
+                                                <div class="panel-collapse collapse panel-scroll" id="accordion">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-paperclip"></span> Clips</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapseOne" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#"><span class="glyphicon glyphicon-pencil text-primary"></span> Clips Double 1"</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#"><span class="glyphicon glyphicon-flash text-success"></span> Clips Double 2"</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @*<tr>
+                                                                            <td>
+                                                                                <a href="#"><span class="glyphicon glyphicon-file text-info"></span> Envelope Brown (3"x6")</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#"><span class="glyphicon glyphicon-comment text-success"></span> Comments</a> <span class="badge">42</span>
+                                                                            </td>
+                                                                        </tr>*@
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-pencil"></span> Pen</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapseThree" class="panel-collapse collapse ">
+                                                            <div class="panel-body">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Change Password</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Notifications</a> <span class="label label-info">9</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Import</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#" class="text-danger"><span class="glyphicon glyphicon-trash text-danger"></span> Delete Account</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-text-background"></span> Paper</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapseFour" class="panel-collapse collapse ">
+                                                            <div class="panel-body">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Change Password</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Notifications</a> <span class="label label-info">9</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Import</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#" class="text-danger"><span class="glyphicon glyphicon-trash text-danger"></span> Delete Account</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive"><span class="glyphicon glyphicon-scissors"></span> Scissors</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapseFive" class="panel-collapse collapse ">
+                                                            <div class="panel-body">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Change Password</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Notifications</a> <span class="label label-info">9</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Import</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#" class="text-danger"><span class="glyphicon glyphicon-trash text-danger"></span> Delete Account</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix"><span class="glyphicon glyphicon-pencil"></span> Tape</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapseSix" class="panel-collapse collapse ">
+                                                            <div class="panel-body">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Change Password</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Notifications</a> <span class="label label-info">9</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Import</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#" class="text-danger"><span class="glyphicon glyphicon-trash text-danger"></span> Delete Account</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven"><span class="glyphicon glyphicon-file"></span> File</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapseSeven" class="panel-collapse collapse ">
+                                                            <div class="panel-body">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">File Separator</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Notifications</a> <span class="label label-info">9</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Import</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#" class="text-danger"><span class="glyphicon glyphicon-trash text-danger"></span> Delete Account</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                   
+
+
+
+                                                    
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseNine"><span class="glyphicon glyphicon-pencil"></span> Puncher</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapseNine" class="panel-collapse collapse ">
+                                                            <div class="panel-body">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Change Password</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Notifications</a> <span class="label label-info">9</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Import</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#" class="text-danger"><span class="glyphicon glyphicon-trash text-danger"></span> Delete Account</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTen"><span class="glyphicon glyphicon-unchecked"></span> Pad</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapseTen" class="panel-collapse collapse ">
+                                                            <div class="panel-body">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Change Password</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Notifications</a> <span class="label label-info">9</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Import</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#" class="text-danger"><span class="glyphicon glyphicon-trash text-danger"></span> Delete Account</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-envelope"></span> Envelope</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapseTwo" class="panel-collapse collapse ">
+                                                            <div class="panel-body">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Envelope Brown (3"x6")</a> <span class="label label-success">$ 42</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @*<tr>
+                                                                            <td>
+                                                                                <a href="#">Invoices</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Shipments</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#">Logging</a>
+                                                                            </td>
+                                                                        </tr>*@
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse12">
+                                                                    <span class="glyphicon glyphicon-erase"></span> Eraser
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse12" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <table class="table">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#"><span class="glyphicon glyphicon-usd"></span> Eraser(hard)</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @*<tr>
+                                                                            <td>
+                                                                                <a href="#"><span class="glyphicon glyphicon-user"></span> Customers</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#"><span class="glyphicon glyphicon-tasks"></span> Products</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a>
+                                                                            </td>
+                                                                        </tr>*@
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
                             </div>
+
+
+                            <div id="push"></div>
+
+
+
+                            @*<ul id="accordion">
+                                <li>
+                                    <a href="#">Item 1</a>
+                                    <ul>
+                                        <li>WordPress Themes</li>
+                                        <li><p>This is a paragraph with some text</p></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">My Skills</a>
+                                    <ul>
+                                        <li>HTML / XHTML, CSS</li>
+                                        <li>Adobe Photoshop, Fireworks</li>
+                                        <li>PHP, jQuery, Ruby on rails</li>
+                                        <li>And a whole lot more</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Resources</a>
+                                    <ul>
+                                        <li>Another link</li>
+                                        <li>Another link</li>
+                                    </ul>
+                                </li>
+                            </ul>*@
+
+
+
+                            @*<div class="panel-body">*@
+                               @* <p>Mun Kew received his PhD from Stanford University. He has more than 25 years of R&D and commercial experience in IT. He was Chair and Editor of the ISO/JTC1/WG2/24800 JPSearch international standard, editor or past editor of the Journal of Information Retrieval, Information Processing and Management Journal, member of the advisory board for the School of IIT at Temasek Polytechnic, the IRAL and AIRS symposium series, and formerly Adjunct Assoc. Prof at the National Institute of Education.</p>*@
+                           
+                            
+                                @*<ul id="accordion">
+                                    <li>
+                                        <a href="#">Item 1</a>
+                                        <ul>
+                                            <li>WordPress Themes</li>
+                                            <li><p>This is a paragraph with some text</p></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">My Skills</a>
+                                        <ul>
+                                            <li>HTML / XHTML, CSS</li>
+                                            <li>Adobe Photoshop, Fireworks</li>
+                                            <li>PHP, jQuery, Ruby on rails</li>
+                                            <li>And a whole lot more</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Resources</a>
+                                        <ul>
+                                            <li>Another link</li>
+                                            <li>Another link</li>
+                                        </ul>
+                                    </li>
+                                </ul>*@
+
+                            
+                            
+                            
+                             @*</div>*@
+
                         </div>
                     </div>
                 </div>
@@ -124,7 +694,7 @@
 
 
 
-                <div class="col-md-4">
+                @*<div class="col-md-4">
                     <table class="table col-md-4" id="taskTable">
                         <thead>
 
@@ -135,17 +705,12 @@
                                 <th>
                                     Quantity
                                 </th>
-                                @*<th>
-                                        Outstanding Quantity
-                                    </th>*@
-                                @*<th>
-                                        Delivery Status
-                                    </th>*@
+                               
                             </tr>
 
 
                         </thead>
-                        <tbody>
+                        <tbody>*@
 
                             @*@foreach (var item in ViewBag.rel)
                                 {
@@ -166,16 +731,16 @@
                                     </tr>
                                 }*@
 
-                        </tbody>
+                        @*</tbody>
 
 
                     </table>
-                </div>
+                </div>*@
             </div>
 
-            <button id="cl" type="submit" class="btn btn-default" >
+            @*<button id="cl" type="submit" class="btn btn-default" >
                 Submit
-            </button>
+            </button>*@
         </div>
 
     </div>
@@ -187,9 +752,7 @@
 
 
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
@@ -520,6 +1083,31 @@ function submitForm() {
 
     });
     });
+
+
+
+
+
+
+
+    function Accordion() {
+        $('#accordion ul').hide(); // hide all unordered lists inside the accordion list
+        $('#accordion ul:first').show(); //show the first unordered list inside the accordion
+        $('#accordion li a').click(
+            function () {
+                var checkElement = $(this).next();
+                if ((checkElement.is('ul')) && (checkElement.is(':visible'))) { //if you click on an unordered list and this list is opened (visible)
+                    return false; //nothing happens
+                }
+                if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) { //if you click on an unordered list and this list is not opened (visible)
+                    $('#accordion ul:visible').slideUp('normal'); // the list that is visible will close (slideUp)
+                    checkElement.slideDown('normal'); //the list you clicked will open (slideDown)
+                    return false;
+                }
+            }
+        );
+    }
+    $(document).ready(function () { Accordion(); }); //when the document is ready to load the script it iniciates the function
 </script>
 
 
@@ -558,3 +1146,49 @@ function submitForm() {
         });
     });
 </script>*@
+<style>
+
+
+
+
+    /*the first*/
+    /*body {
+  font:0.8em Verdana, Arial, Helvetica, sans-serif;
+}*/
+/*ul#accordion {
+  padding:0;
+  border:1px solid #ececec;
+  width:450px;
+  }
+ul#accordion li a {
+  background:#222;
+  padding:0.5em;
+  display:block;
+  color:#ececec;
+  font-weight:bold;
+
+  text-decoration:none;
+  }
+ul > li {
+  list-style:none;
+  padding:0;
+  margin:0;
+  }
+ul#accordion li ul {
+  margin:0;
+  padding:0;
+  }
+ul#accordion li ul li {
+  padding:2px;
+  margin:0;
+  border-bottom:1px dashed #ccc;
+  }
+ul#accordion li ul li a {
+  padding:5px 0;
+  color:#222;
+  background:none;
+}
+ul#accordion li ul li a:hover {
+  color:#C90;
+  }*/
+</style>

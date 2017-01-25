@@ -515,7 +515,6 @@ namespace Team7ADProjectMVC
 
         public String wcfSendForConfirmation(String DisbListId)
         {
-
             try
             {
             int dId = Convert.ToInt32(DisbListId);
@@ -523,7 +522,11 @@ namespace Team7ADProjectMVC
             int deptit= (int)disb.DepartmentId;
             Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
             String token = emp.Token;
-            return token.ToString();
+
+
+            fcm.PushFCMNotification("Test", "harro", token);
+            return "true";
+
             }
             catch (Exception e)
             {

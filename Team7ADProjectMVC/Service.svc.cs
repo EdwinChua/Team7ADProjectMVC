@@ -26,7 +26,6 @@ namespace Team7ADProjectMVC
             l.Add(new WCFMsg("ok3"));
             Console.Write(l.ToString());
             return l;
-
         }
 
         public List<wcfRequisitionList> RequisitionList(string deptid)
@@ -93,7 +92,6 @@ namespace Team7ADProjectMVC
                 }
             }
             return making;
-           
         }
 
         public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String disListID)
@@ -266,8 +264,6 @@ namespace Team7ADProjectMVC
         {
             List<wcfRetrivalList> retrialList = new List<wcfRetrivalList>();
             RetrievalList reList = new RetrievalList();
-            //invService.PopulateRetrievalList();
-            //invService.PopulateRetrievalListItems();
             reList = invService.GetRetrievalList();
             int? rid =reList.retrievalId;
             List<RetrievalListItems> itemsToR = reList.itemsToRetrieve;
@@ -277,6 +273,7 @@ namespace Team7ADProjectMVC
                 wcfRetrivalList rl = new wcfRetrivalList();
                 rl.ItemNo = r.itemNo;
                 rl.ItemName = r.description;
+                rl.BinNo = r.binNo;
                 rl.RequestedQty = r.requiredQuantity.ToString();
                 rl.RetrievedQty = r.collectedQuantity.ToString();
                 String st = "";
@@ -291,7 +288,6 @@ namespace Team7ADProjectMVC
                 rl.Status = st;
                 retrialList.Add(rl);
             }
-            //List<Requisition> reqList = retrivallist.requisitionList;
             return retrialList;
         }
 
@@ -362,8 +358,6 @@ namespace Team7ADProjectMVC
 
         public void updatedqun(wcfDisbursementListDetail c )
         {
-         
-
             int dId = Convert.ToInt32(c.Ddid);
             int dId1 = Convert.ToInt32(c.DisbQty);
             int math;
@@ -375,7 +369,6 @@ namespace Team7ADProjectMVC
              dd.Remark = c.Remarks;
              db.SaveChanges();
              invService.UpdateInventoryQuantity(dd.ItemNo, math);
-        
         }
 
         public string approveReq(String reqId)
@@ -441,8 +434,6 @@ namespace Team7ADProjectMVC
                 storeReq.Add(rl);
             }
                 return storeReq;
-           
-
         }
         public String wcfBtnReqList()
         {
@@ -453,10 +444,8 @@ namespace Team7ADProjectMVC
                     result= "generate";
                 }
                 else
-                   result = "view";
-
+                result = "view";
                 return result;
-               
             }
 
         public String wcfGenetateBtnOK()
@@ -471,7 +460,6 @@ namespace Team7ADProjectMVC
             {
                 return "false";
             }
-           
            
         }
 

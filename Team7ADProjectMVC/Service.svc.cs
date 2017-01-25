@@ -35,6 +35,7 @@ namespace Team7ADProjectMVC
             int departmentId = Convert.ToInt32(deptid);
             var reqList = from req in db.Requisitions
                           where req.DepartmentId == departmentId
+                          && req.RequisitionStatus != "Completed"
                           orderby req.RequisitionStatus == "Pending Approval"
                           select req;
             String beforesplit = "";

@@ -1,9 +1,16 @@
-﻿@model IEnumerable<Team7ADProjectMVC.Requisition>
+﻿@*@model IEnumerable<Team7ADProjectMVC.Requisition>*@
 
 @{
     Page.Title = "View All Employees";
     Layout = "~/Views/Shared/_Layouthead.cshtml";
 }
+
+
+@model PagedList.IPagedList<Team7ADProjectMVC.Requisition>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
 
 <div class="container-fluid">
     <div class="row">
@@ -49,9 +56,17 @@
                                             </ul>
                                         </li>
                                     </ul>
-                                    <form class="navbar-form navbar-left" role="search">
+                                    @*<form class="navbar-form navbar-left" role="search">
                                         <div class="form-group">
                                             <input type="text" class="form-control" />
+                                        </div>
+                                        <button type="submit" class="btn btn-default">
+                                            Submit
+                                        </button>
+                                    </form>*@
+                                    <form class="navbar-form navbar-left" role="form" action="/Head/ListAllEmployees" method="post">
+                                        <div class="form-group">
+                                            <input id="SearchString" type="text" class="form-control" name="SearchString"  />
                                         </div>
                                         <button type="submit" class="btn btn-default">
                                             Submit
@@ -154,47 +169,19 @@
                     </thead>
                     
                 </table>*@
-                <ul class="pagination">
-                    <li>
-                        <a href="#">Prev</a>
-                    </li>
-                    <li>
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">Next</a>
-                    </li>
-                </ul>
+
+                <br />
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("ListAllEmployees",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+               
 
 
             </div>
-        </div>
-       
-    @*</div>
-
-        </div>*@
-        @*<div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    NEWS
-                </div>
-                <div class="panel-body">
-                    <p>Mun Kew received his PhD from Stanford University. He has more than 25 years of R&D and commercial experience in IT. He was Chair and Editor of the ISO/JTC1/WG2/24800 JPSearch international standard, editor or past editor of the Journal of Information Retrieval, Information Processing and Management Journal, member of the advisory board for the School of IIT at Temasek Polytechnic, the IRAL and AIRS symposium series, and formerly Adjunct Assoc. Prof at the National Institute of Education.</p>
-                </div>
-            </div>
-        </div>*@
+        </div>   
+    </div>
+</div>
 
 <script>
     $(document).ready(function ($) {

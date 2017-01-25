@@ -40,7 +40,7 @@ namespace Team7ADProjectMVC.Services
             {
                 var queryResults = from d in db.DisbursementLists
                                    where d.DepartmentId == departmentId
-                                   orderby d.OrderedDate
+                                   orderby d.DeliveryDate
                                    select d;
                 return (queryResults.ToList());
             }
@@ -48,7 +48,7 @@ namespace Team7ADProjectMVC.Services
             {
                 var queryResults = from d in db.DisbursementLists
                                    where d.Status == status
-                                   orderby d.OrderedDate
+                                   orderby d.DeliveryDate
                                    select d;
                 return (queryResults.ToList());
             }
@@ -57,7 +57,7 @@ namespace Team7ADProjectMVC.Services
                 var queryResults = from d in db.DisbursementLists
                                    where d.DepartmentId == departmentId
                                    && d.Status == status
-                                   orderby d.OrderedDate
+                                   orderby d.DeliveryDate
                                    select d;
                 return (queryResults.ToList());
             }

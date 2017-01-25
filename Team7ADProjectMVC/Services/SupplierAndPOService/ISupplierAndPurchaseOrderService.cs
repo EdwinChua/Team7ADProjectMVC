@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace Team7ADProjectMVC.Services.SupplierService
 {
-    interface ISupplierService
+    interface ISupplierAndPurchaseOrderService
     {
         List<Supplier> GetAllSuppliers();
         Supplier FindSupplierById(int? id);
         List<Inventory> FindInventoryItemsBySupplier(int? id);
         void UpdateSupplier(Supplier supplier);
         void AddNewSupplier(Supplier supplier);
+        List<Inventory> GetAllItemsToResupply();
+        void GeneratePurchaseOrders(string[] itemNo, int[] supplier, int?[] orderQuantity);
+        List<PurchaseOrder> GetAllPOOrderByApproval();
+        List<PurchaseOrder> SearchPurchaseOrders(string orderStatus, DateTime? dateOrdered, DateTime? dateApproved, out int resultCount);
+        PurchaseOrder FindPOById(int id);
     }
 }

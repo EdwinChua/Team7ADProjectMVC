@@ -18,11 +18,10 @@ namespace Team7ADProjectMVC
         public Nullable<int> PurchaseOrderId { get; set; }
         public string ItemNo { get; set; }
         public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public Nullable<int> Amount { get; set; }
         public Nullable<int> SupplierId { get; set; }
     
         public virtual Inventory Inventory { get; set; }
+        public virtual PurchaseOrder PurchaseOrder { get; set; }
         public virtual Supplier Supplier { get; set; }
     }
 }

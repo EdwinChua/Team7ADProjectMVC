@@ -36,6 +36,7 @@ namespace Team7ADProjectMVC
         public Nullable<int> RoleId { get; set; }
         public Nullable<int> PermissionId { get; set; }
         public string PhNo { get; set; }
+        public string Token { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Adjustment> Adjustments { get; set; }

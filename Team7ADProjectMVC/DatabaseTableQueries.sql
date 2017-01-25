@@ -71,7 +71,7 @@ ViewCollectionDetails BIT
 )
 
 INSERT INTO Permission
-VALUES (1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),
+VALUES (1,1,0,0,1,1),(1,0,1,0,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),
 (1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),
 (1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1);
 
@@ -95,6 +95,7 @@ DepartmentId INT,
 RoleId INT,
 PermissionId INT,
 PhNo VARCHAR(50),
+Token VARCHAR(200)
 CONSTRAINT RoleId FOREIGN KEY(RoleId) REFERENCES [Role](RoleId),
 CONSTRAINT PermissionId FOREIGN KEY(PermissionId) REFERENCES Permission(PermissionId)
 )
@@ -147,46 +148,46 @@ VALUES ('STO','STORE','Jenny Wong Mei Lin','890 6656','891 9912',10,1,1)
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Jenny Wong Mei Lin','youngmountain7@gmail.com',6,4,1,'11111111') -- registrar
 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Feng Teng','youngmountain7@gmail.com',6,1,2,'22222222') -- store 6 store clerk 2
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Min Yew','youngmountain7@gmail.com',6,1,3,'33333333')
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Lao Lao','youngmountain7@gmail.com',6,1,4,'44444444')
 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mrs Pamela Kow','youngmountain7@gmail.com',1,2,5,'55555555') -- english 1 Head 3
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Dr. Soh Kian Wee','youngmountain7@gmail.com',2,2,6,'66666666')-- com science 2 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('MrMohd. Azman','youngmountain7@gmail.com',3,2,7,'77777777') -- commerce 3
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mrs Low Kway Boo','youngmountain7@gmail.com',4,2,8,'88888888') -- registrar 4
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr. Peter Tan Ah Meng','youngmountain7@gmail.com',5,2,9,'99999999') -- zoo 5
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr. Sander','youngmountain7@gmail.com',6,2,10,'10101010') -- store 6
 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Prof Ezra Pound','youngmountain7@gmail.com',1,4,11,'11111111') -- eng 1 rep 4
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr. Ar Phyan Kwee','youngmountain7@gmail.com',2,4,12,'12121212') -- com science 2
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Dr. Chia Leow Bee','youngmountain7@gmail.com',3,4,13,'13131313') -- commerce 3
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Prof Tan','youngmountain7@gmail.com',4,4,14,'14141414') -- registrar 4
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr. Tay Shout Pann','youngmountain7@gmail.com',5,4,15,'15151515') -- zoo 5
 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr Alan','youngmountain7@gmail.com',1,3,5,'55555555') -- english 1 Head 3
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr Bob','youngmountain7@gmail.com',2,3,6,'66666666')-- com science 2 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr Charlie','youngmountain7@gmail.com',3,3,7,'77777777') -- commerce 3
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Ms Delia','youngmountain7@gmail.com',4,3,8,'88888888') -- registrar 4
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Ms Eve','youngmountain7@gmail.com',5,3,9,'99999999') -- zoo 5
 
 
@@ -356,20 +357,20 @@ CREATE TABLE PurchaseOrder
 (
 PurchaseOrderId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 OrderDate DATE,
-DeliveredDate DATE,
 SupplierId INT,
 EmployeeId INT,
-ReceivedBy INT,
+OrderStatus varchar(20),
 AuthorizedBy INT,
 AuthorizedDate DATE,
 CONSTRAINT PurchaseOrderEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId),
-CONSTRAINT PurchaseOrderReceivedBy FOREIGN KEY(ReceivedBy) REFERENCES Employee(EmployeeId)
+CONSTRAINT PurchaseOrderSupplierId FOREIGN KEY(SupplierId) REFERENCES Supplier(SupplierId),
+CONSTRAINT PurchaseOrderAuthorizedBy FOREIGN KEY(AuthorizedBy) REFERENCES Employee(EmployeeId)
 )
 
 INSERT INTO PurchaseOrder
-VALUES ('2016-12-30','2017-01-02',1,3,2,10,'2017-12-30'),
-		('2016-12-31','2017-01-04',1,2,2,10,'2017-01-04'),
-		('2016-01-06','2017-01-10',1,2,3,10,'2017-01-10');
+VALUES ('2016-12-30',1,3,'Pending',10,'2017-12-30'),
+		('2016-12-31',1,2,'Approved',10,'2017-01-04'),
+		('2016-01-06',1,2,'Rejected',10,'2017-01-10');
 
 -------------------------------------------------- Retrieval ----------------------------------------
 CREATE TABLE Retrieval
@@ -451,7 +452,7 @@ VALUES
 (3,'P002',25,0),
 (3,'H001',15,0),
 (3,'H002',10,0),
-(4,'P003',10,0),
+(4,'P002',10,0),
 (4,'P003',20,0),
 (4,'C001',25,0),
 (5,'P003',25,0),
@@ -459,14 +460,14 @@ VALUES
 (5,'C001',20,0),
 (6,'H002',15,0),
 (6,'P003',10,0),
-(6,'P003',25,0),
+(6,'P002',25,0),
 (7,'C001',5,0),
 (7,'P001',25,0),
 (7,'P002',25,0),
 (8,'R001',10,0),
-(8,'R001',10,0),
+(8,'P002',10,0),
 (8,'T001',20,0),
-(9,'H001',10,0),
+(9,'P001',10,0),
 (9,'H001',10,0),
 (9,'E002',5,0),
 (10,'E003',5,0),
@@ -485,10 +486,10 @@ VALUES
 (14,'P003',20,0),
 (14,'T001',10,0),
 (15,'E003',15,0),
-(15,'P002',10,0),
+(15,'P001',10,0),
 (15,'P002',15,0),
 (16,'P002',25,0),
-(16,'P002',5,0),
+(16,'P001',5,0),
 (16,'P003',5,0),
 (17,'S001',10,0),
 (17,'P003',20,0),
@@ -498,10 +499,10 @@ VALUES
 (18,'E003',15,0),
 (19,'P003',5,0),
 (19,'H002',25,0),
-(19,'P003',20,0),
+(19,'P002',20,0),
 (20,'E003',10,0),
 (20,'P003',20,0),
-(20,'P003',20,0),
+(20,'P002',20,0),
 (21,'E003',20,0),
 (21,'C002',20,0),
 (21,'P003',25,0),
@@ -510,15 +511,15 @@ VALUES
 (22,'P003',25,0),
 (23,'R001',25,0),
 (23,'T001',10,0),
-(23,'T001',10,0),
+(23,'P001',10,0),
 (24,'S001',20,0),
 (24,'P003',5,0),
 (24,'H001',10,0),
 (25,'P005',10,0),
 (25,'P003',5,0),
-(25,'P003',20,0),
+(25,'P002',20,0),
 (26,'R001',15,0),
-(26,'R001',25,0),
+(26,'P001',25,0),
 (26,'E002',10,0),
 (27,'F001',5,0),
 (27,'C002',10,0),
@@ -557,8 +558,8 @@ VALUES
 (38,'H001',15,15),
 (39,'H002',10,10),
 (39,'P003',10,10),
-(39,'P003',20,20),
-(40,'C001',25,25),
+(39,'P002',20,20),
+(40,'P002',25,25),
 (40,'P003',25,25),
 (40,'T001',5,5),
 (40,'C001',20,20);
@@ -570,16 +571,15 @@ PurchaseDetailId  INT NOT NULL IDENTITY(1,1)  PRIMARY KEY,
 PurchaseOrderId INT,
 ItemNo VARCHAR(50),
 Quantity INT,
-Price DECIMAL(8,2),
-Amount INT,
 SupplierId INT,
 CONSTRAINT PurchaseDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(ItemNo),
 CONSTRAINT PurchaseDetailSupplierId FOREIGN KEY(SupplierId) REFERENCES Supplier(SupplierId),
+CONSTRAINT PurchaseDetailPurchaseOrderId FOREIGN KEY(PurchaseOrderId) REFERENCES PurchaseOrder(PurchaseOrderId)
 )
 
 INSERT INTO PurchaseDetail
-VALUES (1,'C001',100, 2,200,1), (1,'E001',100, 0.5,50,1), 
-		(2,'C002',100, 2.2,220,1),(2,'F001',100, 0.8,80,1);
+VALUES (1,'C001',100,1), (1,'E001',100,1), 
+		(2,'C002',100,1),(2,'F001',100,1);
 
 -------------------------------------------------- DisbursementList ----------------------------------------
 CREATE TABLE DisbursementList
@@ -587,50 +587,49 @@ CREATE TABLE DisbursementList
 DisbursementListId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 RetrievalId INT,
 DepartmentId INT,
-OrderedDate DATE,
 DeliveryDate DATE,
 [Status] VARCHAR(50),
 CONSTRAINT RetrievalId FOREIGN KEY (RetrievalId) REFERENCES Retrieval (RetrievalId),
 CONSTRAINT DisbursementListDepartmentId FOREIGN KEY (DepartmentId) REFERENCES Department (DepartmentId),
 )
 
-INSERT INTO DisbursementList(RetrievalId, DepartmentId,  OrderedDate, DeliveryDate, [Status])
+INSERT INTO DisbursementList(RetrievalId, DepartmentId,DeliveryDate, [Status])
 VALUES
-(1,1,null,'2016-06-21','Complete'),
-(1,2,null,'2016-07-21','Complete'),
-(1,3,null,'2016-08-21','Complete'),
-(1,4,null,'2016-09-21','Complete'),
-(1,5,null,'2016-10-21','Complete'),
-(2,1,null,'2016-11-21','Complete'),
-(2,2,null,'2016-12-21','Complete'),
-(2,3,null,'2016-06-21','Complete'),
-(2,4,null,'2016-07-21','Complete'),
-(2,5,null,'2016-08-21','Complete'),
-(3,1,null,'2016-09-21','Complete'),
-(3,2,null,'2016-10-21','Complete'),
-(3,3,null,'2016-11-21','Complete'),
-(3,4,null,'2016-12-21','Complete'),
-(3,5,null,'2016-06-21','Complete'),
-(4,1,null,'2016-07-21','Complete'),
-(4,2,null,'2016-08-21','Complete'),
-(4,3,null,'2016-09-21','Complete'),
-(4,4,null,'2016-10-21','Complete'),
-(4,5,null,'2016-11-21','Complete'),
-(5,1,null,'2016-12-21','Complete'),
-(5,2,null,'2016-06-21','Complete'),
-(5,3,null,'2016-07-21','Complete'),
-(5,4,null,'2016-08-21','Complete'),
-(5,5,null,'2016-09-21','Complete'),
-(6,1,null,'2016-10-21','Complete'),
-(6,2,null,'2016-11-21','Complete'),
-(6,3,null,'2016-12-21','Complete'),
-(6,4,null,'2016-06-21','Complete'),
-(6,5,null,'2016-07-21','Complete'),
-(7,1,null,'2016-08-21','Complete'),
-(7,2,null,'2016-09-21','Complete'),
-(7,3,null,'2016-10-21','Complete'),
-(7,4,null,'2016-11-21','Complete'),
-(7,5,null,'2016-12-21','Complete');
+(1,1,'2016-06-21','Complete'),
+(1,2,'2016-07-21','Complete'),
+(1,3,'2016-08-21','Complete'),
+(1,4,'2016-09-21','Complete'),
+(1,5,'2016-10-21','Complete'),
+(2,1,'2016-11-21','Complete'),
+(2,2,'2016-12-21','Complete'),
+(2,3,'2016-06-21','Complete'),
+(2,4,'2016-07-21','Complete'),
+(2,5,'2016-08-21','Complete'),
+(3,1,'2016-09-21','Complete'),
+(3,2,'2016-10-21','Complete'),
+(3,3,'2016-11-21','Complete'),
+(3,4,'2016-12-21','Complete'),
+(3,5,'2016-06-21','Complete'),
+(4,1,'2016-07-21','Complete'),
+(4,2,'2016-08-21','Complete'),
+(4,3,'2016-09-21','Complete'),
+(4,4,'2016-10-21','Complete'),
+(4,5,'2016-11-21','Complete'),
+(5,1,'2016-12-21','Complete'),
+(5,2,'2016-06-21','Complete'),
+(5,3,'2016-07-21','Complete'),
+(5,4,'2016-08-21','Complete'),
+(5,5,'2016-09-21','Complete'),
+(6,1,'2016-10-21','Complete'),
+(6,2,'2016-11-21','Complete'),
+(6,3,'2016-12-21','Complete'),
+(6,4,'2016-06-21','Complete'),
+(6,5,'2016-07-21','Complete'),
+(7,1,'2016-08-21','Complete'),
+(7,2,'2016-09-21','Complete'),
+(7,3,'2016-10-21','Complete'),
+(7,4,'2016-11-21','Complete'),
+(7,5,'2016-12-21','Complete');
 
 -------------------------------------------------- DisbursementDetail ----------------------------------------
 CREATE TABLE DisbursementDetail
@@ -657,7 +656,7 @@ VALUES
 (3,'P002',25,25,''),
 (3,'H001',15,15,''),
 (3,'H002',10,10,''),
-(4,'P003',10,10,''),
+(4,'P002',10,10,''),
 (4,'P003',20,20,''),
 (4,'C001',25,25,''),
 (5,'P003',25,25,''),
@@ -665,14 +664,14 @@ VALUES
 (5,'C001',20,20,''),
 (6,'H002',15,15,''),
 (6,'P003',10,10,''),
-(6,'P003',25,25,''),
+(6,'P002',25,25,''),
 (7,'C001',5,5,''),
 (7,'P001',25,25,''),
 (7,'P002',25,25,''),
 (8,'R001',10,10,''),
-(8,'R001',10,10,''),
+(8,'P002',10,10,''),
 (8,'T001',20,20,''),
-(9,'H001',10,10,''),
+(9,'P001',10,10,''),
 (9,'H001',10,10,''),
 (9,'E002',5,5,''),
 (10,'E003',5,5,''),
@@ -691,10 +690,10 @@ VALUES
 (14,'P003',20,20,''),
 (14,'T001',10,10,''),
 (15,'E003',15,15,''),
-(15,'P002',10,10,''),
+(15,'P001',10,10,''),
 (15,'P002',15,15,''),
 (16,'P002',25,25,''),
-(16,'P002',5,5,''),
+(16,'P001',5,5,''),
 (16,'P003',5,5,''),
 (17,'S001',10,10,''),
 (17,'P003',20,20,''),
@@ -704,10 +703,10 @@ VALUES
 (18,'E003',15,15,''),
 (19,'P003',5,5,''),
 (19,'H002',25,25,''),
-(19,'P003',20,20,''),
+(19,'P002',20,20,''),
 (20,'E003',10,10,''),
 (20,'P003',20,20,''),
-(20,'P003',20,20,''),
+(20,'P002',20,20,''),
 (21,'E003',20,20,''),
 (21,'C002',20,20,''),
 (21,'P003',25,25,''),
@@ -716,15 +715,15 @@ VALUES
 (22,'P003',25,25,''),
 (23,'R001',25,25,''),
 (23,'T001',10,10,''),
-(23,'T001',10,10,''),
+(23,'P001',10,10,''),
 (24,'S001',20,20,''),
 (24,'P003',5,5,''),
 (24,'H001',10,10,''),
 (25,'P005',10,10,''),
 (25,'P003',5,5,''),
-(25,'P003',20,20,''),
+(25,'P002',20,20,''),
 (26,'R001',15,15,''),
-(26,'R001',25,25,''),
+(26,'P001',25,25,''),
 (26,'E002',10,10,''),
 (27,'F001',5,5,''),
 (27,'C002',10,10,''),

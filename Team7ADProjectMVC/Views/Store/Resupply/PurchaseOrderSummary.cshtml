@@ -1,11 +1,17 @@
-﻿@{
+﻿@model IEnumerable<Team7ADProjectMVC.PurchaseOrder>
+@{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Purchase Order Summary";
+    ProjectEntities db = new ProjectEntities();
+    string supplier = null;
+    string employee = null;
+    string approvedBy = null;
+    string printLine = null;
 }
 
 
 <div class="row jumbotron">
-    <form class="form" role="form">
+    <form class="form" role="form" action="SearchPurchaseOrderSummary" method="get">
         <div class="form-group">
             <div class="col-lg-2">
                 <select id="searchByStatus" name="orderStatus"
@@ -19,7 +25,7 @@
         <div class="form-group">
             <div class="col-lg-3">
                 <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" placeholder="Date Ordered" name="dateOrdered" />
+                    <input type='text' class="form-control" placeholder="Date Ordered"  name="dateOrderedString"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -29,7 +35,7 @@
         <div class="form-group">
             <div class="col-lg-3">
                 <div class='input-group date' id='datetimepicker2'>
-                    <input type='text' class="form-control" placeholder="Date Approved" name="dateApproved" />
+                    <input type='text' class="form-control" placeholder="Date Approved" name="dateApprovedString" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -46,6 +52,15 @@
 <div>
     <br />
 </div>
+@if (ViewBag.ResultCount != null)
+{
+    if (ViewBag.ResultCount == 0)
+    {  <h5> Your search returned @ViewBag.ResultCount result(s). Showing all results.</h5>}
+    else {
+    <h5>Your search returned @ViewBag.ResultCount result(s). </h5>}
+
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -61,69 +76,54 @@
             <th>
                 Approved By / Date
             </th>
-            <th>
-                Delivery Status
-            </th>
         </tr>
     </thead>
     <tbody>
-        <tr>
+        @foreach (var item in Model)
+        {
+        <tr class="clickable-row" data-href="PurchaseOrder/@item.PurchaseOrderId">
             <td>
-                20000169
+                @item.PurchaseOrderId
             </td>
             <td>
-                ALPA
+                @{supplier = db.Suppliers.Find(item.SupplierId).SupplierName;}
+                @supplier
             </td>
             <td>
-                Tan Ah Kow / 10 Jan 17
+                @if (item.EmployeeId != null)
+                {
+                employee = db.Employees.Find(item.EmployeeId).EmployeeName;
+                }
+                @employee / @item.OrderDate.Value.ToString("dd MMM yyyy")
             </td>
             <td>
-                Jackie Chan / 12 Jan 17
-            </td>
-            <td>
-                Received
-            </td>
-        </tr>
-        <tr>
-            <td>
-                20000170
-            </td>
-            <td>
-                CHEP
-            </td>
-            <td>
-                Tan Ah Kow / 17 Jan 17
-            </td>
-            <td>
-                Jackie Chan / 18 Jan 17
-            </td>
-            <td>
-                Pending
+                @if (item.AuthorizedBy != null)
+                {
+                    approvedBy = db.Employees.Find(item.EmployeeId).EmployeeName;
+                    printLine = approvedBy + " / " + item.AuthorizedDate.Value.ToString("dd MMM yyyy");
+                } else
+                {
+                    printLine = @item.OrderStatus;
+                }
+                @printLine
             </td>
         </tr>
-        <tr>
-            <td>
-                20000171
-            </td>
-            <td>
-                BANE
-            </td>
-            <td>
-                Tan Ah Kow / 17 Jan 17
-            </td>
-            <td>
-                Jackie Chan / 19 Jan 17
-            </td>
-            <td>
-                Pending
-            </td>
-        </tr>
+        }
     </tbody>
 </table>
 
 
 <script type="text/javascript">
         $(function () {
-            $('#datetimepicker1').datetimepicker();
+            $('#datetimepicker1').datetimepicker({ format: 'DD/MM/YYYY' });
+
+            $('#datetimepicker2').datetimepicker({ format: 'DD/MM/YYYY' });
         });
+
+    $(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+
 </script>

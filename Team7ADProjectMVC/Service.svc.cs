@@ -518,6 +518,7 @@ namespace Team7ADProjectMVC
             try
             {
             int dId = Convert.ToInt32(DisbListId);
+
             DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
             int deptit= (int)disb.DepartmentId;
             Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();

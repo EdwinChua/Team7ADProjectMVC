@@ -53,12 +53,14 @@ namespace Team7ADProjectMVC.Models
 
                 var data = new
                 {
-                    //single device
-                    to = token,
+                    // to = YOUR_FCM_DEVICE_ID, // Uncoment this if you want to test for single device
+                    to = token, // this is for topic 
                     notification = new
                     {
                         title = title,
                         body = message,
+                        data = "Stationary Store",
+                        //icon="myicon"
                     }
                 };
 

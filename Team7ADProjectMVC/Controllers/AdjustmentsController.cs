@@ -134,7 +134,7 @@ namespace Team7ADProjectMVC.Controllers
         {
             var adjust = new adjustment();
             var adjustdetail = new adjustmentdetail();
-            ViewBag.Item = new SelectList(db.Inventories, "ItemNo", "Description", adjustdetail.ItemNo);
+            ViewBag.Item = new SelectList(db.Inventories, "ItemNo", "Description");
 
             adjust.AdjustmentDetails.Add(adjustdetail);
 
@@ -144,8 +144,9 @@ namespace Team7ADProjectMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind] adjustment adjust)
+        public ActionResult Create([Bind(Include = "Status,AdjustmentDate,EmployeeId,AdjustmentDetails,")] adjustment adjust)
         {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
 
@@ -155,10 +156,31 @@ namespace Team7ADProjectMVC.Controllers
                     EmployeeId = adjust.EmployeeId,
                     Status = adjust.Status
                 };
-                db.Adjustments.Add(Adjustment);
+
+
+                int adid = db.Adjustments.Add(Adjustment).AdjustmentId;
+
+                foreach (var item in adjust.AdjustmentDetails)
+                {
+                    ViewBag.Item = new SelectList(db.Inventories, "ItemNo", "Description", item.ItemNo);
+                    AdjustmentDetail adjustmentdetail = new AdjustmentDetail()
+                    {
+                        AdjustmentId = adid,
+                        ItemNo = item.ItemNo,
+                        Quantity = item.Quantity,
+                        Reason = item.Reason
+
+                    };
+                    db.AdjustmentDetails.Add(adjustmentdetail);
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            foreach (var item in adjust.AdjustmentDetails)
+            {
+                ViewBag.Item = new SelectList(db.Inventories, "ItemNo", "Description", item.ItemNo);
+            }
+
             return View(adjust);
         }
 
@@ -167,7 +189,7 @@ namespace Team7ADProjectMVC.Controllers
         {
             var adjust = new adjustment();
             var adjustdetail = new adjustmentdetail();
-            ViewBag.Item = new SelectList(db.Inventories, "ItemNo", "Description", adjustdetail.ItemNo);
+            ViewBag.Item = new SelectList(db.Inventories, "ItemNo", "Description");
             adjust.AdjustmentDetails.Add(adjustdetail);
 
 

@@ -117,5 +117,35 @@ namespace Team7ADProjectMVC.Services.SupplierService
             
             return q;
         }
+
+        public List<PurchaseOrder> SearchPurchaseOrders(string orderStatus, DateTime? dateOrdered, DateTime? dateApproved, out int count)
+        {
+            List<PurchaseOrder> resultList = GetAllPOOrderByApproval();
+            count = 0;
+            if (orderStatus != null && orderStatus.Length > 1 && resultList.Count() > 0)
+            {
+                resultList.RemoveAll(x => x.OrderStatus != orderStatus);
+                count = resultList.Count();
+            }
+            if (dateOrdered != null && resultList.Count() > 0)
+            {
+                resultList.RemoveAll(x => x.OrderDate > dateOrdered);
+                resultList.RemoveAll(x => x.OrderDate < dateOrdered);
+                count = resultList.Count();
+            }
+            if (dateApproved != null && resultList.Count() > 0)
+            {
+                resultList.RemoveAll(x => x.AuthorizedDate < dateApproved);
+                resultList.RemoveAll(x => x.AuthorizedDate > dateApproved);
+                count = resultList.Count();
+            }
+            return resultList;
+
+        }
+
+        public PurchaseOrder FindPOById(int id)
+        {
+            return db.PurchaseOrders.Find(id);
+        }
     }
 }

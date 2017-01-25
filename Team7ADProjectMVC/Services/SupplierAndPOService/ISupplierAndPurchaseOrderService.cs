@@ -16,5 +16,7 @@ namespace Team7ADProjectMVC.Services.SupplierService
         List<Inventory> GetAllItemsToResupply();
         void GeneratePurchaseOrders(string[] itemNo, int[] supplier, int?[] orderQuantity);
         List<PurchaseOrder> GetAllPOOrderByApproval();
+        List<PurchaseOrder> SearchPurchaseOrders(string orderStatus, DateTime? dateOrdered, DateTime? dateApproved, out int resultCount);
+        PurchaseOrder FindPOById(int id);
     }
 }

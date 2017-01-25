@@ -7,6 +7,7 @@ using System.Text;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 using Team7ADProjectMVC.Services;
+using System.Web.Security;
 
 namespace Team7ADProjectMVC
 {
@@ -327,10 +328,20 @@ namespace Team7ADProjectMVC
 
         public wcflogin getlogin(String userid , String password)
         {
-            // do the proper login here.. 
-            // test case only.
 
-            wcflogin dDetail = new wcflogin();
+           wcflogin dDetail = new wcflogin();
+           bool result= Membership.ValidateUser(userid, password);
+            if(result==true)
+            {
+               
+            }
+            else
+            {
+
+            }
+
+
+          
             if(userid.Equals("c1"))
             {
                 dDetail.Deptid = "0";

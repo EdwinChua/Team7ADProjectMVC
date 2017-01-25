@@ -33,7 +33,7 @@ namespace Team7ADProjectMVC.Models
             set;
         }
 
-        public PushNotification PushFCMNotification(string title, string message, string token)
+        public PushNotification PushFCMNotification(string title, string message, string token, string data)
         {
             PushNotification result = new PushNotification();
             try {
@@ -42,7 +42,7 @@ namespace Team7ADProjectMVC.Models
 
                 string SERVER_API_KEY = "AAAAjD8Iv20:APA91bG3BW0rQSG9WRbpf0SCSboeMOlwm9xyTZF3AsPNbj97wlM7resjGzdjUUQuhvytRdWsvoEKcwq4vKqMeM2uBQRLBj84tWxSWeX87XV1-p_DRBtBUrlxvt_Qq1tDrwFDo_9a9A5t";
                 var SENDER_ID = "602352959341";
-                var value = message;
+                //var value = message;
                 WebRequest tRequest;
                 tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
                 tRequest.Method = "post";
@@ -51,16 +51,16 @@ namespace Team7ADProjectMVC.Models
 
                 tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
 
-                var data = new 
+                var notification = new 
                 {
                     to = token,
                     title = title,
-                    collection1 = "Stationary Store",
-                    collection2 = "Management School"
+                    body = message,
+                    data = data,
                 };
 
                 var serializer = new JavaScriptSerializer();
-                var json = serializer.Serialize(data);
+                var json = serializer.Serialize(notification);
 
                 Byte[] byteArray = Encoding.UTF8.GetBytes(json);
 

@@ -35,7 +35,7 @@ namespace Team7ADProjectMVC
             int departmentId = Convert.ToInt32(deptid);
             var reqList = from req in db.Requisitions
                           where req.DepartmentId == departmentId
-                          orderby req.RequisitionStatus == "Pending Approval", req.RequisitionStatus descending
+                          orderby req.RequisitionStatus == "Pending Approval"
                           select req;
 
          foreach(Requisition rr in reqList)

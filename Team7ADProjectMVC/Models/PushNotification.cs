@@ -33,7 +33,7 @@ namespace Team7ADProjectMVC.Models
             set;
         }
 
-        public PushNotification PushFCMNotification(string title, string message, string token)
+        public PushNotification PushFCMNotification(string title, string message, string topic)
         {
             PushNotification result = new PushNotification();
             try {
@@ -54,14 +54,18 @@ namespace Team7ADProjectMVC.Models
                 var data = new
                 {
                     //single device
-                    to = token,
+                    //to = token,
+                    //notification = new
+                    //{
+                    //    title = title,
+                    //    body = message,
+                    //}
+                    to = "/topics/" + topic,
                     notification = new
                     {
                         title = title,
-                        body = message,
-                       
-                    },
-                   
+                        body = message, 
+                    }
                 };
 
                 var serializer = new JavaScriptSerializer();

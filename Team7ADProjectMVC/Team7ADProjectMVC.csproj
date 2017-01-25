@@ -292,6 +292,7 @@
     <Compile Include="Controllers\AdjustmentsController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\StorePOController.cs" />
     <Compile Include="CreateUserWizard.aspx.cs">
       <DependentUpon>CreateUserWizard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -403,8 +404,8 @@
     <Compile Include="Services\RequisitionService\IRequisitionService.cs" />
     <Compile Include="Services\RequisitionService\RequisitionService.cs" />
     <Compile Include="Models\RetrievalList.cs" />
-    <Compile Include="Services\SupplierService\ISupplierService.cs" />
-    <Compile Include="Services\SupplierService\SupplierService.cs" />
+    <Compile Include="Services\SupplierAndPOService\ISupplierAndPurchaseOrderService.cs" />
+    <Compile Include="Services\SupplierAndPOService\SupplierAndPurchaseOrderService.cs" />
     <Compile Include="Services\UtilityService\UtilityService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\CrystalReport1.cs">
@@ -523,6 +524,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Auth\" />
     <Folder Include="Views\FCM\" />
+    <Folder Include="Views\StorePO\" />
     <Folder Include="Views\StoreTest\" />
   </ItemGroup>
   <ItemGroup>

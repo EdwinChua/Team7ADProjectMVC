@@ -20,7 +20,7 @@ namespace Team7ADProjectMVC.TestControllers
         private IDisbursementService disbursementSvc;
         private IDepartmentService deptSvc;
         private IDelegateRoleService delegateSvc;
-        private ISupplierService supplierSvc;
+        private ISupplierAndPurchaseOrderService supplierAndPOSvc;
 
         public StoreController()
         {
@@ -28,7 +28,7 @@ namespace Team7ADProjectMVC.TestControllers
             disbursementSvc = new DisbursementService();
             deptSvc = new DepartmentService();
             delegateSvc = new DelegateRoleService();
-            supplierSvc = new SupplierService();
+            supplierAndPOSvc = new SupplierAndPurchaseOrderService();
         }
 
         //**************** INVENTORY ********************
@@ -37,7 +37,7 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult Index()
         {
             return View("Dashboard");
-            //TODO: EDWIN - Create a nice dashboard
+            //TODO: EDWIN - Create a nice dashboard or delete this
         }
 
         public ActionResult Inventory()
@@ -205,7 +205,7 @@ namespace Team7ADProjectMVC.TestControllers
         // ********************* MAINTAIN *******************
         public ActionResult SupplierList()
         {
-            return View(supplierSvc.GetAllSuppliers());
+            return View(supplierAndPOSvc.GetAllSuppliers());
         }
 
         public ActionResult Supplier(int? id)
@@ -214,8 +214,8 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = supplierSvc.FindSupplierById(id);
-            List<Inventory> listOfItemsFromSupplier = supplierSvc.FindInventoryItemsBySupplier(id);
+            Supplier supplier = supplierAndPOSvc.FindSupplierById(id);
+            List<Inventory> listOfItemsFromSupplier = supplierAndPOSvc.FindInventoryItemsBySupplier(id);
             ViewBag.SupplierItems = listOfItemsFromSupplier;
             ViewBag.SupplierId = supplier.SupplierId;
             if (supplier == null)
@@ -232,7 +232,7 @@ namespace Team7ADProjectMVC.TestControllers
             if (ModelState.IsValid)
             {
 
-                supplierSvc.UpdateSupplier(supplier);
+                supplierAndPOSvc.UpdateSupplier(supplier);
                 return RedirectToAction("SupplierList");
             }
             return View("Supplier",supplier);
@@ -249,7 +249,7 @@ namespace Team7ADProjectMVC.TestControllers
         {
             //if (ModelState.IsValid)
             //{
-                supplierSvc.AddNewSupplier(supplier);
+                supplierAndPOSvc.AddNewSupplier(supplier);
                 return RedirectToAction("SupplierList");
             //}
 
@@ -259,23 +259,6 @@ namespace Team7ADProjectMVC.TestControllers
 
         // ********************* RESUPPLY *******************
 
-        public ActionResult GeneratePO()
-        {
-            //TODO: EDWIN - CX and Seng doing?
-            return View();
-        }
-
-        public ActionResult PurchaseOrderSummary(String id)
-        {
-            //TODO: EDWIN - CX and Seng doing?
-            return View();
-        }
-
-        public ActionResult ViewReceiveOrder(String id)
-        {
-            //TODO: EDWIN - CX and Seng doing?
-            return View();
-        }
 
         //****************** Outstanding Requisitions ***************
 

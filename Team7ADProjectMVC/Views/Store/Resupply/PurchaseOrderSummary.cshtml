@@ -1,11 +1,17 @@
-﻿@{
+﻿@model IEnumerable<Team7ADProjectMVC.PurchaseOrder>
+@{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Purchase Order Summary";
+    ProjectEntities db = new ProjectEntities();
+    string supplier = null;
+    string employee = null;
+    string approvedBy = null;
+    string printLine = null;
 }
 
 
 <div class="row jumbotron">
-    <form class="form" role="form">
+    <form class="form" role="form" action="SearchPurchaseOrderSummary" method="get">
         <div class="form-group">
             <div class="col-lg-2">
                 <select id="searchByStatus" name="orderStatus"
@@ -61,63 +67,39 @@
             <th>
                 Approved By / Date
             </th>
-            <th>
-                Delivery Status
-            </th>
         </tr>
     </thead>
     <tbody>
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
-                20000169
+                @item.PurchaseOrderId
             </td>
             <td>
-                ALPA
+                @{supplier = db.Suppliers.Find(item.SupplierId).SupplierName;}
+                @supplier
             </td>
             <td>
-                Tan Ah Kow / 10 Jan 17
+                @if (item.EmployeeId != null)
+                {
+                employee = db.Employees.Find(item.EmployeeId).EmployeeName;
+                }
+                @employee / @item.OrderDate.Value.ToString("dd MMM yyyy")
             </td>
             <td>
-                Jackie Chan / 12 Jan 17
-            </td>
-            <td>
-                Received
+                @if (item.AuthorizedBy != null)
+                {
+                    approvedBy = db.Employees.Find(item.EmployeeId).EmployeeName;
+                    printLine = approvedBy + " / " + item.AuthorizedDate.Value.ToString("dd MMM yyyy");
+                } else
+                {
+                    printLine = "Pending Approval";
+                }
+                @printLine
             </td>
         </tr>
-        <tr>
-            <td>
-                20000170
-            </td>
-            <td>
-                CHEP
-            </td>
-            <td>
-                Tan Ah Kow / 17 Jan 17
-            </td>
-            <td>
-                Jackie Chan / 18 Jan 17
-            </td>
-            <td>
-                Pending
-            </td>
-        </tr>
-        <tr>
-            <td>
-                20000171
-            </td>
-            <td>
-                BANE
-            </td>
-            <td>
-                Tan Ah Kow / 17 Jan 17
-            </td>
-            <td>
-                Jackie Chan / 19 Jan 17
-            </td>
-            <td>
-                Pending
-            </td>
-        </tr>
+        }
     </tbody>
 </table>
 
@@ -125,5 +107,6 @@
 <script type="text/javascript">
         $(function () {
             $('#datetimepicker1').datetimepicker();
+            $('#datetimepicker2').datetimepicker();
         });
 </script>

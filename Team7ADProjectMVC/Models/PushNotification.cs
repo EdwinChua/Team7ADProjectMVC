@@ -51,14 +51,12 @@ namespace Team7ADProjectMVC.Models
 
                 tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
 
-                
-                var data = new
+                var data = new 
                 {
-                    //notification = new
                     to = token,
                     title = title,
-                    body = message,
-                    
+                    collection1 = "Stationary Store",
+                    collection2 = "Management School"
                 };
 
                 var serializer = new JavaScriptSerializer();

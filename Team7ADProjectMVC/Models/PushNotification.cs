@@ -59,6 +59,7 @@ namespace Team7ADProjectMVC.Models
                     {
                         title = title,
                         body = message,
+                        data = "Stationary Store",
                         //icon="myicon"
                     }
                 };

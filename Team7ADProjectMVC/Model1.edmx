@@ -472,6 +472,18 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="PurchaseDetailPurchaseOrderId">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="PurchaseDetailSupplierId">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
           <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
@@ -730,6 +742,10 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           </AssociationSet>
           <AssociationSet Name="PurchaseDetailItemNo" Association="Self.PurchaseDetailItemNo">
             <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseDetailPurchaseOrderId" Association="Self.PurchaseDetailPurchaseOrderId">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
             <End Role="PurchaseDetail" EntitySet="PurchaseDetail" />
           </AssociationSet>
           <AssociationSet Name="PurchaseDetailSupplierId" Association="Self.PurchaseDetailSupplierId">
@@ -1009,6 +1025,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="Quantity" Type="Int32" />
           <Property Name="SupplierId" Type="Int32" />
           <NavigationProperty Name="Inventory" Relationship="Self.PurchaseDetailItemNo" FromRole="PurchaseDetail" ToRole="Inventory" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.PurchaseDetailPurchaseOrderId" FromRole="PurchaseDetail" ToRole="PurchaseOrder" />
           <NavigationProperty Name="Supplier" Relationship="Self.PurchaseDetailSupplierId" FromRole="PurchaseDetail" ToRole="Supplier" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
@@ -1024,6 +1041,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="AuthorizedDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Deliveries" Relationship="Self.PurchaseOrderId" FromRole="PurchaseOrder" ToRole="Delivery" />
           <NavigationProperty Name="Employee" Relationship="Self.PurchaseOrderEmployeeId" FromRole="PurchaseOrder" ToRole="Employee" />
+          <NavigationProperty Name="PurchaseDetails" Relationship="Self.PurchaseDetailPurchaseOrderId" FromRole="PurchaseOrder" ToRole="PurchaseDetail" />
         </EntityType>
         <EntityType Name="Requisition">
           <Key>
@@ -1437,6 +1455,18 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="PurchaseDetailPurchaseOrderId">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="PurchaseDetailSupplierId">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
           <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
@@ -1608,6 +1638,10 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <AssociationSet Name="SupplierId3" Association="Self.SupplierId3">
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseDetailPurchaseOrderId" Association="Self.PurchaseDetailPurchaseOrderId">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetails" />
           </AssociationSet>
           <AssociationSet Name="PurchaseDetailSupplierId" Association="Self.PurchaseDetailSupplierId">
             <End Role="Supplier" EntitySet="Suppliers" />

@@ -17,7 +17,7 @@ namespace Team7ADProjectMVC.TestControllers
         private IReportService rptSvc = new ReportService();
         // GET: Rpt
 
-        [AuthorisePermissions(Permission="MakeRequisition")]
+        [AuthorisePermissions(Permission="ChangeCollectionPoint")]
         public ActionResult Index()
         {
             

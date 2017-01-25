@@ -523,9 +523,15 @@ namespace Team7ADProjectMVC
             Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
             String token = emp.Token;
 
-            fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", "clerk");
+            List<Employee> empList = new List<Employee>();
+            foreach(Employee e in empList)
+                {
+                    if (e.RoleId == 4)
+                    {
+                        fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", token);
+                    }
+                }
             return "true";
-
             }
             catch (Exception e)
             {

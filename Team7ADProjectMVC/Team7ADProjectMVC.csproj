@@ -242,6 +242,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\gokul.pubxml" />
+    <None Include="Properties\PublishProfiles\ok.pubxml" />
     <None Include="Properties\PublishProfiles\Team7Android.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Model1.Context.tt">

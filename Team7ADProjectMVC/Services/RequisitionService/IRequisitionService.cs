@@ -7,7 +7,7 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
 {
     public interface IRequisitionService
     {
-        List<Requisition> GetAllRequisition(int depId);       
+        List<Requisition> GetAllRequisition(int? depId);       
         Requisition FindById(int? id);
       
         void UpdateApproveStatus(Requisition r,String c);

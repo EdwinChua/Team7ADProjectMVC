@@ -37,13 +37,19 @@ namespace Team7ADProjectMVC
                           where req.DepartmentId == departmentId
                           orderby req.RequisitionStatus == "Pending Approval"
                           select req;
-
+            String beforesplit = "";
+            String aftersplit = "";
+            Char delimiter = ' ';
          foreach(Requisition rr in reqList)
          {
              wcfRequisitionList rl = new wcfRequisitionList();
              rl.Employeename = rr.Employee.EmployeeName;
              rl.Status = rr.RequisitionStatus;
              rl.Id = rr.RequisitionId.ToString();
+             beforesplit = rr.OrderedDate.ToString();
+             String[] substrings = beforesplit.Split(delimiter);
+             aftersplit = substrings[0];
+             rl.OrderDate = aftersplit;         
              making.Add(rl);
          }
          return making.ToList();
@@ -64,7 +70,7 @@ namespace Team7ADProjectMVC
                 wcfRequisitionItem rl = new wcfRequisitionItem();
                 rl.Itemname = rr.Inventory.Description;
                 rl.Quantity = rr.Quantity.ToString();
-                rl.Uom = rr.OutstandingQuantity.ToString();
+                rl.Uom = rr.Inventory.Measurement.UnitOfMeasurement;
                 making.Add(rl);
             }
             return making;
@@ -128,12 +134,18 @@ namespace Team7ADProjectMVC
                           && a.RequisitionStatus == "Pending Approval"
                           orderby a.OrderedDate
                           select a;
-
+            String beforesplit = "";
+            String aftersplit = "";
+            Char delimiter = ' ';
             foreach (Requisition req in aList)
             {
                 wcfApproveRequisitions cd = new wcfApproveRequisitions();
                 cd.EmpName = req.Employee.EmployeeName.ToString();
-                cd.ReqDate = req.OrderedDate.ToString();
+                beforesplit = req.OrderedDate.ToString();
+                String[] substrings = beforesplit.Split(delimiter);
+                aftersplit = substrings[0];
+                cd.ReqDate = aftersplit ; 
+              
                 cd.ReqID = req.RequisitionId.ToString();
                 approvalList.Add(cd);
             }
@@ -277,6 +289,7 @@ namespace Team7ADProjectMVC
                 rl.BinNo = r.binNo;
                 rl.RequestedQty = r.requiredQuantity.ToString();
                 rl.RetrievedQty = r.collectedQuantity.ToString();
+             
                 String st = "";
                 if(r.collectionStatus.ToString().Equals("False"))
                 {
@@ -320,6 +333,10 @@ namespace Team7ADProjectMVC
                 dDetail.Role = "Clerk";
                 dDetail.Userid = "c1";
                 dDetail.Authenticate = "true";
+                dDetail.Permission = "1-1-0-1";
+               
+            
+
             }
             else if (userid.Equals("e1"))
             {
@@ -341,6 +358,7 @@ namespace Team7ADProjectMVC
                 dDetail.Role = "Representative";
                 dDetail.Userid = "r1";
                 dDetail.Authenticate = "true";
+                dDetail.Permission = "1-0-0-1";
             }
             else
                 dDetail.Authenticate = "false";

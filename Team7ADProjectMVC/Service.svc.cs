@@ -18,7 +18,8 @@ namespace Team7ADProjectMVC
 
         InventoryService invService = new InventoryService();
         IRequisitionService reqService = new RequisitionService();
-        IDisbursementService disService = new DisbursementService(); 
+        IDisbursementService disService = new DisbursementService();
+        PushNotification fcm = new PushNotification(); 
 
         public List<WCFMsg> DoWork()
         {
@@ -512,6 +513,25 @@ namespace Team7ADProjectMVC
             }
         }
 
-        
+        public String wcfSendForConfirmation(String DisbListId)
+        {
+            try
+            {
+            int dId = Convert.ToInt32(DisbListId);
+            DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
+            int deptit= (int)disb.DepartmentId;
+            Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
+            String token = emp.Token;
+
+            fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", "clerk");
+            return "true";
+
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
     }
 }

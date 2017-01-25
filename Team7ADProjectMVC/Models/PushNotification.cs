@@ -11,55 +11,94 @@ namespace Team7ADProjectMVC.Models
 {
     public class PushNotification
     {
-        public string PushFCMNotification(string ID, string message)
+        public PushNotification()
         {
-            string SERVER_API_KEY = "AAAAjD8Iv20:APA91bG3BW0rQSG9WRbpf0SCSboeMOlwm9xyTZF3AsPNbj97wlM7resjGzdjUUQuhvytRdWsvoEKcwq4vKqMeM2uBQRLBj84tWxSWeX87XV1-p_DRBtBUrlxvt_Qq1tDrwFDo_9a9A5t";
-            var SENDER_ID = "602352959341";
-            var value = message;
-            WebRequest tRequest;
-            tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
-            tRequest.Method = "post";
-            tRequest.ContentType = "application/json";
-            tRequest.Headers.Add(string.Format("Authorization: key={0}", SERVER_API_KEY));
-
-            tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
-
-            var data = new
-            {
-                to = "fg_Zb3GAPYo:APA91bEbhMLwk_P2IlFEh13MeJaz6Tlf4dV2Gx1n9Apfx38JWRNMr8YY0ZktYw77IS31iO39H1hB22-t6OdXCC8AbSrxsVFivB6i2IOQbp1FaQpWRTEkzgRynsqEbwyVnPS8WfJgPE0W",
-                notification = new
-                {
-                    body = "TEST TEST TEST",
-                    title = "This is the title"
-                    //icon = "myicon"
-                }
-            };
-
-            var serializer = new JavaScriptSerializer();
-            var json = serializer.Serialize(data);
-
-            Byte[] byteArray = Encoding.UTF8.GetBytes(json);
-
-            tRequest.ContentLength = byteArray.Length;
-
-            Stream dataStream = tRequest.GetRequestStream();
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            dataStream.Close();
-
-            WebResponse tResponse = tRequest.GetResponse();
-
-            dataStream = tResponse.GetResponseStream();
-
-            StreamReader tReader = new StreamReader(dataStream);
-
-            String sResponseFromServer = tReader.ReadToEnd();
-
-
-            tReader.Close();
-            dataStream.Close();
-            tResponse.Close();
-            return sResponseFromServer;
+            // TODO: Add constructor logic here
         }
 
+        public bool Successful
+        {
+            get;
+            set;
+        }
+
+        public string Response
+        {
+            get;
+            set;
+        }
+        public Exception Error
+        {
+            get;
+            set;
+        }
+
+        public PushNotification PushFCMNotification(string title, string message, string topic)
+        {
+            PushNotification result = new PushNotification();
+            try {
+                result.Successful = true;
+                result.Error = null;
+
+                string SERVER_API_KEY = "AAAAjD8Iv20:APA91bG3BW0rQSG9WRbpf0SCSboeMOlwm9xyTZF3AsPNbj97wlM7resjGzdjUUQuhvytRdWsvoEKcwq4vKqMeM2uBQRLBj84tWxSWeX87XV1-p_DRBtBUrlxvt_Qq1tDrwFDo_9a9A5t";
+                var SENDER_ID = "602352959341";
+                var value = message;
+                WebRequest tRequest;
+                tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+                tRequest.Method = "post";
+                tRequest.ContentType = "application/json";
+                tRequest.Headers.Add(string.Format("Authorization: key={0}", SERVER_API_KEY));
+
+                tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
+
+                var data = new
+                {
+                    //single device
+                    //to = token,
+                    //notification = new
+                    //{
+                    //    title = title,
+                    //    body = message,
+                    //}
+                    to = "/topics/" + topic,
+                    notification = new
+                    {
+                        title = title,
+                        body = message, 
+                    }
+                };
+
+                var serializer = new JavaScriptSerializer();
+                var json = serializer.Serialize(data);
+
+                Byte[] byteArray = Encoding.UTF8.GetBytes(json);
+
+                tRequest.ContentLength = byteArray.Length;
+
+                Stream dataStream = tRequest.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+
+                WebResponse tResponse = tRequest.GetResponse();
+
+                dataStream = tResponse.GetResponseStream();
+
+                StreamReader tReader = new StreamReader(dataStream);
+
+                String sResponseFromServer = tReader.ReadToEnd();
+                result.Response = sResponseFromServer;
+
+                tReader.Close();
+                dataStream.Close();
+                tResponse.Close();
+            }
+            catch (Exception e)
+            {
+                result.Successful = false;
+                result.Response = null;
+                result.Error = e;
+            }
+            return result;
+        }
     }
 }

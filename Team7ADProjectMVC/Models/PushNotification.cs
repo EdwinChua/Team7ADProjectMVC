@@ -51,17 +51,18 @@ namespace Team7ADProjectMVC.Models
 
                 tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
 
-                var data = new
+                var notification = new
                 {    //single device
                     to = token,
-                    title = title,
-                    message = message,
-                    data = "Stationary Store",
-               
+                    data = new
+                    {
+                        title = title,
+                        body = message,
+                    }
                 };
 
                 var serializer = new JavaScriptSerializer();
-                var json = serializer.Serialize(data);
+                var json = serializer.Serialize(notification);
 
                 Byte[] byteArray = Encoding.UTF8.GetBytes(json);
 

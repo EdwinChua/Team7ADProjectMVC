@@ -36,7 +36,7 @@ namespace Team7ADProjectMVC
             var reqList = from req in db.Requisitions
                           where req.DepartmentId == departmentId
                           && req.RequisitionStatus != "Completed"
-                          orderby req.RequisitionStatus == "Pending Approval"
+                          orderby req.RequisitionStatus ascending
                           select req;
             String beforesplit = "";
             String aftersplit = "";

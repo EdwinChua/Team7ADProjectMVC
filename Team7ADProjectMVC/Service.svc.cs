@@ -515,20 +515,30 @@ namespace Team7ADProjectMVC
 
         public String wcfSendForConfirmation(String DisbListId)
         {
-            try
-            {
-
             int dId = Convert.ToInt32(DisbListId);
 
             DisbursementList disb = (DisbursementList)from d in db.DisbursementLists
-                       where dId == d.DisbursementListId
-                       select d;
+                                                      where dId == d.DisbursementListId
+                                                      select d;
+            int deptId = (int) disb.DepartmentId;
 
             var token = from t in db.DisbursementLists
-                        where t.DepartmentId == disb.DepartmentId
-                        && t.Department.Employee.RoleId == 2
+                        where t.DepartmentId == deptId
+                        && t.Department.Employee.RoleId == 4
                         select t.Department.Employee.Token;
-                
+
+            //DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
+            //int deptit= (int)disb.DepartmentId;
+            //   Employee emp = (Employee)db.Employees.Where(W => W.DepartmentId == deptit);
+
+            //var token = from t in db.Employees
+            //          where t.DepartmentId == deptit
+            //          && t.RoleId == 4
+            //          select t.Token;
+
+
+            try
+            {
                 return token.ToString();
             }
             catch (Exception e)

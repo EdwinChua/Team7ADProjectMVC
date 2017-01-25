@@ -117,6 +117,14 @@ namespace Team7ADProjectMVC
 
 
 
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfLogout?userid={userid}", ResponseFormat = WebMessageFormat.Json)]
+        String wcfLogout(String userid);
+
+
+
+
+
     }
 }
 

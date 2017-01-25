@@ -528,5 +528,24 @@ namespace Team7ADProjectMVC
             }
         }
 
+
+
+        public String wcfLogout(String userID)
+        {
+            try
+            {
+
+                int Uid = Convert.ToInt32(userID);
+                Employee emp = db.Employees.Where(W => W.EmployeeId == Uid).First();
+                emp.Token = "NULL";
+                db.SaveChanges();
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
     }
 }

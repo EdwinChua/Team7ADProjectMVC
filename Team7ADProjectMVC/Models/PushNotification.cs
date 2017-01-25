@@ -13,8 +13,8 @@ namespace Team7ADProjectMVC.Models
     {
         public string PushFCMNotification(string ID, string message)
         {
-            string SERVER_API_KEY = "AAAAFOhU39k:APA91bFfHD6bi8vruAKHvyFlTIJtJO2P0k94L7t9BhmdlvAEQAmBXEZfCzVGGp4FfK7ExWCtAkzqbsbok1DrsWzswOvYNFUQ_xjk_aR5IG6mvnv_pZHQ8l3g9-KLyQp-OD4Ht24jjmzm";
-            var SENDER_ID = "89797222361";
+            string SERVER_API_KEY = "AAAAjD8Iv20:APA91bG3BW0rQSG9WRbpf0SCSboeMOlwm9xyTZF3AsPNbj97wlM7resjGzdjUUQuhvytRdWsvoEKcwq4vKqMeM2uBQRLBj84tWxSWeX87XV1-p_DRBtBUrlxvt_Qq1tDrwFDo_9a9A5t";
+            var SENDER_ID = "602352959341";
             var value = message;
             WebRequest tRequest;
             tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
@@ -26,7 +26,7 @@ namespace Team7ADProjectMVC.Models
 
             var data = new
             {
-                to = "cnumUhgAHUc:APA91bG8NM8UjP0wZWl8em22TCxw3btnfzNvLhBzv6MZJ9snAwvgsunFsyDvE7e9bSzfQzOGdX3HXjJW_32xSxsmu70gjkFnvhbGU8cnj6ZT6__UVoWEHJF0OgdYKgVO19NOKYE_vyot",
+                to = "fg_Zb3GAPYo:APA91bEbhMLwk_P2IlFEh13MeJaz6Tlf4dV2Gx1n9Apfx38JWRNMr8YY0ZktYw77IS31iO39H1hB22-t6OdXCC8AbSrxsVFivB6i2IOQbp1FaQpWRTEkzgRynsqEbwyVnPS8WfJgPE0W",
                 notification = new
                 {
                     body = "TEST TEST TEST",

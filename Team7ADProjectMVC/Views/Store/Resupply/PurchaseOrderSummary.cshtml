@@ -90,16 +90,16 @@
                 @supplier
             </td>
             <td>
-                @if (item.EmployeeId != null)
+                @if (item.Employee1 != null)
                 {
-                employee = db.Employees.Find(item.EmployeeId).EmployeeName;
+                employee = item.Employee1.EmployeeName;
                 }
                 @employee / @item.OrderDate.Value.ToString("dd MMM yyyy")
             </td>
             <td>
-                @if (item.AuthorizedBy != null)
+                @if (item.OrderStatus == "Approved")
                 {
-                    approvedBy = db.Employees.Find(item.EmployeeId).EmployeeName;
+                    approvedBy = item.Employee.EmployeeName;
                     printLine = approvedBy + " / " + item.AuthorizedDate.Value.ToString("dd MMM yyyy");
                 } else
                 {

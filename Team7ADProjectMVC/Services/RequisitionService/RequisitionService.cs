@@ -11,7 +11,7 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
         ProjectEntities db = new ProjectEntities();
       
 
-        public List<Requisition> GetAllRequisition(int depId)
+        public List<Requisition> GetAllRequisition(int? depId)
         {
             var queryByStatus = from t in db.Requisitions 
                                   where t.RequisitionStatus == "Pending Approval" && t.DepartmentId == depId

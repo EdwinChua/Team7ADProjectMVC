@@ -25,16 +25,16 @@ namespace Team7ADProjectMVC.TestControllers
 
 
 
-        //Employee user = (Employee)(Session["Employee"]); need real session of employee from login
-        int depIdofLoginUser = 4;//int depId=user.Department.DepartmentId
-        int depHeadId = 8;//int depHeadId=user.EmployeeId
+        Employee user ;
+        int? depIdofLoginUser;
+        int? depHeadId;
 
 
         public HeadController()
         {
             reqsvc = new RequisitionService();
             depsvc = new DelegateRoleService();
-           
+
         }
 
         // GET: Head
@@ -54,8 +54,11 @@ namespace Team7ADProjectMVC.TestControllers
         //----------------------------View/Approve/Reject Requisition Part--------------start here
         public ActionResult ListAllEmployees(string currentFilter, string searchString, int? page)
         {
-            
-            
+
+            //user = (Employee)Session["user"];
+            depIdofLoginUser = 4; //user.DepartmentId;
+            depHeadId = 8; //user.EmployeeId;
+
 
             var requisitions = reqsvc.GetAllRequisition(depIdofLoginUser);
             
@@ -91,6 +94,9 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult EmployeeRequisition(int? id)
         {
+            //user = (Employee)Session["user"];
+            depIdofLoginUser = 4; //user.DepartmentId;
+            depHeadId = 8; //user.EmployeeId;
             Requisition r = reqsvc.FindById(id);
             if (r == null)
             {
@@ -102,6 +108,9 @@ namespace Team7ADProjectMVC.TestControllers
         }
         public ActionResult ApproveReject(int id)
         {
+            //user = (Employee)Session["user"];
+            depIdofLoginUser = 4; //user.DepartmentId;
+            depHeadId = 8; //user.EmployeeId;
             Requisition r = reqsvc.FindById(id);
             if (r == null)
             {
@@ -112,6 +121,9 @@ namespace Team7ADProjectMVC.TestControllers
         }
         public ActionResult MarkAsCollected(int? rid, string textcomments, string status)
         {
+            //user = (Employee)Session["user"];
+            depIdofLoginUser = 4; //user.DepartmentId;
+            depHeadId = 8; //user.EmployeeId;
             Requisition r = reqsvc.FindById(rid);
             if (status.Equals("Approve"))
             {
@@ -141,7 +153,10 @@ namespace Team7ADProjectMVC.TestControllers
         //----------------------------View/Approve/Reject Requisition Part--------------end here
         //----------------------------Delegation Part----------------------------------start here
         public ActionResult show()
-        {                   
+        {
+           // user = (Employee)Session["user"];
+            depIdofLoginUser = 4; //user.DepartmentId;
+            depHeadId =8; //user.EmployeeId;
             Delegate delegatedEmployee= depsvc.getDelegatedEmployee(depIdofLoginUser);
 
             if (delegatedEmployee == null)
@@ -159,7 +174,9 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult ManageDelegation(int? empId, string status, string startDate, string endDate, int? DelegateId )
 
-        {
+        { //user = (Employee)Session["user"];
+            depIdofLoginUser = 4; //user.DepartmentId;
+            depHeadId = 8; //user.EmployeeId;
             Employee emp = depsvc.FindById(empId);
             Delegate d = depsvc.FinddelegaterecordById(DelegateId);
          
@@ -224,7 +241,9 @@ namespace Team7ADProjectMVC.TestControllers
         }
 
         public ActionResult fill()
-        {
+        { //user = (Employee)Session["user"];
+            depIdofLoginUser = 4; //user.DepartmentId;
+            depHeadId = 8; //user.EmployeeId;
             Delegate d = depsvc.getDelegatedEmployee(4);
             Employee e = depsvc.FindById(d.EmployeeId);
             ViewBag.emp = e.EmployeeName;
@@ -236,7 +255,9 @@ namespace Team7ADProjectMVC.TestControllers
             return View("Terminate");
         }
         public ActionResult ManageTerminate(int? empId, string status, string startDate, string endDate)
-        {
+        {  //user = (Employee)Session["user"];
+            depIdofLoginUser = 4; //user.DepartmentId;
+            depHeadId = 8; //user.EmployeeId;
             return View("DelegateRole");
         }
         //----------------------------Delegation Part----------------------------------end here

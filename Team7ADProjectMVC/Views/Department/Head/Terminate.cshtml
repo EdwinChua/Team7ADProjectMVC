@@ -112,13 +112,14 @@
 
                 inline: true,
                 sideBySide: false,
-                minDate: new Date()
+              
             });
 
             $("#datetimepicker1").on("dp.change", function (date, e) {
                 console.log($('#datetimepicker1').data("DateTimePicker").date());
                 $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
                 $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                $('#datetimepicker2').data("DateTimePicker").minDate(date.date);
             });
 
             $("#datetimepicker2").on("dp.change", function (date, e) {

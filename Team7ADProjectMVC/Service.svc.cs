@@ -7,6 +7,7 @@ using System.Text;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 using Team7ADProjectMVC.Services;
+using System.Web.Security;
 
 namespace Team7ADProjectMVC
 {
@@ -327,10 +328,20 @@ namespace Team7ADProjectMVC
 
         public wcflogin getlogin(String userid , String password)
         {
-            // do the proper login here.. 
-            // test case only.
 
-            wcflogin dDetail = new wcflogin();
+           wcflogin dDetail = new wcflogin();
+           bool result= Membership.ValidateUser(userid, password);
+            if(result==true)
+            {
+               
+            }
+            else
+            {
+
+            }
+
+
+          
             if(userid.Equals("c1"))
             {
                 dDetail.Deptid = "0";
@@ -518,14 +529,22 @@ namespace Team7ADProjectMVC
             try
             {
             int dId = Convert.ToInt32(DisbListId);
+
             DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
             int deptit= (int)disb.DepartmentId;
             Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
             String token = emp.Token;
+            fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", token);
 
-            fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", "clerk");
+            //List<Employee> empList = new List<Employee>();
+            //foreach(Employee e in empList)
+            //    {
+            //        if (e.RoleId == 4)
+            //        {
+                       
+            //        }
+            //    }
             return "true";
-
             }
             catch (Exception e)
             {

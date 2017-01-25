@@ -110,6 +110,13 @@ namespace Team7ADProjectMVC
         String wcfAcceptCollection(String DisListID);
 
 
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfSendForConfirmation?DisbursementListID={DisListID}", ResponseFormat = WebMessageFormat.Json)]
+        String wcfSendForConfirmation(String DisListID);
+
+
+
     }
 }
 

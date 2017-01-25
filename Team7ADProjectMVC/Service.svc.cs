@@ -526,6 +526,7 @@ namespace Team7ADProjectMVC
 
             var token = from t in db.DisbursementLists
                         where t.DepartmentId == disb.DepartmentId
+                        && t.Department.Employee.RoleId == 2
                         select t.Department.Employee.Token;
                 
           

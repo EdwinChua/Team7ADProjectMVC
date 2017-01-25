@@ -51,17 +51,14 @@ namespace Team7ADProjectMVC.Models
 
                 tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
 
+                
                 var data = new
                 {
-                    // to = YOUR_FCM_DEVICE_ID, // Uncoment this if you want to test for single device
-                    to = token, // this is for topic 
-                    notification = new
-                    {
-                        title = title,
-                        body = message,
-                        data = "Stationary Store",
-                        //icon="myicon"
-                    }
+                    //notification = new
+                    to = token,
+                    title = title,
+                    body = message,
+                    
                 };
 
                 var serializer = new JavaScriptSerializer();

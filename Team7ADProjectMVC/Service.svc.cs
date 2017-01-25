@@ -337,9 +337,8 @@ namespace Team7ADProjectMVC
                 return "0";
             }
         }
-        public wcflogin getlogin(String userid , String password)
+        public wcflogin getlogin(String userid , String password, String token)
         {
-
            wcflogin dDetail = new wcflogin();
            int empid = Convert.ToInt32(userid);
            bool result = Membership.ValidateUser(userid, password);
@@ -353,18 +352,15 @@ namespace Team7ADProjectMVC
                Permission makePerm = db.Permissions.Where(x => x.PermissionId == emp.PermissionId).First();
                dDetail.Permission = makePermissionstring(makePerm.ViewRequisition.ToString()) + "-" + makePermissionstring(makePerm.ApproveRequisition.ToString() )+ "-" +
                    makePermissionstring(makePerm.ChangeCollectionPoint.ToString()) + "-" +makePermissionstring( makePerm.ViewCollectionDetails.ToString());
-           }
+                emp.Token = token;
+                db.SaveChanges();
+            }
            else
            {
                dDetail.Authenticate = "false";
 
            }
            return dDetail;
-           
-            
-             
-
-          
         }
 
         public String updatelocation(String deptid, String collectionptid)

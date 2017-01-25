@@ -65,8 +65,8 @@ namespace Team7ADProjectMVC
         String getallocate();
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcflogin?userid={userid}&password={password}", ResponseFormat = WebMessageFormat.Json)]
-        wcflogin getlogin(String userid,String password);
+        [WebGet(UriTemplate = "/wcflogin?userid={userid}&password={password}&token={token}", ResponseFormat = WebMessageFormat.Json)]
+        wcflogin getlogin(String userid,String password, String token);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfChangecollectionpt?dept={deptid}&location={collectionptid}", ResponseFormat = WebMessageFormat.Json)]
@@ -432,6 +432,7 @@ public class wcflogin
     string role;
     string deptid;
     string permission;
+   
 
 
     [DataMember]
@@ -457,7 +458,6 @@ public class wcfStoreRequisitions
     string deptName;
     string approvalDate;
     string reqStatus;
-   
 
 
     [DataMember]

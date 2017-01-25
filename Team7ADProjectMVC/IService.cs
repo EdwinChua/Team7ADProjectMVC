@@ -90,8 +90,6 @@ namespace Team7ADProjectMVC
         [WebGet(UriTemplate = "/wcfStoreRequisitions", ResponseFormat = WebMessageFormat.Json)]
         List<wcfStoreRequisitions> getStoreRequistions();
 
-
-
         [OperationContract]
         [WebGet(UriTemplate = "/wcfBtnReqList", ResponseFormat = WebMessageFormat.Json)]
         String wcfBtnReqList();
@@ -108,7 +106,6 @@ namespace Team7ADProjectMVC
         [OperationContract]
         [WebGet(UriTemplate = "/wcfAcceptCollection?DisbursementListID={DisListID}", ResponseFormat = WebMessageFormat.Json)]
         String wcfAcceptCollection(String DisListID);
-
 
     }
 }
@@ -173,12 +170,6 @@ public class wcfRequisitionList
 public class wcfRequisitionItem
 {
 
-    string itemname;
-    string quantity;
-    string uom;
-
-
-
     [DataMember]
     public String Itemname { get; set; }
 
@@ -193,10 +184,6 @@ public class wcfRequisitionItem
 [DataContract]
 public class wcfTodayCollectionlist
 {
-
-    string collectionpt;
-    string time;
-    string disbursementListID;
 
     [DataMember]
     public String Collectionpt { get; set; }
@@ -401,10 +388,6 @@ public class wcfRetrivalList
 
 public class wcfallocate
 {
-    string itemName;
-    string preQty;
-    string disbQty;
-
 
     [DataMember]
     public String ItemName { get; set; }
@@ -420,13 +403,6 @@ public class wcfallocate
 
 public class wcflogin
 {
-    string authenticate;
-    string userid;
-    string role;
-    string deptid;
-    string permission;
-
-
     [DataMember]
     public String Userid { get; set; }
 

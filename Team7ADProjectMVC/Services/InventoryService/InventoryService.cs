@@ -485,7 +485,7 @@ namespace Team7ADProjectMVC.Models
         {
 
             int deptId;
-            int prepQty;
+
             int adjustedQty;
             int disburseListId;
             int disburseDetailId;

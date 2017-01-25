@@ -24,7 +24,6 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
                 {
                     return xyz;
                 }
-    
             }
             return null;
         }
@@ -46,7 +45,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
         {
             return db.Employees.Find(empid);
         }
-        public  void manageDelegate(Employee e, DateTime startDate, DateTime endDate/*, bool approveReq, bool changeCP, bool viewReq, bool makeReq, bool delegateRol, bool viewColDetl*/)
+        public  void manageDelegate(Employee e, DateTime startDate, DateTime endDate,int depHeadId)
         {
               
             Permission p = new Permission();
@@ -56,69 +55,36 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
             d.StartDate = startDate.Date;
             d.EndDate = endDate.Date;
             d.ActualEndDate = endDate.Date;
-            d.ApprovedBy = 8;//default dep head id
+            d.ApprovedBy = depHeadId;//default dep head id
             d.ApprovedDate = DateTime.Today;
             db.Delegates.Add(d);
             db.SaveChanges();
-
-           
-            //p.ApproveRequisition = approveReq;
-            //p.ChangeCollectionPoint = changeCP;
-            //p.ViewRequisition = viewReq;
-            //p.MakeRequisition = makeReq;
-            //p.DelegateRole = delegateRol;
-            //p.ViewCollectionDetails = viewColDetl;
-
-            //db.Permissions.Add(p);
-            //db.SaveChanges();
-
+            
             e.RoleId = 3;
-          //  e.PermissionId = p.PermissionId;
+
             db.Entry(e).State = EntityState.Modified;
             db.SaveChanges();
 
 
         }
-        public void updateDelegate(Employee e, Delegate d,DateTime startDate, DateTime endDate/*, bool approveReq, bool changeCP, bool viewReq, bool makeReq, bool delegateRol, bool viewColDetl*/)
-        {     
-
-
+        public void updateDelegate(Employee e, Delegate d,DateTime startDate, DateTime endDate,int depHeadId)
+        {
             d.StartDate = startDate.Date;
             d.EndDate = endDate.Date;
             d.ActualEndDate = endDate.Date;
-            d.ApprovedBy = 8;//default dep head id
+            d.ApprovedBy = depHeadId;//default dep head id
             d.ApprovedDate = DateTime.Today.Date;
             db.Entry(d).State = EntityState.Modified;
             db.SaveChanges();
-
-          
-            //p.ApproveRequisition = approveReq;
-            //p.ChangeCollectionPoint = changeCP;
-            //p.ViewRequisition = viewReq;
-            //p.MakeRequisition = makeReq;
-            //p.DelegateRole = delegateRol;
-            //p.ViewCollectionDetails = viewColDetl;
-
-            //db.Entry(p).State = EntityState.Modified;
-            //db.SaveChanges();
-           
-
         }
+
         public void TerminateDelegate(Employee emp, Delegate d)
         {
-            d.ActualEndDate = DateTime.Today;
+            d.ActualEndDate = DateTime.Today.AddDays(-1);
             db.Entry(d).State = EntityState.Modified;
             db.SaveChanges();
-
-            //p.ApproveRequisition = false;
-            //p.ChangeCollectionPoint = false;
-            //p.ViewRequisition = false;
-            //p.MakeRequisition = false;
-            //p.DelegateRole = false;
-            //p.ViewCollectionDetails = false;
-            //db.Entry(p).State = EntityState.Modified;
-            //db.SaveChanges();
         }
+
         public List<Delegate> getDelegate()
         {
 

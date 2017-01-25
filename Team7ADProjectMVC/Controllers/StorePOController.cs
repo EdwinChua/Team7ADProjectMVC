@@ -5,9 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.DelegateRoleService;
+using Team7ADProjectMVC.Models.UtilityService;
 using Team7ADProjectMVC.Services;
 using Team7ADProjectMVC.Services.DepartmentService;
 using Team7ADProjectMVC.Services.SupplierService;
+using Team7ADProjectMVC.Services.UtilityService;
 
 namespace Team7ADProjectMVC.Controllers
 {
@@ -18,6 +20,7 @@ namespace Team7ADProjectMVC.Controllers
         private IDepartmentService deptSvc;
         private IDelegateRoleService delegateSvc;
         private ISupplierAndPurchaseOrderService supplierAndPOSvc;
+        private IUtilityService utilSvc;
 
         public StorePOController()
         {
@@ -26,6 +29,7 @@ namespace Team7ADProjectMVC.Controllers
             deptSvc = new DepartmentService();
             delegateSvc = new DelegateRoleService();
             supplierAndPOSvc = new SupplierAndPurchaseOrderService();
+            utilSvc = new UtilityService();
         }
 
         public ActionResult GeneratePO()
@@ -50,11 +54,23 @@ namespace Team7ADProjectMVC.Controllers
             
             return View(poList);
         }
-        public ActionResult SearchPurchaseOrderSummary(string orderStatus, DateTime? dateOrdered, DateTime? dateApproved)
+        public ActionResult SearchPurchaseOrderSummary(string orderStatus, string dateOrderedString, string dateApprovedString)
         {
-            List<PurchaseOrder> poList = supplierAndPOSvc.GetAllPOOrderByApproval();
+            DateTime? dateOrdered = null;
+            DateTime? dateApproved = null;
+            int resultCount = 0;
+            if (dateOrderedString != null && dateOrderedString.Count() > 1)
+            {
+                dateOrdered = utilSvc.GetDateTimeFromPicker(dateOrderedString);
+            }
+            if (dateApprovedString != null && dateApprovedString.Count() > 1)
+            {
+                dateApproved = utilSvc.GetDateTimeFromPicker(dateApprovedString);
+            }
 
-            return View(poList);
+            List <PurchaseOrder> poList = supplierAndPOSvc.SearchPurchaseOrders(orderStatus, dateOrdered, dateApproved, out resultCount);
+            ViewBag.ResultCount = resultCount;
+            return View("PurchaseOrderSummary", poList);
         }
 
         public ActionResult ViewReceiveOrder(String id)
@@ -62,5 +78,14 @@ namespace Team7ADProjectMVC.Controllers
             //TODO: EDWIN
             return View();
         }
+
+        public ActionResult PurchaseOrder(int id)
+        {
+            PurchaseOrder purchaseOrder = supplierAndPOSvc.FindPOById(id);
+            return View(purchaseOrder);
+        }
+
+
     }
+
 }

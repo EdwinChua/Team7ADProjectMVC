@@ -21,6 +21,7 @@ namespace Team7ADProjectMVC
             this.Inventories1 = new HashSet<Inventory>();
             this.Inventories2 = new HashSet<Inventory>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
+            this.PurchaseOrders = new HashSet<PurchaseOrder>();
         }
     
         public int SupplierId { get; set; }
@@ -40,5 +41,7 @@ namespace Team7ADProjectMVC
         public virtual ICollection<Inventory> Inventories2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
     }
 }

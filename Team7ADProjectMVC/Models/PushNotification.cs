@@ -33,7 +33,7 @@ namespace Team7ADProjectMVC.Models
             set;
         }
 
-        public PushNotification PushFCMNotification(string title, string message, string topic)
+        public PushNotification PushFCMNotification(string title, string message, string token)
         {
             PushNotification result = new PushNotification();
             try {
@@ -52,20 +52,12 @@ namespace Team7ADProjectMVC.Models
                 tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
 
                 var data = new
-                {
-                    //single device
-                    //to = token,
-                    //notification = new
-                    //{
-                    //    title = title,
-                    //    body = message,
-                    //}
-                    to = "/topics/" + topic,
-                    notification = new
-                    {
-                        title = title,
-                        body = message, 
-                    }
+                {    //single device
+                    to = token,
+                    title = title,
+                    message = message,
+                    data = "Stationary Store",
+               
                 };
 
                 var serializer = new JavaScriptSerializer();

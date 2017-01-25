@@ -24,7 +24,6 @@ namespace Team7ADProjectMVC
             this.Departments = new HashSet<Department>();
             this.Departments1 = new HashSet<Department>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
-            this.PurchaseOrders1 = new HashSet<PurchaseOrder>();
             this.Requisitions = new HashSet<Requisition>();
             this.Retrievals = new HashSet<Retrieval>();
         }
@@ -36,6 +35,7 @@ namespace Team7ADProjectMVC
         public Nullable<int> RoleId { get; set; }
         public Nullable<int> PermissionId { get; set; }
         public string PhNo { get; set; }
+        public string Token { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Adjustment> Adjustments { get; set; }
@@ -53,8 +53,6 @@ namespace Team7ADProjectMVC
         public virtual Permission Permission { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrder> PurchaseOrders1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Requisition> Requisitions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.ReportService;
 
 namespace Team7ADProjectMVC.TestControllers
@@ -15,6 +16,8 @@ namespace Team7ADProjectMVC.TestControllers
         private ProjectEntities db = new ProjectEntities();
         private IReportService rptSvc = new ReportService();
         // GET: Rpt
+
+        [AuthorisePermissions(Permission="MakeRequisition")]
         public ActionResult Index()
         {
             

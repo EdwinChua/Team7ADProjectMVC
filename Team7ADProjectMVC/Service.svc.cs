@@ -347,12 +347,14 @@ namespace Team7ADProjectMVC
                Employee emp = db.Employees.Where(x => x.EmployeeId == empid).First();
                dDetail.Role = emp.Role.Description;
                dDetail.Deptid= emp.DepartmentId.ToString();
-               dDetail.Userid = emp.EmployeeName;
+               dDetail.Userid = userid;
+               dDetail.EmpName = emp.EmployeeName;
                dDetail.Authenticate = "true";
                Permission makePerm = db.Permissions.Where(x => x.PermissionId == emp.PermissionId).First();
                dDetail.Permission = makePermissionstring(makePerm.ViewRequisition.ToString()) + "-" + makePermissionstring(makePerm.ApproveRequisition.ToString() )+ "-" +
                    makePermissionstring(makePerm.ChangeCollectionPoint.ToString()) + "-" +makePermissionstring( makePerm.ViewCollectionDetails.ToString());
                 emp.Token = token;
+
                 db.SaveChanges();
             }
            else

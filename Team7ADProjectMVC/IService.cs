@@ -432,11 +432,14 @@ public class wcflogin
     string role;
     string deptid;
     string permission;
-   
+    string empName;
 
 
     [DataMember]
     public String Userid { get; set; }
+
+    [DataMember]
+    public String EmpName { get; set; }
 
     [DataMember]
     public String Role { get; set; }

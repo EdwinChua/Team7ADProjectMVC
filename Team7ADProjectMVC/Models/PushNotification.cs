@@ -59,7 +59,9 @@ namespace Team7ADProjectMVC.Models
                     {
                         title = title,
                         body = message,
-                    }
+                       
+                    },
+                   
                 };
 
                 var serializer = new JavaScriptSerializer();

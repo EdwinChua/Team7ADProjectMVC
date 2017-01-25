@@ -121,6 +121,7 @@
           <Property Name="RoleId" Type="int" />
           <Property Name="PermissionId" Type="int" />
           <Property Name="PhNo" Type="varchar" MaxLength="50" />
+          <Property Name="Token" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Inventory">
           <Key>
@@ -926,6 +927,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="RoleId" Type="Int32" />
           <Property Name="PermissionId" Type="Int32" />
           <Property Name="PhNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Token" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Adjustments" Relationship="Self.AdjustmentEmployeeId" FromRole="Employee" ToRole="Adjustment" />
           <NavigationProperty Name="CollectionPoints" Relationship="Self.eid" FromRole="Employee" ToRole="CollectionPoints" />
           <NavigationProperty Name="Delegates" Relationship="Self.DelegateEmployeeId" FromRole="Employee" ToRole="Delegate" />
@@ -1751,6 +1753,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
                 <ScalarProperty Name="PhNo" ColumnName="PhNo" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

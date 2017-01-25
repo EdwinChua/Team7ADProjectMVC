@@ -71,7 +71,7 @@ ViewCollectionDetails BIT
 )
 
 INSERT INTO Permission
-VALUES (1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),
+VALUES (1,1,0,0,1,1),(1,0,1,0,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),
 (1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),
 (1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1);
 
@@ -95,6 +95,7 @@ DepartmentId INT,
 RoleId INT,
 PermissionId INT,
 PhNo VARCHAR(50),
+Token VARCHAR(200)
 CONSTRAINT RoleId FOREIGN KEY(RoleId) REFERENCES [Role](RoleId),
 CONSTRAINT PermissionId FOREIGN KEY(PermissionId) REFERENCES Permission(PermissionId)
 )
@@ -147,46 +148,46 @@ VALUES ('STO','STORE','Jenny Wong Mei Lin','890 6656','891 9912',10,1,1)
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Jenny Wong Mei Lin','youngmountain7@gmail.com',6,4,1,'11111111') -- registrar
 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Feng Teng','youngmountain7@gmail.com',6,1,2,'22222222') -- store 6 store clerk 2
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Min Yew','youngmountain7@gmail.com',6,1,3,'33333333')
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Lao Lao','youngmountain7@gmail.com',6,1,4,'44444444')
 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mrs Pamela Kow','youngmountain7@gmail.com',1,2,5,'55555555') -- english 1 Head 3
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Dr. Soh Kian Wee','youngmountain7@gmail.com',2,2,6,'66666666')-- com science 2 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('MrMohd. Azman','youngmountain7@gmail.com',3,2,7,'77777777') -- commerce 3
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mrs Low Kway Boo','youngmountain7@gmail.com',4,2,8,'88888888') -- registrar 4
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr. Peter Tan Ah Meng','youngmountain7@gmail.com',5,2,9,'99999999') -- zoo 5
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr. Sander','youngmountain7@gmail.com',6,2,10,'10101010') -- store 6
 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Prof Ezra Pound','youngmountain7@gmail.com',1,4,11,'11111111') -- eng 1 rep 4
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr. Ar Phyan Kwee','youngmountain7@gmail.com',2,4,12,'12121212') -- com science 2
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Dr. Chia Leow Bee','youngmountain7@gmail.com',3,4,13,'13131313') -- commerce 3
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Prof Tan','youngmountain7@gmail.com',4,4,14,'14141414') -- registrar 4
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr. Tay Shout Pann','youngmountain7@gmail.com',5,4,15,'15151515') -- zoo 5
 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr Alan','youngmountain7@gmail.com',1,3,5,'55555555') -- english 1 Head 3
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr Bob','youngmountain7@gmail.com',2,3,6,'66666666')-- com science 2 
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Mr Charlie','youngmountain7@gmail.com',3,3,7,'77777777') -- commerce 3
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Ms Delia','youngmountain7@gmail.com',4,3,8,'88888888') -- registrar 4
-INSERT INTO Employee
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Ms Eve','youngmountain7@gmail.com',5,3,9,'99999999') -- zoo 5
 
 

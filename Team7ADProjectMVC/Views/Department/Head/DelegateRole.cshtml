@@ -16,7 +16,7 @@
             <div>
                 <select id="empListPicker" name="empId"
                         class="selectpicker show-tick form-control"
-                        data-live-search="true" title="Select employee to delegate" >
+                        data-live-search="true" title="Select employee to delegate" required >
                     @foreach (var emp in ViewBag.empList)
                     {
                         <option value="@emp.EmployeeId" >@emp.EmployeeName </option>

@@ -33,7 +33,7 @@ namespace Team7ADProjectMVC.Models
             set;
         }
 
-        public PushNotification PushFCMNotification(string title, string message)
+        public PushNotification PushFCMNotification(string title, string message, string token)
         {
             PushNotification result = new PushNotification();
             try {
@@ -54,11 +54,12 @@ namespace Team7ADProjectMVC.Models
                 var data = new
                 {
                     //single device
-                    to = "fg_Zb3GAPYo:APA91bEbhMLwk_P2IlFEh13MeJaz6Tlf4dV2Gx1n9Apfx38JWRNMr8YY0ZktYw77IS31iO39H1hB22-t6OdXCC8AbSrxsVFivB6i2IOQbp1FaQpWRTEkzgRynsqEbwyVnPS8WfJgPE0W",
+                    to = token,
                     notification = new
                     {
                         title = title,
                         body = message,
+                        
                     }
                 };
 

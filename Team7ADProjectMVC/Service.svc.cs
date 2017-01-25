@@ -529,7 +529,6 @@ namespace Team7ADProjectMVC
                         && t.Department.Employee.RoleId == 2
                         select t.Department.Employee.Token;
                 
-          
                 return token.ToString();
             }
             catch (Exception e)

@@ -89,6 +89,27 @@ namespace Team7ADProjectMVC
         [OperationContract]
         [WebGet(UriTemplate = "/wcfStoreRequisitions", ResponseFormat = WebMessageFormat.Json)]
         List<wcfStoreRequisitions> getStoreRequistions();
+
+
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfBtnReqList", ResponseFormat = WebMessageFormat.Json)]
+        String wcfBtnReqList();
+
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfGenerateBtnOk", ResponseFormat = WebMessageFormat.Json)]
+        String wcfGenetateBtnOK();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfClearListBtnOK", ResponseFormat = WebMessageFormat.Json)]
+        String wcfClearListBtnOK();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfAcceptCollection?DisbursementListID={DisListID}", ResponseFormat = WebMessageFormat.Json)]
+        String wcfAcceptCollection(String DisListID);
+
+
     }
 }
 
@@ -151,6 +172,7 @@ public class wcfRequisitionItem
     string itemname;
     string quantity;
     string uom;
+
 
 
     [DataMember]
@@ -351,6 +373,7 @@ public class wcfRetrivalList
     string requestedQty;
     string retrievedQty;
     string status;
+    string binNo;
 
     [DataMember]
     public String ItemNo { get; set; }
@@ -367,7 +390,10 @@ public class wcfRetrivalList
     [DataMember]
     public String Status { get; set; }
 
-   }
+    [DataMember]
+    public String BinNo { get; set; }
+
+}
 
 public class wcfallocate
 {
@@ -416,7 +442,7 @@ public class wcfStoreRequisitions
     string deptName;
     string approvalDate;
     string reqStatus;
-    string btnstatus;
+   
 
 
     [DataMember]
@@ -427,9 +453,6 @@ public class wcfStoreRequisitions
 
     [DataMember]
     public String ReqStatus { get; set; }
-
-    [DataMember]
-    public String Btnstatus { get; set; }
 
 }
 

@@ -64,7 +64,7 @@
                         <td class="col-md-2"><input class="form-control" name="adjustedQuantity" type="number" max="@prodmax" />
                          <span class="text-danger field-validation-error" data-valmsg-for="preparedQuantity" data-valmsg-replace="true"><span for="preparedQuantity" class="">Value must be less than or equal to @prodmax</span></span>
                     </tr>
-                    @if (item.ItemNo == item2.ItemNo)
+                    @*@if (item.ItemNo == item2.ItemNo)
                     {
                     <tr>
                         <td></td>
@@ -72,21 +72,18 @@
                         <td></td>
                         <td><input type="submit" class="btn btn-primary" value="Allocate" /></td>
                     </tr>
-                    }
+                    }*@
 
                 </tbody>
             </table>
+            <input type="submit" class="btn btn-primary" value="Allocate" />
 
-            { item2 = item; formcount++;}
-            <script>
-                $('#form_@formcount input[type="number"]').each(function () {
-                    // Do your magic here
-                });
-            </script>
+            { item2 = item; formcount++; }
 
-            }
+        }
 
-            } else { <div><h4>There are no items to reallocate at this time</h4></div> }
+    }
+    else { <div><h4>There are no items to reallocate at this time</h4></div> }
 
     </div>
 </div>

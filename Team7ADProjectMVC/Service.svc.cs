@@ -519,7 +519,7 @@ namespace Team7ADProjectMVC
             int deptit= (int)disb.DepartmentId;
             Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
             String token = emp.Token;
-            fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", token);
+            fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", token, "Registrar");
             return "true";
             }
             catch (Exception e)

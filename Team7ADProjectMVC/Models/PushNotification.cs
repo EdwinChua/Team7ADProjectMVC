@@ -51,18 +51,20 @@ namespace Team7ADProjectMVC.Models
 
                 tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
 
-                var notification = new
-                {    //single device
-                    to = token,
-                    data = new
+                var data = new
+                {
+                    // to = YOUR_FCM_DEVICE_ID, // Uncoment this if you want to test for single device
+                    to = token, // this is for topic 
+                    notification = new
                     {
                         title = title,
                         body = message,
+                        //icon="myicon"
                     }
                 };
 
                 var serializer = new JavaScriptSerializer();
-                var json = serializer.Serialize(notification);
+                var json = serializer.Serialize(data);
 
                 Byte[] byteArray = Encoding.UTF8.GetBytes(json);
 

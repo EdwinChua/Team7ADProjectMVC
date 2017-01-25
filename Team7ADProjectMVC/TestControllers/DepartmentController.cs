@@ -81,10 +81,17 @@ namespace Team7ADProjectMVC.TestControllers
         
         public ActionResult Index(string sortOrder)
 
+
+
+
+
         {
             var requisitions = depasvc.ListAllRequisition();
 
+
             gsearchString = "";
+
+
 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
             ViewBag.emeSortParm = String.IsNullOrEmpty(sortOrder) ? "e_desc" : "";
@@ -98,11 +105,16 @@ namespace Team7ADProjectMVC.TestControllers
                 gsearchString = Session["searchstr"].ToString();
 
             }
-     
+            
 
 
 
            
+
+
+
+
+
             var re = from s in db.Requisitions
                      select s;
             if (sortOrder != null)
@@ -489,6 +501,10 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.rel = relis;
 
             return View(requisition);
+        }
+        public ActionResult HtmlPage1() {
+
+            return View();
         }
     }
 }

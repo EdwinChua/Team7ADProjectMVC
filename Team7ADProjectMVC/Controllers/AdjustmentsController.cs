@@ -133,16 +133,32 @@ namespace Team7ADProjectMVC.Controllers
         public ActionResult Create()
         {
             var adjust = new adjustment();
+            var adjustdetail = new adjustmentdetail();
+            ViewBag.Item = new SelectList(db.Inventories, "ItemNo", "Description", adjustdetail.ItemNo);
 
-            adjust.AdjustmentDetails.Add(new adjustmentdetail());
+            adjust.AdjustmentDetails.Add(adjustdetail);
 
 
             return View(adjust);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind] adjustment adjust)
         {
+            if (ModelState.IsValid)
+            {
+
+                Adjustment Adjustment = new Adjustment
+                {
+                    AdjustmentDate = adjust.AdjustmentDate,
+                    EmployeeId = adjust.EmployeeId,
+                    Status = adjust.Status
+                };
+                db.Adjustments.Add(Adjustment);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return View(adjust);
         }
 
@@ -150,7 +166,10 @@ namespace Team7ADProjectMVC.Controllers
         public ActionResult AddDetail()
         {
             var adjust = new adjustment();
-            adjust.AdjustmentDetails.Add(new adjustmentdetail());
+            var adjustdetail = new adjustmentdetail();
+            ViewBag.Item = new SelectList(db.Inventories, "ItemNo", "Description", adjustdetail.ItemNo);
+            adjust.AdjustmentDetails.Add(adjustdetail);
+
 
             return View(adjust);
         }

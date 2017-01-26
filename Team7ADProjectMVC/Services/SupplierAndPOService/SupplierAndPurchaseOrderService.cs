@@ -49,7 +49,7 @@ namespace Team7ADProjectMVC.Services.SupplierService
             return q;
         }
 
-        public void GeneratePurchaseOrders(string[] itemNo, int[] supplier, int?[] orderQuantity)
+        public void GeneratePurchaseOrders(Employee employee, string[] itemNo, int[] supplier, int?[] orderQuantity)
         {
             List<PurchaseOrder> listOfPurchaseOrdersToUpdate = new List<PurchaseOrder>();
             List<PurchaseDetail> listOfPurchaseDetails = new List<PurchaseDetail>();
@@ -84,7 +84,7 @@ namespace Team7ADProjectMVC.Services.SupplierService
                 PurchaseOrder tempPurchaseOrder = new PurchaseOrder();
                 tempPurchaseOrder.OrderDate = DateTime.Today;
                 tempPurchaseOrder.SupplierId = localSupplierId;
-                //TODO EDWIN - Employee ID
+                tempPurchaseOrder.EmployeeId = employee.EmployeeId;
                 db.PurchaseOrders.Add(tempPurchaseOrder);
                 db.SaveChanges();
 
@@ -160,12 +160,12 @@ namespace Team7ADProjectMVC.Services.SupplierService
             return db.PurchaseOrders.Find(id);
         }
 
-        public void ApprovePurchaseOrder(int poNumber, string approve)
+        public void ApprovePurchaseOrder(Employee employee, int poNumber, string approve)
         {
             PurchaseOrder purchaseOrder = db.PurchaseOrders.Find(poNumber);
             purchaseOrder.OrderStatus = approve;
             purchaseOrder.AuthorizedDate = DateTime.Today;
-            //TODO: purchaseOrder.AuthorizedBy = ??? 
+            purchaseOrder.AuthorizedBy = employee.EmployeeId;
             db.Entry(purchaseOrder).State = EntityState.Modified;
             db.SaveChanges();
             if (approve == "Approved")
@@ -221,7 +221,7 @@ namespace Team7ADProjectMVC.Services.SupplierService
             return q;
         }
 
-        public void ReceiveDelivery(int deliveryId, string deliveryRefNo, string dateDelivered, int[] deliveryDetailId, string[] itemNo, int[] quantity, string[] remarks)
+        public void ReceiveDelivery(Employee employee, int deliveryId, string deliveryRefNo, string dateDelivered, int[] deliveryDetailId, string[] itemNo, int[] quantity, string[] remarks)
         {
             for (int i = 0; i< deliveryDetailId.Count(); i ++)
             {
@@ -234,7 +234,7 @@ namespace Team7ADProjectMVC.Services.SupplierService
             Delivery delivery = db.Deliveries.Find(deliveryId);
             delivery.DeliveredDate = DateTime.Today;
             delivery.DeliveryOrderNo = deliveryRefNo;
-            //TODO: delivery.ReceivedBy = 
+            delivery.ReceivedBy = employee.EmployeeId;
             db.Entry(delivery).State = EntityState.Modified;
             db.SaveChanges();
         }

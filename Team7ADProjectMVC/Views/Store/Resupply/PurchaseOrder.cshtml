@@ -4,6 +4,8 @@
     ViewBag.Title = "Details";
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Purchase Order Details";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 
@@ -83,7 +85,7 @@
         }
     </tbody>
 </table>
-@if (Model.OrderStatus == "Pending")
+@if (Model.OrderStatus == "Pending" && (currentEmployee.Role.Name == "Store Supervisor" || currentEmployee.Role.Name == "Store Manager"))
 {<form action="../ApprovePO">
         <input type="hidden" name="poNumber" value="@Model.PurchaseOrderId" />
         <input type="submit" name="approve" value="Approve" title="Approve" class="btn btn-primary" />

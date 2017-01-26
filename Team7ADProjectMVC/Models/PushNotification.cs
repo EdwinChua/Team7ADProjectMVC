@@ -140,12 +140,10 @@ namespace Team7ADProjectMVC.Models
             }
         }
 
-        public void CollectionPointChanged(String deptid,String  collectionptid)
+        public void CollectionPointChanged(int deptid)
         {
-
-                int dId = Convert.ToInt32(deptid);
-                int cpoint = Convert.ToInt32(collectionptid);
-                Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
+ 
+                Department wcfItem = db.Departments.Where(p => p.DepartmentId == deptid).First();
                 String cpointName = wcfItem.CollectionPoint.PlaceName;
                 String deptname= wcfItem.DepartmentName;
                 List<String> myData = new List<string>();
@@ -187,6 +185,23 @@ namespace Team7ADProjectMVC.Models
             myData.Add("0");
 
             PushFCMNotificationToStoreClerk("New Requisition",  "From: "+deptName, myData);
+        }
+
+        public void NotificationForHeadOnCreate(String EmpID)
+        {
+            int eid = Convert.ToInt32(EmpID);
+            Employee wcfItem = db.Employees.Where(p => p.EmployeeId == eid).First();
+            int deptId = (int)wcfItem.DepartmentId;
+            Employee head = db.Employees.Where(W => W.DepartmentId == deptId).Where(x => x.RoleId == 2).First();
+            string empName = wcfItem.EmployeeName;
+            string token = head.Token;
+            List<String> myData = new List<string>();
+            myData.Add("ApproveRequisition");
+            myData.Add("Approve Requisition");
+            myData.Add("0");
+            myData.Add("0");
+
+            PushFCMNotification("New Requisition", "From: " + empName, token, myData);
         }
 
 }

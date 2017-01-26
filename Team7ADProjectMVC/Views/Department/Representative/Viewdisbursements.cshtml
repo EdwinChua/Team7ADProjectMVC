@@ -47,7 +47,7 @@
                                     class="selectpicker show-tick form-control"
                                     data-live-search="true" title="Status">
                                 <option>Processing</option>
-                                <option>Completed</option>
+                                <option>Complete</option>
                             </select>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                         @Html.DisplayNameFor(model => model.Department.DepartmentName)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.OrderedDate)
+                        @Html.DisplayNameFor(model => model.DeliveryDate)
                     </th>
 
                     <th>
@@ -94,7 +94,7 @@
                             @Html.DisplayFor(modelItem => item.Department.DepartmentName)
                         </td>
                         <td>
-                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.OrderedDate))
+                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DeliveryDate))
                         </td>
 
                         <td>

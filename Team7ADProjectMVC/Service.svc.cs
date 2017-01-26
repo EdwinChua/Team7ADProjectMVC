@@ -382,7 +382,7 @@ namespace Team7ADProjectMVC
                 Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
                 wcfItem.CollectionPointId = cpoint;
                 db.SaveChanges();
-                fcm.CollectionPointChanged(deptid, collectionptid);
+                fcm.CollectionPointChanged(dId);
                 return collectionptid;
             } catch (Exception e)
             {

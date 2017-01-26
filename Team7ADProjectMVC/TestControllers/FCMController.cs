@@ -24,8 +24,10 @@ namespace Team7ADProjectMVC.TestControllers
 
      //   fcmPush.RepAcceptRequisition("5");// call when rep accepts...
 
-      //    fcmPush.CollectionPointChanged("4","2");// call when rep accepts...
-            fcmPush.NewRequisitonMade("3");
+      //   fcmPush.CollectionPointChanged(2);// call when rep accepts...
+        //    fcmPush.NewRequisitonMade("3");
+
+        //    fcmPush.NotificationForHeadOnCreate("14");
 
 
         }

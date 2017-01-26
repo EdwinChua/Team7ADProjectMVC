@@ -14,9 +14,9 @@
 @using (Html.BeginForm())
 { @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
+    @*<div class="form-group">*@
         @Html.EditorFor(x => x)
-    </div>
+    @*</div>*@
 
     <h3>Adjustment Detail </h3>
     <div class="row">

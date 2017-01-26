@@ -189,5 +189,22 @@ namespace Team7ADProjectMVC.Models
             PushFCMNotificationToStoreClerk("New Requisition",  "From: "+deptName, myData);
         }
 
+        public void NotificationForHeadOnCreate(String EmpID)
+        {
+            int eid = Convert.ToInt32(EmpID);
+            Employee wcfItem = db.Employees.Where(p => p.EmployeeId == eid).First();
+            int deptId = (int)wcfItem.DepartmentId;
+            Employee head = db.Employees.Where(W => W.DepartmentId == deptId).Where(x => x.RoleId == 2).First();
+            string empName = wcfItem.EmployeeName;
+            string token = head.Token;
+            List<String> myData = new List<string>();
+            myData.Add("ApproveRequisition");
+            myData.Add("Approve Requisition");
+            myData.Add("0");
+            myData.Add("0");
+
+            PushFCMNotification("New Requisition", "From: " + empName, token, myData);
+        }
+
 }
 }

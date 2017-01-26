@@ -756,6 +756,7 @@ VALUES
 CREATE TABLE Delivery
 (
 DeliveryId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+DeliveryOrderNo VARCHAR(50),
 PurchaseOrderId INT,
 DeliveredDate DATE,
 ReceivedBy INT,
@@ -764,11 +765,11 @@ CONSTRAINT DeliveryEmployeeId FOREIGN KEY (ReceivedBy ) REFERENCES Employee (Emp
 )
 
 INSERT INTO Delivery
-(PurchaseOrderId,DeliveredDate,ReceivedBy)
+(PurchaseOrderId,DeliveryOrderNo,DeliveredDate,ReceivedBy)
 VALUES
-(1,'2017-01-02',3),
-(2,'2017-01-04',2),
-(3,'2017-01-10',2);
+(1,'A1234','2017-01-02',3),
+(2,'A1235','2017-01-04',2),
+(3,'A1236','2017-01-10',2);
 
 -------------------------------------------------- DeliveryDetail ----------------------------------------
 CREATE TABLE DeliveryDetail
@@ -778,7 +779,8 @@ ItemNo VARCHAR(50),
 Quantity INT,
 Remarks VARCHAR(250),
 DeliveryId INT,
-CONSTRAINT DeliveryDetailItemNo FOREIGN KEY (ItemNo) REFERENCES Inventory (ItemNo)
+CONSTRAINT DeliveryDetailItemNo FOREIGN KEY (ItemNo) REFERENCES Inventory (ItemNo),
+CONSTRAINT DeliveryDetailDeliveryId FOREIGN KEY (DeliveryId) REFERENCES Delivery (DeliveryId)
 )
 
 INSERT INTO DeliveryDetail

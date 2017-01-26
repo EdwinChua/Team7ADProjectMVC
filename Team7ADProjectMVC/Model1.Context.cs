@@ -39,6 +39,7 @@ namespace Team7ADProjectMVC
         public virtual DbSet<Inventory> Inventories { get; set; }
         public virtual DbSet<ItemCodeGenerator> ItemCodeGenerators { get; set; }
         public virtual DbSet<Measurement> Measurements { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
@@ -47,6 +48,7 @@ namespace Team7ADProjectMVC
         public virtual DbSet<Retrieval> Retrievals { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<disbAnalysi> disbAnalysis { get; set; }
         public virtual DbSet<StockCard> StockCards { get; set; }
     }
 }

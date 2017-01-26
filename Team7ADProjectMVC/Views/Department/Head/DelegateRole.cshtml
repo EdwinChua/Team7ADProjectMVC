@@ -3,6 +3,9 @@
     @{
         Layout = "~/Views/Shared/_Layouthead.cshtml";
         Page.Title = "Delegate Acting Department-Head";
+        //Layout = "~/_Layout1.cshtml";
+        Employee currentEmployee = (Employee)Session["User"];
+        Page.Employee = currentEmployee;
 }
 
 @*<script type="text/javascript">
@@ -75,23 +78,15 @@
 
                             <h5>
                    
-                    Start Date:<label id="s1" name="s" value="startDate"></label><br/>  
+                    Start Date:<label id="s1" name="s" value="startDate">  @ViewBag.autoStartdate</label><br/>  
                     <input type="hidden" name="startDate" id="startDate" />
                   
                                      
-                    End Date::<label id="e1" name="e" value="endDate"></label><br/>
-                    <input type="hidden" name="DelegateId" id="d" value="0" />
-                   
-                   <input type="hidden" name="endDate" id="endDate" /> 
-                    @*<input type="checkbox" name="approveReq" >Approve Requisition<br>
-    <input type="checkbox" name="changeCP">Change Collection Point<br>
-    <input type="checkbox" name="viewReq">View Requisiton <br />
-    <input type="checkbox" name="makeReq">Make Requisition<br>
-    <input type="checkbox" name="delegateRol">Delegate Role<br />
-    <input type="checkbox" name="viewColDetl">View Collection Details<br />
+                    End Date::<label id="e1" name="e" value="endDate">@ViewBag.autoEnddate</label><br/>
 
-    <br />
-    <br />*@
+                    <input type="hidden" name="DelegateId" id="d" value="0" />                   
+                   <input type="hidden" name="endDate" id="endDate" /> 
+                 
 
                 </h5>
                 

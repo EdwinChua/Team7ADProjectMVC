@@ -1,8 +1,12 @@
-﻿@*@model IEnumerable<Team7ADProjectMVC.Requisition>*@
+﻿
+@*@model IEnumerable<Team7ADProjectMVC.Requisition>*@
 
 @{
     Page.Title = "View All Employees";
     Layout = "~/Views/Shared/_Layouthead.cshtml";
+    //Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 
@@ -96,6 +100,7 @@
                                             </ul>
                                         </li>
                                     </ul>
+
                                 </div>
 
                             </nav>
@@ -114,13 +119,7 @@
                             <th>
                                 Ordered Date
                             </th>
-                            @*<th>
-                                    Request Date
-                                </th>
-                                <th>
-                                    Request
-                                </th>*@
-                        </tr>
+                            
                     </thead>
                     <tbody>
                       

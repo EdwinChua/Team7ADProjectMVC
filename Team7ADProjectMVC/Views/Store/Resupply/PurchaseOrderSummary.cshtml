@@ -17,8 +17,9 @@
                 <select id="searchByStatus" name="orderStatus"
                         class="selectpicker show-tick form-control"
                         data-live-search="true" title="Order Status">
-                    <option>Received</option>
+                    <option>Approved</option>
                     <option>Pending</option>
+                    <option>Rejected</option>
                 </select>
             </div>
         </div>
@@ -42,9 +43,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-1">
             <button class="btn btn-default" type="submit">
                 Search
+            </button>
+            </div>
+        <div class="col-lg-1">
+            <button class="btn btn-primary" type="button" onclick="window.location.href='../StorePO/GeneratePO'">
+                Create New
             </button>
         </div>
     </form>
@@ -64,16 +70,19 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="col-md-1">
                 PO Number
             </th>
-            <th>
-                Supplier Code
+            <th  class="col-md-2">
+                Supplier (Supp.Code)
             </th>
-            <th>
+            <th  class="col-md-2">
                 Ordered By / Date
             </th>
-            <th>
+            <th  class="col-md-1">
+                Status
+            </th>
+            <th  class="col-md-2">
                 Approved By / Date
             </th>
         </tr>
@@ -90,21 +99,28 @@
                 @supplier
             </td>
             <td>
-                @if (item.EmployeeId != null)
+                @if (item.Employee1 != null)
                 {
-                employee = db.Employees.Find(item.EmployeeId).EmployeeName;
+                employee = item.Employee1.EmployeeName;
                 }
                 @employee / @item.OrderDate.Value.ToString("dd MMM yyyy")
             </td>
             <td>
-                @if (item.AuthorizedBy != null)
-                {
-                    approvedBy = db.Employees.Find(item.EmployeeId).EmployeeName;
-                    printLine = approvedBy + " / " + item.AuthorizedDate.Value.ToString("dd MMM yyyy");
-                } else
-                {
-                    printLine = @item.OrderStatus;
-                }
+                @item.OrderStatus
+            </td>
+            <td>
+               
+               @{
+                   if (item.Employee != null)
+                   {
+                       approvedBy = item.Employee.EmployeeName;
+                       printLine = approvedBy + " / " + item.AuthorizedDate.Value.ToString("dd MMM yyyy");
+                   }
+                   else
+                   {
+                       printLine = null;
+                   }
+               }
                 @printLine
             </td>
         </tr>

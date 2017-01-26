@@ -7,6 +7,7 @@ using System.Text;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 using Team7ADProjectMVC.Services;
+using System.Web.Security;
 
 namespace Team7ADProjectMVC
 {
@@ -325,48 +326,52 @@ namespace Team7ADProjectMVC
         }
 
 
-        public wcflogin getlogin(String userid , String password)
+        public string makePermissionstring(String s)
         {
-            // do the proper login here.. 
-            // test case only.
-
-            wcflogin dDetail = new wcflogin();
-            if(userid.Equals("c1"))
+            if(s.Equals("True"))
             {
-                dDetail.Deptid = "0";
-                dDetail.Role = "Clerk";
-                dDetail.Userid = "c1";
-                dDetail.Authenticate = "true";
-                dDetail.Permission = "1-1-0-1";
-               
-            
-
-            }
-            else if (userid.Equals("e1"))
-            {
-                dDetail.Deptid = "4";
-                dDetail.Role = "Employee";
-                dDetail.Userid = "e1";
-                dDetail.Authenticate = "true";
-            }
-            else if (userid.Equals("h1"))
-            {
-                dDetail.Deptid = "4";
-                dDetail.Role = "Boss";
-                dDetail.Userid = "h1";
-                dDetail.Authenticate ="true";
-            }
-            else if (userid.Equals("r1"))
-            {
-                dDetail.Deptid = "4";
-                dDetail.Role = "Representative";
-                dDetail.Userid = "r1";
-                dDetail.Authenticate = "true";
-                dDetail.Permission = "1-0-0-1";
+                return "1";
             }
             else
+            {
+                return "0";
+            }
+        }
+        public wcflogin getlogin(String userid , String password, String token)
+        {
+            wcflogin dDetail = new wcflogin();
+            try
+            {
+               
+                int empid = Convert.ToInt32(userid);
+                bool result = Membership.ValidateUser(userid, "password!");
+                if (result == true)
+                {
+                    Employee emp = db.Employees.Where(x => x.EmployeeId == empid).First();
+                    dDetail.Role = emp.Role.Name;
+                    dDetail.Deptid = emp.DepartmentId.ToString();
+                    dDetail.Userid = userid;
+                    dDetail.EmpName = emp.EmployeeName;
+                    dDetail.Authenticate = "true";
+                    Permission makePerm = db.Permissions.Where(x => x.PermissionId == emp.PermissionId).First();
+                    dDetail.Permission = makePermissionstring(makePerm.ViewRequisition.ToString()) + "-" + makePermissionstring(makePerm.ApproveRequisition.ToString()) + "-" +
+                        makePermissionstring(makePerm.ChangeCollectionPoint.ToString()) + "-" + makePermissionstring(makePerm.ViewCollectionDetails.ToString());
+                    emp.Token = token;
+
+                    db.SaveChanges();
+                }
+                else
+                {
+                    dDetail.Authenticate = "false";
+
+                }
+                return dDetail;
+            }
+            catch(Exception e)
+            {
                 dDetail.Authenticate = "false";
                 return dDetail;
+            }
         }
 
         public String updatelocation(String deptid, String collectionptid)
@@ -518,20 +523,34 @@ namespace Team7ADProjectMVC
             try
             {
             int dId = Convert.ToInt32(DisbListId);
+
             DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
             int deptit= (int)disb.DepartmentId;
             Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
-            String token = emp.Token;
 
-            List<Employee> empList = new List<Employee>();
-            foreach(Employee e in empList)
-                {
-                    if (e.RoleId == 4)
-                    {
-                        fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", token);
-                    }
-                }
+          //  Employee emp = db.Employees.Where(W => W.EmployeeId==14).First();
+            String token = emp.Token;
+            fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", token);
             return "true";
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
+
+
+        public String wcfLogout(String userID)
+        {
+            try
+            {
+
+                int Uid = Convert.ToInt32(userID);
+                Employee emp = db.Employees.Where(W => W.EmployeeId == Uid).First();
+                emp.Token = "NULL";
+                db.SaveChanges();
+                return "true";
             }
             catch (Exception e)
             {

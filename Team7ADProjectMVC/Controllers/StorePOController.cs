@@ -34,9 +34,7 @@ namespace Team7ADProjectMVC.Controllers
 
         public ActionResult GeneratePO()
         {
-            //TODO: EDWIN
             List<Inventory> itemsToResupply = supplierAndPOSvc.GetAllItemsToResupply();
-
             return View(itemsToResupply);
         }
 
@@ -73,10 +71,12 @@ namespace Team7ADProjectMVC.Controllers
             return View("PurchaseOrderSummary", poList);
         }
 
-        public ActionResult ViewReceiveOrder(String id)
+        public ActionResult DeliveryDetails(int id)
         {
-            //TODO: EDWIN
-            return View();
+            List<DeliveryDetail> deliveryDetailsList = supplierAndPOSvc.GetDeliveryDetailsByDeliveryId(id);
+            Delivery delivery = supplierAndPOSvc.FindDeliveryById(id);
+            ViewBag.DeliveryDetailsList = deliveryDetailsList;
+            return View("ViewReceiveOrder",delivery);
         }
 
         public ActionResult PurchaseOrder(int id)
@@ -84,7 +84,25 @@ namespace Team7ADProjectMVC.Controllers
             PurchaseOrder purchaseOrder = supplierAndPOSvc.FindPOById(id);
             return View(purchaseOrder);
         }
+        
+        public ActionResult ApprovePO(int poNumber, string approve)
+        {
+            if(approve=="Approve")
+            {
+                approve = "Approved";
+            } else
+            {
+                approve = "Rejected";
+            }
+            supplierAndPOSvc.ApprovePurchaseOrder(poNumber, approve); //TODO: include employee id
+            return RedirectToAction("PurchaseOrderSummary");
+        }
 
+        public ActionResult ListDeliveries()
+        {
+            List<Delivery> allDeliveries = supplierAndPOSvc.GetAllDeliveries();
+            return View(allDeliveries);
+        }
 
     }
 

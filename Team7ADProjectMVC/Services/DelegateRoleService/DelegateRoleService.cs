@@ -12,7 +12,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
     {
         ProjectEntities db = new ProjectEntities();
 
-         public  Delegate getDelegatedEmployee(int depId)
+         public  Delegate getDelegatedEmployee(int? depId)
         {
             var queryBydepId = from t in db.Delegates
                                where t.Employee.DepartmentId == depId 
@@ -28,7 +28,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
             return null;
         }
        
-        public List<Employee> GetAllEmployeebyDepId(int depId)
+        public List<Employee> GetAllEmployeebyDepId(int? depId)
         {
             var queryBydepId= from t in db.Employees
                                 where t.DepartmentId == depId
@@ -45,7 +45,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
         {
             return db.Employees.Find(empid);
         }
-        public  void manageDelegate(Employee e, DateTime startDate, DateTime endDate,int depHeadId)
+        public  void manageDelegate(Employee e, DateTime startDate, DateTime endDate,int? depHeadId)
         {
               
             Permission p = new Permission();
@@ -67,7 +67,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
 
 
         }
-        public void updateDelegate(Employee e, Delegate d,DateTime startDate, DateTime endDate,int depHeadId)
+        public void updateDelegate(Employee e, Delegate d,DateTime startDate, DateTime endDate,int? depHeadId)
         {
             d.StartDate = startDate.Date;
             d.EndDate = endDate.Date;

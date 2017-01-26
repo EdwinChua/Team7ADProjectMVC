@@ -79,7 +79,7 @@ namespace Team7ADProjectMVC.Models
         }
 
         public List<Requisition> GetOutStandingRequisitions()
-        {
+            {
             var query = from rq in db.Requisitions
                         where rq.RequisitionStatus != "Pending Approval"
                         && rq.RequisitionStatus != "Rejected"
@@ -99,7 +99,10 @@ namespace Team7ADProjectMVC.Models
                 {
                     try
                     {
-                        temp = temp.Intersect(rList.requisitionList).ToList();
+                        foreach (var item in rList.requisitionList)
+                        {
+                            temp.RemoveAll(x => x.RequisitionId == item.RequisitionId);
+                        }
                     }
                     catch
                     {

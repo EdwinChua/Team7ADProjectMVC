@@ -92,6 +92,14 @@ namespace Team7ADProjectMVC.Services.SupplierService
                                     .OrderByDescending(x => x.PurchaseOrderId)
                                     .FirstOrDefault().PurchaseOrderId;
 
+                Delivery delivery = new Delivery();
+                delivery.PurchaseOrderId = lastCreatedPOId;
+                db.Deliveries.Add(delivery);
+
+                var lastCreatedDeliveryId = db.Deliveries
+                                    .OrderByDescending(x => x.DeliveryId)
+                                    .FirstOrDefault().DeliveryId;
+
                 var q = (from x in listOfPurchaseDetails
                          where x.SupplierId == localSupplierId
                          select x).ToList();
@@ -99,6 +107,12 @@ namespace Team7ADProjectMVC.Services.SupplierService
                 {
                     item.PurchaseOrderId = lastCreatedPOId;
                     db.PurchaseDetails.Add(item);
+                    db.SaveChanges();
+
+                    DeliveryDetail deliveryDetail = new DeliveryDetail();
+                    deliveryDetail.DeliveryId = lastCreatedDeliveryId;
+                    deliveryDetail.ItemNo = item.ItemNo;
+                    db.DeliveryDetails.Add(deliveryDetail);
                     db.SaveChanges();
 
                     Inventory tempInv = db.Inventories.Find(item.ItemNo);
@@ -139,6 +153,10 @@ namespace Team7ADProjectMVC.Services.SupplierService
                 resultList.RemoveAll(x => x.AuthorizedDate > dateApproved);
                 count = resultList.Count();
             }
+            if(resultList.Count() ==0)
+            {
+                resultList = GetAllPOOrderByApproval();
+            }
             return resultList;
 
         }
@@ -146,6 +164,38 @@ namespace Team7ADProjectMVC.Services.SupplierService
         public PurchaseOrder FindPOById(int id)
         {
             return db.PurchaseOrders.Find(id);
+        }
+
+        public void ApprovePurchaseOrder(int poNumber, string approve)
+        {
+            PurchaseOrder purchaseOrder = db.PurchaseOrders.Find(poNumber);
+            purchaseOrder.OrderStatus = approve;
+            purchaseOrder.AuthorizedDate = DateTime.Today;
+            //purchaseOrder.AuthorizedBy = ???
+            db.Entry(purchaseOrder).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public List<Delivery> GetAllDeliveries()
+        {
+            var q = db.Deliveries.OrderBy(x => x.DeliveredDate != null).ThenByDescending(x => x.DeliveredDate);
+
+            return q.ToList();
+        }
+
+        public Delivery FindDeliveryById(int id)
+        {
+            return db.Deliveries.Find(id);
+        }
+
+        public List<DeliveryDetail> GetDeliveryDetailsByDeliveryId(int id)
+        {
+            DeliveryDetail dd = new DeliveryDetail();
+            
+            var q = (from x in db.DeliveryDetails
+                     where x.DeliveryDetailid == id
+                     select x).ToList();
+            return q;
         }
     }
 }

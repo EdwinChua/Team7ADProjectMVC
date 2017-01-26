@@ -129,8 +129,14 @@
                                 <td>
                                    @item.Employee.EmployeeName
                                 </td>
-                                <td>
-                                    @item.OrderedDate
+                                <td>@{
+
+                                    string[] D = item.OrderedDate.ToString().Split(' ');
+                                    string[] sd = D[0].Split('/');
+                                    ViewBag.showDate = sd[1] + "/" + sd[0] + "/" + sd[2]; 
+                                   }
+                                @ViewBag.showDate 
+                                                           
                                 </td>
                               <td> @foreach (var item2 in item.RequisitionDetails)
                                   { @item2.Inventory.Description <br> }

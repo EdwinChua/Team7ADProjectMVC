@@ -530,6 +530,7 @@ namespace Team7ADProjectMVC
 
           //  Employee emp = db.Employees.Where(W => W.EmployeeId==14).First();
             String token = emp.Token;
+             
             fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", token);
             return "true";
             }
@@ -538,7 +539,6 @@ namespace Team7ADProjectMVC
                 return "false";
             }
         }
-
 
 
         public String wcfLogout(String userID)

@@ -907,6 +907,19 @@ Insert into ItemCodeGenerator values
 ('s',3),('t',2),('u',1),('v',1),('w',1),('x',1),
 ('y',1),('z',1)
 
+-------------------------------------------------- Notification ----------------------------------------
+
+CREATE TABLE [Notification]
+(
+NotificationId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+EmployeeId INT NOT NULL,
+Title VARCHAR(200),
+Body VARCHAR(MAX),
+Intent VARCHAR(50),
+PageHeader VARCHAR(50),
+PageId VARCHAR(50),
+ExtraDetail VARCHAR(50)
+)
 -------------------------------------- Stock Card View ----------------------------------------
 CREATE VIEW StockCard AS
 

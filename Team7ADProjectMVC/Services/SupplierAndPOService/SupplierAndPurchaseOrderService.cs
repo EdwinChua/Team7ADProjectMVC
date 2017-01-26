@@ -84,21 +84,13 @@ namespace Team7ADProjectMVC.Services.SupplierService
                 PurchaseOrder tempPurchaseOrder = new PurchaseOrder();
                 tempPurchaseOrder.OrderDate = DateTime.Today;
                 tempPurchaseOrder.SupplierId = localSupplierId;
-                //TODO - Employee ID
+                //TODO EDWIN - Employee ID
                 db.PurchaseOrders.Add(tempPurchaseOrder);
                 db.SaveChanges();
 
                 var lastCreatedPOId = db.PurchaseOrders
                                     .OrderByDescending(x => x.PurchaseOrderId)
                                     .FirstOrDefault().PurchaseOrderId;
-
-                Delivery delivery = new Delivery();
-                delivery.PurchaseOrderId = lastCreatedPOId;
-                db.Deliveries.Add(delivery);
-
-                var lastCreatedDeliveryId = db.Deliveries
-                                    .OrderByDescending(x => x.DeliveryId)
-                                    .FirstOrDefault().DeliveryId;
 
                 var q = (from x in listOfPurchaseDetails
                          where x.SupplierId == localSupplierId
@@ -107,12 +99,6 @@ namespace Team7ADProjectMVC.Services.SupplierService
                 {
                     item.PurchaseOrderId = lastCreatedPOId;
                     db.PurchaseDetails.Add(item);
-                    db.SaveChanges();
-
-                    DeliveryDetail deliveryDetail = new DeliveryDetail();
-                    deliveryDetail.DeliveryId = lastCreatedDeliveryId;
-                    deliveryDetail.ItemNo = item.ItemNo;
-                    db.DeliveryDetails.Add(deliveryDetail);
                     db.SaveChanges();
 
                     Inventory tempInv = db.Inventories.Find(item.ItemNo);
@@ -124,12 +110,20 @@ namespace Team7ADProjectMVC.Services.SupplierService
         }
 
         public List<PurchaseOrder> GetAllPOOrderByApproval()
-        {
+        {// Unapproved ones will be at the top
             var q = (from x in db.PurchaseOrders
-                     orderby x.AuthorizedBy ascending
-                     select x).ToList(); // Unapproved ones will be at the top
-            
-            return q;
+                     where x.OrderStatus == "Pending"
+                     select x).ToList();
+            var q1 = (from x in db.PurchaseOrders
+                     where x.OrderStatus == "Approved"
+                     select x).ToList();
+            var q2 = (from x in db.PurchaseOrders
+                     where x.OrderStatus == "Rejected"
+                     select x).ToList();
+
+            List<PurchaseOrder> list = q.Concat(q1).Concat(q2).ToList();
+
+            return list;
         }
 
         public List<PurchaseOrder> SearchPurchaseOrders(string orderStatus, DateTime? dateOrdered, DateTime? dateApproved, out int count)
@@ -171,9 +165,38 @@ namespace Team7ADProjectMVC.Services.SupplierService
             PurchaseOrder purchaseOrder = db.PurchaseOrders.Find(poNumber);
             purchaseOrder.OrderStatus = approve;
             purchaseOrder.AuthorizedDate = DateTime.Today;
-            //purchaseOrder.AuthorizedBy = ???
+            //TODO: purchaseOrder.AuthorizedBy = ??? 
             db.Entry(purchaseOrder).State = EntityState.Modified;
             db.SaveChanges();
+            if (approve == "Approved")
+            {
+                Delivery delivery = new Delivery();
+                delivery.PurchaseOrderId = poNumber;
+                db.Deliveries.Add(delivery);
+                db.SaveChanges();
+
+                var lastCreatedDeliveryId = db.Deliveries
+                                        .OrderByDescending(x => x.PurchaseOrderId == purchaseOrder.PurchaseOrderId)
+                                        .FirstOrDefault().DeliveryId;
+                foreach (var item in purchaseOrder.PurchaseDetails)
+                {
+                    DeliveryDetail deliveryDetail = new DeliveryDetail();
+                    deliveryDetail.DeliveryId = lastCreatedDeliveryId;
+                    deliveryDetail.ItemNo = item.ItemNo;
+                    db.DeliveryDetails.Add(deliveryDetail);
+                    db.SaveChanges();
+                }
+            }
+            else if (approve=="Rejected")
+            {
+                foreach (var item in purchaseOrder.PurchaseDetails)
+                {
+                    Inventory tempInv = db.Inventories.Find(item.ItemNo);
+                    tempInv.HoldQuantity -= item.Quantity;
+                    db.Entry(tempInv).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
         }
 
         public List<Delivery> GetAllDeliveries()
@@ -196,6 +219,24 @@ namespace Team7ADProjectMVC.Services.SupplierService
                      where x.DeliveryDetailid == id
                      select x).ToList();
             return q;
+        }
+
+        public void ReceiveDelivery(int deliveryId, string deliveryRefNo, string dateDelivered, int[] deliveryDetailId, string[] itemNo, int[] quantity, string[] remarks)
+        {
+            for (int i = 0; i< deliveryDetailId.Count(); i ++)
+            {
+                DeliveryDetail deliveryDetail = db.DeliveryDetails.Find(deliveryDetailId[i]);
+                deliveryDetail.Quantity = quantity[i];
+                deliveryDetail.Remarks = remarks[i];
+                db.Entry(deliveryDetail).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            Delivery delivery = db.Deliveries.Find(deliveryId);
+            delivery.DeliveredDate = DateTime.Today;
+            delivery.DeliveryOrderNo = deliveryRefNo;
+            //TODO: delivery.ReceivedBy = 
+            db.Entry(delivery).State = EntityState.Modified;
+            db.SaveChanges();
         }
     }
 }

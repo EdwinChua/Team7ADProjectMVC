@@ -376,12 +376,18 @@ namespace Team7ADProjectMVC
 
         public String updatelocation(String deptid, String collectionptid)
         {
-            int dId = Convert.ToInt32(deptid);
-            int cpoint = Convert.ToInt32(collectionptid);
-            Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
-            wcfItem.CollectionPointId = cpoint;
-            db.SaveChanges();
-            return collectionptid;
+            try {
+                int dId = Convert.ToInt32(deptid);
+                int cpoint = Convert.ToInt32(collectionptid);
+                Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
+                wcfItem.CollectionPointId = cpoint;
+                db.SaveChanges();
+                fcm.CollectionPointChanged(deptid, collectionptid);
+                return collectionptid;
+            } catch (Exception e)
+            {
+                return "false";
+            }
         }
 
         public void updatedqun(wcfDisbursementListDetail c )
@@ -531,12 +537,11 @@ namespace Team7ADProjectMVC
             String token = emp.Token;
 
             List<String> myData = new List<string>();
-            myData.Add("ReceiveRequisition.Class");
+            myData.Add("ReceiveRequisition");
             myData.Add("Stationary Store");
             myData.Add("4");
-            myData.Add("4");
             myData.Add("09:30:00");
-                fcm.PushFCMNotification("Test Accept Delivery", "Delivery for:", token,myData);
+                fcm.PushFCMNotification("Accept Delivery", "Delivery for: "+deptName, token,myData);
                 return "true";
             }
             catch (Exception e)
@@ -553,7 +558,7 @@ namespace Team7ADProjectMVC
 
                 int Uid = Convert.ToInt32(userID);
                 Employee emp = db.Employees.Where(W => W.EmployeeId == Uid).First();
-                emp.Token = "NULL";
+                emp.Token = null;
                 db.SaveChanges();
                 return "true";
             }

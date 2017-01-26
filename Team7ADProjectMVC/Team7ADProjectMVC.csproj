@@ -371,6 +371,7 @@
     <Compile Include="Models\adjustment.cs" />
     <Compile Include="Models\adjustmentdetail.cs" />
     <Compile Include="Models\AuthorisePermissions.cs" />
+    <Compile Include="Models\List.cs" />
     <Compile Include="Models\PushNotification.cs" />
     <Compile Include="Models\CustomizedComparers.cs" />
     <Compile Include="Permission.cs">

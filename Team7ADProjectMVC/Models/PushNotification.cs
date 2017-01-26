@@ -6,14 +6,18 @@ using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Script.Serialization;
+using Team7ADProjectMVC.Services.DepartmentService;
 
 namespace Team7ADProjectMVC.Models
 {
     public class PushNotification
     {
+        //IDepartmentService deptSvc;
+        ProjectEntities db = new ProjectEntities();
         public PushNotification()
         {
             // TODO: Add constructor logic here
+             //deptSvc = new DepartmentService();
         }
 
         public bool Successful
@@ -62,11 +66,11 @@ namespace Team7ADProjectMVC.Models
                        },
                       data = new
                        {
-                          f = myData[0],
-                          f1= myData[1],
-                          f2 = myData[2],
-                          f3 = myData[3],
-                          f4 = myData[4],
+                          intent = myData[0],
+                          pageHeader = myData[1],
+                          id = myData[2],
+                          extraDetail = myData[3],
+                          //f4 = myData[4],
                         }
                     };
 
@@ -102,5 +106,90 @@ namespace Team7ADProjectMVC.Models
             }
             return result;
         }
-    }
+
+        public PushNotification PushFCMNotificationToStoreClerk(string title, string message, List<String> myData)
+        {
+
+            PushNotification result = new PushNotification();
+            
+            var tokenList = from e in db.Employees
+                            where e.RoleId == 1
+                            && e.Token != null
+                            select e.Token;
+            foreach (var token in tokenList.ToList())
+            {
+                PushFCMNotification(title, message,token, myData);
+            }
+            return result;
+        }
+
+        public void CheckForStockReorder()
+        {
+            var checkForStockReorder = (from x in db.Inventories
+                                        where x.Quantity < x.ReorderLevel
+                                        select x).ToList();
+
+            List<String> myData = new List<string>();
+            myData.Add("StockCard");
+            myData.Add("StockCard");
+            myData.Add("0");
+            myData.Add("0");
+            if (checkForStockReorder != null)
+            {
+                PushFCMNotificationToStoreClerk("Low Stock Alert", "Please see here", myData);
+            }
+        }
+
+        public void CollectionPointChanged(String deptid,String  collectionptid)
+        {
+
+                int dId = Convert.ToInt32(deptid);
+                int cpoint = Convert.ToInt32(collectionptid);
+                Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
+                String cpointName = wcfItem.CollectionPoint.PlaceName;
+                String deptname= wcfItem.DepartmentName;
+                List<String> myData = new List<string>();
+                myData.Add("DisbursementList");
+                myData.Add("Disbursement List");
+                myData.Add("0");
+                myData.Add("0");
+
+                PushFCMNotificationToStoreClerk(deptname+" Collection", "Changed to : "+ cpointName, myData);
+               
+        }
+
+        public void RepAcceptRequisition(String DisListID)
+        {
+
+            int dlid = Convert.ToInt32(DisListID);
+            DisbursementList wcfItem = db.DisbursementLists.Where(p => p.DisbursementListId == dlid).First();
+            string deptName = wcfItem.Department.DepartmentName;
+            List < String > myData = new List<string>();
+            myData.Add("DisbursementList");
+            myData.Add("Disbursement List");
+            myData.Add("0");
+            myData.Add("0");
+
+            PushFCMNotificationToStoreClerk(deptName, "Accepted Disbursement", myData);
+        }
+
+
+
+        public void NewRequisitonMade()
+        {
+
+            int dlid = Convert.ToInt32(DisListID);
+            var deptName = from d in db.DisbursementLists
+                           where d.DisbursementListId == dlid
+                           select d.Department.DepartmentName;
+            List<String> myData = new List<string>();
+            myData.Add("DisbursementList");
+            myData.Add("Disbursement List");
+            myData.Add("0");
+            myData.Add("0");
+
+            PushFCMNotificationToStoreClerk("Disbursement completed", deptName + " accepted disbursement.", myData);
+        }
+
+}
 }

@@ -84,9 +84,9 @@
     </tbody>
 </table>
 @if (Model.OrderStatus != "Approved")
-{<form action="ApprovePO">
+{<form action="../ApprovePO">
         <input type="hidden" name="poNumber" value="@Model.PurchaseOrderId" />
-        <input type="submit" name="approve" value="Approve" class="btn btn-primary" />
+        <input type="submit" name="approve" value="Approve" title="Approve" class="btn btn-primary" />
         <input type="submit" name="approve" value="Reject" class="btn btn-danger" />
      <input type="button" value="Back" class="btn btn-default" onclick="window.history.back()" />
     </form>

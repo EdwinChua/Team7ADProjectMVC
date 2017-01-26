@@ -154,7 +154,7 @@ namespace Team7ADProjectMVC.Models
                 myData.Add("0");
                 myData.Add("0");
 
-                PushFCMNotificationToStoreClerk(deptname+"'s Collection Point", "Changed to : "+ cpointName, myData);
+                PushFCMNotificationToStoreClerk(deptname+" Collection", "Changed to : "+ cpointName, myData);
                
         }
 
@@ -162,9 +162,8 @@ namespace Team7ADProjectMVC.Models
         {
 
             int dlid = Convert.ToInt32(DisListID);
-            var deptName = from d in db.DisbursementLists
-                    where d.DisbursementListId == dlid
-                    select d.Department.DepartmentName.ToString();
+            DisbursementList wcfItem = db.DisbursementLists.Where(p => p.DisbursementListId == dlid).First();
+            string deptName = wcfItem.Department.DepartmentName;
             // take what ever u want form there..
             List < String > myData = new List<string>();
             myData.Add("DisbursementList");
@@ -172,7 +171,7 @@ namespace Team7ADProjectMVC.Models
             myData.Add("0");
             myData.Add("0");
 
-            PushFCMNotificationToStoreClerk("Disbursement completed", deptName+ " accepted disbursement.", myData);
+            PushFCMNotificationToStoreClerk("Disbursement Completed", deptName+ " accepted disbursement.", myData);
         }
 
 

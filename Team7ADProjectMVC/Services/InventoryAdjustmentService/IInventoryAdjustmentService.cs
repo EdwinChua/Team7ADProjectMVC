@@ -11,5 +11,6 @@ namespace Team7ADProjectMVC.Models.InventoryAdjustmentService
         string findRolebyUserID(int userid);
         List<Adjustment> findSupervisorAdjustmentList();
         List<Adjustment> findManagerAdjustmentList();
+        List<Adjustment> FindAdjustmentBySearch(List<Adjustment> searchlist, string employee, string date, string status);
     }
 }

@@ -18,24 +18,24 @@ namespace Team7ADProjectMVC.Controllers
         }
 
         // GET: Adjustments
-        public ActionResult Index()
+        public ActionResult ViewAdjustment()
         {
             int userid = ((Employee)Session["user"]).EmployeeId;
 
             string role = ivadjustsvc.findRolebyUserID(userid);
-            ViewBag.SearchEmployee = new SelectList(db.Employees.Where(x => x.DepartmentId == 6), "EmployeeId", "EmployeeName");
-            
+            ViewBag.employee = new SelectList(db.Employees.Where(x => x.DepartmentId == 6), "EmployeeId", "EmployeeName");
+
             if (role == "Store Supervisor")
             {
                 List<SelectListItem> statuslist = new List<SelectListItem>()
                 {
-                    new SelectListItem {Text ="Pending Approval",Value ="1" },
-                    new SelectListItem {Text ="Approved",Value ="2" },
-                    new SelectListItem {Text ="Rejected",Value ="3" },
+                    new SelectListItem {Text ="Pending Approval"},
+                    new SelectListItem {Text ="Approved" },
+                    new SelectListItem {Text ="Rejected" },
                 };
 
-                ViewBag.SearchStatus = statuslist;
-                 var adjustmentlist=ivadjustsvc.findSupervisorAdjustmentList();
+                ViewBag.status = statuslist;
+                var adjustmentlist = ivadjustsvc.findSupervisorAdjustmentList();
                 return View(adjustmentlist);
             }
 
@@ -43,13 +43,13 @@ namespace Team7ADProjectMVC.Controllers
             {
                 List<SelectListItem> statuslist = new List<SelectListItem>()
                 {
-                    new SelectListItem {Text ="Pending Final Approval",Value ="1" },
-                    new SelectListItem {Text ="Approved",Value ="2" },
-                    new SelectListItem {Text ="Rejected",Value ="3" },
+                    new SelectListItem {Text ="Pending Final Approval" },
+                    new SelectListItem {Text ="Approved"},
+                    new SelectListItem {Text ="Rejected"},
                 };
 
-                ViewBag.SearchStatus = statuslist;
-                var adjustmentlist=ivadjustsvc.findManagerAdjustmentList();
+                ViewBag.status = statuslist;
+                var adjustmentlist = ivadjustsvc.findManagerAdjustmentList();
                 return View(adjustmentlist);
             }
 
@@ -57,14 +57,54 @@ namespace Team7ADProjectMVC.Controllers
 
             return View();
         }
-        //public ActionResult SearchAdjustment(int employee, int status, string date)
-        //{
-        //    if((status == null || status == "") && (date == null || date == ""))
-        //    {
 
-        //    }
+        public ActionResult SearchAdjustment(string employee, string status, string date)
+        {
 
-        //}
+            int userid = ((Employee)Session["user"]).EmployeeId;
+
+            string role = ivadjustsvc.findRolebyUserID(userid);
+            ViewBag.employee = new SelectList(db.Employees.Where(x => x.DepartmentId == 6), "EmployeeId", "EmployeeName");
+
+            if (role == "Store Supervisor")
+            {
+                var adjustmentlist = ivadjustsvc.findSupervisorAdjustmentList();
+
+                var result = ivadjustsvc.FindAdjustmentBySearch(adjustmentlist, employee, status, date);
+
+
+                List<SelectListItem> statuslist = new List<SelectListItem>()
+                {
+                    new SelectListItem {Text ="Pending Approval"},
+                    new SelectListItem {Text ="Approved" },
+                    new SelectListItem {Text ="Rejected" },
+                };
+
+                ViewBag.status = statuslist;
+                return View("ViewAdjustment", result);
+            }
+
+            if (role == "Store Supervisor")
+            {
+                var adjustmentlist = ivadjustsvc.findManagerAdjustmentList();
+                var result = ivadjustsvc.FindAdjustmentBySearch(adjustmentlist, employee, status, date);
+
+                List<SelectListItem> statuslist = new List<SelectListItem>()
+                {
+                    new SelectListItem {Text ="Pending Final Approval" },
+                    new SelectListItem {Text ="Approved"},
+                    new SelectListItem {Text ="Rejected"},
+                };
+
+                ViewBag.status = statuslist;
+                return View("ViewAdjustment", result);
+            }
+
+            return View();
+
+
+        }
+
 
 
 

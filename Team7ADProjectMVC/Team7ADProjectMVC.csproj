@@ -517,7 +517,7 @@
     <Content Include="Views\Adjustments\Create.cshtml" />
     <Content Include="Views\Adjustments\Delete.cshtml" />
     <Content Include="Views\Adjustments\Details.cshtml" />
-    <Content Include="Views\Adjustments\Index.cshtml" />
+    <Content Include="Views\Adjustments\ViewAdjustment.cshtml" />
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />
     <Content Include="Views\Store\Disbursement\ReallocateDisbursements.cshtml" />

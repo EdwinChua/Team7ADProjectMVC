@@ -526,16 +526,12 @@ namespace Team7ADProjectMVC
 
             DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
             int deptit= (int)disb.DepartmentId;
-            string deptName = disb.Department.DepartmentName;
             Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
+
+          //  Employee emp = db.Employees.Where(W => W.EmployeeId==14).First();
             String token = emp.Token;
-                List<String> myData = new List<string>();
-                myData.Add("ReceiveRequisition.Class");
-                myData.Add("Stationary Store");
-                myData.Add("4");
-                myData.Add("4");
-                myData.Add("09:30:00");
-            fcm.PushFCMNotification("Test Accept Delivery", "Delivery for:" + deptName, myData, token);
+             
+            fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", token);
             return "true";
             }
             catch (Exception e)

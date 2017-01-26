@@ -376,12 +376,33 @@ namespace Team7ADProjectMVC
 
         public String updatelocation(String deptid, String collectionptid)
         {
-            int dId = Convert.ToInt32(deptid);
-            int cpoint = Convert.ToInt32(collectionptid);
-            Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
-            wcfItem.CollectionPointId = cpoint;
-            db.SaveChanges();
-            return collectionptid;
+            try {
+                int dId = Convert.ToInt32(deptid);
+                int cpoint = Convert.ToInt32(collectionptid);
+                Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
+                wcfItem.CollectionPointId = cpoint;
+                db.SaveChanges();
+                String cpointName = wcfItem.CollectionPoint.PlaceName;
+                List<string> clerkTokens = new List<string>();
+                var tokenList = from e in db.Employees
+                                where e.RoleId == 1
+                                && e.Token != null 
+                                select e.Token;
+
+                List<String> myData = new List<string>();
+                myData.Add("DisbursementList");
+                myData.Add("DisbursementList");
+                myData.Add("0");
+                myData.Add("0");
+
+                foreach (string s in tokenList){
+                    fcm.PushFCMNotification("Change of Collection Point", "Collection point changed to : " + cpointName, s, myData);
+                }
+                return collectionptid;
+            } catch (Exception e)
+            {
+                return "false";
+            }
         }
 
         public void updatedqun(wcfDisbursementListDetail c )
@@ -552,7 +573,7 @@ namespace Team7ADProjectMVC
 
                 int Uid = Convert.ToInt32(userID);
                 Employee emp = db.Employees.Where(W => W.EmployeeId == Uid).First();
-                emp.Token = "NULL";
+                emp.Token = null;
                 db.SaveChanges();
                 return "true";
             }

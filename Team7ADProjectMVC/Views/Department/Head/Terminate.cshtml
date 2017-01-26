@@ -3,6 +3,9 @@
 @{
     Layout = "~/Views/Shared/_Layouthead.cshtml";
     Page.Title = "Delegate Acting Department-Head";
+    //Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 @*<script type="text/javascript">
@@ -103,23 +106,26 @@
 <script type="text/javascript">
         $(function () {
             $('#datetimepicker1').datetimepicker({
-                format: 'DD/MM/YYYY HH:mm:ss',
+                format: 'dd/mm/yy',
                 inline: true,
                 sideBySide: false,
-                minDate: new Date()
+                minDate: new Date(),
+                date: '@ViewBag.s2'
             });
-            $('#datetimepicker2').datetimepicker({
-
-                inline: true,
-                sideBySide: false,
-              
-            });
-
+                       
             $("#datetimepicker1").on("dp.change", function (date, e) {
                 console.log($('#datetimepicker1').data("DateTimePicker").date());
                 $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
                 $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
                 $('#datetimepicker2').data("DateTimePicker").minDate(date.date);
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'dd/mm/yy',
+                inline: true,
+                sideBySide: false,
+                minDate: '@ViewBag.s2',
+                date: '@ViewBag.e2'
+
             });
 
             $("#datetimepicker2").on("dp.change", function (date, e) {
@@ -127,8 +133,8 @@
                 $('#endDate').val($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
                 $('#e1').text($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
             });
-        });
 
+        });
 </script>
 
 

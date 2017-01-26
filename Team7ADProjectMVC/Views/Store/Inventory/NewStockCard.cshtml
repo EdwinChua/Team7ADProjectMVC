@@ -3,6 +3,8 @@
 @{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Create New Stock Card";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 

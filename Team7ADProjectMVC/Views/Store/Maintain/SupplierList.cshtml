@@ -3,6 +3,8 @@
 @{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "List of Suppliers";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 <button class="btn btn-primary" onclick="window.location.href='AddSupplier'">

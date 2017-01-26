@@ -1,6 +1,8 @@
 ﻿@{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Inventory Adjustment";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 

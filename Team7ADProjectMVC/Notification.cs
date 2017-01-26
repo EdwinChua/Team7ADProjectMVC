@@ -12,15 +12,15 @@ namespace Team7ADProjectMVC
     using System;
     using System.Collections.Generic;
     
-    public partial class DeliveryDetail
+    public partial class Notification
     {
-        public int DeliveryDetailid { get; set; }
-        public string ItemNo { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public string Remarks { get; set; }
-        public Nullable<int> DeliveryId { get; set; }
-    
-        public virtual Delivery Delivery { get; set; }
-        public virtual Inventory Inventory { get; set; }
+        public int NotificationId { get; set; }
+        public int EmployeeId { get; set; }
+        public string Title { get; set; }
+        public string Body { get; set; }
+        public string Intent { get; set; }
+        public string PageHeader { get; set; }
+        public string PageId { get; set; }
+        public string ExtraDetail { get; set; }
     }
 }

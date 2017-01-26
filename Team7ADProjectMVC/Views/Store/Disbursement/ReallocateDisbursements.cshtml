@@ -4,6 +4,8 @@
     Layout = "~/_Layout1.cshtml";
     DisbursementDetail item2 = new DisbursementDetail();
     Page.Title = "Reallocation of Disbursements";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
     int prodmax = 0;
     int formcount=0;
     string formname = "form"+formcount;

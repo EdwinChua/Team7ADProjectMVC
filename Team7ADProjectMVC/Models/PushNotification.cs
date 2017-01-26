@@ -6,14 +6,18 @@ using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Script.Serialization;
+using Team7ADProjectMVC.Services.DepartmentService;
 
 namespace Team7ADProjectMVC.Models
 {
     public class PushNotification
     {
+        //IDepartmentService deptSvc;
+        ProjectEntities db = new ProjectEntities();
         public PushNotification()
         {
             // TODO: Add constructor logic here
+             //deptSvc = new DepartmentService();
         }
 
         public bool Successful
@@ -33,8 +37,8 @@ namespace Team7ADProjectMVC.Models
             set;
         }
 
-        public PushNotification PushFCMNotification(string title, string message, string token)
-        {
+        public PushNotification PushFCMNotification(string title, string message, string token,List<String> myData){
+        
             PushNotification result = new PushNotification();
             try {
                 result.Successful = true;
@@ -49,22 +53,26 @@ namespace Team7ADProjectMVC.Models
                 tRequest.Headers.Add(string.Format("Authorization: key={0}", SERVER_API_KEY));
 
                 tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
-                
-                var data = new
-                  {
-                      //single device
-                      to = token,
-                      notofication = new
-                      {
-                          title = title,
-                          body = message,                      
-                      },
+
+              var data = new
+                   {
+                       //single device
+                       to = token,
+               
+                       notification = new
+                        {
+                            title = title,
+                            body = message,                      
+                       },
                       data = new
-                      {
-                          f = "dsdsdsd",
-                          er = "dsdsd",                      
-                      }
-                  };
+                       {
+                          intent = myData[0],
+                          pageHeader = myData[1],
+                          id = myData[2],
+                          extraDetail = myData[3],
+                          //f4 = myData[4],
+                        }
+                    };
 
                 var serializer = new JavaScriptSerializer();
                 var json = serializer.Serialize(data);
@@ -98,5 +106,103 @@ namespace Team7ADProjectMVC.Models
             }
             return result;
         }
-    }
+
+        public PushNotification PushFCMNotificationToStoreClerk(string title, string message, List<String> myData)
+        {
+
+            PushNotification result = new PushNotification();
+            
+            var tokenList = from e in db.Employees
+                            where e.RoleId == 1
+                            && e.Token != null
+                            select e.Token;
+            foreach (var token in tokenList.ToList())
+            {
+                PushFCMNotification(title, message,token, myData);
+            }
+            return result;
+        }
+
+        public void CheckForStockReorder()
+        {
+            var checkForStockReorder = (from x in db.Inventories
+                                        where x.Quantity < x.ReorderLevel
+                                        select x).ToList();
+
+            List<String> myData = new List<string>();
+            myData.Add("StockCard");
+            myData.Add("StockCard");
+            myData.Add("0");
+            myData.Add("0");
+            if (checkForStockReorder != null)
+            {
+                PushFCMNotificationToStoreClerk("Low Stock Alert", "Please see here", myData);
+            }
+        }
+
+        public void CollectionPointChanged(int deptid)
+        {
+ 
+                Department wcfItem = db.Departments.Where(p => p.DepartmentId == deptid).First();
+                String cpointName = wcfItem.CollectionPoint.PlaceName;
+                String deptname= wcfItem.DepartmentName;
+                List<String> myData = new List<string>();
+                myData.Add("DisbursementList");
+                myData.Add("Disbursement List");
+                myData.Add("0");
+                myData.Add("0");
+
+                PushFCMNotificationToStoreClerk(deptname+" Collection", "Changed to: "+ cpointName, myData);
+               
+        }
+
+        public void RepAcceptRequisition(String DisListID)
+        {
+
+            int dlid = Convert.ToInt32(DisListID);
+            DisbursementList wcfItem = db.DisbursementLists.Where(p => p.DisbursementListId == dlid).First();
+            string deptName = wcfItem.Department.DepartmentName;
+            List < String > myData = new List<string>();
+            myData.Add("DisbursementList");
+            myData.Add("Disbursement List");
+            myData.Add("0");
+            myData.Add("0");
+
+            PushFCMNotificationToStoreClerk(deptName, "Accepted Disbursement", myData);
+        }
+
+
+
+        public void NewRequisitonMade(string reqListID)
+        {
+            int reqID = Convert.ToInt32(reqListID);
+            Requisition wcfItem = db.Requisitions.Where(p => p.RequisitionId == reqID).First();
+            string deptName = wcfItem.Employee.Department.DepartmentName;
+            List<String> myData = new List<string>();
+            myData.Add("UnfulfilledRequisitions");
+            myData.Add("UnfulfilledRequisitions List");
+            myData.Add("0");
+            myData.Add("0");
+
+            PushFCMNotificationToStoreClerk("New Requisition",  "From: "+deptName, myData);
+        }
+
+        public void NotificationForHeadOnCreate(String EmpID)
+        {
+            int eid = Convert.ToInt32(EmpID);
+            Employee wcfItem = db.Employees.Where(p => p.EmployeeId == eid).First();
+            int deptId = (int)wcfItem.DepartmentId;
+            Employee head = db.Employees.Where(W => W.DepartmentId == deptId).Where(x => x.RoleId == 2).First();
+            string empName = wcfItem.EmployeeName;
+            string token = head.Token;
+            List<String> myData = new List<string>();
+            myData.Add("ApproveRequisition");
+            myData.Add("Approve Requisition");
+            myData.Add("0");
+            myData.Add("0");
+
+            PushFCMNotification("New Requisition", "From: " + empName, token, myData);
+        }
+
+}
 }

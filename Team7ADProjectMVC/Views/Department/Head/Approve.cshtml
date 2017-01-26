@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "Approve/Reject Requisition";
     Layout = "~/Views/Shared/_Layouthead.cshtml";
+    //Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
   

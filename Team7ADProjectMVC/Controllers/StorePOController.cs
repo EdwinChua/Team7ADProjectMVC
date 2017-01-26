@@ -21,7 +21,7 @@ namespace Team7ADProjectMVC.Controllers
         private IDelegateRoleService delegateSvc;
         private ISupplierAndPurchaseOrderService supplierAndPOSvc;
         private IUtilityService utilSvc;
-
+        
         public StorePOController()
         {
             inventorySvc = new InventoryService();
@@ -40,10 +40,10 @@ namespace Team7ADProjectMVC.Controllers
 
         public ActionResult GeneratePurchaseOrders(string[] itemNo, int[] supplier, int?[] orderQuantity)
         {
-            supplierAndPOSvc.GeneratePurchaseOrders(itemNo, supplier, orderQuantity);
-
+            Employee currentEmployee = (Employee)Session["User"];
+            supplierAndPOSvc.GeneratePurchaseOrders(currentEmployee,itemNo, supplier, orderQuantity);
             List<Inventory> itemsToResupply = supplierAndPOSvc.GetAllItemsToResupply();
-            return RedirectToAction("GeneratePO");
+            return RedirectToAction("PurchaseOrderSummary");
         }
 
         public ActionResult PurchaseOrderSummary()
@@ -94,7 +94,8 @@ namespace Team7ADProjectMVC.Controllers
             {
                 approve = "Rejected";
             }
-            supplierAndPOSvc.ApprovePurchaseOrder(poNumber, approve); //TODO: include employee id
+            Employee currentEmployee = (Employee)Session["User"];
+            supplierAndPOSvc.ApprovePurchaseOrder(currentEmployee, poNumber, approve);
             return RedirectToAction("PurchaseOrderSummary");
         }
 
@@ -102,6 +103,14 @@ namespace Team7ADProjectMVC.Controllers
         {
             List<Delivery> allDeliveries = supplierAndPOSvc.GetAllDeliveries();
             return View(allDeliveries);
+        }
+
+        public ActionResult AcceptDelivery(int deliveryId, string deliveryRefNo, string dateDelivered, int[] deliveryDetailId, string[] itemNo, int[] quantity, string[] remarks)
+        {
+            Employee currentEmployee = (Employee)Session["User"];
+            supplierAndPOSvc.ReceiveDelivery(currentEmployee, deliveryId, deliveryRefNo, dateDelivered, deliveryDetailId, itemNo, quantity, remarks);
+
+            return RedirectToAction("ListDeliveries");
         }
 
     }

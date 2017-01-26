@@ -14,13 +14,14 @@ namespace Team7ADProjectMVC.Services.SupplierService
         void UpdateSupplier(Supplier supplier);
         void AddNewSupplier(Supplier supplier);
         List<Inventory> GetAllItemsToResupply();
-        void GeneratePurchaseOrders(string[] itemNo, int[] supplier, int?[] orderQuantity);
+        void GeneratePurchaseOrders(Employee employee, string[] itemNo, int[] supplier, int?[] orderQuantity);
         List<PurchaseOrder> GetAllPOOrderByApproval();
         List<PurchaseOrder> SearchPurchaseOrders(string orderStatus, DateTime? dateOrdered, DateTime? dateApproved, out int resultCount);
         PurchaseOrder FindPOById(int id);
-        void ApprovePurchaseOrder(int poNumber, string approve);
+        void ApprovePurchaseOrder(Employee employee, int poNumber, string approve);
         List<Delivery> GetAllDeliveries();
         Delivery FindDeliveryById(int id);
         List<DeliveryDetail> GetDeliveryDetailsByDeliveryId(int id);
+        void ReceiveDelivery(Employee employee, int deliveryId, string deliveryRefNo, string dateDelivered, int[] deliveryDetailId, string[] itemNo, int[] quantity, string[] remarks);
     }
 }

@@ -18,7 +18,7 @@ namespace Team7ADProjectMVC.Controllers
                 int userId = Int32.Parse(User.Identity.Name);
                 Session["user"] = db.Employees.Find(userId);
               
-                return Content(((Employee)Session["User"]).EmployeeName);    //Redirect("Head/ListAllEmployees"); 
+                return Redirect("Head/ListAllEmployees"); /*Content(((Employee)Session["User"]).EmployeeName);    //*/
             }
             
             else return Content("not authenticated");

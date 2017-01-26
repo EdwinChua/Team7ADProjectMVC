@@ -175,5 +175,22 @@ namespace Team7ADProjectMVC.Models
         }
 
 
+
+        public void NewRequisitonMade(String DisListID)
+        {
+
+            int dlid = Convert.ToInt32(DisListID);
+            var deptName = from d in db.DisbursementLists
+                           where d.DisbursementListId == dlid
+                           select d.Department.DepartmentName;
+            List<String> myData = new List<string>();
+            myData.Add("DisbursementList");
+            myData.Add("Disbursement List");
+            myData.Add("0");
+            myData.Add("0");
+
+            PushFCMNotificationToStoreClerk("Disbursement completed", deptName + " accepted disbursement.", myData);
+        }
+
 }
 }

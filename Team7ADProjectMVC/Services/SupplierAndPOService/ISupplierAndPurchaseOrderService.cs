@@ -22,5 +22,6 @@ namespace Team7ADProjectMVC.Services.SupplierService
         List<Delivery> GetAllDeliveries();
         Delivery FindDeliveryById(int id);
         List<DeliveryDetail> GetDeliveryDetailsByDeliveryId(int id);
+        void ReceiveDelivery(int deliveryId, string deliveryRefNo, string dateDelivered, int[] deliveryDetailId, string[] itemNo, int[] quantity, string[] remarks);
     }
 }

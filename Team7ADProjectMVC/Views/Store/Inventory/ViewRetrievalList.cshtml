@@ -3,7 +3,8 @@
 @{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "View Stationery Retrieval List";
-    //TODO: EDWIN - Write logic for retrieval list to populate table
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 

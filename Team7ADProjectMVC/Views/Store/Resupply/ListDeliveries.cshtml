@@ -3,6 +3,8 @@
 @{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "View Deliveries";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
     string printLine = null;
 }
 

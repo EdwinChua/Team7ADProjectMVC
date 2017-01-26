@@ -3,6 +3,8 @@
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Purchase Order Summary";
     ProjectEntities db = new ProjectEntities();
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
     string supplier = null;
     string employee = null;
     string approvedBy = null;

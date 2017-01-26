@@ -8,6 +8,7 @@ namespace Team7ADProjectMVC.Models
 {
     interface IInventoryService
     {
+        string GetItemCode(string itemDesc);
         List<Inventory> GetAllInventory();
 
         List<Category> GetAllCategories();

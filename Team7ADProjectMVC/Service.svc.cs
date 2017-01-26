@@ -531,12 +531,12 @@ namespace Team7ADProjectMVC
             String token = emp.Token;
 
             List<String> myData = new List<string>();
-                myData.Add("ReceiveRequisition.Class");
-                myData.Add("Stationary Store");
-                myData.Add("4");
-                myData.Add("4");
-                myData.Add("09:30:00");
-                fcm.PushFCMNotification("Test Accept Delivery", "Delivery for:" + deptName, myData, token);
+            myData.Add("ReceiveRequisition.Class");
+            myData.Add("Stationary Store");
+            myData.Add("4");
+            myData.Add("4");
+            myData.Add("09:30:00");
+                fcm.PushFCMNotification("Test Accept Delivery", "Delivery for:", token,myData);
                 return "true";
             }
             catch (Exception e)

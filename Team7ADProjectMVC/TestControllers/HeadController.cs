@@ -105,7 +105,7 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 return HttpNotFound();
             }
-
+            ViewBag.r = r;
 
             return View("Approve", r);
         }

@@ -12,7 +12,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <h5>
-                      Ordered Date: @Html.DisplayFor(model => model.OrderedDate)
+                        @{
+
+                            string[] D = ViewBag.r.OrderedDate.ToString().Split(' ');
+                            string[] sd = D[0].Split('/');
+                            ViewBag.showDate = sd[1] + "/" + sd[0] + "/" + sd[2];
+                        }
+                        Ordered Date: @ViewBag.showDate
+
                         </h5>
                         <div>
                             

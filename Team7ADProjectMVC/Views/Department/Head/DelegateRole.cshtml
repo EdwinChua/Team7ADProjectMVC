@@ -3,6 +3,9 @@
     @{
         Layout = "~/Views/Shared/_Layouthead.cshtml";
         Page.Title = "Delegate Acting Department-Head";
+        //Layout = "~/_Layout1.cshtml";
+        Employee currentEmployee = (Employee)Session["User"];
+        Page.Employee = currentEmployee;
 }
 
 @*<script type="text/javascript">

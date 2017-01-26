@@ -1,9 +1,9 @@
 ﻿@model Team7ADProjectMVC.Employee
 
 @{
-    Layout = "~/Views/Shared/_Layouthead.cshtml";
+    //Layout = "~/Views/Shared/_Layouthead.cshtml";
     Page.Title = "Delegate Acting Department-Head";
-    //Layout = "~/_Layout1.cshtml";
+    Layout = "~/_Layout1.cshtml";
     Employee currentEmployee = (Employee)Session["User"];
     Page.Employee = currentEmployee;
 }

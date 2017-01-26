@@ -171,7 +171,7 @@ namespace Team7ADProjectMVC.Models
             myData.Add("0");
             myData.Add("0");
 
-            PushFCMNotificationToStoreClerk("Disbursement Accepted", deptName+ " accepted disbursement.", myData);
+            PushFCMNotificationToStoreClerk("Disbursement completed", deptName+ " accepted disbursement.", myData);
         }
 
 

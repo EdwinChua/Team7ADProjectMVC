@@ -16,7 +16,7 @@ namespace Team7ADProjectMVC.TestControllers
         private IDisbursementService disbursementSvc;
         private IDepartmentService departmentSvc;
         private ProjectEntities db = new ProjectEntities();
-        
+
 
         public RepresentativeController()
         {
@@ -28,7 +28,14 @@ namespace Team7ADProjectMVC.TestControllers
         //[AuthorisePermissions(Permission="ChangeCollection")]
         public ActionResult Viewdisbursements()
         {
-
+            if ((Employee)Session["user"] == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (((Employee)Session["user"]).Role.Name != "Representative")
+            {
+                return HttpNotFound();
+            }
             return View(disbursementSvc.GetAllDisbursements());
 
 
@@ -66,20 +73,19 @@ namespace Team7ADProjectMVC.TestControllers
 
 
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
-            if (id == null)
+
+            if ((Employee)Session["user"] == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            Department department = departmentSvc.findDeptByID(id);
-
-            if (department == null)
+            if (((Employee)Session["user"]).Role.Name != "Representative")
             {
                 return HttpNotFound();
             }
-
+            var id = ((Employee)Session["user"]).DepartmentId;
+            Department department = departmentSvc.findDeptByID(id);
             ViewBag.Message = db.CollectionPoints.ToList();
             return View("ChangeCollectionPoint", department);
 
@@ -94,9 +100,9 @@ namespace Team7ADProjectMVC.TestControllers
             {
 
                 var rid = Request.Form["radio"];
-                
+
                 departmentSvc.changeDeptCp(department, int.Parse(rid));
-                                
+
 
                 return RedirectToAction("Viewdisbursements");
             }

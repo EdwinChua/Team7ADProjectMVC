@@ -545,7 +545,6 @@ namespace Team7ADProjectMVC
         }
 
 
-
         public String wcfLogout(String userID)
         {
             try

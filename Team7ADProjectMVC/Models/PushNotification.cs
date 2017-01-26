@@ -164,8 +164,7 @@ namespace Team7ADProjectMVC.Models
             int dlid = Convert.ToInt32(DisListID);
             var deptName = from d in db.DisbursementLists
                     where d.DisbursementListId == dlid
-                    select d.Department.DepartmentName.ToString();
-            // take what ever u want form there..
+                    select d.Department.DepartmentName;
             List < String > myData = new List<string>();
             myData.Add("DisbursementList");
             myData.Add("Disbursement List");

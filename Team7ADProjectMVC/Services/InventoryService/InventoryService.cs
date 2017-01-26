@@ -10,7 +10,7 @@ namespace Team7ADProjectMVC.Models
     public class InventoryService : IInventoryService
     {
         ProjectEntities db = new ProjectEntities();
-
+        PushNotification fcm = new PushNotification(); 
         public String GetItemCode(String itemDesc)
         {
             String startingLetter = itemDesc[0].ToString();
@@ -218,8 +218,9 @@ namespace Team7ADProjectMVC.Models
             {
                 UpdateInventoryQuantity(itemsCollected.itemNo, itemsCollected.collectedQuantity);
             }
+            fcm.CheckForStockReorder();
 
-            List<Requisition> requisitionListFromRList = retrievalList.requisitionList;
+            List < Requisition > requisitionListFromRList = retrievalList.requisitionList;
             DisbursementList dList = new DisbursementList();
             List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
 
@@ -273,6 +274,7 @@ namespace Team7ADProjectMVC.Models
             {
                 db.Entry(i).State = EntityState.Modified;
                 db.SaveChanges();
+       
             }
             else
             {

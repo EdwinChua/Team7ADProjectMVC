@@ -5,18 +5,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Team7ADProjectMVC.Models;
 
 namespace Team7ADProjectMVC.Services
 {
     public class DisbursementService : IDisbursementService
     {
         ProjectEntities db = new ProjectEntities();
-
+        PushNotification notify = new PushNotification(); 
 
         public List<DisbursementList> GetAllDisbursements()
         {
             var disbursementList = from d in db.DisbursementLists
-                                   orderby d.Status
                                    select d;
 
             return (disbursementList.ToList());
@@ -28,7 +28,15 @@ namespace Team7ADProjectMVC.Services
 
             return db.DisbursementLists.Find(id);
         }
+        public List<DisbursementList> GetDisbursementByDeptId(int? id)
+        {
+            var disbursementList = from d in db.DisbursementLists
+                                   where d.DepartmentId ==id
+                                   orderby d.Status
+                                   select d;
 
+            return (disbursementList.ToList());
+        }
 
         public List<DisbursementList> GetDisbursementsBySearchCriteria(int? departmentId, string status)
         {
@@ -139,9 +147,9 @@ namespace Team7ADProjectMVC.Services
 
 
             List<RequisitionDetail> rdlist = (from x in db.RequisitionDetails
-                          where x.Requisition.RetrievalId == rid
-                          && x.Requisition.DepartmentId == deptid
-                          select x).ToList();
+                                              where x.Requisition.RetrievalId == rid
+                                              && x.Requisition.DepartmentId == deptid
+                                              select x).ToList();
 
             var itlist = (from x in rdlist
 
@@ -232,7 +240,8 @@ namespace Team7ADProjectMVC.Services
 
             db.SaveChanges();
 
-
+            string disbID = disburseid.ToString(); 
+            notify.RepAcceptRequisition(disbID);
         }
 
     }

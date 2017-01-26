@@ -1,6 +1,8 @@
 ﻿@{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Dashboard";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 <div class="container-fluid">

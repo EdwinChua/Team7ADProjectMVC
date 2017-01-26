@@ -3,6 +3,8 @@
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Purchase Order Summary";
     ProjectEntities db = new ProjectEntities();
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
     string supplier = null;
     string employee = null;
     string approvedBy = null;
@@ -136,10 +138,14 @@
             $('#datetimepicker2').datetimepicker({ format: 'DD/MM/YYYY' });
         });
 
-    $(document).ready(function ($) {
-        $(".clickable-row").click(function () {
-            window.document.location = $(this).data("href");
-        });
-    });
-
+        $(document).ready(function ($) {
+            $(".clickable-row").click(function () {
+                window.document.location = $(this).data("href");
+            })
+            .hover(function () {
+                $(this).css('background-color','#ccc');
+            }, function () {
+                $(this).css('background-color','#fff');
+            });
+        })
 </script>

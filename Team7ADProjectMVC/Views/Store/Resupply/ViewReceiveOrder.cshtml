@@ -2,7 +2,9 @@
 @{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Receive & View Order";
-    PurchaseDetail q = new PurchaseDetail();    
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    PurchaseDetail q = new PurchaseDetail();
 }
 
 

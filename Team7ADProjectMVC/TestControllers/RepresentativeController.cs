@@ -16,7 +16,7 @@ namespace Team7ADProjectMVC.TestControllers
         private IDisbursementService disbursementSvc;
         private IDepartmentService departmentSvc;
         private ProjectEntities db = new ProjectEntities();
-        
+
 
         public RepresentativeController()
         {
@@ -24,14 +24,19 @@ namespace Team7ADProjectMVC.TestControllers
             departmentSvc = new DepartmentService();
         }
         // GET: Representative
+
+        //[AuthorisePermissions(Permission="")]
+
         public ActionResult Viewdisbursements()
         {
 
-            return View(disbursementSvc.GetAllDisbursements());
+            var id = ((Employee)Session["user"]).DepartmentId;
+            
+            return View(disbursementSvc.GetDisbursementByDeptId(id));
 
 
         }
-        public ActionResult Searchdisbursements(string date, String status)
+        public ActionResult Searchdisbursements(string date, string status)
         {
 
             return View("Viewdisbursements", disbursementSvc.FindDisbursementsBySearch(date, status));
@@ -64,20 +69,11 @@ namespace Team7ADProjectMVC.TestControllers
 
 
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
 
+            var id = ((Employee)Session["user"]).DepartmentId;
             Department department = departmentSvc.findDeptByID(id);
-
-            if (department == null)
-            {
-                return HttpNotFound();
-            }
-
             ViewBag.Message = db.CollectionPoints.ToList();
             return View("ChangeCollectionPoint", department);
 
@@ -92,9 +88,9 @@ namespace Team7ADProjectMVC.TestControllers
             {
 
                 var rid = Request.Form["radio"];
-                
+
                 departmentSvc.changeDeptCp(department, int.Parse(rid));
-                                
+
 
                 return RedirectToAction("Viewdisbursements");
             }

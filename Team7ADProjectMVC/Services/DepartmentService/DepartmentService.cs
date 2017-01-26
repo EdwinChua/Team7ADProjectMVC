@@ -4,13 +4,15 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Team7ADProjectMVC.Models;
 
 namespace Team7ADProjectMVC.Services.DepartmentService
 {
+    
     class DepartmentService : IDepartmentService
     {
         ProjectEntities db = new ProjectEntities();
-        
+        PushNotification notify = new PushNotification();
 
         public Requisition FindById(string id)
         {
@@ -60,8 +62,38 @@ namespace Team7ADProjectMVC.Services.DepartmentService
             
             int id = department.DepartmentId;
             db.Departments.Single(model => model.DepartmentId == id).CollectionPointId = cpId;
-
             db.SaveChanges();
+            
+            notify.CollectionPointChanged(id);
         }
+
+
+        public void UpdateRequi(Requisition requisition,Requisition req, int idd,int eid,int deid)
+        {
+
+            requisition.RequisitionId = idd;
+            req.RequisitionStatus = "Pending Approval";
+            req.EmployeeId = 1;
+            req.DepartmentId = 2;
+            req.OrderedDate = DateTime.Today;
+           
+        }
+        //public void UpdateRequiDetail(RequisitionDetail rd, int iter, int idd, int eid, int deid)
+        //{
+
+        //    requisition.RequisitionId = idd;
+        //    req.RequisitionStatus = "Pending Approval";
+        //    req.EmployeeId = 1;
+        //    req.DepartmentId = 2;
+        //    req.OrderedDate = DateTime.Today;
+
+        //}
+
+        public string FinditemByName(string descibe) {
+
+            string itemid = db.Inventories.Where(x => x.Description == descibe).FirstOrDefault().ItemNo.ToString();
+            return itemid;
+        }
+
     }
 }

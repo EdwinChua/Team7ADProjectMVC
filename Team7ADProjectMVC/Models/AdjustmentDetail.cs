@@ -20,7 +20,7 @@ namespace Team7ADProjectMVC.Models
     //}
     public  class adjustmentdetail
     {
-        [Key]
+       // [Key]
         public int AdjustmentDetailId { get; set; }
         [Required]
         public string ItemNo { get; set; }

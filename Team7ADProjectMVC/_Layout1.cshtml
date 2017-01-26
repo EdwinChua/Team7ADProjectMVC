@@ -79,7 +79,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
-                <ul class="nav nav-sidebar">
+                <ul id="nav" class="nav nav-sidebar">
                     STORE
                     <li id="menu1"><a href="/Store/Index">Main Menu</a></li>
                     <li id="menu2"><a href="/Store/Inventory">View Inventory</a></li>
@@ -107,7 +107,7 @@
                     @Page.Title
                 </h1>
 
-                <h2 class="sub-header" id="sectiontitle"></h2>
+                @*<h2 class="sub-header" id="sectiontitle">@Page.Subtitle</h2>*@
 
                 <div id="mainbody" class="container-fluid">
                     
@@ -132,6 +132,35 @@
         <p>Footer</p>
     </footer>
 
+    <script>
+        $(function () {
+            var current = location.pathname;
+            console.log(current);
+            $('#nav li a').each(function () {
+                var $this = $(this);
+                // if the current path is like this link, make it active
+                if ($this.attr('href').indexOf(current) !== -1) {
+                    console.log($this.outerHtml);
+                    $this.parent().addClass('active selected');
+                }
+            })
+        })
+    </script>
+   
+    <script type="text/javascript">
+
+        $(document).ready(function ($) {
+            $(".clickable-row").click(function () {
+                window.document.location = $(this).data("href");
+            })
+            .hover(function () {
+                $(this).css('background-color','#ccc');
+            }, function () {
+                $(this).css('background-color','#fff');
+            });
+        })
+    </script>
 </body>
 </html>
+
 

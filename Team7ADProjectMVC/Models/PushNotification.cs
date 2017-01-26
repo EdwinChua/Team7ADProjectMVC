@@ -176,7 +176,7 @@ namespace Team7ADProjectMVC.Models
 
 
 
-        public void NewRequisitonMade(String DisListID)
+        public void NewRequisitonMade()
         {
 
             int dlid = Convert.ToInt32(DisListID);

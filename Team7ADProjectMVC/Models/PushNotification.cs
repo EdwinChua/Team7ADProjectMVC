@@ -154,7 +154,7 @@ namespace Team7ADProjectMVC.Models
                 myData.Add("0");
                 myData.Add("0");
 
-                PushFCMNotificationToStoreClerk(deptname+" Collection", "Changed to : "+ cpointName, myData);
+                PushFCMNotificationToStoreClerk(deptname+" Collection", "Changed to: "+ cpointName, myData);
                
         }
 
@@ -175,20 +175,18 @@ namespace Team7ADProjectMVC.Models
 
 
 
-        public void NewRequisitonMade()
+        public void NewRequisitonMade(string reqListID)
         {
-
-            int dlid = Convert.ToInt32(DisListID);
-            var deptName = from d in db.DisbursementLists
-                           where d.DisbursementListId == dlid
-                           select d.Department.DepartmentName;
+            int reqID = Convert.ToInt32(reqListID);
+            Requisition wcfItem = db.Requisitions.Where(p => p.RequisitionId == reqID).First();
+            string deptName = wcfItem.Employee.Department.DepartmentName;
             List<String> myData = new List<string>();
-            myData.Add("DisbursementList");
-            myData.Add("Disbursement List");
+            myData.Add("UnfulfilledRequisitions");
+            myData.Add("UnfulfilledRequisitions List");
             myData.Add("0");
             myData.Add("0");
 
-            PushFCMNotificationToStoreClerk("Disbursement completed", deptName + " accepted disbursement.", myData);
+            PushFCMNotificationToStoreClerk("New Requisition",  "From: "+deptName, myData);
         }
 
 }

@@ -79,12 +79,7 @@ namespace Team7ADProjectMVC.TestControllers
             //mododo = new PersonModel();
         }
         
-        public ActionResult Index(string sortOrder)
-
-
-
-
-
+        public ActionResult Index(string sortOrder/*,int pages=4*/)
         {
             var requisitions = depasvc.ListAllRequisition();
 
@@ -94,12 +89,25 @@ namespace Team7ADProjectMVC.TestControllers
 
 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            //ViewBag.NameSortParm = sortOrder == "Name_desc" ? "Name_desc" : "Name";
             ViewBag.emeSortParm = String.IsNullOrEmpty(sortOrder) ? "e_desc" : "";
 
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             ViewBag.remeSortParm = String.IsNullOrEmpty(sortOrder) ? "s_desc" : "";
 
-            Session["npg"] = 4;
+            if (Session["npg"] == null || Session["npg"].Equals("4"))
+            {
+                Session["npg"] = 4;
+
+            }
+            //else {
+
+
+            //    Session["npg"] = pages;
+
+            //}
+
+            
             //Session["UserName"]="joe";
             if (Session["searchstr"] != null){
                 gsearchString = Session["searchstr"].ToString();
@@ -152,16 +160,34 @@ namespace Team7ADProjectMVC.TestControllers
 
                
             }
+            //if (sortOrder != null)
+            if (sortOrder == null) {
+
+                if (!String.IsNullOrEmpty(gsearchString))
+                {
+                    var q = re.Where(s => s.Employee.EmployeeName.Contains(gsearchString)
+                                           || s.ApprovedDate.ToString().Contains(gsearchString)
+                                           || s.Employee.Department.DepartmentName.Contains(gsearchString));
+                    requisitions = q.ToList();
+                }
+                else
+                {
+
+                    requisitions = re.ToList();
+
+                }
+
+
+            }
 
 
 
-           
 
-
+                requisitions.RemoveAll(x => x.DepartmentId != 1);
 
 
             ViewBag.Cat = requisitions;
-            ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+            //ViewBag.dapaName = requisitions.FirstOrDefault().Employee.Department.DepartmentName;
             return View(requisitions);
         }
         public ActionResult DepartmentEmployee()
@@ -175,13 +201,14 @@ namespace Team7ADProjectMVC.TestControllers
             return View(requisitions);
         }
         [HttpPost]
-        public ActionResult Index(string searchString, string sortOrder)
+        public ActionResult Index(string searchString, string sortOrder/*, int pages = 4*/)
         {
             var requisitions = depasvc.ListAllRequisition();
 
 
 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            //ViewBag.NameSortParm = sortOrder == "Name_desc" ? "Name_desc" : "Name";
             ViewBag.emeSortParm = String.IsNullOrEmpty(sortOrder) ? "e_desc" : "";
 
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
@@ -201,6 +228,12 @@ namespace Team7ADProjectMVC.TestControllers
 
                 Session["searchstr"] = searchString;
             }
+            else {
+
+                requisitions = requisitions.ToList();
+                Session["searchstr"] = searchString;
+
+            }
             ///* i*/nt currentPageIndex = page.HasValue ? page.Value - 1 : 0;
 
             //var requisitions = db.Requisitions.ToList();
@@ -210,10 +243,21 @@ namespace Team7ADProjectMVC.TestControllers
 
 
 
+            //String.IsNullOrEmpty(Session["npg"])
 
 
+            if (Session["npg"] == null || Session["npg"].Equals("4"))
+            {
+                Session["npg"] = 4;
+
+            }
+            //else
+            //{
 
 
+            //    Session["npg"] = pages;
+
+            //}
 
 
 
@@ -247,11 +291,12 @@ namespace Team7ADProjectMVC.TestControllers
             }
 
 
-           
+            requisitions.RemoveAll(x => x.DepartmentId != 1);
 
 
             ViewBag.Cat = requisitions;
-            ViewBag.dapaName = requisitions.First().Employee.Department.DepartmentName;
+           
+            //ViewBag.dapaName = requisitions.FirstOrDefault().Employee.Department.DepartmentName;
 
 
             return View(requisitions);

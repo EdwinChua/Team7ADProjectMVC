@@ -61,6 +61,11 @@ namespace Team7ADProjectMVC.Models
                       {
                           title = title,
                           body = message,                      
+                      },
+                      data = new
+                      {
+                          f = "dsdsdsd",
+                          er = "dsdsd",                      
                       }
                   };
 

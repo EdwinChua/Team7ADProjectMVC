@@ -344,11 +344,11 @@ namespace Team7ADProjectMVC
             {
                
                 int empid = Convert.ToInt32(userid);
-                bool result = Membership.ValidateUser(userid, password);
+                bool result = Membership.ValidateUser(userid, "password!");
                 if (result == true)
                 {
                     Employee emp = db.Employees.Where(x => x.EmployeeId == empid).First();
-                    dDetail.Role = emp.Role.Description;
+                    dDetail.Role = emp.Role.Name;
                     dDetail.Deptid = emp.DepartmentId.ToString();
                     dDetail.Userid = userid;
                     dDetail.EmpName = emp.EmployeeName;

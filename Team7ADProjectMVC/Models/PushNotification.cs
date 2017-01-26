@@ -50,11 +50,11 @@ namespace Team7ADProjectMVC.Models
 
                 tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
                 
-                var payload = new
+                var data = new
                   {
                       //single device
                       to = token,
-                      data = new
+                      notofication = new
                       {
                           title = title,
                           body = message,                      
@@ -67,7 +67,7 @@ namespace Team7ADProjectMVC.Models
                   };
 
                 var serializer = new JavaScriptSerializer();
-                var json = serializer.Serialize(payload);
+                var json = serializer.Serialize(data);
 
                 Byte[] byteArray = Encoding.UTF8.GetBytes(json);
 

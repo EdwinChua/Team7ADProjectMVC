@@ -145,7 +145,8 @@ namespace Team7ADProjectMVC.Models
                         },
                         data = new
                         {
-                            myData
+                            myData,
+                            
                         }
                     };
 

@@ -41,9 +41,9 @@ namespace Team7ADProjectMVC.Controllers
         public ActionResult GeneratePurchaseOrders(string[] itemNo, int[] supplier, int?[] orderQuantity)
         {
             supplierAndPOSvc.GeneratePurchaseOrders(itemNo, supplier, orderQuantity);
-
+            //TODO: EmployeeId
             List<Inventory> itemsToResupply = supplierAndPOSvc.GetAllItemsToResupply();
-            return RedirectToAction("GeneratePO");
+            return RedirectToAction("PurchaseOrderSummary");
         }
 
         public ActionResult PurchaseOrderSummary()
@@ -102,6 +102,13 @@ namespace Team7ADProjectMVC.Controllers
         {
             List<Delivery> allDeliveries = supplierAndPOSvc.GetAllDeliveries();
             return View(allDeliveries);
+        }
+
+        public ActionResult AcceptDelivery(int deliveryId, string deliveryRefNo, string dateDelivered, int[] deliveryDetailId, string[] itemNo, int[] quantity, string[] remarks)
+        {
+            supplierAndPOSvc.ReceiveDelivery(deliveryId, deliveryRefNo, dateDelivered, deliveryDetailId, itemNo, quantity, remarks);
+
+            return RedirectToAction("ListDeliveries");
         }
 
     }

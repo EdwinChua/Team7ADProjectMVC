@@ -83,7 +83,7 @@
         }
     </tbody>
 </table>
-@if (Model.OrderStatus != "Approved")
+@if (Model.OrderStatus == "Pending")
 {<form action="../ApprovePO">
         <input type="hidden" name="poNumber" value="@Model.PurchaseOrderId" />
         <input type="submit" name="approve" value="Approve" title="Approve" class="btn btn-primary" />

@@ -61,6 +61,7 @@
             <PropertyRef Name="DeliveryId" />
           </Key>
           <Property Name="DeliveryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeliveryOrderNo" Type="varchar" MaxLength="50" />
           <Property Name="PurchaseOrderId" Type="int" />
           <Property Name="DeliveredDate" Type="date" />
           <Property Name="ReceivedBy" Type="int" />
@@ -325,6 +326,18 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             </Principal>
             <Dependent Role="Delegate">
               <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeliveryDetailDeliveryId">
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="0..1" />
+          <End Role="DeliveryDetail" Type="Self.DeliveryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="DeliveryId" />
+            </Principal>
+            <Dependent Role="DeliveryDetail">
+              <PropertyRef Name="DeliveryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -720,6 +733,10 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Delegate" EntitySet="Delegate" />
           </AssociationSet>
+          <AssociationSet Name="DeliveryDetailDeliveryId" Association="Self.DeliveryDetailDeliveryId">
+            <End Role="Delivery" EntitySet="Delivery" />
+            <End Role="DeliveryDetail" EntitySet="DeliveryDetail" />
+          </AssociationSet>
           <AssociationSet Name="DeliveryDetailItemNo" Association="Self.DeliveryDetailItemNo">
             <End Role="Inventory" EntitySet="Inventory" />
             <End Role="DeliveryDetail" EntitySet="DeliveryDetail" />
@@ -902,9 +919,11 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             <PropertyRef Name="DeliveryId" />
           </Key>
           <Property Name="DeliveryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeliveryOrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PurchaseOrderId" Type="Int32" />
           <Property Name="DeliveredDate" Type="DateTime" Precision="0" />
           <Property Name="ReceivedBy" Type="Int32" />
+          <NavigationProperty Name="DeliveryDetails" Relationship="Self.DeliveryDetailDeliveryId" FromRole="Delivery" ToRole="DeliveryDetail" />
           <NavigationProperty Name="Employee" Relationship="Self.DeliveryEmployeeId" FromRole="Delivery" ToRole="Employee" />
           <NavigationProperty Name="PurchaseOrder" Relationship="Self.PurchaseOrderId" FromRole="Delivery" ToRole="PurchaseOrder" />
         </EntityType>
@@ -917,6 +936,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="Quantity" Type="Int32" />
           <Property Name="Remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DeliveryId" Type="Int32" />
+          <NavigationProperty Name="Delivery" Relationship="Self.DeliveryDetailDeliveryId" FromRole="DeliveryDetail" ToRole="Delivery" />
           <NavigationProperty Name="Inventory" Relationship="Self.DeliveryDetailItemNo" FromRole="DeliveryDetail" ToRole="Inventory" />
         </EntityType>
         <EntityType Name="Department">
@@ -1236,6 +1256,18 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             </Principal>
             <Dependent Role="Delegate">
               <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeliveryDetailDeliveryId">
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="0..1" />
+          <End Role="DeliveryDetail" Type="Self.DeliveryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="DeliveryId" />
+            </Principal>
+            <Dependent Role="DeliveryDetail">
+              <PropertyRef Name="DeliveryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1615,6 +1647,10 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Delegate" EntitySet="Delegates" />
           </AssociationSet>
+          <AssociationSet Name="DeliveryDetailDeliveryId" Association="Self.DeliveryDetailDeliveryId">
+            <End Role="Delivery" EntitySet="Deliveries" />
+            <End Role="DeliveryDetail" EntitySet="DeliveryDetails" />
+          </AssociationSet>
           <AssociationSet Name="DeliveryEmployeeId" Association="Self.DeliveryEmployeeId">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Delivery" EntitySet="Deliveries" />
@@ -1790,6 +1826,7 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             <EntityTypeMapping TypeName="ProjectModel.Delivery">
               <MappingFragment StoreEntitySet="Delivery">
                 <ScalarProperty Name="DeliveryId" ColumnName="DeliveryId" />
+                <ScalarProperty Name="DeliveryOrderNo" ColumnName="DeliveryOrderNo" />
                 <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
                 <ScalarProperty Name="DeliveredDate" ColumnName="DeliveredDate" />
                 <ScalarProperty Name="ReceivedBy" ColumnName="ReceivedBy" />

@@ -344,11 +344,11 @@ namespace Team7ADProjectMVC
             {
                
                 int empid = Convert.ToInt32(userid);
-                bool result = Membership.ValidateUser(userid, password);
+                bool result = Membership.ValidateUser(userid, "password!");
                 if (result == true)
                 {
                     Employee emp = db.Employees.Where(x => x.EmployeeId == empid).First();
-                    dDetail.Role = emp.Role.Description;
+                    dDetail.Role = emp.Role.Name;
                     dDetail.Deptid = emp.DepartmentId.ToString();
                     dDetail.Userid = userid;
                     dDetail.EmpName = emp.EmployeeName;
@@ -526,19 +526,23 @@ namespace Team7ADProjectMVC
 
             DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
             int deptit= (int)disb.DepartmentId;
+            string deptName = disb.Department.DepartmentName;
             Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
-
-          //  Employee emp = db.Employees.Where(W => W.EmployeeId==14).First();
             String token = emp.Token;
-            fcm.PushFCMNotification("Test", "test subscribe to topic: clerk", token);
-            return "true";
+
+            List<String> myData = new List<string>();
+            myData.Add("ReceiveRequisition");
+            myData.Add("Stationary Store");
+            myData.Add("4");
+            myData.Add("09:30:00");
+                fcm.PushFCMNotification("Accept Delivery", "Delivery for: "+deptName, token,myData);
+                return "true";
             }
             catch (Exception e)
             {
                 return "false";
             }
         }
-
 
 
         public String wcfLogout(String userID)

@@ -33,8 +33,8 @@ namespace Team7ADProjectMVC.Models
             set;
         }
 
-        public PushNotification PushFCMNotification(string title, string message, string token)
-        {
+        public PushNotification PushFCMNotification(string title, string message, string token,List<String> myData){
+        
             PushNotification result = new PushNotification();
             try {
                 result.Successful = true;
@@ -49,20 +49,29 @@ namespace Team7ADProjectMVC.Models
                 tRequest.Headers.Add(string.Format("Authorization: key={0}", SERVER_API_KEY));
 
                 tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
-                
-                var payload = new
-                  {
-                      //single device
-                      to = token,
+
+              var data = new
+                   {
+                       //single device
+                       to = token,
+               
+                       notification = new
+                        {
+                            title = title,
+                            body = message,                      
+                       },
                       data = new
-                      {
-                          title = title,
-                          body = message,                      
-                      }
-                  };
+                       {
+                          intent = myData[0],
+                          pageHeader = myData[1],
+                          id = myData[2],
+                          extraDetail = myData[3],
+                          //f4 = myData[4],
+                        }
+                    };
 
                 var serializer = new JavaScriptSerializer();
-                var json = serializer.Serialize(payload);
+                var json = serializer.Serialize(data);
 
                 Byte[] byteArray = Encoding.UTF8.GetBytes(json);
 

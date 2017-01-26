@@ -62,11 +62,11 @@ namespace Team7ADProjectMVC.Models
                        },
                       data = new
                        {
-                          f = myData[0],
-                          f1= myData[1],
-                          f2 = myData[2],
-                          f3 = myData[3],
-                          f4 = myData[4],
+                          intent = myData[0],
+                          pageHeader = myData[1],
+                          id = myData[2],
+                          extraDetail = myData[3],
+                          //f4 = myData[4],
                         }
                     };
 

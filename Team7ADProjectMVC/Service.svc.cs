@@ -534,9 +534,8 @@ namespace Team7ADProjectMVC
             myData.Add("ReceiveRequisition.Class");
             myData.Add("Stationary Store");
             myData.Add("4");
-            myData.Add("4");
             myData.Add("09:30:00");
-                fcm.PushFCMNotification("Test Accept Delivery", "Delivery for:", token,myData);
+                fcm.PushFCMNotification("Accept Delivery", "Delivery for: "+deptName, token,myData);
                 return "true";
             }
             catch (Exception e)

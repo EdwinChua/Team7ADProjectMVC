@@ -8,6 +8,8 @@ namespace Team7ADProjectMVC.Models.InventoryAdjustmentService
 {
     interface IInventoryAdjustmentService
     {
-
+        string findRolebyUserID(int userid);
+        List<Adjustment> findSupervisorAdjustmentList();
+        List<Adjustment> findManagerAdjustmentList();
     }
 }

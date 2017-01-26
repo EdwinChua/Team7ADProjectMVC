@@ -413,6 +413,7 @@ namespace Team7ADProjectMVC
                 Requisition r = db.Requisitions.Where(p => p.RequisitionId == rId).First();
                 r.RequisitionStatus = "Approved";
                 r.ApprovedDate = DateTime.Today;
+                fcm.NewRequisitonMade(reqId);
                 db.SaveChanges();
                 result = "True";
             }
@@ -541,7 +542,7 @@ namespace Team7ADProjectMVC
             myData.Add(DisbListId);
             myData.Add(disb.Department.CollectionPoint.CollectTime.ToString());
 
-            fcm.PushNotificationForRep("Accept Delivery", "Delivery for: " + deptName, myData,deptit);
+            fcm.PushNotificationForRep("Accept Delivery", "Please Confirm Delivery", myData,deptit);
 
 
               

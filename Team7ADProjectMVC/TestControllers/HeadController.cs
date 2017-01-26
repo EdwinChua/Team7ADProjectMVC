@@ -105,7 +105,7 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 return HttpNotFound();
             }
-
+            ViewBag.r = r;
 
             return View("Approve", r);
         }
@@ -119,9 +119,9 @@ namespace Team7ADProjectMVC.TestControllers
             Requisition r = reqsvc.FindById(rid);
             if (status.Equals("Approve"))
             {
-                if(textcomments.Equals("Enter comment here..."))
+                if(textcomments == null || textcomments.Length < 1)
                 {
-                    textcomments = "No comment";
+                    textcomments = "N/A";
                     reqsvc.UpdateApproveStatus(r, textcomments);
                 }
 

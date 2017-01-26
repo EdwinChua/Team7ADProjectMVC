@@ -5,13 +5,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Team7ADProjectMVC.Models;
 
 namespace Team7ADProjectMVC.Services
 {
     public class DisbursementService : IDisbursementService
     {
         ProjectEntities db = new ProjectEntities();
-
+        PushNotification notify = new PushNotification(); 
 
         public List<DisbursementList> GetAllDisbursements()
         {
@@ -239,7 +240,8 @@ namespace Team7ADProjectMVC.Services
 
             db.SaveChanges();
 
-
+            string disbID = disburseid.ToString(); 
+            notify.RepAcceptRequisition(disbID);
         }
 
     }

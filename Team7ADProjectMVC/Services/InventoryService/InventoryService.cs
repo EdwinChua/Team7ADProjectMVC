@@ -10,7 +10,8 @@ namespace Team7ADProjectMVC.Models
     public class InventoryService : IInventoryService
     {
         ProjectEntities db = new ProjectEntities();
-        PushNotification fcm = new PushNotification(); 
+        PushNotification fcm = new PushNotification();
+        
         public String GetItemCode(String itemDesc)
         {
             String startingLetter = itemDesc[0].ToString();

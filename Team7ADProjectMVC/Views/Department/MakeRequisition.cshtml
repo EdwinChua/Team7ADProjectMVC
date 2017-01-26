@@ -30,7 +30,7 @@
 
 
                                 <div>
-                                    <span>OrderedDate:</span> <span id="demo">@ViewBag.time</span>
+                                    <span>OrderedDate:</span> <span id="demo">@Convert.ToDateTime(ViewBag.time).ToString("dd/MM/yyyy")</span>
                                     
                                     <script>
                                         var d = new Date();
@@ -235,7 +235,7 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-paperclip"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">Clips</span> @*<a href="#Pen Ballpoint Black">Pen Ballpoint Black</a>*@</span></a>
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-paperclip"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">Clips</span></span></a>
                                                             </h4>
                                                         </div>
                                                         <div id="collapseOne" class="panel-collapse collapse">
@@ -245,7 +245,8 @@
                                                                         <tr>
                                                                             <td>
                                                                                 
-                                                                                <div draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><p ondragstart="dragStart(event)" draggable="true" id="dragtarget">Clips Double 1</p> @*<a href="#Pen Ballpoint Black">Pen Ballpoint Black</a>*@</div>
+                                                                              
+                                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-paperclip"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">Clips Double 1</span></span></a>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -271,7 +272,8 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-pencil"></span> Pen</a>
+                                                              
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-pencil"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">Pen</span></span></a>
                                                             </h4>
                                                         </div>
                                                         <div id="collapseThree" class="panel-collapse collapse ">
@@ -308,7 +310,8 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-text-background"></span> Paper</a>
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-text-background"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">Paper</span></span></a>
+                                                               
                                                             </h4>
                                                         </div>
                                                         <div id="collapseFour" class="panel-collapse collapse ">
@@ -347,7 +350,8 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive"><span class="glyphicon glyphicon-scissors"></span> Scissors</a>
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive"><span class="glyphicon glyphicon-scissors"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">Scissors</span></span></a>
+                                                                
                                                             </h4>
                                                         </div>
                                                         <div id="collapseFive" class="panel-collapse collapse ">
@@ -385,7 +389,8 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix"><span class="glyphicon glyphicon-pencil"></span> Tape</a>
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix"><span class="glyphicon glyphicon glyphicon-stop"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">Tape</span></span></a>
+                                                               
                                                             </h4>
                                                         </div>
                                                         <div id="collapseSix" class="panel-collapse collapse ">
@@ -394,7 +399,7 @@
                                                                     <tbody>
                                                                         <tr>
                                                                             <td>
-                                                                                <a href="#">Change Password</a>
+                                                                                <a href="#">Scotch Tape</a>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -423,7 +428,8 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven"><span class="glyphicon glyphicon-file"></span> File</a>
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven"><span class="glyphicon glyphicon-file"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">File</span></span></a>
+
                                                             </h4>
                                                         </div>
                                                         <div id="collapseSeven" class="panel-collapse collapse ">
@@ -466,7 +472,8 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseNine"><span class="glyphicon glyphicon-pencil"></span> Puncher</a>
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseNine"><span class="glyphicon glyphicon-object-align-left"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">Puncher</span></span></a>
+                                                               
                                                             </h4>
                                                         </div>
                                                         <div id="collapseNine" class="panel-collapse collapse ">
@@ -504,7 +511,8 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTen"><span class="glyphicon glyphicon-unchecked"></span> Pad</a>
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTen"><span class="glyphicon glyphicon-unchecked"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">Pad</span></span></a>
+                                                                
                                                             </h4>
                                                         </div>
                                                         <div id="collapseTen" class="panel-collapse collapse ">
@@ -543,7 +551,8 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-envelope"></span> Envelope</a>
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTen"><span class="glyphicon glyphicon-envelope"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">Envelope</span></span></a>
+                                                               
                                                             </h4>
                                                         </div>
                                                         <div id="collapseTwo" class="panel-collapse collapse ">
@@ -579,9 +588,9 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse12">
-                                                                    <span class="glyphicon glyphicon-erase"></span> Eraser
-                                                                </a>
+                                                                
+                                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse12"><span class="glyphicon glyphicon-erase"></span><span draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)"><span ondragstart="dragStart(event)" draggable="true" id="dragtarget">Eraser</span></span></a>
+                                                                    
                                                             </h4>
                                                         </div>
                                                         <div id="collapse12" class="panel-collapse collapse">

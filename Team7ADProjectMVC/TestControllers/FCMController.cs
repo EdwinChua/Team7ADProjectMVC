@@ -19,7 +19,8 @@ namespace Team7ADProjectMVC.TestControllers
         public void Test()
         {
             PushNotification fcmPush = new PushNotification();
-            fcmPush.PushFCMNotification("Test", "Hello World", "d7kbhWxRWes:APA91bFAw_SDOdBXmM4BuKwgA7VOFFjNwf11nD5XVMATfVJiV7KHklu96yMlt8QsNaTFnZvPo3KoLSmF5iMuC3AdDlIt-O4rnJwB_1mqHPzwOGTrrfLW6bIGar7-6onV9UJJ0h97Ivcv");
+            
+            //fcmPush.PushFCMNotification("Test", "Hello World", "d7kbhWxRWes:APA91bFAw_SDOdBXmM4BuKwgA7VOFFjNwf11nD5XVMATfVJiV7KHklu96yMlt8QsNaTFnZvPo3KoLSmF5iMuC3AdDlIt-O4rnJwB_1mqHPzwOGTrrfLW6bIGar7-6onV9UJJ0h97Ivcv");
         }
 
     }

@@ -247,17 +247,9 @@ namespace Team7ADProjectMVC.TestControllers
         [ValidateAntiForgeryToken]
         public ActionResult AddSupplier([Bind(Include = "SupplierId,SupplierCode,SupplierName,ContactName,PhNo,FaxNo,Address,GstRegistrationNo")] Supplier supplier)
         {
-            //if (ModelState.IsValid)
-            //{
                 supplierAndPOSvc.AddNewSupplier(supplier);
                 return RedirectToAction("SupplierList");
-            //}
-
-            //return View("Supplier", supplier);
         }
-
-
-        // ********************* RESUPPLY *******************
 
 
         //****************** Outstanding Requisitions ***************

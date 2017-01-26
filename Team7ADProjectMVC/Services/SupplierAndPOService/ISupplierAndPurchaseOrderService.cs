@@ -18,5 +18,9 @@ namespace Team7ADProjectMVC.Services.SupplierService
         List<PurchaseOrder> GetAllPOOrderByApproval();
         List<PurchaseOrder> SearchPurchaseOrders(string orderStatus, DateTime? dateOrdered, DateTime? dateApproved, out int resultCount);
         PurchaseOrder FindPOById(int id);
+        void ApprovePurchaseOrder(int poNumber, string approve);
+        List<Delivery> GetAllDeliveries();
+        Delivery FindDeliveryById(int id);
+        List<DeliveryDetail> GetDeliveryDetailsByDeliveryId(int id);
     }
 }

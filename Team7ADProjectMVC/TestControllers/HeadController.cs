@@ -64,6 +64,7 @@ namespace Team7ADProjectMVC.TestControllers
             
 
             if (searchString != null)
+
             {
                 page = 1;
             }
@@ -242,18 +243,33 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult fill()
         { //user = (Employee)Session["user"];
+
+            
+
             depIdofLoginUser = 4; //user.DepartmentId;
             depHeadId = 8; //user.EmployeeId;
             Delegate d = depsvc.getDelegatedEmployee(4);
             Employee e = depsvc.FindById(d.EmployeeId);
+
+            string[] startdate = d.StartDate.ToString().Split(' ');
+            string[] enddate = d.EndDate.ToString().Split(' ');
+
+            string[] sd = startdate[0].Split('/');
+            string[] ed = enddate[0].Split('/');
+
+            
             ViewBag.emp = e.EmployeeName;
             ViewBag.empid = e.EmployeeId;
-            ViewBag.s1 = d.StartDate;
-            ViewBag.e1 = d.EndDate;
-          
+            ViewBag.s1 = sd[1] + "/" + sd[0] + "/" + sd[2];
+            ViewBag.s2= d.StartDate;
+            ViewBag.e1 = ed[1] + "/" + ed[0] + "/" + ed[2];
+            ViewBag.e2 = d.EndDate;
+
             ViewBag.delegateId = d.DelegateId;
             return View("Terminate");
         }
+
+
         public ActionResult ManageTerminate(int? empId, string status, string startDate, string endDate)
         {  //user = (Employee)Session["user"];
             depIdofLoginUser = 4; //user.DepartmentId;

@@ -382,22 +382,7 @@ namespace Team7ADProjectMVC
                 Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
                 wcfItem.CollectionPointId = cpoint;
                 db.SaveChanges();
-                String cpointName = wcfItem.CollectionPoint.PlaceName;
-                List<string> clerkTokens = new List<string>();
-                var tokenList = from e in db.Employees
-                                where e.RoleId == 1
-                                && e.Token != null 
-                                select e.Token;
-
-                List<String> myData = new List<string>();
-                myData.Add("DisbursementList");
-                myData.Add("DisbursementList");
-                myData.Add("0");
-                myData.Add("0");
-
-                foreach (string s in tokenList){
-                    fcm.PushFCMNotification("Change of Collection Point", "Collection point changed to : " + cpointName, s, myData);
-                }
+                fcm.CollectionPointChanged(deptid, collectionptid);
                 return collectionptid;
             } catch (Exception e)
             {

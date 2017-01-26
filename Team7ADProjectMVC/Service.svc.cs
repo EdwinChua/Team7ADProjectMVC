@@ -531,7 +531,7 @@ namespace Team7ADProjectMVC
             String token = emp.Token;
 
             List<String> myData = new List<string>();
-            myData.Add("ReceiveRequisition.Class");
+            myData.Add("ReceiveRequisition");
             myData.Add("Stationary Store");
             myData.Add("4");
             myData.Add("09:30:00");

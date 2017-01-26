@@ -24,6 +24,7 @@ namespace Team7ADProjectMVC.Controllers
 
             string role = ivadjustsvc.findRolebyUserID(userid);
             ViewBag.SearchEmployee = new SelectList(db.Employees.Where(x => x.DepartmentId == 6), "EmployeeId", "EmployeeName");
+            
             if (role == "Store Supervisor")
             {
                 List<SelectListItem> statuslist = new List<SelectListItem>()
@@ -34,7 +35,8 @@ namespace Team7ADProjectMVC.Controllers
                 };
 
                 ViewBag.SearchStatus = statuslist;
-                ivadjustsvc.findSupervisorAdjustmentList();
+                 var adjustmentlist=ivadjustsvc.findSupervisorAdjustmentList();
+                return View(adjustmentlist);
             }
 
             if (role == "Store Manager")
@@ -47,7 +49,8 @@ namespace Team7ADProjectMVC.Controllers
                 };
 
                 ViewBag.SearchStatus = statuslist;
-                ivadjustsvc.findManagerAdjustmentList();
+                var adjustmentlist=ivadjustsvc.findManagerAdjustmentList();
+                return View(adjustmentlist);
             }
 
 

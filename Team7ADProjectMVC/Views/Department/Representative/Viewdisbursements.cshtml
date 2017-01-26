@@ -15,6 +15,8 @@
     ViewBag.Title = "View Disbursement";
     Layout = "~/_Layout1.cshtml";
     Page.Title = "View Disbursement Lists";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 

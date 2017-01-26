@@ -39,10 +39,47 @@ namespace Team7ADProjectMVC.Models.InventoryAdjustmentService
 
             return (adjustmentlist);
         }
-        //public List<Adjustment > FindAdjustmentBySearch(int employee ,string date,string status)
-        //{
+
+        //    public List<Adjustment> FindAdjustmentBySearch(string employee, string date, string status)
+        //    {
+
+        //        int epyid = Int32.Parse(employee);
+        //        List<String> datesplit = date.Split('/').ToList<String>();
+        //        DateTime selectedate = new DateTime(Int32.Parse((datesplit[2])), Int32.Parse((datesplit[1])), Int32.Parse((datesplit[0])));
+        //        if ((status == null || status == "") && (date == null || date == "")&& (employee == null || date == ""))
+        //        {
+
+        //        }
+        //        else if ( (date == null || date == "") && (employee == null || date == ""))//only select status
+        //        {
+
+        //        }
+        //        else if((status == null || status == "") && (date == null || date == ""))//only select employee
+        //        {
+
+        //        }
+        //        else if ( (status == null || status == "") && (employee == null || date == ""))//only select date
+        //        {
+
+        //        }
+        //        else if ((date == null || date == ""))
+        //        {
+
+        //        }
+        //        else if ((status == null || status == ""))
+        //        {
+
+        //        }
+        //        else if ((employee == null || date == ""))
+        //        {
+
+        //        }
+        //        else
+        //        {
+
+        //        }
+        //    }
 
         //}
-
     }
 }

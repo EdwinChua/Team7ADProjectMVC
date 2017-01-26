@@ -281,15 +281,15 @@ namespace Team7ADProjectMVC {
             
             private global::System.Data.DataColumn columnDepartmentName;
             
+            private global::System.Data.DataColumn columnDescription;
+            
+            private global::System.Data.DataColumn columnItemNo;
+            
+            private global::System.Data.DataColumn columnDeliveredQuantity;
+            
             private global::System.Data.DataColumn columnCategoryName;
             
-            private global::System.Data.DataColumn columnApprovedDate;
-            
-            private global::System.Data.DataColumn columnQuantity;
-            
-            private global::System.Data.DataColumn columnEmployeeName;
-            
-            private global::System.Data.DataColumn columnRequisitionId;
+            private global::System.Data.DataColumn columnDeliveryDate;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -334,6 +334,30 @@ namespace Team7ADProjectMVC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ItemNoColumn {
+                get {
+                    return this.columnItemNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DeliveredQuantityColumn {
+                get {
+                    return this.columnDeliveredQuantity;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn CategoryNameColumn {
                 get {
                     return this.columnCategoryName;
@@ -342,33 +366,9 @@ namespace Team7ADProjectMVC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ApprovedDateColumn {
+            public global::System.Data.DataColumn DeliveryDateColumn {
                 get {
-                    return this.columnApprovedDate;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn QuantityColumn {
-                get {
-                    return this.columnQuantity;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EmployeeNameColumn {
-                get {
-                    return this.columnEmployeeName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn RequisitionIdColumn {
-                get {
-                    return this.columnRequisitionId;
+                    return this.columnDeliveryDate;
                 }
             }
             
@@ -409,15 +409,15 @@ namespace Team7ADProjectMVC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public disbAnalysisRow AdddisbAnalysisRow(string DepartmentName, string CategoryName, System.DateTime ApprovedDate, int Quantity, string EmployeeName, int RequisitionId) {
+            public disbAnalysisRow AdddisbAnalysisRow(string DepartmentName, string Description, string ItemNo, int DeliveredQuantity, string CategoryName, System.DateTime DeliveryDate) {
                 disbAnalysisRow rowdisbAnalysisRow = ((disbAnalysisRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         DepartmentName,
+                        Description,
+                        ItemNo,
+                        DeliveredQuantity,
                         CategoryName,
-                        ApprovedDate,
-                        Quantity,
-                        EmployeeName,
-                        RequisitionId};
+                        DeliveryDate};
                 rowdisbAnalysisRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdisbAnalysisRow);
                 return rowdisbAnalysisRow;
@@ -441,11 +441,11 @@ namespace Team7ADProjectMVC {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnDepartmentName = base.Columns["DepartmentName"];
+                this.columnDescription = base.Columns["Description"];
+                this.columnItemNo = base.Columns["ItemNo"];
+                this.columnDeliveredQuantity = base.Columns["DeliveredQuantity"];
                 this.columnCategoryName = base.Columns["CategoryName"];
-                this.columnApprovedDate = base.Columns["ApprovedDate"];
-                this.columnQuantity = base.Columns["Quantity"];
-                this.columnEmployeeName = base.Columns["EmployeeName"];
-                this.columnRequisitionId = base.Columns["RequisitionId"];
+                this.columnDeliveryDate = base.Columns["DeliveryDate"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -453,20 +453,21 @@ namespace Team7ADProjectMVC {
             private void InitClass() {
                 this.columnDepartmentName = new global::System.Data.DataColumn("DepartmentName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDepartmentName);
+                this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDescription);
+                this.columnItemNo = new global::System.Data.DataColumn("ItemNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnItemNo);
+                this.columnDeliveredQuantity = new global::System.Data.DataColumn("DeliveredQuantity", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeliveredQuantity);
                 this.columnCategoryName = new global::System.Data.DataColumn("CategoryName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCategoryName);
-                this.columnApprovedDate = new global::System.Data.DataColumn("ApprovedDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnApprovedDate);
-                this.columnQuantity = new global::System.Data.DataColumn("Quantity", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnQuantity);
-                this.columnEmployeeName = new global::System.Data.DataColumn("EmployeeName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEmployeeName);
-                this.columnRequisitionId = new global::System.Data.DataColumn("RequisitionId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnRequisitionId);
+                this.columnDeliveryDate = new global::System.Data.DataColumn("DeliveryDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeliveryDate);
                 this.columnDepartmentName.MaxLength = 100;
+                this.columnDescription.MaxLength = 250;
+                this.columnItemNo.AllowDBNull = false;
+                this.columnItemNo.MaxLength = 50;
                 this.columnCategoryName.MaxLength = 100;
-                this.columnEmployeeName.MaxLength = 100;
-                this.columnRequisitionId.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -625,6 +626,49 @@ namespace Team7ADProjectMVC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Description {
+                get {
+                    try {
+                        return ((string)(this[this.tabledisbAnalysis.DescriptionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Description\' in table \'disbAnalysis\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledisbAnalysis.DescriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ItemNo {
+                get {
+                    return ((string)(this[this.tabledisbAnalysis.ItemNoColumn]));
+                }
+                set {
+                    this[this.tabledisbAnalysis.ItemNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int DeliveredQuantity {
+                get {
+                    try {
+                        return ((int)(this[this.tabledisbAnalysis.DeliveredQuantityColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DeliveredQuantity\' in table \'disbAnalysis\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledisbAnalysis.DeliveredQuantityColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string CategoryName {
                 get {
                     try {
@@ -641,60 +685,17 @@ namespace Team7ADProjectMVC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime ApprovedDate {
+            public System.DateTime DeliveryDate {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tabledisbAnalysis.ApprovedDateColumn]));
+                        return ((global::System.DateTime)(this[this.tabledisbAnalysis.DeliveryDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ApprovedDate\' in table \'disbAnalysis\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DeliveryDate\' in table \'disbAnalysis\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledisbAnalysis.ApprovedDateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Quantity {
-                get {
-                    try {
-                        return ((int)(this[this.tabledisbAnalysis.QuantityColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Quantity\' in table \'disbAnalysis\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledisbAnalysis.QuantityColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string EmployeeName {
-                get {
-                    try {
-                        return ((string)(this[this.tabledisbAnalysis.EmployeeNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'EmployeeName\' in table \'disbAnalysis\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledisbAnalysis.EmployeeNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int RequisitionId {
-                get {
-                    return ((int)(this[this.tabledisbAnalysis.RequisitionIdColumn]));
-                }
-                set {
-                    this[this.tabledisbAnalysis.RequisitionIdColumn] = value;
+                    this[this.tabledisbAnalysis.DeliveryDateColumn] = value;
                 }
             }
             
@@ -712,6 +713,30 @@ namespace Team7ADProjectMVC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDescriptionNull() {
+                return this.IsNull(this.tabledisbAnalysis.DescriptionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDescriptionNull() {
+                this[this.tabledisbAnalysis.DescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDeliveredQuantityNull() {
+                return this.IsNull(this.tabledisbAnalysis.DeliveredQuantityColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDeliveredQuantityNull() {
+                this[this.tabledisbAnalysis.DeliveredQuantityColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCategoryNameNull() {
                 return this.IsNull(this.tabledisbAnalysis.CategoryNameColumn);
             }
@@ -724,38 +749,14 @@ namespace Team7ADProjectMVC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsApprovedDateNull() {
-                return this.IsNull(this.tabledisbAnalysis.ApprovedDateColumn);
+            public bool IsDeliveryDateNull() {
+                return this.IsNull(this.tabledisbAnalysis.DeliveryDateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetApprovedDateNull() {
-                this[this.tabledisbAnalysis.ApprovedDateColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsQuantityNull() {
-                return this.IsNull(this.tabledisbAnalysis.QuantityColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetQuantityNull() {
-                this[this.tabledisbAnalysis.QuantityColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEmployeeNameNull() {
-                return this.IsNull(this.tabledisbAnalysis.EmployeeNameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEmployeeNameNull() {
-                this[this.tabledisbAnalysis.EmployeeNameColumn] = global::System.Convert.DBNull;
+            public void SetDeliveryDateNull() {
+                this[this.tabledisbAnalysis.DeliveryDateColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -919,11 +920,11 @@ namespace Team7ADProjectMVC.DataSet1TableAdapters {
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "disbAnalysis";
             tableMapping.ColumnMappings.Add("DepartmentName", "DepartmentName");
+            tableMapping.ColumnMappings.Add("Description", "Description");
+            tableMapping.ColumnMappings.Add("ItemNo", "ItemNo");
+            tableMapping.ColumnMappings.Add("DeliveredQuantity", "DeliveredQuantity");
             tableMapping.ColumnMappings.Add("CategoryName", "CategoryName");
-            tableMapping.ColumnMappings.Add("ApprovedDate", "ApprovedDate");
-            tableMapping.ColumnMappings.Add("Quantity", "Quantity");
-            tableMapping.ColumnMappings.Add("EmployeeName", "EmployeeName");
-            tableMapping.ColumnMappings.Add("RequisitionId", "RequisitionId");
+            tableMapping.ColumnMappings.Add("DeliveryDate", "DeliveryDate");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -940,8 +941,7 @@ namespace Team7ADProjectMVC.DataSet1TableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        DepartmentName, CategoryName, ApprovedDate, Quantity, EmployeeName," +
-                " RequisitionId\r\nFROM            disbAnalysis";
+            this._commandCollection[0].CommandText = "select * from disbanalysis";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         

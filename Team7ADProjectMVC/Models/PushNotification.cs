@@ -140,12 +140,10 @@ namespace Team7ADProjectMVC.Models
             }
         }
 
-        public void CollectionPointChanged(String deptid,String  collectionptid)
+        public void CollectionPointChanged(int deptid)
         {
-
-                int dId = Convert.ToInt32(deptid);
-                int cpoint = Convert.ToInt32(collectionptid);
-                Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
+ 
+                Department wcfItem = db.Departments.Where(p => p.DepartmentId == deptid).First();
                 String cpointName = wcfItem.CollectionPoint.PlaceName;
                 String deptname= wcfItem.DepartmentName;
                 List<String> myData = new List<string>();

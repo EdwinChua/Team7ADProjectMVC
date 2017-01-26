@@ -24,6 +24,8 @@ namespace Team7ADProjectMVC.TestControllers
             departmentSvc = new DepartmentService();
         }
         // GET: Representative
+
+        //[AuthorisePermissions(Permission="ChangeCollection")]
         public ActionResult Viewdisbursements()
         {
 

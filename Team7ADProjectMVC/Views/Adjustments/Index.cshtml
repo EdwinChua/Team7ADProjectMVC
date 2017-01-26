@@ -71,47 +71,31 @@
     <table class="table">
         <tr>
             <th>
-                
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SupervisorId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SupervisorAuthorizedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HeadId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HeadAuthorizedDate)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Employee.EmployeeName)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdjustmentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
         </tr>
 
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AdjustmentDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SupervisorId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SupervisorAuthorizedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HeadId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HeadAuthorizedDate)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Employee.EmployeeName)
                 </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.AdjustmentDate)*@
+                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.AdjustmentDate))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+ 
+
                 <td>
                     
                     @Html.ActionLink("Details", "Details", new { id = item.AdjustmentId }) 

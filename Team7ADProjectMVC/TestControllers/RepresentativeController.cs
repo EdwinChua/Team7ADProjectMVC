@@ -25,18 +25,14 @@ namespace Team7ADProjectMVC.TestControllers
         }
         // GET: Representative
 
-        //[AuthorisePermissions(Permission="ChangeCollection")]
+        //[AuthorisePermissions(Permission="")]
+
         public ActionResult Viewdisbursements()
         {
-            if ((Employee)Session["user"] == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            if (((Employee)Session["user"]).Role.Name != "Representative")
-            {
-                return HttpNotFound();
-            }
-            return View(disbursementSvc.GetAllDisbursements());
+
+            var id = ((Employee)Session["user"]).DepartmentId;
+            
+            return View(disbursementSvc.GetDisbursementByDeptId(id));
 
 
         }
@@ -76,14 +72,6 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult Edit()
         {
 
-            if ((Employee)Session["user"] == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            if (((Employee)Session["user"]).Role.Name != "Representative")
-            {
-                return HttpNotFound();
-            }
             var id = ((Employee)Session["user"]).DepartmentId;
             Department department = departmentSvc.findDeptByID(id);
             ViewBag.Message = db.CollectionPoints.ToList();

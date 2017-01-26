@@ -20,10 +20,6 @@ namespace Team7ADProjectMVC.Controllers
         // GET: Adjustments
         public ActionResult Index()
         {
-            if (Session["user"] == null)
-            {
-                return HttpNotFound();
-            }
             int userid = ((Employee)Session["user"]).EmployeeId;
 
             string role = ivadjustsvc.findRolebyUserID(userid);

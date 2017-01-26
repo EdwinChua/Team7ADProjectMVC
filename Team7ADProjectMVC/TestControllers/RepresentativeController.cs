@@ -33,7 +33,7 @@ namespace Team7ADProjectMVC.TestControllers
 
 
         }
-        public ActionResult Searchdisbursements(string date, String status)
+        public ActionResult Searchdisbursements(string date, string status)
         {
 
             return View("Viewdisbursements", disbursementSvc.FindDisbursementsBySearch(date, status));

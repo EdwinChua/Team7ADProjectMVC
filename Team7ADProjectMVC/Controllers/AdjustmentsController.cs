@@ -1,26 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using Team7ADProjectMVC.Services;
 using Team7ADProjectMVC.Models;
+using Team7ADProjectMVC.Models.InventoryAdjustmentService;
 
 namespace Team7ADProjectMVC.Controllers
 {
     public class AdjustmentsController : Controller
     {
+        private IInventoryAdjustmentService ivadjustsvc;
         private ProjectEntities db = new ProjectEntities();
+        public AdjustmentsController()
+        {
+            ivadjustsvc = new InventoryAdjustmentService();
+        }
 
         // GET: Adjustments
         public ActionResult Index()
         {
-            var adjustments = db.Adjustments.Include(a => a.Employee);
-            return View(adjustments.ToList());
+            if (Session["user"] == null)
+            {
+                return HttpNotFound();
+            }
+            int userid = ((Employee)Session["user"]).EmployeeId;
+
+            string role = ivadjustsvc.findRolebyUserID(userid);
+            ViewBag.SearchEmployee = new SelectList(db.Employees.Where(x => x.DepartmentId == 6), "EmployeeId", "EmployeeName");
+            if (role == "Store Supervisor")
+            {
+                List<SelectListItem> statuslist = new List<SelectListItem>()
+                {
+                    new SelectListItem {Text ="Pending Approval",Value ="1" },
+                    new SelectListItem {Text ="Approved",Value ="2" },
+                    new SelectListItem {Text ="Rejected",Value ="3" },
+                };
+
+                ViewBag.SearchStatus = statuslist;
+                ivadjustsvc.findSupervisorAdjustmentList();
+            }
+
+            if (role == "Store Manager")
+            {
+                List<SelectListItem> statuslist = new List<SelectListItem>()
+                {
+                    new SelectListItem {Text ="Pending Final Approval",Value ="1" },
+                    new SelectListItem {Text ="Approved",Value ="2" },
+                    new SelectListItem {Text ="Rejected",Value ="3" },
+                };
+
+                ViewBag.SearchStatus = statuslist;
+                ivadjustsvc.findManagerAdjustmentList();
+            }
+
+
+
+            return View();
         }
+        //public ActionResult SearchAdjustment(int employee, int status, string date)
+        //{
+        //    if((status == null || status == "") && (date == null || date == ""))
+        //    {
+
+        //    }
+
+        //}
+
+
+
 
         // GET: Adjustments/Details/5
         public ActionResult Details(int? id)
@@ -63,7 +111,7 @@ namespace Team7ADProjectMVC.Controllers
         //}
 
         // GET: Adjustments/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult ViewAdjustmentDetail(int? id)
         {
             if (id == null)
             {

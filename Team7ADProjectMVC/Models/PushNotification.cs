@@ -164,16 +164,32 @@ namespace Team7ADProjectMVC.Models
             int dlid = Convert.ToInt32(DisListID);
             DisbursementList wcfItem = db.DisbursementLists.Where(p => p.DisbursementListId == dlid).First();
             string deptName = wcfItem.Department.DepartmentName;
-            // take what ever u want form there..
             List < String > myData = new List<string>();
             myData.Add("DisbursementList");
             myData.Add("Disbursement List");
             myData.Add("0");
             myData.Add("0");
 
-            PushFCMNotificationToStoreClerk("Disbursement Completed", deptName+ " accepted disbursement.", myData);
+            PushFCMNotificationToStoreClerk(deptName, "Accepted Disbursement", myData);
         }
 
+
+
+        public void NewRequisitonMade(String DisListID)
+        {
+
+            int dlid = Convert.ToInt32(DisListID);
+            var deptName = from d in db.DisbursementLists
+                           where d.DisbursementListId == dlid
+                           select d.Department.DepartmentName;
+            List<String> myData = new List<string>();
+            myData.Add("DisbursementList");
+            myData.Add("Disbursement List");
+            myData.Add("0");
+            myData.Add("0");
+
+            PushFCMNotificationToStoreClerk("Disbursement completed", deptName + " accepted disbursement.", myData);
+        }
 
 }
 }

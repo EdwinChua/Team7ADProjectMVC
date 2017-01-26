@@ -65,7 +65,7 @@ namespace Team7ADProjectMVC.Models
                         pageHead = myData[1],
                         deptId = myData[2],
                         id2 = myData[3],
-                        extraDetails = myData[4];           
+                        extraDetails = myData[4],          
                       }
                   };
 

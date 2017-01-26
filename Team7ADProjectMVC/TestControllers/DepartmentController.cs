@@ -184,7 +184,7 @@ namespace Team7ADProjectMVC.TestControllers
 
 
 
-                requisitions.RemoveAll(x => x.DepartmentId != 1);
+                requisitions.RemoveAll(x => x.DepartmentId != 2);
 
 
             ViewBag.Cat = requisitions;
@@ -292,7 +292,7 @@ namespace Team7ADProjectMVC.TestControllers
             }
 
 
-            requisitions.RemoveAll(x => x.DepartmentId != 1);
+            requisitions.RemoveAll(x => x.DepartmentId != 2);
 
 
             ViewBag.Cat = requisitions;
@@ -387,18 +387,16 @@ namespace Team7ADProjectMVC.TestControllers
 
             ViewBag.MembershipList = db.Inventories.ToList();
 
-            //var query = from t in db.Inventories
-            //            where t.Category.CategoryName.Equals("Clips")
-            //            select t;
+            
 
             ViewBag.clips = db.Inventories.Where(x => x.Category.CategoryName == "Clips").ToList();
-            //ViewBag.clips = query.ToList();
 
 
 
 
-                   DateTime d= DateTime.Today;
 
+
+            DateTime d = DateTime.Today;
             ViewBag.time = d.ToShortDateString();
             ViewBag.rel = relis;
 
@@ -414,19 +412,26 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", requisition.EmployeeId);
 
             Requisition req = new Requisition();
-            var count = db.Requisitions.ToList();
-            int idd = count.Count()+1;
+
+            var count = depasvc.ListAllRequisition();
+            //var count = db.Requisitions.ToList();
+            int idd = count.Count() + 1;
+
+            depasvc.UpdateRequi(requisition,req,idd,1,2);
+
+
+           
             ///fake
-            requisition.RequisitionId = idd;
-            req.RequisitionStatus = "Pending";
-            req.EmployeeId = 1;
-            req.DepartmentId = 2;
-            req.OrderedDate = DateTime.Today;
+            //requisition.RequisitionId = idd;
+            //req.RequisitionStatus = "Pending";
+            //req.EmployeeId = 1;
+            //req.DepartmentId = 2;
+            //req.OrderedDate = DateTime.Today;
            
           
                
            
-            //
+          
 
 
 
@@ -439,11 +444,27 @@ namespace Team7ADProjectMVC.TestControllers
             foreach (ItemModel i in mododo.Items)
             {
 
+
+
+
                 RequisitionDetail rd = new RequisitionDetail();
+
+
+
                 rd.Quantity = Int32.Parse(i.Quantity);
 
+                string descibe = i.Item;
 
-                rd.ItemNo = "C002";
+                string itemno = depasvc.FinditemByName(descibe);
+
+                //rd.ItemNo = "C002";
+
+
+                rd.ItemNo = itemno;
+
+
+
+
                 rd.OutstandingQuantity = Int32.Parse(i.Quantity);
                 rd.RequisitionId = idd;
 
@@ -516,20 +537,7 @@ namespace Team7ADProjectMVC.TestControllers
 
         }
 
-        //[HttpPost]
-        //public ActionResult AddUser(List<String> rs)
-        //{
-        //    this.Roles = rs;
-        //    foreach (string i in Roles)
-        //    {
-
-        //        Console.WriteLine(i.ToString());
-
-        //    }
-
-        //    return null;
-
-        //}
+       
 
         public ActionResult ViewRequisitionDetails(int? id)
         {

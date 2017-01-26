@@ -65,8 +65,8 @@ namespace Team7ADProjectMVC
         String getallocate();
 
         [OperationContract]
-        [WebGet(UriTemplate = "/wcflogin?userid={userid}&password={password}", ResponseFormat = WebMessageFormat.Json)]
-        wcflogin getlogin(String userid,String password);
+        [WebGet(UriTemplate = "/wcflogin?userid={userid}&password={password}&token={token}", ResponseFormat = WebMessageFormat.Json)]
+        wcflogin getlogin(String userid,String password, String token);
 
         [OperationContract]
         [WebGet(UriTemplate = "/wcfChangecollectionpt?dept={deptid}&location={collectionptid}", ResponseFormat = WebMessageFormat.Json)]
@@ -108,6 +108,21 @@ namespace Team7ADProjectMVC
         [OperationContract]
         [WebGet(UriTemplate = "/wcfAcceptCollection?DisbursementListID={DisListID}", ResponseFormat = WebMessageFormat.Json)]
         String wcfAcceptCollection(String DisListID);
+
+
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfSendForConfirmation?DisbursementListID={DisListID}", ResponseFormat = WebMessageFormat.Json)]
+        String wcfSendForConfirmation(String DisListID);
+
+
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/wcfLogout?userid={userid}", ResponseFormat = WebMessageFormat.Json)]
+        String wcfLogout(String userid);
+
+
+
 
 
     }
@@ -425,10 +440,14 @@ public class wcflogin
     string role;
     string deptid;
     string permission;
+    string empName;
 
 
     [DataMember]
     public String Userid { get; set; }
+
+    [DataMember]
+    public String EmpName { get; set; }
 
     [DataMember]
     public String Role { get; set; }
@@ -450,7 +469,6 @@ public class wcfStoreRequisitions
     string deptName;
     string approvalDate;
     string reqStatus;
-   
 
 
     [DataMember]

@@ -20,6 +20,7 @@ namespace Team7ADProjectMVC
         public string Remarks { get; set; }
         public Nullable<int> DeliveryId { get; set; }
     
+        public virtual Delivery Delivery { get; set; }
         public virtual Inventory Inventory { get; set; }
     }
 }

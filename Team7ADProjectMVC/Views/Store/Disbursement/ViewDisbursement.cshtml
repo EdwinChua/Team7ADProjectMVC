@@ -4,7 +4,8 @@
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Disbursement for " + @ViewBag.disbursementListInfo.Department.DepartmentName;
     int? disbursementListId = null;
-    //TODO: EDWIN - Logic for disbursement
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 
@@ -78,7 +79,7 @@
         </div>
     </div>
 </form>
-@if (Model.Status == "Completed")
+@if (Model.Status == "Complete")
 {
 <script>
     $('#form1 input[type="number"]').each(function () {

@@ -23,28 +23,29 @@ namespace Team7ADProjectMVC.Models
     //        Details = new List<AdjustmentDetail>();
     //    }
     //}
-    public  class adjustment
+    public class adjustment
     {
-        
+
         public adjustment()
         {
             Status = "Pending";
-            AdjustmentDate = DateTime.Today;
+            AdjustmentDate = DateTime.Now;
+            // EmployeeId =1;
             this.AdjustmentDetails = new HashSet<adjustmentdetail>();
 
         }
-        [Key]
+        //[Key]
         public int AdjustmentId { get; set; }
         [Required]
         public Nullable<System.DateTime> AdjustmentDate { get; set; }
         [Required]
         public Nullable<int> EmployeeId { get; set; }
-      
+
         [Required]
         public string Status { get; set; }
 
-        
+
         public virtual ICollection<adjustmentdetail> AdjustmentDetails { get; set; }
-        public virtual Employee Employee { get; set; }
+
     }
 }

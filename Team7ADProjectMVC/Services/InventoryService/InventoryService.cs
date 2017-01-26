@@ -10,7 +10,8 @@ namespace Team7ADProjectMVC.Models
     public class InventoryService : IInventoryService
     {
         ProjectEntities db = new ProjectEntities();
-
+        PushNotification fcm = new PushNotification();
+        
         public String GetItemCode(String itemDesc)
         {
             String startingLetter = itemDesc[0].ToString();
@@ -79,7 +80,7 @@ namespace Team7ADProjectMVC.Models
         }
 
         public List<Requisition> GetOutStandingRequisitions()
-        {
+            {
             var query = from rq in db.Requisitions
                         where rq.RequisitionStatus != "Pending Approval"
                         && rq.RequisitionStatus != "Rejected"
@@ -99,7 +100,10 @@ namespace Team7ADProjectMVC.Models
                 {
                     try
                     {
-                        temp = temp.Intersect(rList.requisitionList).ToList();
+                        foreach (var item in rList.requisitionList)
+                        {
+                            temp.RemoveAll(x => x.RequisitionId == item.RequisitionId);
+                        }
                     }
                     catch
                     {
@@ -215,8 +219,9 @@ namespace Team7ADProjectMVC.Models
             {
                 UpdateInventoryQuantity(itemsCollected.itemNo, itemsCollected.collectedQuantity);
             }
+            fcm.CheckForStockReorder();
 
-            List<Requisition> requisitionListFromRList = retrievalList.requisitionList;
+            List < Requisition > requisitionListFromRList = retrievalList.requisitionList;
             DisbursementList dList = new DisbursementList();
             List<DisbursementDetail> tempDisbursementDetailList = new List<DisbursementDetail>();
 
@@ -270,6 +275,7 @@ namespace Team7ADProjectMVC.Models
             {
                 db.Entry(i).State = EntityState.Modified;
                 db.SaveChanges();
+       
             }
             else
             {
@@ -484,7 +490,7 @@ namespace Team7ADProjectMVC.Models
         {
 
             int deptId;
-            int prepQty;
+
             int adjustedQty;
             int disburseListId;
             int disburseDetailId;

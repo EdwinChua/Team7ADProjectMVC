@@ -1,8 +1,12 @@
-﻿@*@model IEnumerable<Team7ADProjectMVC.Requisition>*@
+﻿
+@*@model IEnumerable<Team7ADProjectMVC.Requisition>*@
 
 @{
     Page.Title = "View All Employees";
-    Layout = "~/Views/Shared/_Layouthead.cshtml";
+    //Layout = "~/Views/Shared/_Layouthead.cshtml";
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 
@@ -56,14 +60,6 @@
                                             </ul>
                                         </li>
                                     </ul>
-                                    @*<form class="navbar-form navbar-left" role="search">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" />
-                                        </div>
-                                        <button type="submit" class="btn btn-default">
-                                            Submit
-                                        </button>
-                                    </form>*@
                                     <form class="navbar-form navbar-left" role="form" action="/Head/ListAllEmployees" method="post">
                                         <div class="form-group">
                                             <input id="SearchString" type="text" class="form-control" name="SearchString"  />
@@ -96,6 +92,7 @@
                                             </ul>
                                         </li>
                                     </ul>
+
                                 </div>
 
                             </nav>
@@ -114,13 +111,7 @@
                             <th>
                                 Ordered Date
                             </th>
-                            @*<th>
-                                    Request Date
-                                </th>
-                                <th>
-                                    Request
-                                </th>*@
-                        </tr>
+                            
                     </thead>
                     <tbody>
                       
@@ -146,7 +137,6 @@
                                             <input type="submit" class="btn btn-success btn-lg" name="status" value="Approve" />
                                             <input type="submit" class="btn btn-danger btn-lg" name="status" value="Reject" />
                                         </form>
-                                        @*<a href="ApproveRequisition/@item.RequisitionId"><button type="button" class="btn btn-success">Approve</button></a>          <a href="RejectRequisition/@item.RequisitionId"><button type="button" class="btn btn-danger">Reject</button></a>*@
                                     </td>
                                 </tr>
 
@@ -155,22 +145,7 @@
                     </tbody>
                 </table>
 
-
-                @*<table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Item Code
-                            </th>
-                            <th>
-                                Product
-                            </th>
-                        </tr>
-                    </thead>
-                    
-                </table>*@
-
-                <br />
+               <br />
                 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
                 @Html.PagedListPager(Model, page => Url.Action("ListAllEmployees",
@@ -179,26 +154,6 @@
 
 
             </div>
-        </div>
-       
-    @*</div>
-
-        </div>*@
-        @*<div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    NEWS
-                </div>
-                <div class="panel-body">
-                    <p>Mun Kew received his PhD from Stanford University. He has more than 25 years of R&D and commercial experience in IT. He was Chair and Editor of the ISO/JTC1/WG2/24800 JPSearch international standard, editor or past editor of the Journal of Information Retrieval, Information Processing and Management Journal, member of the advisory board for the School of IIT at Temasek Polytechnic, the IRAL and AIRS symposium series, and formerly Adjunct Assoc. Prof at the National Institute of Education.</p>
-                </div>
-            </div>
-        </div>*@
-
-<script>
-    $(document).ready(function ($) {
-        $(".clickable-row").click(function () {
-            window.document.location = $(this).data("href");
-        });
-    });
-</script>
+        </div>   
+    </div>
+</div>

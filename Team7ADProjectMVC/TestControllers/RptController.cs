@@ -1,5 +1,6 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -17,7 +18,7 @@ namespace Team7ADProjectMVC.TestControllers
         private IReportService rptSvc = new ReportService();
         // GET: Rpt
 
-        [AuthorisePermissions(Permission="MakeRequisition")]
+        //[AuthorisePermissions(Permission="ChangeCollectionPoint")]
         public ActionResult Index()
         {
             
@@ -49,43 +50,47 @@ namespace Team7ADProjectMVC.TestControllers
             DataSet1TableAdapters.disbAnalysisTableAdapter da = new DataSet1TableAdapters.disbAnalysisTableAdapter();
             DataSet1.disbAnalysisDataTable dt = new DataSet1.disbAnalysisDataTable();
             da.Fill(dt);
-
-            EnumerableRowCollection<Team7ADProjectMVC.DataSet1.disbAnalysisRow> query;
-            if (Request.Form["Month2"].Length > 0 && Request.Form["Year2"].Length > 0 && Request.Form["Month3"].Length > 0 && Request.Form["Year3"].Length > 0)
-            {           
-                query = from row in dt.AsEnumerable()
-                        where depts.Contains(row.Field<string>("DepartmentName"))
-                        && row.Field<DateTime>("ApprovedDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("ApprovedDate").Year == Int32.Parse(Request.Form["Year"])
-                        || row.Field<DateTime>("ApprovedDate").Month == Int32.Parse(Request.Form["Month2"]) && row.Field<DateTime>("ApprovedDate").Year == Int32.Parse(Request.Form["Year2"])
-                        || row.Field<DateTime>("ApprovedDate").Month == Int32.Parse(Request.Form["Month3"]) && row.Field<DateTime>("ApprovedDate").Year == Int32.Parse(Request.Form["Year3"])
-                        && cats.Contains(row.Field<String>("CategoryName"))
-                        select row;
-            } else if (Request.Form["Month2"].Length > 0 && Request.Form["Year2"].Length > 0)
+            String categorySelected = Request.Form["Categories"];
+            List<DataSet1.disbAnalysisRow> filteredList = dt.Where(x => x.CategoryName == categorySelected&& depts.Contains(x.DepartmentName)).ToList<DataSet1.disbAnalysisRow>();
+            DataSet1.disbAnalysisDataTable filteredDT = new DataSet1.disbAnalysisDataTable();
+            foreach(DataSet1.disbAnalysisRow r in filteredList)
             {
-                query = from row in dt.AsEnumerable()
-                        where depts.Contains(row.Field<string>("DepartmentName"))
-                        && row.Field<DateTime>("ApprovedDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("ApprovedDate").Year == Int32.Parse(Request.Form["Year"])
-                        || row.Field<DateTime>("ApprovedDate").Month == Int32.Parse(Request.Form["Month2"]) && row.Field<DateTime>("ApprovedDate").Year == Int32.Parse(Request.Form["Year2"])
-                        && cats.Contains(row.Field<String>("CategoryName"))
+                filteredDT.ImportRow(r);
+            }
+
+            EnumerableRowCollection < Team7ADProjectMVC.DataSet1.disbAnalysisRow > query;
+            if (Request.Form["Month2"].Length > 0 && Request.Form["Year2"].Length > 0 && Request.Form["Month3"].Length > 0 && Request.Form["Year3"].Length > 0)
+            {
+                query = from row in filteredDT.AsEnumerable()
+                        where row.Field<DateTime>("DeliveryDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("DeliveryDate").Year == Int32.Parse(Request.Form["Year"])
+                        || row.Field<DateTime>("DeliveryDate").Month == Int32.Parse(Request.Form["Month2"]) && row.Field<DateTime>("DeliveryDate").Year == Int32.Parse(Request.Form["Year2"])
+                        || row.Field<DateTime>("DeliveryDate").Month == Int32.Parse(Request.Form["Month3"]) && row.Field<DateTime>("DeliveryDate").Year == Int32.Parse(Request.Form["Year3"])
+                        select row;
+            }
+            else if (Request.Form["Month2"].Length > 0 && Request.Form["Year2"].Length > 0)
+            {
+                query = from row in filteredDT.AsEnumerable()
+                        where row.Field<DateTime>("DeliveryDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("DeliveryDate").Year == Int32.Parse(Request.Form["Year"])
+                        || row.Field<DateTime>("DeliveryDate").Month == Int32.Parse(Request.Form["Month2"]) && row.Field<DateTime>("DeliveryDate").Year == Int32.Parse(Request.Form["Year2"])
                         select row;
             }
             else
             {
-                query = from row in dt.AsEnumerable()
-                        where depts.Contains(row.Field<string>("DepartmentName"))
-                        && row.Field<DateTime>("ApprovedDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("ApprovedDate").Year == Int32.Parse(Request.Form["Year"])                                                        
-                        && cats.Contains(row.Field<String>("CategoryName"))
+                query = from row in filteredDT.AsEnumerable()
+                        where row.Field<DateTime>("DeliveryDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("DeliveryDate").Year == Int32.Parse(Request.Form["Year"])
                         select row;
-            }   
+            }
             //return Content("<html>" + htmlstuff + "</html>");
-            ReportDocument cr = new ReportDocument();
-            cr.Load(Server.MapPath("~/Reports/CrystalReport2.rpt"));
-            
+            //ReportDocument cr = new ReportDocument();
+            //cr.Load(Server.MapPath("~/Reports/CrystalReport1.rpt"));
 
-            DataView view = query.AsDataView();
-            cr.SetDataSource(view);
-            Stream s = cr.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-            return File(s, "application/pdf");
+
+            DataView data = query.AsDataView();
+            //cr.SetDataSource(view);
+            //Stream s = cr.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            //return File(s, "application/pdf");
+            Session["data"] = data;
+            return Redirect("ReportViewer.aspx");
 
         }
 
@@ -112,16 +117,16 @@ namespace Team7ADProjectMVC.TestControllers
             l.Add("Computer Science");
 
             EnumerableRowCollection<Team7ADProjectMVC.DataSet1.disbAnalysisRow> query = from row in dt.AsEnumerable()
-                                                     where l.Contains(row.Field<string>("DepartmentName")) && row.Field<DateTime>("ApprovedDate").Month==6 && row.Field<DateTime>("ApprovedDate").Year==2017
-                                                     || row.Field<DateTime>("ApprovedDate").Month == 8 && row.Field<DateTime>("ApprovedDate").Year == 2017
+                                                     where l.Contains(row.Field<string>("DepartmentName")) && row.Field<DateTime>("DeliveryDate").Month==6 && row.Field<DateTime>("DeliveryDate").Year==2017
+                                                     || row.Field<DateTime>("DeliveryDate").Month == 8 && row.Field<DateTime>("DeliveryDate").Year == 2017
                                                                                         select row;
 
             DataView view = query.AsDataView();
            // DataView view = new DataView();
             //view.Table = dt;
             //view.RowFilter = "DepartmentName='Registrar Department'OR DepartmentName='Computer Science'";
-            //view.RowFilter = "Convert(ApprovedDate, 'System.String') LIKE '6/2017'";
-            //return Content("<html>" + ((DateTime)dt.Rows[3]["ApprovedDate"]).ToString()+ "</html>");
+            //view.RowFilter = "Convert(DeliveryDate, 'System.String') LIKE '6/2017'";
+            //return Content("<html>" + ((DateTime)dt.Rows[3]["DeliveryDate"]).ToString()+ "</html>");
 
             cr.SetDataSource(view);
             Stream s = cr.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);

@@ -57,6 +57,8 @@ INSERT INTO [Role]
 VALUES ('Representative', 'Department Representative')
 INSERT INTO [Role]
 VALUES ('Store Supervisor', 'Store sup')
+INSERT INTO [Role]
+VALUES ('Store Manager', 'Store Manager')
 
 ----------------------------------------- Permission -----------------------------------------
 CREATE TABLE Permission
@@ -281,8 +283,8 @@ VALUES
 ('H002',7,'Hole Puncher 2 holes','H2',50,20,3,100,0,1,5,2,6,3,7),
 ('P001',8,'Pad Postit Memo 1"X2"','P1',100,60,5,150,0,1,5,2,5.5,3,6),
 ('P002',9,'Paper Photostat A3','P2',500,500,2,800,0,1,5,2,5.5,3,6),
-('P003',6,'Pen Ballpoint Black','P3',100,50,1,150,0,1,12,2,13,3,14),
-('P004',6,'Pen Ballpoint Blue','P4',100,50,1,150,0,1,12,2,13,3,14),
+('P003',6,'Pen Ballpoint Black','P3',100,50,1,150,0,2,12,1,13,3,14),
+('P004',6,'Pen Ballpoint Blue','P4',100,50,1,150,0,2,12,1,13,3,14),
 ('P005',6,'Pencil 2B','P5',100,50,1,80,0,1,12,2,13,3,14),
 ('R001',10,'Ruler 6"','R1',50,20,1,20,0,1,5,2,6,3,7),
 ('S001',11,'Scissors','S1',50,20,3,20,0,1,1.5,2,2,3,2.2),
@@ -362,13 +364,18 @@ EmployeeId INT,
 OrderStatus varchar(20),
 AuthorizedBy INT,
 AuthorizedDate DATE,
-CONSTRAINT PurchaseOrderEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId)
+CONSTRAINT PurchaseOrderEmployeeId FOREIGN KEY(EmployeeId) REFERENCES Employee(EmployeeId),
+CONSTRAINT PurchaseOrderSupplierId FOREIGN KEY(SupplierId) REFERENCES Supplier(SupplierId),
+CONSTRAINT PurchaseOrderAuthorizedBy FOREIGN KEY(AuthorizedBy) REFERENCES Employee(EmployeeId)
 )
 
 INSERT INTO PurchaseOrder
-VALUES ('2016-12-30',1,3,'Pending',10,'2017-12-30'),
-		('2016-12-31',1,2,'Approved',10,'2017-01-04'),
-		('2016-01-06',1,2,'Rejected',10,'2017-01-10');
+VALUES 
+('2016-10-23',1,2,'Approved',10,'2016-10-23'),
+('2016-10-23',2,2,'Approved',10,'2016-10-23'),
+('2016-11-23',2,2,'Approved',10,'2016-11-23'),
+('2016-12-23',1,2,'Approved',10,'2016-12-23'),
+('2016-12-23',2,2,'Approved',10,'2016-12-23');
 
 -------------------------------------------------- Retrieval ----------------------------------------
 CREATE TABLE Retrieval
@@ -450,7 +457,7 @@ VALUES
 (3,'P002',25,0),
 (3,'H001',15,0),
 (3,'H002',10,0),
-(4,'P003',10,0),
+(4,'P002',10,0),
 (4,'P003',20,0),
 (4,'C001',25,0),
 (5,'P003',25,0),
@@ -458,14 +465,14 @@ VALUES
 (5,'C001',20,0),
 (6,'H002',15,0),
 (6,'P003',10,0),
-(6,'P003',25,0),
+(6,'P002',25,0),
 (7,'C001',5,0),
 (7,'P001',25,0),
 (7,'P002',25,0),
 (8,'R001',10,0),
-(8,'R001',10,0),
+(8,'P002',10,0),
 (8,'T001',20,0),
-(9,'H001',10,0),
+(9,'P001',10,0),
 (9,'H001',10,0),
 (9,'E002',5,0),
 (10,'E003',5,0),
@@ -484,10 +491,10 @@ VALUES
 (14,'P003',20,0),
 (14,'T001',10,0),
 (15,'E003',15,0),
-(15,'P002',10,0),
+(15,'P001',10,0),
 (15,'P002',15,0),
 (16,'P002',25,0),
-(16,'P002',5,0),
+(16,'P001',5,0),
 (16,'P003',5,0),
 (17,'S001',10,0),
 (17,'P003',20,0),
@@ -497,10 +504,10 @@ VALUES
 (18,'E003',15,0),
 (19,'P003',5,0),
 (19,'H002',25,0),
-(19,'P003',20,0),
+(19,'P002',20,0),
 (20,'E003',10,0),
 (20,'P003',20,0),
-(20,'P003',20,0),
+(20,'P002',20,0),
 (21,'E003',20,0),
 (21,'C002',20,0),
 (21,'P003',25,0),
@@ -509,15 +516,15 @@ VALUES
 (22,'P003',25,0),
 (23,'R001',25,0),
 (23,'T001',10,0),
-(23,'T001',10,0),
+(23,'P001',10,0),
 (24,'S001',20,0),
 (24,'P003',5,0),
 (24,'H001',10,0),
 (25,'P005',10,0),
 (25,'P003',5,0),
-(25,'P003',20,0),
+(25,'P002',20,0),
 (26,'R001',15,0),
-(26,'R001',25,0),
+(26,'P001',25,0),
 (26,'E002',10,0),
 (27,'F001',5,0),
 (27,'C002',10,0),
@@ -556,8 +563,8 @@ VALUES
 (38,'H001',15,15),
 (39,'H002',10,10),
 (39,'P003',10,10),
-(39,'P003',20,20),
-(40,'C001',25,25),
+(39,'P002',20,20),
+(40,'P002',25,25),
 (40,'P003',25,25),
 (40,'T001',5,5),
 (40,'C001',20,20);
@@ -572,11 +579,62 @@ Quantity INT,
 SupplierId INT,
 CONSTRAINT PurchaseDetailItemNo FOREIGN KEY(ItemNo) REFERENCES Inventory(ItemNo),
 CONSTRAINT PurchaseDetailSupplierId FOREIGN KEY(SupplierId) REFERENCES Supplier(SupplierId),
+CONSTRAINT PurchaseDetailPurchaseOrderId FOREIGN KEY(PurchaseOrderId) REFERENCES PurchaseOrder(PurchaseOrderId)
 )
 
 INSERT INTO PurchaseDetail
-VALUES (1,'C001',100,1), (1,'E001',100,1), 
-		(2,'C002',100,1),(2,'F001',100,1);
+VALUES 
+(1,'C001',20,1),
+(1,'C002',30,1),
+(1,'E001',10,1),
+(1,'E002',20,1),
+(1,'E003',40,1),
+(1,'F001',10,1),
+(1,'H001',10,1),
+(1,'H002',10,1),
+(1,'P001',20,1),
+(1,'P002',20,1),
+(2,'P003',80,2),
+(2,'P004',5,2),
+(1,'P005',10,1),
+(1,'R001',20,1),
+(1,'S001',10,1),
+(1,'S002',10,1),
+(1,'T001',20,1),
+(3,'C001',40,2),
+(3,'C002',20,2),
+(3,'E001',20,2),
+(3,'E002',10,2),
+(3,'E003',40,2),
+(3,'F001',10,2),
+(3,'H001',10,2),
+(3,'H002',10,2),
+(3,'P001',10,2),
+(3,'P002',40,2),
+(3,'P003',105,2),
+(3,'P004',5,2),
+(3,'P005',20,2),
+(3,'R001',20,2),
+(3,'S001',10,2),
+(3,'S002',20,2),
+(3,'T001',20,2),
+(4,'C001',50,1),
+(4,'C002',20,1),
+(4,'E001',10,1),
+(4,'E002',20,1),
+(4,'E003',35,1),
+(4,'F001',15,1),
+(4,'H001',25,1),
+(4,'H002',30,1),
+(4,'P001',80,1),
+(4,'P002',145,1),
+(5,'P003',100,2),
+(5,'P004',15,2),
+(4,'P005',35,1),
+(4,'R001',55,1),
+(4,'S001',55,1),
+(4,'S002',55,1),
+(4,'T001',50,1);
 
 -------------------------------------------------- DisbursementList ----------------------------------------
 CREATE TABLE DisbursementList
@@ -653,7 +711,7 @@ VALUES
 (3,'P002',25,25,''),
 (3,'H001',15,15,''),
 (3,'H002',10,10,''),
-(4,'P003',10,10,''),
+(4,'P002',10,10,''),
 (4,'P003',20,20,''),
 (4,'C001',25,25,''),
 (5,'P003',25,25,''),
@@ -661,14 +719,14 @@ VALUES
 (5,'C001',20,20,''),
 (6,'H002',15,15,''),
 (6,'P003',10,10,''),
-(6,'P003',25,25,''),
+(6,'P002',25,25,''),
 (7,'C001',5,5,''),
 (7,'P001',25,25,''),
 (7,'P002',25,25,''),
 (8,'R001',10,10,''),
-(8,'R001',10,10,''),
+(8,'P002',10,10,''),
 (8,'T001',20,20,''),
-(9,'H001',10,10,''),
+(9,'P001',10,10,''),
 (9,'H001',10,10,''),
 (9,'E002',5,5,''),
 (10,'E003',5,5,''),
@@ -687,10 +745,10 @@ VALUES
 (14,'P003',20,20,''),
 (14,'T001',10,10,''),
 (15,'E003',15,15,''),
-(15,'P002',10,10,''),
+(15,'P001',10,10,''),
 (15,'P002',15,15,''),
 (16,'P002',25,25,''),
-(16,'P002',5,5,''),
+(16,'P001',5,5,''),
 (16,'P003',5,5,''),
 (17,'S001',10,10,''),
 (17,'P003',20,20,''),
@@ -700,10 +758,10 @@ VALUES
 (18,'E003',15,15,''),
 (19,'P003',5,5,''),
 (19,'H002',25,25,''),
-(19,'P003',20,20,''),
+(19,'P002',20,20,''),
 (20,'E003',10,10,''),
 (20,'P003',20,20,''),
-(20,'P003',20,20,''),
+(20,'P002',20,20,''),
 (21,'E003',20,20,''),
 (21,'C002',20,20,''),
 (21,'P003',25,25,''),
@@ -712,15 +770,15 @@ VALUES
 (22,'P003',25,25,''),
 (23,'R001',25,25,''),
 (23,'T001',10,10,''),
-(23,'T001',10,10,''),
+(23,'P001',10,10,''),
 (24,'S001',20,20,''),
 (24,'P003',5,5,''),
 (24,'H001',10,10,''),
 (25,'P005',10,10,''),
 (25,'P003',5,5,''),
-(25,'P003',20,20,''),
+(25,'P002',20,20,''),
 (26,'R001',15,15,''),
-(26,'R001',25,25,''),
+(26,'P001',25,25,''),
 (26,'E002',10,10,''),
 (27,'F001',5,5,''),
 (27,'C002',10,10,''),
@@ -753,6 +811,7 @@ VALUES
 CREATE TABLE Delivery
 (
 DeliveryId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+DeliveryOrderNo VARCHAR(50),
 PurchaseOrderId INT,
 DeliveredDate DATE,
 ReceivedBy INT,
@@ -761,11 +820,12 @@ CONSTRAINT DeliveryEmployeeId FOREIGN KEY (ReceivedBy ) REFERENCES Employee (Emp
 )
 
 INSERT INTO Delivery
-(PurchaseOrderId,DeliveredDate,ReceivedBy)
 VALUES
-(1,'2017-01-02',3),
-(2,'2017-01-04',2),
-(3,'2017-01-10',2);
+('A1234',1,'2016-10-25',2),
+('A1235',2,'2016-10-25',2),
+('A1236',3,'2016-11-25',2),
+('A1237',4,'2016-12-27',2),
+('A1238',5,'2016-12-27',2);
 
 -------------------------------------------------- DeliveryDetail ----------------------------------------
 CREATE TABLE DeliveryDetail
@@ -775,15 +835,63 @@ ItemNo VARCHAR(50),
 Quantity INT,
 Remarks VARCHAR(250),
 DeliveryId INT,
-CONSTRAINT DeliveryDetailItemNo FOREIGN KEY (ItemNo) REFERENCES Inventory (ItemNo)
+CONSTRAINT DeliveryDetailItemNo FOREIGN KEY (ItemNo) REFERENCES Inventory (ItemNo),
+CONSTRAINT DeliveryDetailDeliveryId FOREIGN KEY (DeliveryId) REFERENCES Delivery (DeliveryId)
 )
 
 INSERT INTO DeliveryDetail
 VALUES
-('C001',100,'',1),
-('E001',100,'',1),
-('C002',100,'',2),
-('F001',100,'',2);
+('C001',20,null,1),
+('C002',30,null,1),
+('E001',10,null,1),
+('E002',20,null,1),
+('E003',40,null,1),
+('F001',10,null,1),
+('H001',10,null,1),
+('H002',10,null,1),
+('P001',20,null,1),
+('P002',20,null,1),
+('P003',80,null,2),
+('P004',5,null,2),
+('P005',10,null,1),
+('R001',20,null,1),
+('S001',10,null,1),
+('S002',10,null,1),
+('T001',20,null,1),
+('C001',40,null,3),
+('C002',20,null,3),
+('E001',20,null,3),
+('E002',10,null,3),
+('E003',40,null,3),
+('F001',10,null,3),
+('H001',10,null,3),
+('H002',10,null,3),
+('P001',10,null,3),
+('P002',40,null,3),
+('P003',105,null,3),
+('P004',5,null,3),
+('P005',20,null,3),
+('R001',20,null,3),
+('S001',10,null,3),
+('S002',20,null,3),
+('T001',20,null,3),
+('C001',50,null,4),
+('C002',20,null,4),
+('E001',10,null,4),
+('E002',20,null,4),
+('E003',35,null,4),
+('F001',15,null,4),
+('H001',25,null,4),
+('H002',30,null,4),
+('P001',80,null,4),
+('P002',145,null,4),
+('P003',100,null,5),
+('P004',15,null,5),
+('P005',35,null,4),
+('R001',55,null,4),
+('S001',55,null,4),
+('S002',55,null,4),
+('T001',50,null,4);
 
 -------------------------------------------------- DeliveryDetail ----------------------------------------
 CREATE TABLE ItemCodeGenerator
@@ -799,7 +907,19 @@ Insert into ItemCodeGenerator values
 ('s',3),('t',2),('u',1),('v',1),('w',1),('x',1),
 ('y',1),('z',1)
 
+-------------------------------------------------- Notification ----------------------------------------
 
+CREATE TABLE [Notification]
+(
+NotificationId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+EmployeeId INT NOT NULL,
+Title VARCHAR(200),
+Body VARCHAR(MAX),
+Intent VARCHAR(50),
+PageHeader VARCHAR(50),
+PageId VARCHAR(50),
+ExtraDetail VARCHAR(50)
+)
 -------------------------------------- Stock Card View ----------------------------------------
 CREATE VIEW StockCard AS
 
@@ -825,23 +945,11 @@ INNER JOIN Inventory i on i.ItemNo = pd.ItemNo
 INNER JOIN Supplier s on s.SupplierId = po.SupplierId
 
 -------------------------------------- CrystalReports Views (Don't run this view, need to be maintained)----------------------------------------
+
 create view disbAnalysis as
-select d.DepartmentName, c.CategoryName, r.ApprovedDate, dd.PreparedQuantity, e.EmployeeName, r.RequisitionId
-from 
-DisbursementDetail dd, 
-RequisitionDetail rd, 
-Requisition r, 
-Inventory i, 
-Employee e, 
-Department d, 
-Category c
-where 
-dd.RequisitionDetailId=rd.RequisitionDetailId 
-and rd.RequisitionId=r.RequisitionId 
-and rd.ItemNo=i.ItemNo 
-and i.CategoryId=c.CategoryId
-and r.EmployeeId=e.EmployeeId 
-and e.DepartmentId=d.DepartmentId 
+select d.DepartmentName,i.Description,i.ItemNo,dd.DeliveredQuantity,c.CategoryName,dl.DeliveryDate
+from DisbursementDetail dd, DisbursementList dl, Inventory i,Department d, Category c
+where dd.DisbursementListId=dl.DisbursementListId and dl.DepartmentId=d.DepartmentId and dd.ItemNo=i.ItemNo and i.CategoryId=c.CategoryId
 
 select e.EmployeeId,e.EmployeeName,d.DepartmentName,r.Name from Employee e, role r, Department d
 where e.RoleId=r.RoleId and e.DepartmentId=d.DepartmentId

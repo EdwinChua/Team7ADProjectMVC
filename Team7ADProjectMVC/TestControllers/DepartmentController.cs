@@ -67,6 +67,7 @@ namespace Team7ADProjectMVC.TestControllers
         private IDelegateRoleService delpsvc;
         private static string gsearchString;
         private ProjectEntities db = new ProjectEntities();
+
         List<String> Roles;
        
         public DepartmentController()

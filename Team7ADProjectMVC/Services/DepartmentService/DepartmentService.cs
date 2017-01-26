@@ -4,13 +4,15 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Team7ADProjectMVC.Models;
 
 namespace Team7ADProjectMVC.Services.DepartmentService
 {
+    
     class DepartmentService : IDepartmentService
     {
         ProjectEntities db = new ProjectEntities();
-        
+        PushNotification notify = new PushNotification();
 
         public Requisition FindById(string id)
         {
@@ -60,8 +62,9 @@ namespace Team7ADProjectMVC.Services.DepartmentService
             
             int id = department.DepartmentId;
             db.Departments.Single(model => model.DepartmentId == id).CollectionPointId = cpId;
-
             db.SaveChanges();
+            
+            notify.CollectionPointChanged(id);
         }
     }
 }

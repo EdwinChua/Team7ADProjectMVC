@@ -7,6 +7,7 @@ using System.Text;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 using Team7ADProjectMVC.Services;
+using System.Web.Security;
 
 namespace Team7ADProjectMVC
 {
@@ -18,7 +19,8 @@ namespace Team7ADProjectMVC
 
         InventoryService invService = new InventoryService();
         IRequisitionService reqService = new RequisitionService();
-        IDisbursementService disService = new DisbursementService(); 
+        IDisbursementService disService = new DisbursementService();
+        PushNotification fcm = new PushNotification(); 
 
         public List<WCFMsg> DoWork()
         {
@@ -324,58 +326,68 @@ namespace Team7ADProjectMVC
         }
 
 
-        public wcflogin getlogin(String userid , String password)
+        public string makePermissionstring(String s)
         {
-            // do the proper login here.. 
-            // test case only.
-
-            wcflogin dDetail = new wcflogin();
-            if(userid.Equals("c1"))
+            if(s.Equals("True"))
             {
-                dDetail.Deptid = "0";
-                dDetail.Role = "Clerk";
-                dDetail.Userid = "c1";
-                dDetail.Authenticate = "true";
-                dDetail.Permission = "1-1-0-1";
-               
-            
-
-            }
-            else if (userid.Equals("e1"))
-            {
-                dDetail.Deptid = "4";
-                dDetail.Role = "Employee";
-                dDetail.Userid = "e1";
-                dDetail.Authenticate = "true";
-            }
-            else if (userid.Equals("h1"))
-            {
-                dDetail.Deptid = "4";
-                dDetail.Role = "Boss";
-                dDetail.Userid = "h1";
-                dDetail.Authenticate ="true";
-            }
-            else if (userid.Equals("r1"))
-            {
-                dDetail.Deptid = "4";
-                dDetail.Role = "Representative";
-                dDetail.Userid = "r1";
-                dDetail.Authenticate = "true";
-                dDetail.Permission = "1-0-0-1";
+                return "1";
             }
             else
+            {
+                return "0";
+            }
+        }
+        public wcflogin getlogin(String userid , String password, String token)
+        {
+            wcflogin dDetail = new wcflogin();
+            try
+            {
+               
+                int empid = Convert.ToInt32(userid);
+                bool result = Membership.ValidateUser(userid, "password!");
+                if (result == true)
+                {
+                    Employee emp = db.Employees.Where(x => x.EmployeeId == empid).First();
+                    dDetail.Role = emp.Role.Name;
+                    dDetail.Deptid = emp.DepartmentId.ToString();
+                    dDetail.Userid = userid;
+                    dDetail.EmpName = emp.EmployeeName;
+                    dDetail.Authenticate = "true";
+                    Permission makePerm = db.Permissions.Where(x => x.PermissionId == emp.PermissionId).First();
+                    dDetail.Permission = makePermissionstring(makePerm.ViewRequisition.ToString()) + "-" + makePermissionstring(makePerm.ApproveRequisition.ToString()) + "-" +
+                        makePermissionstring(makePerm.ChangeCollectionPoint.ToString()) + "-" + makePermissionstring(makePerm.ViewCollectionDetails.ToString());
+                    emp.Token = token;
+
+                    db.SaveChanges();
+                }
+                else
+                {
+                    dDetail.Authenticate = "false";
+
+                }
+                return dDetail;
+            }
+            catch(Exception e)
+            {
                 dDetail.Authenticate = "false";
                 return dDetail;
+            }
         }
 
         public String updatelocation(String deptid, String collectionptid)
         {
-            int dId = Convert.ToInt32(deptid);
-            int cpoint = Convert.ToInt32(collectionptid);
-            Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
-            wcfItem.CollectionPointId = cpoint;
-            db.SaveChanges();
-            return collectionptid;
+            try {
+                int dId = Convert.ToInt32(deptid);
+                int cpoint = Convert.ToInt32(collectionptid);
+                Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
+                wcfItem.CollectionPointId = cpoint;
+                db.SaveChanges();
+                fcm.CollectionPointChanged(dId);
+                return collectionptid;
+            } catch (Exception e)
+            {
+                return "false";
+            }
         }
 
         public void updatedqun(wcfDisbursementListDetail c )
@@ -511,6 +523,50 @@ namespace Team7ADProjectMVC
                 return "false";
             }
         }
-        
+
+        public String wcfSendForConfirmation(String DisbListId)
+        {
+            try
+            {
+            int dId = Convert.ToInt32(DisbListId);
+
+            DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
+            int deptit= (int)disb.DepartmentId;
+            string deptName = disb.Department.DepartmentName;
+            Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
+            String token = emp.Token;
+
+            List<String> myData = new List<string>();
+            myData.Add("ReceiveRequisition");
+            myData.Add("Stationary Store");
+            myData.Add("4");
+            myData.Add("09:30:00");
+                fcm.PushFCMNotification("Accept Delivery", "Delivery for: "+deptName, token,myData);
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
+
+        public String wcfLogout(String userID)
+        {
+            try
+            {
+
+                int Uid = Convert.ToInt32(userID);
+                Employee emp = db.Employees.Where(W => W.EmployeeId == Uid).First();
+                emp.Token = null;
+                db.SaveChanges();
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
     }
 }

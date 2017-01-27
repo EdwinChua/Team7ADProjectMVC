@@ -81,12 +81,16 @@ namespace Team7ADProjectMVC.TestControllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                var q = db.Requisitions.Where(s => s.Employee.EmployeeName.Contains(searchString)
-                                       || s.OrderedDate.ToString().Contains(searchString));                                      
+
+                var q = db.Requisitions.Where(s => (s.Employee.EmployeeName.Contains(searchString)
+                                       || s.OrderedDate.ToString().Contains(searchString)) );                                      
                 requisitions = q.ToList();
             }
-            
 
+            Employee userName = (Employee)Session["User"];
+
+            requisitions.RemoveAll(x => x.DepartmentId != userName.DepartmentId);
+            requisitions.RemoveAll(x => x.RequisitionStatus != "Pending Approval");
             ViewBag.req = requisitions.ToList();
           
             return View("ListAllEmployees", requisitions.ToPagedList(pageNumber, pageSize)); 

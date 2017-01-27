@@ -200,9 +200,9 @@ namespace Team7ADProjectMVC
         {
             List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
             var disburse = from d in db.DisbursementLists
-                           where d.Status != "Completed"
-                           && d.Status != "Pending Approval"
-                           && d.Status != "Rejected"
+                           where d.Status.Equals("Processing")
+                           //where d.Status != "Completed"
+                           
                            orderby d.DeliveryDate ascending
                            select d;
             String beforesplit = "";

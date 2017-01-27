@@ -7,54 +7,58 @@
     ViewBag.Title = "Create";
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Inventory Adjustment";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+
 }
 
 
-@using Team7ADProjectMVC.Extensions
-@using (Html.BeginForm())
+@*@using Team7ADProjectMVC.Extensions
+@using (Html.BeginForm(FormMethod.Get))
 { @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @*<div class="form-group">*@
         @Html.EditorFor(x => x)
     @*</div>*@
-
+<form method="get">
     <h3>Adjustment Detail </h3>
     <div class="row">
         <div class="col-md-5">
             <input type="button" id="add-detail" value="Add " class="btn btn-default" />
         </div>
     </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <div class="col-md-3  ">ItemNo</div>
-                    </th>
-                    <th>
-                        <div class="col-md-3 ">Quantity</div>
-                    </th>
-                    <th>
-                        <div class="col-md-3 ">Reason</div>
-                    </th>
-                    <th>
-                        <div class="col-md-3 "></div>
-                    </th>
-                </tr>
-            <thead />
-        </table>
-        <div id="detail-list">
-            @Html.EditorForMany(x => x.AdjustmentDetails, x => x.Index)
-        </div>
-        <hr />
-        <div class="row">
-            <div class="form-group">
-                <div class="col-md-5">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <div class="col-md-3  ">ItemNo</div>
+                </th>
+                <th>
+                    <div class="col-md-3 ">Quantity</div>
+                </th>
+                <th>
+                    <div class="col-md-3 ">Reason</div>
+                </th>
+                <th>
+                    <div class="col-md-3 "></div>
+                </th>
+            </tr>
+        <thead />
+    </table>
+    <div id="detail-list">
+        @Html.EditorForMany(x => x.AdjustmentDetails, x => x.Index)
+    </div>
+    <hr />
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-5">
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
+    </div>
 
-}
+    @* } *@
+</form>
 <br/>
 <div>
     @Html.ActionLink("Back to List", "Index")

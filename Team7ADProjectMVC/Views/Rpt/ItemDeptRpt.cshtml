@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "ItemDeptRpt";
     Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 
@@ -22,11 +24,18 @@
                 <label for="DepartmentId">Department</label>
             </div>
             <div class="col-md-10">
-                @foreach (var item in ViewBag.Departments)
-                {
-                    <input type="checkbox" name="Departments" value="@item.DepartmentName">@item.DepartmentName <br>
-                }
-            </div>
+                <select id="Departments" name="Departments"
+                        class="selectpicker show-tick form-control"
+                        data-live-search="true" title="" multiple required>
+                    @foreach (var item in ViewBag.Departments)
+                    {
+                        <option>@item.DepartmentName</option>
+                    }
+                </select>
+
+
+                
+</div>
         </div>
 
 
@@ -55,11 +64,8 @@
                  <div class="col-md-10" name="period" id="period">
                      <div class="col-md-4">
                          
-                         <div class="control-label col-md-5">
+                         <div class="col-md-10">
                              <label for="Year">Year</label>
-                         </div>
-                         <div class="col-md-5">
-
                              <select class="form-control" id="Year" name="Year" required>
                                  <option> </option>
                                  @for (int q = 0; q < @ViewBag.Years.Count; q++)
@@ -67,15 +73,12 @@
                                      <option>@ViewBag.Years[q]</option>
                                  }
                              </select>
-                         </div>
 
 
 
-                         <div class="control-label col-md-5">
+
+
                              <label for="Month">Month</label>
-                         </div>
-                         <div class="col-md-5">
-
                              <select class="form-control" id="Month" name="Month" required>
                                  <option> </option>
                                  @foreach (var item in ViewBag.Months)
@@ -83,18 +86,14 @@
                                      <option>@item</option>
                                  }
                              </select>
-                         </div>
 
+                         </div>
                      </div>
 
                  
                      <div class="col-md-4">
-                         
-                             <div class="control-label col-md-5">
-                                 <label for="Year2">Year</label>
-                             </div>
-                             <div class="col-md-5">
-                                 
+                         <div class="col-md-10">
+                                 <label for="Year2">Year</label>                             
                                  <select class="form-control" id="Year2" name="Year2">
                                      <option> </option>
                                      @for(int q=0; q<@ViewBag.Years.Count;q++)
@@ -102,15 +101,11 @@
                                          <option>@ViewBag.Years[q]</option>
                                      }
                                  </select>
-                             </div>
-                         
 
                          
-                             <div class="control-label col-md-5">
-                                 <label for="Month2">Month</label>
-                             </div>
-                             <div class="col-md-5">
-                                 
+
+                       
+                                 <label for="Month2">Month</label>                         
                                  <select class="form-control" id="Month2" name="Month2">
                                      <option> </option>
                                      @foreach (var item in ViewBag.Months)
@@ -118,50 +113,33 @@
                                          <option>@item</option>
                                      }
                                  </select>
-                             </div>
-                  
+                        </div>
                      </div>
 
                      <div class="col-md-4">
-
-                         <div class="control-label col-md-5">
-                             <label for="Year3">Year</label>
-                         </div>
-                         <div class="col-md-5">
-
-                             <select class="form-control" id="Year3" name="Year3">
-                                 <option> </option>
-                                 @for (int q = 0; q < @ViewBag.Years.Count; q++)
-                                 {
-                                     <option>@ViewBag.Years[q]</option>
-                                 }
-                             </select>
-                         </div>
+                         <div class="col-md-10">
+                                 <label for="Year3">Year</label>
+                                 <select class="form-control" id="Year3" name="Year3">
+                                     <option> </option>
+                                     @for (int q = 0; q < @ViewBag.Years.Count; q++)
+                                     {
+                                         <option>@ViewBag.Years[q]</option>
+                                     }
+                                 </select>
 
 
 
-                         <div class="control-label col-md-5">
-                             <label for="Month3">Month</label>
-                         </div>
-                         <div class="col-md-5">
-
-                             <select class="form-control" id="Month3" name="Month3">
-                                 <option> </option>
-                                 @foreach (var item in ViewBag.Months)
-                                 {
-                                     <option>@item</option>
-                                 }
-                             </select>
-                         </div>
-
-
-
-
-                     </div>
-
-                 
-                     </div>
-             
+                                 <label for="Month3">Month</label>
+                                 <select class="form-control" id="Month3" name="Month3">
+                                     <option> </option>
+                                     @foreach (var item in ViewBag.Months)
+                                     {
+                                         <option>@item</option>
+                                     }
+                                 </select>
+                             </div>
+                         </div>               
+                     </div>          
              </div>
 
 

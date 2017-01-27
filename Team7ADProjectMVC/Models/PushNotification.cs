@@ -184,7 +184,7 @@ namespace Team7ADProjectMVC.Models
             DisbursementList wcfItem = db.DisbursementLists.Where(p => p.DisbursementListId == dlid).First();
             string deptName = wcfItem.Department.DepartmentName;
             List<String> myData = new List<string>();
-            myData.Add("read");
+            myData.Add("UnfulfilledRequisitions");
             myData.Add("Disbursement List");
             myData.Add("0");
             myData.Add("0");

@@ -73,9 +73,13 @@ ViewCollectionDetails BIT
 )
 
 INSERT INTO Permission
-VALUES (1,1,0,0,1,1),(1,0,1,0,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),
-(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),
-(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1),(1,1,1,1,1,1);
+VALUES 
+(0,0,0,0,0,0), -- CLERK
+(1,1,1,0,1,0), -- HEAD
+(0,0,1,1,0,0), -- EMPLOYEE
+(0,1,1,1,0,1), -- REP
+(0,0,0,0,0,0), -- STORE SUPERVISOR
+(1,1,1,0,0,0); -- DELEGATE
 
 
 ----------------------------------------- Collection Points -----------------------------------------
@@ -148,49 +152,53 @@ VALUES ('STO','STORE','Jenny Wong Mei Lin','890 6656','891 9912',10,1,1)
 
 ----------------------------------------- Add Employee -----------------------------------------
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Jenny Wong Mei Lin','youngmountain7@gmail.com',6,4,1,'11111111') -- registrar
+VALUES ('Jenny Wong Mei Lin','youngmountain7@gmail.com',6,3,3,'11111111') -- registrar
 
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Feng Teng','youngmountain7@gmail.com',6,1,2,'22222222') -- store 6 store clerk 2
+VALUES ('Feng Teng','youngmountain7@gmail.com',6,1,1,'22222222') -- store 6 store clerk 2
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Min Yew','youngmountain7@gmail.com',6,1,3,'33333333')
+VALUES ('Min Yew','youngmountain7@gmail.com',6,1,1,'33333333')
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Lao Lao','youngmountain7@gmail.com',6,1,4,'44444444')
+VALUES ('Lao Lao','youngmountain7@gmail.com',6,1,1,'44444444')
 
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mrs Pamela Kow','youngmountain7@gmail.com',1,2,5,'55555555') -- english 1 Head 3
+VALUES ('Mrs Pamela Kow','youngmountain7@gmail.com',1,2,2,'55555555') -- english 1 Head 3
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Dr. Soh Kian Wee','youngmountain7@gmail.com',2,2,6,'66666666')-- com science 2 
+VALUES ('Dr. Soh Kian Wee','youngmountain7@gmail.com',2,2,2,'66666666')-- com science 2 
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('MrMohd. Azman','youngmountain7@gmail.com',3,2,7,'77777777') -- commerce 3
+VALUES ('MrMohd. Azman','youngmountain7@gmail.com',3,2,2,'77777777') -- commerce 3
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mrs Low Kway Boo','youngmountain7@gmail.com',4,2,8,'88888888') -- registrar 4
+VALUES ('Mrs Low Kway Boo','youngmountain7@gmail.com',4,2,2,'88888888') -- registrar 4
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr. Peter Tan Ah Meng','youngmountain7@gmail.com',5,2,9,'99999999') -- zoo 5
+VALUES ('Mr. Peter Tan Ah Meng','youngmountain7@gmail.com',5,2,2,'99999999') -- zoo 5
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr. Sander','youngmountain7@gmail.com',6,2,10,'10101010') -- store 6
+VALUES ('Mr. Sander','youngmountain7@gmail.com',6,2,2,'10101010') -- store 6
 
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Prof Ezra Pound','youngmountain7@gmail.com',1,4,11,'11111111') -- eng 1 rep 4
+VALUES ('Prof Ezra Pound','youngmountain7@gmail.com',1,4,4,'11111111') -- eng 1 rep 4
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr. Ar Phyan Kwee','youngmountain7@gmail.com',2,4,12,'12121212') -- com science 2
+VALUES ('Mr. Ar Phyan Kwee','youngmountain7@gmail.com',2,4,4,'12121212') -- com science 2
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Dr. Chia Leow Bee','youngmountain7@gmail.com',3,4,13,'13131313') -- commerce 3
+VALUES ('Dr. Chia Leow Bee','youngmountain7@gmail.com',3,4,4,'13131313') -- commerce 3
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Prof Tan','youngmountain7@gmail.com',4,4,14,'14141414') -- registrar 4
+VALUES ('Prof Tan','youngmountain7@gmail.com',4,4,4,'14141414') -- registrar 4
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr. Tay Shout Pann','youngmountain7@gmail.com',5,4,15,'15151515') -- zoo 5
+VALUES ('Mr. Tay Shout Pann','youngmountain7@gmail.com',5,4,4,'15151515') -- zoo 5
 
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr Alan','youngmountain7@gmail.com',1,3,5,'55555555') -- english 1 Head 3
+VALUES ('Mr Alan','youngmountain7@gmail.com',1,3,3,'55555555') -- english 1 employee 3
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr Bob','youngmountain7@gmail.com',2,3,6,'66666666')-- com science 2 
+VALUES ('Mr Bob','youngmountain7@gmail.com',2,3,3,'66666666')-- com science 2 
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr Charlie','youngmountain7@gmail.com',3,3,7,'77777777') -- commerce 3
+VALUES ('Mr Charlie','youngmountain7@gmail.com',3,3,3,'77777777') -- commerce 3
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Ms Delia','youngmountain7@gmail.com',4,3,8,'88888888') -- registrar 4
+VALUES ('Ms Delia','youngmountain7@gmail.com',4,3,3,'88888888') -- registrar 4
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Ms Eve','youngmountain7@gmail.com',5,3,9,'99999999') -- zoo 5
+VALUES ('Ms Eve','youngmountain7@gmail.com',5,3,3,'99999999') -- zoo 5
+
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
+VALUES ('Mr Joe Alan','youngmountain7@gmail.com',1,5,5,'55555555') -- english 1 supervisor 5
+
 
 
 ----------------------------------------- End of Adding Employee ----------------------------------------------------------------------------
@@ -650,41 +658,41 @@ CONSTRAINT DisbursementListDepartmentId FOREIGN KEY (DepartmentId) REFERENCES De
 
 INSERT INTO DisbursementList(RetrievalId, DepartmentId,DeliveryDate, [Status])
 VALUES
-(1,1,'2016-06-21','Complete'),
-(1,2,'2016-07-21','Complete'),
-(1,3,'2016-08-21','Complete'),
-(1,4,'2016-09-21','Complete'),
-(1,5,'2016-10-21','Complete'),
-(2,1,'2016-11-21','Complete'),
-(2,2,'2016-12-21','Complete'),
-(2,3,'2016-06-21','Complete'),
-(2,4,'2016-07-21','Complete'),
-(2,5,'2016-08-21','Complete'),
-(3,1,'2016-09-21','Complete'),
-(3,2,'2016-10-21','Complete'),
-(3,3,'2016-11-21','Complete'),
-(3,4,'2016-12-21','Complete'),
-(3,5,'2016-06-21','Complete'),
-(4,1,'2016-07-21','Complete'),
-(4,2,'2016-08-21','Complete'),
-(4,3,'2016-09-21','Complete'),
-(4,4,'2016-10-21','Complete'),
-(4,5,'2016-11-21','Complete'),
-(5,1,'2016-12-21','Complete'),
-(5,2,'2016-06-21','Complete'),
-(5,3,'2016-07-21','Complete'),
-(5,4,'2016-08-21','Complete'),
-(5,5,'2016-09-21','Complete'),
-(6,1,'2016-10-21','Complete'),
-(6,2,'2016-11-21','Complete'),
-(6,3,'2016-12-21','Complete'),
-(6,4,'2016-06-21','Complete'),
-(6,5,'2016-07-21','Complete'),
-(7,1,'2016-08-21','Complete'),
-(7,2,'2016-09-21','Complete'),
-(7,3,'2016-10-21','Complete'),
-(7,4,'2016-11-21','Complete'),
-(7,5,'2016-12-21','Complete');
+(1,1,'2016-06-21','Completed'),
+(1,2,'2016-07-21','Completed'),
+(1,3,'2016-08-21','Completed'),
+(1,4,'2016-09-21','Completed'),
+(1,5,'2016-10-21','Completed'),
+(2,1,'2016-11-21','Completed'),
+(2,2,'2016-12-21','Completed'),
+(2,3,'2016-06-21','Completed'),
+(2,4,'2016-07-21','Completed'),
+(2,5,'2016-08-21','Completed'),
+(3,1,'2016-09-21','Completed'),
+(3,2,'2016-10-21','Completed'),
+(3,3,'2016-11-21','Completed'),
+(3,4,'2016-12-21','Completed'),
+(3,5,'2016-06-21','Completed'),
+(4,1,'2016-07-21','Completed'),
+(4,2,'2016-08-21','Completed'),
+(4,3,'2016-09-21','Completed'),
+(4,4,'2016-10-21','Completed'),
+(4,5,'2016-11-21','Completed'),
+(5,1,'2016-12-21','Completed'),
+(5,2,'2016-06-21','Completed'),
+(5,3,'2016-07-21','Completed'),
+(5,4,'2016-08-21','Completed'),
+(5,5,'2016-09-21','Completed'),
+(6,1,'2016-10-21','Completed'),
+(6,2,'2016-11-21','Completed'),
+(6,3,'2016-12-21','Completed'),
+(6,4,'2016-06-21','Completed'),
+(6,5,'2016-07-21','Completed'),
+(7,1,'2016-08-21','Completed'),
+(7,2,'2016-09-21','Processing'),
+(7,3,'2016-10-21','Processing'),
+(7,4,'2016-11-21','Processing'),
+(7,5,'2016-12-21','Processing');
 
 -------------------------------------------------- DisbursementDetail ----------------------------------------
 CREATE TABLE DisbursementDetail

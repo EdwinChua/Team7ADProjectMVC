@@ -3,7 +3,9 @@
 
 @{
     Page.Title = "View All requisitions";
-    Layout = "~/Views/Shared/_LayoutD.cshtml";
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 
 }
 
@@ -26,30 +28,7 @@
                                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                     <ul class="nav navbar-nav">
 
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a href="#">Action</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Another action</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Something else here</a>
-                                                </li>
-                                                <li class="divider">
-                                                </li>
-                                                <li>
-                                                    <a href="#">Separated link</a>
-                                                </li>
-                                                <li class="divider">
-                                                </li>
-                                                <li>
-                                                    <a href="#">One more separated link</a>
-                                                </li>
-                                            </ul>
-                                        </li>
+                                        
                                     </ul>
                                     @*@using (Html.BeginForm())
                                     {
@@ -147,7 +126,7 @@
                                 @Html.ActionLink("Requisiton Status", "Index", new { sortOrder = ViewBag.remeSortParm })
                             </th>
                             <th>
-                                Action @Session["searchstr"]   @Session["npg"];
+                                Action @*@Session["searchstr"]   @Session["npg"];*@
                             </th>
 
                         </tr>
@@ -256,10 +235,18 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    NEWS
+                    WHEATHER
                 </div>
+
+
+
+
                 <div class="panel-body">
-                    <p>Mun Kew received his PhD from Stanford University. He has more than 25 years of R&D and commercial experience in IT. He was Chair and Editor of the ISO/JTC1/WG2/24800 JPSearch international standard, editor or past editor of the Journal of Information Retrieval, Information Processing and Management Journal, member of the advisory board for the School of IIT at Temasek Polytechnic, the IRAL and AIRS symposium series, and formerly Adjunct Assoc. Prof at the National Institute of Education.</p>
+
+                    <div id="weather"></div>
+
+
+                    @*<p>Mun Kew received his PhD from Stanford University. He has more than 25 years of R&D and commercial experience in IT. He was Chair and Editor of the ISO/JTC1/WG2/24800 JPSearch international standard, editor or past editor of the Journal of Information Retrieval, Information Processing and Management Journal, member of the advisory board for the School of IIT at Temasek Polytechnic, the IRAL and AIRS symposium series, and formerly Adjunct Assoc. Prof at the National Institute of Education.</p>*@
                 </div>
             </div>
         </div>
@@ -437,4 +424,30 @@
     //        $('#page-content').text('Page ' + page);
     //    }
     //});
+
+
+
+    $(document).ready(function() {
+        $.simpleWeather({
+            zipcode: '',
+            woeid: '1062617',
+            location: '',
+            unit: 'f',
+            success: function(weather) {
+                html = '<h2>'+weather.temp+'&deg;'+weather.units.temp+'</h2>';
+                html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
+                html += '<li class="currently">'+weather.currently+'</li>';
+                html += '<li>'+weather.alt.temp+'&deg;C</li></ul>';
+
+                $("#weather").html(html);
+            },
+            error: function(error) {
+                $("#weather").html('<p>'+error+'</p>');
+            }
+        });
+    });
+
+
+
 </script>
+<script src="~/Scripts/jquery.simpleWeather.min.js"></script>

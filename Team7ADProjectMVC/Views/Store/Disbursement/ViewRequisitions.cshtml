@@ -13,29 +13,37 @@
     </div>
 </div>
 
-@ViewBag.rList.retrievalId
 <div class="row">
     <div class="col-md-4">
         <br />
-        @if (ViewBag.rList.requisitionList == null)
+
+        @if (ViewBag.rList.requisitionList == null && Model.Count() > 0)
         {
             <button class="btn btn-success" onclick="window.location.href='GenerateRetrievalList'">Generate Retrieval List</button>
         }
-        else
+        else if (ViewBag.rList.requisitionList != null)
         {
             <button class="btn btn-success" onclick="window.location.href='RetrievalList'">View Retrieval List</button>
         }
+        @if (ViewBag.rList.requisitionList != null)
+        {
         <button class="btn btn-danger" onclick="window.location.href='ClearRetrievalList'">Clear Retrieval List</button>
+        }
+        else
+        {
+            <h5>There are no active retrievals at this time.</h5>
+        }
     </div>
 </div>
 <br />
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <h3>Unfulfilled Requisitions</h3>
+    <div class="col-md-12">
+        <h3>Requisitions that require your attention</h3>
     </div>
 </div>
-
+@if (Model.Count() > 0)
+{
 <div class="row">
     <table class="table">
         <thead>
@@ -69,3 +77,8 @@
         </tbody>
     </table>
 </div>
+}
+else
+{
+    <h4>Yay! There are no pending requisitions at this time.</h4>
+}

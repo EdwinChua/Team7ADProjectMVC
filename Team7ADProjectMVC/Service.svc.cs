@@ -357,8 +357,8 @@ namespace Team7ADProjectMVC
                     dDetail.Permission = makePermissionstring(makePerm.ViewRequisition.ToString()) + "-" + makePermissionstring(makePerm.ApproveRequisition.ToString()) + "-" +
                         makePermissionstring(makePerm.ChangeCollectionPoint.ToString()) + "-" + makePermissionstring(makePerm.ViewCollectionDetails.ToString());
                     emp.Token = token;
-
                     db.SaveChanges();
+                    PushOldNotification(empid, token);
                 }
                 else
                 {
@@ -367,9 +367,9 @@ namespace Team7ADProjectMVC
                 }
                 return dDetail;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                dDetail.Authenticate = "false";
+                dDetail.Authenticate = "falseer";
                 return dDetail;
             }
         }
@@ -413,6 +413,7 @@ namespace Team7ADProjectMVC
                 Requisition r = db.Requisitions.Where(p => p.RequisitionId == rId).First();
                 r.RequisitionStatus = "Approved";
                 r.ApprovedDate = DateTime.Today;
+                fcm.NewRequisitonMade(reqId);
                 db.SaveChanges();
                 result = "True";
             }
@@ -533,15 +534,18 @@ namespace Team7ADProjectMVC
             DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
             int deptit= (int)disb.DepartmentId;
             string deptName = disb.Department.DepartmentName;
-            Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
-            String token = emp.Token;
 
+            String name =disb.Department.CollectionPoint.PlaceName;
             List<String> myData = new List<string>();
             myData.Add("ReceiveRequisition");
-            myData.Add("Stationary Store");
-            myData.Add("4");
-            myData.Add("09:30:00");
-                fcm.PushFCMNotification("Accept Delivery", "Delivery for: "+deptName, token,myData);
+            myData.Add(name);
+            myData.Add(DisbListId);
+            myData.Add(disb.Department.CollectionPoint.CollectTime.ToString());
+
+            fcm.PushNotificationForRep("Accept Delivery", "Please Confirm Delivery", myData,deptit);
+
+
+              
                 return "true";
             }
             catch (Exception e)
@@ -566,6 +570,38 @@ namespace Team7ADProjectMVC
             {
                 return "false";
             }
+        }
+
+        public void PushOldNotification(int  EmpID,String token)
+        {
+            var notification= from n in db.Notifications  where n.EmployeeId == EmpID    select n;
+            if (notification != null)
+            {
+                foreach (Notification n in notification)
+                {
+                    List<String> myData = new List<string>();
+                    myData.Add(n.Intent);
+                    myData.Add(n.PageHeader);
+                    myData.Add(n.PageId);
+                    myData.Add(n.ExtraDetail);
+                    fcm.PushFCMNotification(n.Title, n.Body, token, myData);
+                    DeleteOldNotifications(n.NotificationId);
+                    
+                }
+                db.SaveChanges();
+
+              
+            }
+
+        }
+
+        public void DeleteOldNotifications (int notID)
+        {
+            var report = (from d in db.Notifications
+                          where d.NotificationId == notID
+                          select d).Single();
+
+            db.Notifications.Remove(report);
         }
 
     }

@@ -35,17 +35,6 @@ namespace Team7ADProjectMVC.TestControllers
         {
 
             List<string> depts = Request.Form["Departments"].Split(',').ToList<string>();
-            string htmlstuff = "";
-            foreach (string pc in depts)
-            {
-                htmlstuff = htmlstuff + pc + "<br>";
-            }
-
-            List<string> cats = Request.Form["Categories"].Split(',').ToList<string>();
-            foreach (string pc in cats)
-            {
-                htmlstuff = htmlstuff + pc + "<br>";
-            }
 
             DataSet1TableAdapters.disbAnalysisTableAdapter da = new DataSet1TableAdapters.disbAnalysisTableAdapter();
             DataSet1.disbAnalysisDataTable dt = new DataSet1.disbAnalysisDataTable();
@@ -80,16 +69,10 @@ namespace Team7ADProjectMVC.TestControllers
                         where row.Field<DateTime>("DeliveryDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("DeliveryDate").Year == Int32.Parse(Request.Form["Year"])
                         select row;
             }
-            //return Content("<html>" + htmlstuff + "</html>");
-            //ReportDocument cr = new ReportDocument();
-            //cr.Load(Server.MapPath("~/Reports/CrystalReport1.rpt"));
-
 
             DataView data = query.AsDataView();
-            //cr.SetDataSource(view);
-            //Stream s = cr.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-            //return File(s, "application/pdf");
             Session["data"] = data;
+            Session["path"] = "~/Reports/CrystalReport1.rpt";
             return Redirect("ReportViewer.aspx");
 
         }
@@ -102,6 +85,21 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.Years = rptSvc.GetYearValues();
 
             return View("ItemSupplierRpt");
+        }
+
+        [HttpPost]
+        public ActionResult ItemSupplier(FormCollection f)
+        {
+            DataSet1.PurchaseAnalysisDataTable dt = new DataSet1.PurchaseAnalysisDataTable();
+            DataSet1TableAdapters.PurchaseAnalysisTableAdapter da = new DataSet1TableAdapters.PurchaseAnalysisTableAdapter();
+            da.Fill(dt);
+            ReportDocument cr = new ReportDocument();
+            cr.Load(Server.MapPath("~/Reports/CrystalReport2.rpt"));
+            cr.SetDataSource((DataTable)dt);
+            Session["data"] = dt;
+            Session["path"] = "~/Reports/CrystalReport2.rpt";
+            return Redirect("/ReportViewer.aspx");
+
         }
 
         public ActionResult test()

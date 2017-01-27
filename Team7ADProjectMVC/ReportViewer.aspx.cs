@@ -1,6 +1,7 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -8,12 +9,18 @@ using System.Web.UI.WebControls;
 
 namespace Team7ADProjectMVC
 {
-    public partial class WebForm1 : System.Web.UI.Page
+    public partial class ReportViewer : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ReportDocument cr= (ReportDocument)Session["report"];
+            //DataSet1.PurchaseAnalysisDataTable dt = new DataSet1.PurchaseAnalysisDataTable();
+            //DataSet1TableAdapters.PurchaseAnalysisTableAdapter da = new DataSet1TableAdapters.PurchaseAnalysisTableAdapter();
+            //da.Fill(dt);
+            ReportDocument cr = new ReportDocument();
+            cr.Load(Server.MapPath(Session["Path"].ToString()));
+            cr.SetDataSource(Session["data"]);
             CrystalReportViewer1.ReportSource = cr;
+            Session["cr"] = "";
         }
     }
 }

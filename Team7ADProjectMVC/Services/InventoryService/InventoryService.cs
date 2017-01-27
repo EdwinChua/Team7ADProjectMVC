@@ -12,14 +12,14 @@ namespace Team7ADProjectMVC.Models
         ProjectEntities db = new ProjectEntities();
         PushNotification fcm = new PushNotification();
         
-        public String GetItemCode(String itemDesc)
+        public string GetItemCode(string itemDesc)
         {
-            String startingLetter = itemDesc[0].ToString();
+            string startingLetter = itemDesc[0].ToString();
             ItemCodeGenerator result= db.ItemCodeGenerators.Find(startingLetter);
             result.itemcount++;
             db.SaveChanges();
             string fmt = "000";
-            return startingLetter + ((int)result.itemcount).ToString(fmt);
+            return startingLetter.ToUpper() + ((int)result.itemcount).ToString(fmt);
         }
 
         public Inventory FindIventoryItemById(string id)
@@ -30,7 +30,7 @@ namespace Team7ADProjectMVC.Models
         {
             db.Inventories.Add(inventory);
             db.SaveChanges();
-        }
+        } 
 
         public List<Category> GetAllCategories()
         {

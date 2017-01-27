@@ -27,7 +27,7 @@ VALUES ('AlPA','ALPHA Office Supplies', 'Ms Irene Tan', '461 9928', '461 2238',
 		'Blk 1128, Ang Mo Kio Industrial Park, #02-1108 Ang Mo Kio Street 62, Singapore 622262',
 		'MR-8500440-2')
 INSERT INTO Supplier
-VALUES ('CHEP','Cheap Stationer', 'Mr Soh Kway Koh', '354 3234', '474 2434', 
+VALUES ('CHEP','Cheap Stationery', 'Mr Soh Kway Koh', '354 3234', '474 2434', 
 		'Blk 34, Blk 34, Clementi road, #02-70 Ban Ban Soh Building, Singapore 110525',
 		'Nil')
 INSERT INTO Supplier
@@ -944,18 +944,21 @@ INNER JOIN PurchaseOrder po on po.PurchaseOrderId = pd.PurchaseOrderId
 INNER JOIN Inventory i on i.ItemNo = pd.ItemNo
 INNER JOIN Supplier s on s.SupplierId = po.SupplierId
 
--------------------------------------- CrystalReports Views (Don't run this view, need to be maintained)----------------------------------------
+-------------------------------------- CrystalReports Views Disbursement Analysis----------------------------------------
 
 create view disbAnalysis as
 select d.DepartmentName,i.Description,i.ItemNo,dd.DeliveredQuantity,c.CategoryName,dl.DeliveryDate
 from DisbursementDetail dd, DisbursementList dl, Inventory i,Department d, Category c
 where dd.DisbursementListId=dl.DisbursementListId and dl.DepartmentId=d.DepartmentId and dd.ItemNo=i.ItemNo and i.CategoryId=c.CategoryId
 
+-------------------------------------- CrystalReports Views Purchase Analysis----------------------------------------
+create view PurchaseAnalysis as
+select s.SupplierName,po.AuthorizedDate,c.CategoryName,i.Description,pd.Quantity
+from PurchaseOrder po, PurchaseDetail pd, Inventory i, supplier s, Category c
+where pd.PurchaseOrderId=po.PurchaseOrderId and po.SupplierId=s.SupplierId and pd.ItemNo=i.ItemNo and po.OrderStatus='Approved' and i.CategoryId=c.CategoryId
+
+
+---------------------------------------Utility query to list out employees and their roles---------------------------------
 select e.EmployeeId,e.EmployeeName,d.DepartmentName,r.Name from Employee e, role r, Department d
 where e.RoleId=r.RoleId and e.DepartmentId=d.DepartmentId
 
-select * from role
-
-select * from Department
-
-select * from Requisition

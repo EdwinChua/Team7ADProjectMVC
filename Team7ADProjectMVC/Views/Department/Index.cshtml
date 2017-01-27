@@ -197,8 +197,14 @@
                                                 string[] D = item.ApprovedDate.ToString().Split(' ');
                                                 ViewBag.approvedDate = D[0];
                                              }*@
-                                            @Convert.ToDateTime(item.ApprovedDate).ToString("dd/MM/yyyy")
-
+                                            @{string d = null; }
+                                            @if (item.ApprovedDate != null)
+                                            {
+                                                
+                                                d=Convert.ToDateTime(item.ApprovedDate).ToString("dd/MM/yyyy");
+                                            }
+                                           
+                                            @d
                                             
                                          
                                         </td>

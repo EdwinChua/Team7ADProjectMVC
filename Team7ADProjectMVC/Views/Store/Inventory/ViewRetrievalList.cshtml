@@ -106,7 +106,7 @@
                     </td>
                     <td>
                         <form action="MarkAsCollected">
-                            <div class="col-md-4"><input type="number" name="collectedQuantity" class="form-control" value="@item.collectedQuantity" width="30" /></div>
+                            <div class="col-md-4"><input type="number" name="collectedQuantity" class="form-control" value="@item.collectedQuantity" max="@item.collectedQuantity" width="30" /></div>
                             <input type="hidden" value="@item.itemNo" name="itemNo" />
                             <input type="submit" class="btn btn-info" value="Update" />
                         </form>

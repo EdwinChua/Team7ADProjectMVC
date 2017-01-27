@@ -17,7 +17,6 @@ namespace Team7ADProjectMVC.Services
         public List<DisbursementList> GetAllDisbursements()
         {
             var disbursementList = from d in db.DisbursementLists
-                                   orderby d.Status
                                    select d;
 
             return (disbursementList.ToList());
@@ -29,7 +28,15 @@ namespace Team7ADProjectMVC.Services
 
             return db.DisbursementLists.Find(id);
         }
+        public List<DisbursementList> GetDisbursementByDeptId(int? id)
+        {
+            var disbursementList = from d in db.DisbursementLists
+                                   where d.DepartmentId ==id
+                                   orderby d.Status
+                                   select d;
 
+            return (disbursementList.ToList());
+        }
 
         public List<DisbursementList> GetDisbursementsBySearchCriteria(int? departmentId, string status)
         {
@@ -140,9 +147,9 @@ namespace Team7ADProjectMVC.Services
 
 
             List<RequisitionDetail> rdlist = (from x in db.RequisitionDetails
-                          where x.Requisition.RetrievalId == rid
-                          && x.Requisition.DepartmentId == deptid
-                          select x).ToList();
+                                              where x.Requisition.RetrievalId == rid
+                                              && x.Requisition.DepartmentId == deptid
+                                              select x).ToList();
 
             var itlist = (from x in rdlist
 

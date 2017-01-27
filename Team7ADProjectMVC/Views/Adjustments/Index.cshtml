@@ -12,11 +12,11 @@
 <hr />
 <div class="container-fluid">
     <div class="row jumbotron">
-        <form class="form" role="form" action="SearchAdjustment" method="Get">
+        <form class="form" role="form" action="SearchAdjustment" method="post">
             <div class="form-group">
                 @Html.Label("Raised by", htmlAttributes: new { @class = "control-label col-md-1" })
                 <div class="col-lg-3 ">
-                    @Html.DropDownList("SearchEmployee", null, "-- Please Select --", htmlAttributes: new { @id = "employee",@class = "form-control" })
+                    @Html.DropDownList("SearchEmployee", null, "-- Please Select --", htmlAttributes: new { @name = "employee",@class = "form-control" })
                 </div>
             </div>
             @Html.Label("Date Issued", htmlAttributes: new { @class = "control-label col-md-1" })
@@ -32,7 +32,7 @@
             </div>
             @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-1" })
             <div class="col-lg-2 ">
-                @Html.DropDownList("SearchStatus", null, "Status", htmlAttributes: new { @id = "status",@class = "form-control" ,})
+                @Html.DropDownList("SearchStatus", null, "Status", htmlAttributes: new { @name = "status",@class = "form-control" ,})
             </div>
             <div class="col-lg-1">
                 <button class="btn btn-default" type="submit">

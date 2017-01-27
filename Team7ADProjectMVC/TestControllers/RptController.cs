@@ -81,15 +81,18 @@ namespace Team7ADProjectMVC.TestControllers
                         select row;
             }
             //return Content("<html>" + htmlstuff + "</html>");
-            //ReportDocument cr = new ReportDocument();
-            //cr.Load(Server.MapPath("~/Reports/CrystalReport1.rpt"));
+            ReportDocument cr = new ReportDocument();
+            cr.Load(Server.MapPath("~/Reports/CrystalReport1.rpt"));
 
 
             DataView data = query.AsDataView();
-            //cr.SetDataSource(view);
+            cr.SetDataSource(data);
+            Session["cr"] = cr;
+
             //Stream s = cr.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             //return File(s, "application/pdf");
             Session["data"] = data;
+            Session["path"]= "~/Reports/CrystalReport1.rpt";
             return Redirect("ReportViewer.aspx");
 
         }

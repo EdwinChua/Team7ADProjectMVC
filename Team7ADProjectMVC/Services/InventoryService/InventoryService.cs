@@ -30,7 +30,7 @@ namespace Team7ADProjectMVC.Models
         {
             db.Inventories.Add(inventory);
             db.SaveChanges();
-        }
+        } 
 
         public List<Category> GetAllCategories()
         {

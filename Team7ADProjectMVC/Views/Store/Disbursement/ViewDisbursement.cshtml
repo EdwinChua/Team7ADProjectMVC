@@ -59,28 +59,34 @@
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label for="inputForRepresentative">
                             Department Representative:
                         </label>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-5">
                         @ViewBag.Representative.EmployeeName (Tel no: @ViewBag.Representative.PhNo)
                     </div>
                 </div>
                 <br />
                 <br />
             </div>
-            <label class="print" style="display:">________________________________</label>
-
+            <div class="print">
+                <label>Signature: ________________________________</label>
+            </div>
             <button id="submitbutton" class="btn btn-primary noprint" >
-                Update Disbursement
+                Update
             </button>
             
             <button class="btn btn-danger noprint" onclick="window.history.back()">
                 Cancel
             </button>
-            <button class="btn btn-default noprint" type="button" onclick="window.print()">Print this page</button>
+            <br />
+            <br />
+            <a href="#" class="btn btn-success noprint dragTxt" onclick="window.print()">
+                <span class="glyphicon glyphicon-print"></span> Print
+            </a>
+            <button class="btn btn-default noprint" type="button" onclick="ClearTB()">Clear Form</button>
         </div>
     </div>
 </form>
@@ -92,9 +98,17 @@
     });
     $('#form1 input[type="text"]').each(function () {
         $(this).attr('disabled', 'disabled');
-    });
 
+       
+    });
+        
         $('#submitbutton').attr('disabled', 'disabled');
     
 </script>
 }
+<script>
+    function ClearTB() {
+        $(document).find('input[type=text]').val('');
+        $(document).find('input[type=number]').val('');
+    }
+</script>

@@ -974,6 +974,7 @@
     <Content Include="Resources\dashboard.css" />
     <Content Include="Resources\mystyle.css" />
     <Content Include="Resources\print.css" />
+    <Content Include="Resources\screen.css" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1266,9 +1267,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Auth\" />
     <Folder Include="Views\FCM\" />
-    <Folder Include="Views\PrintFriendly\" />
-    <Folder Include="Views\StorePO\" />
-    <Folder Include="Views\StoreTest\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

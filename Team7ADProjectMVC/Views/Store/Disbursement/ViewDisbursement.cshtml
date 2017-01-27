@@ -9,6 +9,8 @@
 }
 
 
+
+
 <h2>Collection Point: @Model.Department.CollectionPoint.PlaceName ( @Model.Department.CollectionPoint.CollectTime ) </h2>
 <form role="form" id="form1" action="../UpdateDisbursement">
     <table class="table">
@@ -66,16 +68,19 @@
                         @ViewBag.Representative.EmployeeName (Tel no: @ViewBag.Representative.PhNo)
                     </div>
                 </div>
+                <br />
+                <br />
             </div>
-            
-            <button id="submitbutton" class="btn btn-primary" >
+            <label class="print" style="display:">________________________________</label>
+
+            <button id="submitbutton" class="btn btn-primary noprint" >
                 Update Disbursement
             </button>
             
-            <button class="btn btn-danger" onclick="window.history.back()">
+            <button class="btn btn-danger noprint" onclick="window.history.back()">
                 Cancel
             </button>
-
+            <button class="btn btn-default noprint" type="button" onclick="window.print()">Print this page</button>
         </div>
     </div>
 </form>

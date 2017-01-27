@@ -69,13 +69,10 @@ namespace Team7ADProjectMVC.TestControllers
                         where row.Field<DateTime>("DeliveryDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("DeliveryDate").Year == Int32.Parse(Request.Form["Year"])
                         select row;
             }
-            ReportDocument cr = new ReportDocument();
-            cr.Load(Server.MapPath("~/Reports/CrystalReport1.rpt"));
-
 
             DataView data = query.AsDataView();
-            cr.SetDataSource(data);
-            Session["cr"] = cr;
+            Session["data"] = data;
+            Session["path"] = "~/Reports/CrystalReport1.rpt";
             return Redirect("ReportViewer.aspx");
 
         }
@@ -99,7 +96,8 @@ namespace Team7ADProjectMVC.TestControllers
             ReportDocument cr = new ReportDocument();
             cr.Load(Server.MapPath("~/Reports/CrystalReport2.rpt"));
             cr.SetDataSource((DataTable)dt);
-            Session["cr"] = cr;
+            Session["data"] = dt;
+            Session["path"] = "~/Reports/CrystalReport2.rpt";
             return Redirect("/ReportViewer.aspx");
 
         }

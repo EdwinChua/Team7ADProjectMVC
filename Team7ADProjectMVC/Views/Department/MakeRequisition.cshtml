@@ -1,7 +1,9 @@
 ﻿@model Team7ADProjectMVC.Requisition
 @{
     Page.Title = "Make Requisition";
-    Layout = "~/Views/Shared/_LayoutD.cshtml";
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 
 }
 
@@ -24,9 +26,10 @@
                             <div class="page-header">
 
 
-                                Department:  @Html.DisplayFor(model => model.Employee.Department.DepartmentName)
+                                Department:  @currentEmployee.Department.DepartmentName
+                               
 
-                                Employee Name:  @Html.DisplayFor(model => model.Employee.EmployeeName)
+                                Employee Name:  @currentEmployee.EmployeeName
 
 
                                 <div>

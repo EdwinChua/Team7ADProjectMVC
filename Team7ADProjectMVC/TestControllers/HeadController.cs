@@ -81,8 +81,9 @@ namespace Team7ADProjectMVC.TestControllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                var q = db.Requisitions.Where(s => s.Employee.EmployeeName.Contains(searchString)
-                                       || s.OrderedDate.ToString().Contains(searchString));                                      
+
+                var q = db.Requisitions.Where(s => (s.Employee.EmployeeName.Contains(searchString)
+                                       || s.OrderedDate.ToString().Contains(searchString)) );                                      
                 requisitions = q.ToList();
             }
             
@@ -266,8 +267,7 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult fill()
         {
 
-
-
+            
             user = (Employee)Session["user"];
             depIdofLoginUser = user.DepartmentId;
             depHeadId = user.EmployeeId;

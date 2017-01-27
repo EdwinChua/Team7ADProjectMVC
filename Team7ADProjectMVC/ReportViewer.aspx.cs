@@ -13,15 +13,14 @@ namespace Team7ADProjectMVC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DataSet1TableAdapters.disbAnalysisTableAdapter da = new DataSet1TableAdapters.disbAnalysisTableAdapter();
-            DataSet1.disbAnalysisDataTable dt = new DataSet1.disbAnalysisDataTable();
-            da.Fill(dt);
-            DataView data = (DataView)Session["data"];
-            //String path = Session["path"].ToString();
+            //DataSet1.PurchaseAnalysisDataTable dt = new DataSet1.PurchaseAnalysisDataTable();
+            //DataSet1TableAdapters.PurchaseAnalysisTableAdapter da = new DataSet1TableAdapters.PurchaseAnalysisTableAdapter();
+            //da.Fill(dt);
             ReportDocument cr = new ReportDocument();
-            cr.Load(Server.MapPath("~/Reports/CrystalReport1.rpt"));
-            cr.SetDataSource((DataTable)dt);
+            cr.Load(Server.MapPath(Session["Path"].ToString()));
+            cr.SetDataSource(Session["data"]);
             CrystalReportViewer1.ReportSource = cr;
+            Session["cr"] = "";
         }
     }
 }

@@ -68,13 +68,13 @@ namespace Team7ADProjectMVC.Services.DepartmentService
         }
 
 
-        public void UpdateRequi(Requisition requisition,Requisition req, int idd,int eid,int deid)
+        public void UpdateRequi(Requisition requisition,Requisition req, int idd,int eid,int? deid)
         {
 
             requisition.RequisitionId = idd;
             req.RequisitionStatus = "Pending Approval";
-            req.EmployeeId = 1;
-            req.DepartmentId = 2;
+            req.EmployeeId = eid;
+            req.DepartmentId = deid;
             req.OrderedDate = DateTime.Today;
            
         }

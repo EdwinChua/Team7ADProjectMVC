@@ -18,9 +18,9 @@
                 <select id="searchByStatus" name="orderStatus"
                         class="selectpicker show-tick form-control"
                         data-live-search="true" title="Order Status">
-                    <option>Approved</option>
-                    <option>Pending</option>
-                    <option>Rejected</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Rejected">Rejected</option>
                 </select>
             
         </div>
@@ -132,19 +132,27 @@
 
     <script type="text/javascript">
         $(function () {
-            $('#datetimepicker1').datetimepicker({ format: 'DD/MM/YYYY' });
+            $('#datetimepicker1').datetimepicker({ format: 'DD/MM/YYYY', date: '27/1/2016' });
 
             $('#datetimepicker2').datetimepicker({ format: 'DD/MM/YYYY' });
         });
 
         $(document).ready(function ($) {
-            $(".clickable-row").click(function () {
-                window.document.location = $(this).data("href");
-            })
-            .hover(function () {
-                $(this).css('background-color', '#ccc');
-            }, function () {
-                $(this).css('background-color', '#fff');
-            });
-        })
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+                
+        $('#searchByStatus').selectpicker('val', getUrlVars()["orderStatus"]);
+        var date1 = unescape(getUrlVars()["dateOrderedString"]);
+        var date2 = unescape(getUrlVars()["dateApprovedString"]);
+        $('#datetimepicker1').data("DateTimePicker").date(date1);
+        $('#datetimepicker2').data("DateTimePicker").date(date2);
+        });
     </script>

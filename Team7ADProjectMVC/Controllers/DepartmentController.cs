@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC;
-
+using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.DelegateRoleService;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 using Team7ADProjectMVC.Services.DepartmentService;
@@ -67,7 +67,7 @@ namespace Team7ADProjectMVC.TestControllers
         private IDelegateRoleService delpsvc;
         private static string gsearchString;
         private ProjectEntities db = new ProjectEntities();
-
+        PushNotification notify = new PushNotification(); 
         List<String> Roles;
        
         public DepartmentController()
@@ -182,9 +182,12 @@ namespace Team7ADProjectMVC.TestControllers
             }
 
 
+            Employee userName = (Employee)Session["User"];
+
+            requisitions.RemoveAll(x => x.DepartmentId != userName.DepartmentId);
 
 
-                requisitions.RemoveAll(x => x.DepartmentId != 2);
+            //requisitions.RemoveAll(x => x.DepartmentId != 2);
 
 
             ViewBag.Cat = requisitions;
@@ -266,7 +269,7 @@ namespace Team7ADProjectMVC.TestControllers
 
 
 
-            //string userName = Session["UserName"].ToString();
+           
 
             // Convert sort order
             ViewBag.NameSort = sortOrder == "Name" ? "Name_desc" : "Name";
@@ -291,8 +294,9 @@ namespace Team7ADProjectMVC.TestControllers
                 requisitions = re.ToList();
             }
 
+            Employee userName = (Employee)Session["User"];
 
-            requisitions.RemoveAll(x => x.DepartmentId != 2);
+            requisitions.RemoveAll(x => x.DepartmentId != userName.DepartmentId);
 
 
             ViewBag.Cat = requisitions;
@@ -411,13 +415,18 @@ namespace Team7ADProjectMVC.TestControllers
         {
             ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", requisition.EmployeeId);
 
+            Employee userName = (Employee)Session["User"];
+
+
             Requisition req = new Requisition();
 
             var count = depasvc.ListAllRequisition();
             //var count = db.Requisitions.ToList();
             int idd = count.Count() + 1;
 
-            depasvc.UpdateRequi(requisition,req,idd,1,2);
+           
+
+            depasvc.UpdateRequi(requisition,req,idd,userName.EmployeeId, userName.DepartmentId);
 
 
            
@@ -487,6 +496,14 @@ namespace Team7ADProjectMVC.TestControllers
                 //ViewBag.rel = relis;
                 return RedirectToAction("Index");
             }
+
+            
+
+            notify.NotificationForHeadOnCreate(userName.EmployeeId.ToString());
+
+
+
+
             return View(requisition);
             //var requisitions = db.Requisitions.ToList();
             //ViewBag.Cat = requisitions;

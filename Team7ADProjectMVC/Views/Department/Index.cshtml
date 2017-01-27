@@ -191,8 +191,12 @@
                                             @item.RequisitionStatus
                                         </td>
                                         <td>
+                                            <button type="submit" class="btn btn-primary">@Html.ActionLink("Detail", "ViewRequisitionDetails", new { id = @item.RequisitionId, @class = "btn btn-primary" })</button>
+                                           
 
-                                            @Html.ActionLink("Detail", "ViewRequisitionDetails", new { id = @item.RequisitionId })
+                                            @*<form action="/Department/ViewRequisitionDetails">
+                                                <input type="submit" value="Detail" />
+                                            </form>*@
 
                                         </td>
                                     </tr>

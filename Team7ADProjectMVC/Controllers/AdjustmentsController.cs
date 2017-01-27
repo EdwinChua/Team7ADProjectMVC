@@ -36,6 +36,7 @@ namespace Team7ADProjectMVC.Controllers
 
                 ViewBag.status = statuslist;
                 var adjustmentlist = ivadjustsvc.findSupervisorAdjustmentList();
+                TempData["list"] = adjustmentlist;
                 return View(adjustmentlist);
             }
 
@@ -50,6 +51,7 @@ namespace Team7ADProjectMVC.Controllers
 
                 ViewBag.status = statuslist;
                 var adjustmentlist = ivadjustsvc.findManagerAdjustmentList();
+                TempData["list"] = adjustmentlist;
                 return View(adjustmentlist);
             }
 
@@ -68,7 +70,8 @@ namespace Team7ADProjectMVC.Controllers
 
             if (role == "Store Supervisor")
             {
-                var adjustmentlist = ivadjustsvc.findSupervisorAdjustmentList();
+                //var adjustmentlist = ivadjustsvc.findSupervisorAdjustmentList();
+                var adjustmentlist = (List<Adjustment>)TempData.Peek("list");
 
                 var result = ivadjustsvc.FindAdjustmentBySearch(adjustmentlist, employee, status, date);
 
@@ -86,7 +89,8 @@ namespace Team7ADProjectMVC.Controllers
 
             if (role == "Store Supervisor")
             {
-                var adjustmentlist = ivadjustsvc.findManagerAdjustmentList();
+                //var adjustmentlist = ivadjustsvc.findManagerAdjustmentList();
+                var adjustmentlist = (List<Adjustment>)TempData.Peek("list");
                 var result = ivadjustsvc.FindAdjustmentBySearch(adjustmentlist, employee, status, date);
 
                 List<SelectListItem> statuslist = new List<SelectListItem>()
@@ -156,13 +160,22 @@ namespace Team7ADProjectMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Adjustment adjustment = db.Adjustments.Find(id);
+            Adjustment adjustment = ivadjustsvc.findAdjustmentByID(id);
             if (adjustment == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", adjustment.EmployeeId);
-            return View(adjustment);
+            List<AdjustmentDetail> dtlist = ivadjustsvc.findDetailByAdjustment(adjustment);
+            decimal? total = 0;
+            foreach (var item in dtlist)
+            {
+                var price = item.Quantity * item.Inventory.Price1;
+
+                total += total + price;
+            }
+            ViewBag.status = ivadjustsvc.findAdjustmentStatus(id);
+            ViewBag.sum = total ;
+            return View(dtlist);
         }
 
         // POST: Adjustments/Edit/5

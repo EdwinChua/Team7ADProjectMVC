@@ -125,6 +125,18 @@ namespace Team7ADProjectMVC.Models.InventoryAdjustmentService
                 return resultlist;
             }
         }
+        public Adjustment findAdjustmentByID(int? id)
+        {
 
+            return (db.Adjustments.Find(id));
+        }
+        public List <AdjustmentDetail > findDetailByAdjustment(Adjustment adjust)
+        {
+            return (db.AdjustmentDetails.Where(x=>x.AdjustmentId ==adjust .AdjustmentId ).ToList());
+        }
+        public string findAdjustmentStatus(int? id)
+        {
+            return (db.Adjustments.Find(id).Status);
+        }
     }
 }

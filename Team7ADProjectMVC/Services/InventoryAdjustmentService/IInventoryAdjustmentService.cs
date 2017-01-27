@@ -12,5 +12,8 @@ namespace Team7ADProjectMVC.Models.InventoryAdjustmentService
         List<Adjustment> findSupervisorAdjustmentList();
         List<Adjustment> findManagerAdjustmentList();
         List<Adjustment> FindAdjustmentBySearch(List<Adjustment> searchlist, string employee, string date, string status);
+        Adjustment findAdjustmentByID(int? id);
+        List<AdjustmentDetail> findDetailByAdjustment(Adjustment adjust);
+        string findAdjustmentStatus(int? id);
     }
 }

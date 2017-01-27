@@ -515,8 +515,6 @@
     <Content Include="Views\Shared\_Layouthead.cshtml" />
     <Content Include="Views\Shared\_LayoutD.cshtml" />
     <Content Include="Views\Adjustments\Create.cshtml" />
-    <Content Include="Views\Adjustments\Delete.cshtml" />
-    <Content Include="Views\Adjustments\Details.cshtml" />
     <Content Include="Views\Adjustments\ViewAdjustment.cshtml" />
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />
@@ -530,9 +528,7 @@
     <Content Include="Views\Suppliers\Index.cshtml" />
     <Content Include="Views\Store\Resupply\PurchaseOrder.cshtml" />
     <Content Include="Views\Store\Resupply\ListDeliveries.cshtml" />
-    <Content Include="Views\Adjustments\create1.cshtml" />
-    <Content Include="Views\Adjustments\ww.cshtml" />
-    <Content Include="Views\Adjustments\Edit1.cshtml" />
+    <Content Include="Views\Adjustments\ViewAdjustmentDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

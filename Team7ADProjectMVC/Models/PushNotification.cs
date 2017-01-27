@@ -184,7 +184,7 @@ namespace Team7ADProjectMVC.Models
             DisbursementList wcfItem = db.DisbursementLists.Where(p => p.DisbursementListId == dlid).First();
             string deptName = wcfItem.Department.DepartmentName;
             List<String> myData = new List<string>();
-            myData.Add("DisbursementList");
+            myData.Add("UnfulfilledRequisitions");
             myData.Add("Disbursement List");
             myData.Add("0");
             myData.Add("0");
@@ -210,6 +210,7 @@ namespace Team7ADProjectMVC.Models
 
         public void NotificationForHeadOnCreate(String EmpID)
         {
+            String  title="New Requisition";
             int eid = Convert.ToInt32(EmpID);
             Employee wcfItem = db.Employees.Where(p => p.EmployeeId == eid).First();
             int deptId = (int)wcfItem.DepartmentId;
@@ -221,8 +222,32 @@ namespace Team7ADProjectMVC.Models
             myData.Add("Approve Requisition");
             myData.Add("0");
             myData.Add("0");
+            String message="From: " + empName;
+            List<Employee> Allemp = db.Employees.Where(p => p.RoleId == 2).Where(p => p.DepartmentId == deptId).ToList();
+            foreach (Employee e in Allemp)
+            {
+                if (e.Token == null)
+                {
 
-            PushFCMNotification("New Requisition", "From: " + empName, token, myData);
+                    Notification n = new Notification();
+                    n.EmployeeId = e.EmployeeId;
+                    n.Title = title;
+                    n.Body = message;
+                    n.Intent = myData[0];
+                    n.PageHeader = myData[1];
+                    n.PageId = myData[2];
+                    n.ExtraDetail = myData[3];
+                    db.Notifications.Add(n);
+                    db.SaveChanges();
+
+                }
+                else
+                {
+                    PushFCMNotification(title, message, e.Token, myData);
+
+                }
+                }
+           
         }
 
 

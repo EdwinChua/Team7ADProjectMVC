@@ -35,17 +35,6 @@ namespace Team7ADProjectMVC.TestControllers
         {
 
             List<string> depts = Request.Form["Departments"].Split(',').ToList<string>();
-            string htmlstuff = "";
-            foreach (string pc in depts)
-            {
-                htmlstuff = htmlstuff + pc + "<br>";
-            }
-
-            List<string> cats = Request.Form["Categories"].Split(',').ToList<string>();
-            foreach (string pc in cats)
-            {
-                htmlstuff = htmlstuff + pc + "<br>";
-            }
 
             DataSet1TableAdapters.disbAnalysisTableAdapter da = new DataSet1TableAdapters.disbAnalysisTableAdapter();
             DataSet1.disbAnalysisDataTable dt = new DataSet1.disbAnalysisDataTable();
@@ -80,19 +69,10 @@ namespace Team7ADProjectMVC.TestControllers
                         where row.Field<DateTime>("DeliveryDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("DeliveryDate").Year == Int32.Parse(Request.Form["Year"])
                         select row;
             }
-            //return Content("<html>" + htmlstuff + "</html>");
-            ReportDocument cr = new ReportDocument();
-            cr.Load(Server.MapPath("~/Reports/CrystalReport1.rpt"));
-
 
             DataView data = query.AsDataView();
-            cr.SetDataSource(data);
-            Session["cr"] = cr;
-
-            //Stream s = cr.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-            //return File(s, "application/pdf");
             Session["data"] = data;
-            Session["path"]= "~/Reports/CrystalReport1.rpt";
+            Session["path"] = "~/Reports/CrystalReport1.rpt";
             return Redirect("ReportViewer.aspx");
 
         }
@@ -105,6 +85,56 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.Years = rptSvc.GetYearValues();
 
             return View("ItemSupplierRpt");
+        }
+
+        [HttpPost]
+        public ActionResult ItemSupplier(FormCollection f)
+        {
+            DataSet1.PurchaseAnalysisDataTable dt = new DataSet1.PurchaseAnalysisDataTable();
+            DataSet1TableAdapters.PurchaseAnalysisTableAdapter da = new DataSet1TableAdapters.PurchaseAnalysisTableAdapter();
+            da.Fill(dt);
+            String categorySelected = Request.Form["Categories"];
+            List<DataSet1.PurchaseAnalysisRow> filteredList = dt.Where(x => x.CategoryName == categorySelected).ToList<DataSet1.PurchaseAnalysisRow>();
+            DataSet1.PurchaseAnalysisDataTable filteredDT = new DataSet1.PurchaseAnalysisDataTable();
+            foreach (DataSet1.PurchaseAnalysisRow r in filteredList)
+            {
+                filteredDT.ImportRow(r);
+            }
+
+             EnumerableRowCollection < Team7ADProjectMVC.DataSet1.PurchaseAnalysisRow> query;
+            if (Request.Form["Month2"].Length > 0 && Request.Form["Year2"].Length > 0 && Request.Form["Month3"].Length > 0 && Request.Form["Year3"].Length > 0)
+            {
+                query = from row in filteredDT.AsEnumerable()
+                        where row.Field<DateTime>("AuthorizedDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("AuthorizedDate").Year == Int32.Parse(Request.Form["Year"])
+                        || row.Field<DateTime>("AuthorizedDate").Month == Int32.Parse(Request.Form["Month2"]) && row.Field<DateTime>("AuthorizedDate").Year == Int32.Parse(Request.Form["Year2"])
+                        || row.Field<DateTime>("AuthorizedDate").Month == Int32.Parse(Request.Form["Month3"]) && row.Field<DateTime>("AuthorizedDate").Year == Int32.Parse(Request.Form["Year3"])
+                        select row;
+            }
+            else if (Request.Form["Month2"].Length > 0 && Request.Form["Year2"].Length > 0)
+            {
+                query = from row in filteredDT.AsEnumerable()
+                        where row.Field<DateTime>("AuthorizedDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("AuthorizedDate").Year == Int32.Parse(Request.Form["Year"])
+                        || row.Field<DateTime>("AuthorizedDate").Month == Int32.Parse(Request.Form["Month2"]) && row.Field<DateTime>("AuthorizedDate").Year == Int32.Parse(Request.Form["Year2"])
+                        select row;
+            }
+            else
+            {
+                query = from row in filteredDT.AsEnumerable()
+                        where row.Field<DateTime>("AuthorizedDate").Month == Int32.Parse(Request.Form["Month"]) && row.Field<DateTime>("AuthorizedDate").Year == Int32.Parse(Request.Form["Year"])
+                        select row;
+            }
+
+            DataView data = query.AsDataView();
+            Session["data"] = data;
+            Session["path"] = "~/Reports/CrystalReport2.rpt";
+            return Redirect("/ReportViewer.aspx");
+
+
+
+
+
+
+
         }
 
         public ActionResult test()

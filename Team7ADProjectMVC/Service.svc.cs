@@ -200,9 +200,9 @@ namespace Team7ADProjectMVC
         {
             List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
             var disburse = from d in db.DisbursementLists
-                           where d.Status != "Completed"
-                           && d.Status != "Pending Approval"
-                           && d.Status != "Rejected"
+                           where d.Status.Equals("Processing")
+                           //where d.Status != "Completed"
+                           
                            orderby d.DeliveryDate ascending
                            select d;
             String beforesplit = "";
@@ -413,6 +413,7 @@ namespace Team7ADProjectMVC
                 Requisition r = db.Requisitions.Where(p => p.RequisitionId == rId).First();
                 r.RequisitionStatus = "Approved";
                 r.ApprovedDate = DateTime.Today;
+                fcm.NewRequisitonMade(reqId);
                 db.SaveChanges();
                 result = "True";
             }
@@ -533,16 +534,15 @@ namespace Team7ADProjectMVC
             DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
             int deptit= (int)disb.DepartmentId;
             string deptName = disb.Department.DepartmentName;
-            //Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
-            //String token = emp.Token;
-            
+
+            String name =disb.Department.CollectionPoint.PlaceName;
             List<String> myData = new List<string>();
             myData.Add("ReceiveRequisition");
-            myData.Add("Stationary Store");
-            myData.Add("4");
-            myData.Add("09:30:00");
+            myData.Add(name);
+            myData.Add(DisbListId);
+            myData.Add(disb.Department.CollectionPoint.CollectTime.ToString());
 
-            fcm.PushNotificationForRep("Accept Delivery", "Delivery for: " + deptName, myData,deptit);
+            fcm.PushNotificationForRep("Accept Delivery", "Please Confirm Delivery", myData,deptit);
 
 
               

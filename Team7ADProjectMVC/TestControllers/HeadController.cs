@@ -266,8 +266,7 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult fill()
         {
 
-
-
+            
             user = (Employee)Session["user"];
             depIdofLoginUser = user.DepartmentId;
             depHeadId = user.EmployeeId;

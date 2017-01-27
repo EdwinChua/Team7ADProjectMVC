@@ -1,7 +1,9 @@
 ﻿@model Team7ADProjectMVC.Requisition
 @{
     Page.Title = "View Requisition Details";
-    Layout = "~/Views/Shared/_LayoutD.cshtml";
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 
@@ -14,11 +16,13 @@
 
                 </h3>
                 <h3>
-                    EmployeeId:  @Html.DisplayFor(model => model.Employee.EmployeeName)
+                    Employee:  @Html.DisplayFor(model => model.Employee.EmployeeName)
 
                 </h3>
                 <h3>
-                    OrderedDate:  @Html.DisplayFor(model => model.OrderedDate)
+                    Requisition Date:  @*@Html.DisplayFor(model => model.OrderedDate)*@
+
+                    @Convert.ToDateTime(Model.OrderedDate).ToString("dd/MM/yyyy")
                 </h3>
             </div>
             

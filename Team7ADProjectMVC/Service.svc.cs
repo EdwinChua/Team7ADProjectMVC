@@ -533,14 +533,13 @@ namespace Team7ADProjectMVC
             DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
             int deptit= (int)disb.DepartmentId;
             string deptName = disb.Department.DepartmentName;
-            //Employee emp = db.Employees.Where(W => W.DepartmentId == deptit).Where(x => x.RoleId==4).First();
-            //String token = emp.Token;
-            
+
+            String name =disb.Department.CollectionPoint.PlaceName;
             List<String> myData = new List<string>();
             myData.Add("ReceiveRequisition");
-            myData.Add("Stationary Store");
-            myData.Add("4");
-            myData.Add("09:30:00");
+            myData.Add(name);
+            myData.Add(DisbListId);
+            myData.Add(disb.Department.CollectionPoint.CollectTime.ToString());
 
             fcm.PushNotificationForRep("Accept Delivery", "Delivery for: " + deptName, myData,deptit);
 

@@ -112,8 +112,7 @@ namespace Team7ADProjectMVC.Models
         public void PushFCMNotificationToStoreClerk(string title, string message, List<String> myData)
         {
 
-
-            List<Employee> Allemp = db.Employees.Where(p => p.RoleId == 1).ToList();
+             List<Employee> Allemp = db.Employees.Where(p => p.RoleId == 1).ToList();
 
             foreach (Employee e in Allemp)
             {
@@ -138,10 +137,6 @@ namespace Team7ADProjectMVC.Models
 
                 }
             }
-
-
-
-
         }
 
         public void CheckForStockReorder()
@@ -191,8 +186,6 @@ namespace Team7ADProjectMVC.Models
 
             PushFCMNotificationToStoreClerk(deptName, "Accepted Disbursement", myData);
         }
-
-
 
         public void NewRequisitonMade(string reqListID)
         {
@@ -249,7 +242,6 @@ namespace Team7ADProjectMVC.Models
                 else
                 {
                     PushFCMNotification(title, message, e.Token, myData);
-
                 }
             }
 

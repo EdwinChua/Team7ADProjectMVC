@@ -14,13 +14,13 @@
 <div>
     <table class="table">
         <tr>
-            <th>
-                Supplier Name (Supplier Code)
+            <th class="col-md-2">
+                Supplier Name (Supp. Code)
             </th>
-            <th>
+            <th class="col-md-2">
                 Contact Person / Phone
             </th>
-            <th>
+            <th class="col-md-2">
                 @Html.DisplayNameFor(model => model.FaxNo)
             </th>
             <th>
@@ -32,10 +32,10 @@
         {
             <tr class="clickable-row" data-href="Supplier/@item.SupplierId">
                 <td>
-                    @Html.DisplayFor(modelItem => item.SupplierName) (@Html.DisplayFor(modelItem => item.SupplierCode))
+                    @Html.DisplayFor(modelItem => item.SupplierName) <br />(@Html.DisplayFor(modelItem => item.SupplierCode))
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ContactName) / @Html.DisplayFor(modelItem => item.PhNo)
+                    @Html.DisplayFor(modelItem => item.ContactName) <br /> @Html.DisplayFor(modelItem => item.PhNo)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FaxNo)

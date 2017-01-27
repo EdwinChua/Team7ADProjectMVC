@@ -96,8 +96,20 @@ namespace Team7ADProjectMVC.TestControllers
         {
             if (ModelState.IsValid)
             {
-                inventorySvc.AddItem(inventory);
-                return RedirectToAction("Inventory");
+                if ((inventory.SupplierId1 != inventory.SupplierId2) && (inventory.SupplierId1 != inventory.SupplierId3) && (inventory.SupplierId2 != inventory.SupplierId3))
+                {
+                    inventory.ItemNo = inventorySvc.GetItemCode(inventory.Description);
+                    inventorySvc.AddItem(inventory);
+                    return RedirectToAction("Inventory");
+                }
+                else
+                {
+                    ViewBag.Error = "Please ensure that all three suppliers are different.";
+                }
+            }
+            else
+            {
+                ViewBag.Error = "Please ensure that all three suppliers are different.";
             }
 
             ViewBag.CategoryId = new SelectList(inventorySvc.GetAllCategories(), "CategoryId", "CategoryName", inventory.CategoryId);

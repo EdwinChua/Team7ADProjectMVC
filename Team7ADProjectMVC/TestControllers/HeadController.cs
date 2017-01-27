@@ -130,14 +130,14 @@ namespace Team7ADProjectMVC.TestControllers
             }
 
 
-            if (textcomments.Equals("Enter comment here..."))
-            {
-                textcomments = "No comment";
-                reqsvc.UpdateRejectStatus(r, textcomments);
-            }
-            reqsvc.UpdateRejectStatus(r, textcomments);
+            //if (textcomments.Equals("Enter comment here..."))
+            //{
+            //    textcomments = "No comment";
+            //    reqsvc.UpdateRejectStatus(r, textcomments);
+            //}
+            //reqsvc.UpdateRejectStatus(r, textcomments);
 
-            return RedirectToAction("ListAllEmployees");
+            //return RedirectToAction("ListAllEmployees");
 
 
         }

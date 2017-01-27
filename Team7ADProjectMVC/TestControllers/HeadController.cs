@@ -137,7 +137,7 @@ namespace Team7ADProjectMVC.TestControllers
             //}
             //reqsvc.UpdateRejectStatus(r, textcomments);
 
-            //return RedirectToAction("ListAllEmployees");
+            return RedirectToAction("ListAllEmployees");
 
 
         }

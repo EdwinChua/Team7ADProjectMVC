@@ -1,121 +1,162 @@
-﻿@{
+﻿@model Team7ADProjectMVC.Supplier
+
+@{
     Layout = "~/_Layout1.cshtml";
-    Page.Title = "Supplier - {Code: Supplier Name}";
+    Page.Title = "Supplier Details";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 
-<form role="form">
-    <div class="row">
-        <div class="col-lg-6">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <label for="inputForSupplierCode">
-                            Supplier Code
-                        </label>
-                    </div>
-                    <div class="col-lg-6">
-                        <input class="form-control" id="inputForSupplierCode" type="text" />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <label for="inputForSupplierName">
-                            Supplier Name
-                        </label>
-                    </div>
-                    <div class="col-lg-6">
-                        <input class="form-control" id="inputForSupplierName" type="text" />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <label for="inputForContactName">
-                            Contact Name:
-                        </label>
-                    </div>
-                    <div class="col-lg-6">
-                        <input class="form-control" id="inputForContactName" type="text" />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <label for="inputForGSTReg">
-                            GST Registration
-                        </label>
-                    </div>
-                    <div class="col-lg-6">
-                        <input class="form-control" id="inputForGSTReg" type="text" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <label for="inputForPhone">
-                            Phone No.
-                        </label>
-                    </div>
-                    <div class="col-lg-6">
-                        <input class="form-control" id="inputForPhone" type="tel" />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <label for="inputForFax">
-                            Fax No.
-                        </label>
-                    </div>
-                    <div class="col-lg-6">
-                        <input class="form-control" id="inputForFax" type="text" />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <label for="inputForAddress">
-                            Address
-                        </label>
-                    </div>
-                    <div class="col-lg-6">
-                        <textarea class="form-control" rows="3" id="inputForAddress"></textarea>
-                    </div>
-                </div>
-            </div>
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.SupplierId)
 
 
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="inputForSupplierCode">
+                                Supplier Code
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            @Html.EditorFor(model => model.SupplierCode, new { htmlAttributes = new { @class = "form-control", @required=true } })
+                            @Html.ValidationMessageFor(model => model.SupplierCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="inputForSupplierName">
+                                Supplier Name
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            @Html.EditorFor(model => model.SupplierName, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="inputForContactName">
+                                Contact Name:
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            @Html.EditorFor(model => model.ContactName, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.ContactName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="inputForGSTReg">
+                                GST Registration
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            @Html.EditorFor(model => model.GstRegistrationNo, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.GstRegistrationNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="inputForPhone">
+                                Phone No.
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            @Html.EditorFor(model => model.PhNo, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.PhNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="inputForFax">
+                                Fax No.
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            @Html.EditorFor(model => model.FaxNo, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.FaxNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="inputForAddress">
+                                Address
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            @*<textarea class="form-control" id="Address" name="Address" type="text" value=""></textarea>*@
+                            @Html.TextAreaFor(model => model.Address, new { @class = "form-control", @rows = 3, @required = true })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <button class="btn btn-primary">
-        Create
-    </button>
+
+    if(Model != null)
+    {
     <button class="btn btn-primary">
         Update
     </button>
-    <button class="btn btn-danger">
-        Delete
-    </button>
-</form>
-<div><br /></div>
+    }
+    else
+    {
+        <button class="btn btn-primary">
+            Create
+        </button>
+    }
 
+}
+
+
+<div><br /></div>
+@if (ViewBag.SupplierId != null)
+{
 <div>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    Item Description
+                    Item Code
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Category
                 </th>
                 <th>
                     Tender Price
@@ -123,46 +164,38 @@
             </tr>
         </thead>
         <tbody>
+            
+                @foreach (var item in ViewBag.SupplierItems)
+                {
+                    decimal x = 0;
             <tr>
                 <td>
-                    Pencil 2B, eraser end
+                    @item.ItemNo
                 </td>
                 <td>
-                    $1.00 doz
+                    @item.Description
                 </td>
+                <td>
+                    @item.Category.CategoryName
+                </td>
+                
+                    @if (ViewBag.SupplierId == item.SupplierId1)
+                    {
+                        x = @item.Price1;
+                    }
+                    else if (ViewBag.SupplierId == item.SupplierId1)
+                    {
+                        x = @item.Price2;
+                    }
+                    else if (ViewBag.SupplierId == item.SupplierId3)
+                    {
+                        x = @item.Price3;
+                    }
+                <td>@x</td>   
             </tr>
-            <tr>
-                <td>
-                    Eraser (soft)
-                </td>
-                <td>
-                    48cts pkt
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Exercise book (100 pages)
-                </td>
-                <td>
-                    22cts each
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    A4 Exercise Book
-                </td>
-                <td>
-                    $1.00 each
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Diskettes 3.5inch
-                </td>
-                <td>
-                    $10 box
-                </td>
-            </tr>
+                }
+            
         </tbody>
     </table>
 </div>
+}

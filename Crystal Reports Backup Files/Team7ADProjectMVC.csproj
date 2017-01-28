@@ -449,13 +449,10 @@
     <Content Include="Views\Inventory\Details.cshtml" />
     <Content Include="Views\Inventory\Edit.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
-    <Content Include="Views\Shared\_Layouthead.cshtml" />
     <Content Include="Views\Shared\_LayoutD.cshtml" />
-    <Content Include="Views\Adjustments\Create.cshtml" />
-    <Content Include="Views\Adjustments\Delete.cshtml" />
-    <Content Include="Views\Adjustments\Details.cshtml" />
-    <Content Include="Views\Adjustments\Edit.cshtml" />
-    <Content Include="Views\Adjustments\Index.cshtml" />
+    <Content Include="Views\Shared\_Layouthead.cshtml" />
+	<Content Include="Views\Shared\_LayoutD.cshtml" />
+	  <Content Include="Views\Department\Head\Terminate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

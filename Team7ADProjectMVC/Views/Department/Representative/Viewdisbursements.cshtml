@@ -15,6 +15,8 @@
     ViewBag.Title = "View Disbursement";
     Layout = "~/_Layout1.cshtml";
     Page.Title = "View Disbursement Lists";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 
@@ -35,7 +37,7 @@
                                     <i class="fa fa-calendar">
                                     </i>
                                 </div>
-                                <input class="form-control" id="date" name="date" placeholder="YYYY/MM/DD" type="text" />
+                                <input class="form-control" id="date" name="date" placeholder="DD/MM/YYYY" type="text" />
                             </div>
                         </div>
                         <label class="control-label col-md-2 " for="status">
@@ -47,7 +49,7 @@
                                     class="selectpicker show-tick form-control"
                                     data-live-search="true" title="Status">
                                 <option>Processing</option>
-                                <option>Completed</option>
+                                <option>Complete</option>
                             </select>
                         </div>
                     </div>
@@ -67,17 +69,17 @@
                         @Html.DisplayNameFor(model => model.Department.DepartmentName)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.OrderedDate)
+                        @Html.DisplayNameFor(model => model.DeliveryDate)
                     </th>
 
                     <th>
                         @Html.DisplayNameFor(model => model.DeliveryDate)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.CollectionPoint.PlaceName)
+                        @Html.DisplayNameFor(model => model.Department.CollectionPoint.PlaceName)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.CollectionPoint.CollectTime)
+                        @Html.DisplayNameFor(model => model.Department.CollectionPoint.CollectTime)
                     </th>
 
                     <th>
@@ -94,19 +96,19 @@
                             @Html.DisplayFor(modelItem => item.Department.DepartmentName)
                         </td>
                         <td>
-                            @Convert.ToString(string.Format("{0:yyyy/MM/dd}", item.OrderedDate))
+                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DeliveryDate))
                         </td>
 
                         <td>
                             
-                            @Convert.ToString(string.Format("{0:yyyy/MM/dd}", item.DeliveryDate))
+                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DeliveryDate))
                         </td>
 
                         <td>
-                            @Html.DisplayFor(modelItem => item.CollectionPoint.PlaceName)
+                            @Html.DisplayFor(modelItem => item.Department.CollectionPoint.PlaceName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.CollectionPoint.CollectTime)
+                            @Html.DisplayFor(modelItem => item.Department.CollectionPoint.CollectTime)
                         </td>
 
                         <td>
@@ -132,7 +134,7 @@
         var date_input = $('input[name="date"]'); //our date input has the name "date"
         var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
         var options = {
-            format: 'yyyy/mm/dd',
+            format: 'dd/mm/yyyy',
             container: container,
             todayHighlight: true,
             autoclose: true,

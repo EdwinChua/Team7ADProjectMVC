@@ -79,6 +79,7 @@ document.getElementById("demo").innerHTML = d.toDateString();
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
                     <li id="menu1"><a href="/Head/ListAllEmployees">View Requisition</a></li>
+                    
                     <li id="menu2"><a href="/Head/show">Manage Delegation</a></li>
 
 
@@ -113,6 +114,14 @@ document.getElementById("demo").innerHTML = d.toDateString();
 
     <footer class="container-fluid text-center">
         <p>Footer</p>
+        @*@if(ViewBag.Employee.RoleId == 1)
+        {
+            <p>hi</p>
+        }
+        else
+        {
+            <p>bye</p>
+        }*@
     </footer>
 
 </body>

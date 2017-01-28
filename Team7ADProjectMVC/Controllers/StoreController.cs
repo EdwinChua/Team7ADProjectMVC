@@ -5,8 +5,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Team7ADProjectMVC.Exceptions;
 using Team7ADProjectMVC.Models;
-using Team7ADProjectMVC.Models.DepartmentService;
+using Team7ADProjectMVC.Models.DelegateRoleService;
+using Team7ADProjectMVC.Services;
+using Team7ADProjectMVC.Services.DepartmentService;
+using Team7ADProjectMVC.Services.SupplierService;
 
 namespace Team7ADProjectMVC.TestControllers
 {
@@ -15,12 +19,16 @@ namespace Team7ADProjectMVC.TestControllers
         private IInventoryService inventorySvc;
         private IDisbursementService disbursementSvc;
         private IDepartmentService deptSvc;
+        private IDelegateRoleService delegateSvc;
+        private ISupplierAndPurchaseOrderService supplierAndPOSvc;
 
         public StoreController()
         {
             inventorySvc = new InventoryService();
             disbursementSvc = new DisbursementService();
             deptSvc = new DepartmentService();
+            delegateSvc = new DelegateRoleService();
+            supplierAndPOSvc = new SupplierAndPurchaseOrderService();
         }
 
         //**************** INVENTORY ********************
@@ -29,7 +37,7 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult Index()
         {
             return View("Dashboard");
-            //TODO: EDWIN - Create a nice dashboard
+            //TODO: EDWIN - Create a nice dashboard or delete this
         }
 
         public ActionResult Inventory()
@@ -42,7 +50,7 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult InventoryItem(String id)
         {
-            Inventory inventory = inventorySvc.FindById(id);
+            Inventory inventory = inventorySvc.FindIventoryItemById(id);
             if (inventory == null)
             {
                 return HttpNotFound();
@@ -88,8 +96,20 @@ namespace Team7ADProjectMVC.TestControllers
         {
             if (ModelState.IsValid)
             {
-                inventorySvc.AddItem(inventory);
-                return RedirectToAction("Inventory");
+                if ((inventory.SupplierId1 != inventory.SupplierId2) && (inventory.SupplierId1 != inventory.SupplierId3) && (inventory.SupplierId2 != inventory.SupplierId3))
+                {
+                    inventory.ItemNo = inventorySvc.GetItemCode(inventory.Description);
+                    inventorySvc.AddItem(inventory);
+                    return RedirectToAction("Inventory");
+                }
+                else
+                {
+                    ViewBag.Error = "Please ensure that all three suppliers are different.";
+                }
+            }
+            else
+            {
+                ViewBag.Error = "Please ensure that all three suppliers are different.";
             }
 
             ViewBag.CategoryId = new SelectList(inventorySvc.GetAllCategories(), "CategoryId", "CategoryName", inventory.CategoryId);
@@ -107,7 +127,7 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Inventory inventory = inventorySvc.FindById(id);
+            Inventory inventory = inventorySvc.FindIventoryItemById(id);
             if (inventory == null)
             {
                 return HttpNotFound();
@@ -117,6 +137,7 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.SupplierId1 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId1);
             ViewBag.SupplierId2 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId2);
             ViewBag.SupplierId3 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId3);
+            ViewBag.inv = inventory;
             return View("UpdateStockCard",inventory);
         }
 
@@ -130,13 +151,14 @@ namespace Team7ADProjectMVC.TestControllers
             if (ModelState.IsValid)
             {
                 inventorySvc.UpdateInventory(inventory);
-                return RedirectToAction("ViewInventory");
+                return RedirectToAction("Inventory");
             }
             ViewBag.CategoryId = new SelectList(inventorySvc.GetAllCategories(), "CategoryId", "CategoryName", inventory.CategoryId);
             ViewBag.MeasurementId = new SelectList(inventorySvc.GetAllMeasurements(), "MeasurementId", "UnitOfMeasurement", inventory.MeasurementId);
             ViewBag.SupplierId1 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId1);
             ViewBag.SupplierId2 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId2);
             ViewBag.SupplierId3 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId3);
+            ViewBag.inv = inventory;
             return View("UpdateStockCard",inventory);
         }
 
@@ -160,7 +182,7 @@ namespace Team7ADProjectMVC.TestControllers
         {
             DisbursementList dl = disbursementSvc.GetDisbursementById(id);
             ViewBag.disbursementListInfo = dl;
-            //TODO: EDWIN - Retrieval list info required
+            ViewBag.Representative = deptSvc.FindEmployeeById((int)dl.Department.RepresentativeId);
             return View(dl);
         }
 
@@ -171,53 +193,76 @@ namespace Team7ADProjectMVC.TestControllers
             return View("ViewDisbursements", disbursementSvc.GetDisbursementsBySearchCriteria(id, status));
         }
 
+        public ActionResult UpdateDisbursement(int disbursementListId, string[] itemNo, int[] originalPreparedQty, int[] adjustedQuantity, string[] remarks)
+        {
+            inventorySvc.UpdateDisbursementListDetails(disbursementListId, itemNo, originalPreparedQty, adjustedQuantity, remarks);
+            return RedirectToAction("ViewDisbursements");
+        }
+
         // ********************* ADJUSTMENTS *******************
 
         public ActionResult InventoryAdjustment()
         {
-            //TODO: EDWIN - Implementation code here
+            //TODO: EDWIN - CX and Seng doing?
+
             return View();
         }
 
         public ActionResult CreateNewAdjustment()
         {
-            //TODO: EDWIN - Implementation code here
+            //TODO: EDWIN - CX and Seng doing?
             return View();
         }
 
         // ********************* MAINTAIN *******************
         public ActionResult SupplierList()
         {
-            //TODO: EDWIN - Implementation code here
-            return View();
+            return View(supplierAndPOSvc.GetAllSuppliers());
         }
 
-        public ActionResult Supplier(String id)
+        public ActionResult Supplier(int? id)
         {
-            //TODO: EDWIN - Implementation code here
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Supplier supplier = supplierAndPOSvc.FindSupplierById(id);
+            List<Inventory> listOfItemsFromSupplier = supplierAndPOSvc.FindInventoryItemsBySupplier(id);
+            ViewBag.SupplierItems = listOfItemsFromSupplier;
+            ViewBag.SupplierId = supplier.SupplierId;
+            if (supplier == null)
+            {
+                return HttpNotFound();
+            }
+            return View(supplier);
         }
 
-
-        // ********************* RESUPPLY *******************
-
-        public ActionResult GeneratePO()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Supplier([Bind(Include = "SupplierId,SupplierCode,SupplierName,ContactName,PhNo,FaxNo,Address,GstRegistrationNo")] Supplier supplier)
         {
-            //TODO: EDWIN - Implementation code here
-            return View();
+            if (ModelState.IsValid)
+            {
+
+                supplierAndPOSvc.UpdateSupplier(supplier);
+                return RedirectToAction("SupplierList");
+            }
+            return View("Supplier",supplier);
         }
 
-        public ActionResult PurchaseOrderSummary(String id)
+        public ActionResult AddSupplier()
         {
-            //TODO: EDWIN - Implementation code here
-            return View();
+            return View("Supplier");
         }
 
-        public ActionResult ViewReceiveOrder(String id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSupplier([Bind(Include = "SupplierId,SupplierCode,SupplierName,ContactName,PhNo,FaxNo,Address,GstRegistrationNo")] Supplier supplier)
         {
-            //TODO: EDWIN - Implementation code here
-            return View();
+                supplierAndPOSvc.AddNewSupplier(supplier);
+                return RedirectToAction("SupplierList");
         }
+
 
         //****************** Outstanding Requisitions ***************
 
@@ -244,16 +289,45 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult DisburseItems()
         {
             inventorySvc.AutoAllocateDisbursementsByOrderOfRequisition();
-            return RedirectToAction("Index");
+            return RedirectToAction("ReallocateDisbursements");
+        }
+        public ActionResult ReallocateDisbursements()
+        {
+            List<DisbursementDetail> reallocationList = inventorySvc.GenerateListForManualAllocation();
+            DisbursementListComparer comparer = new DisbursementListComparer(); //sort by item no
+            reallocationList.Sort(comparer);
+            int currentRetrievalListId = inventorySvc.GetLastRetrievalListId();
+            List<Requisition> summedListByDepartment = inventorySvc.GetRequisitionsSummedByDept(currentRetrievalListId);
+            ViewBag.MaxQuantityOfEachItem = summedListByDepartment;
+            if (TempData["PrepQtyException"] != null)
+            {
+                ViewBag.PrepQtyException = TempData["PrepQtyException"].ToString();
+            }  
+
+            return View(reallocationList);
         }
 
         // ********************* Other *******************
 
         public ActionResult GenerateReports()
         {
-            //TODO: EDWIN - Implementation code here
+            //Seng has done. To wire up with view
             return View();
         }
 
+
+        public ActionResult Test(int[] departmentId, int[] preparedQuantity,int [] disbursementListId, int[] disbursementDetailId, string[] itemNo, int[] adjustedQuantity)
+        {
+            try
+            {
+                inventorySvc.ManuallyAllocateDisbursements(departmentId, preparedQuantity, adjustedQuantity, disbursementListId, disbursementDetailId, itemNo);
+            }
+            catch (InventoryAndDisbursementUpdateException e)
+            {
+                TempData["PrepQtyException"] = e;
+            }
+
+            return RedirectToAction("ReallocateDisbursements");
+        }
     }
 }

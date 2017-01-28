@@ -1,28 +1,32 @@
 ﻿@model IEnumerable<Team7ADProjectMVC.Employee>
 
     @{
-        Layout = "~/Views/Shared/_Layouthead.cshtml";
+        //Layout = "~/Views/Shared/_Layouthead.cshtml";
         Page.Title = "Delegate Acting Department-Head";
+        Layout = "~/_Layout1.cshtml";
+        Employee currentEmployee = (Employee)Session["User"];
+        Page.Employee = currentEmployee;
 }
 
 @*<script type="text/javascript">
     $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
 </script>*@
 
-<form role="form" action="/Head/ManageDelegate">
+<form role="form" action="/Head/ManageDelegation">
     <div class="row">
         <div class="col-lg-4 col-xs-12">
             Choose Employee:
             <div>
                 <select id="empListPicker" name="empId"
                         class="selectpicker show-tick form-control"
-                        data-live-search="true" title="Retrieve by department head to view all employees">
+                        data-live-search="true" title="Select employee to delegate" required >
                     @foreach (var emp in ViewBag.empList)
                     {
-                        <option value="@emp.EmployeeId">@emp.EmployeeName </option>
+                        <option value="@emp.EmployeeId" >@emp.EmployeeName </option>
                     }
                 
                 </select>
+               
             </div>
 
         </div>
@@ -72,76 +76,79 @@
 
 
 
-            <div>
-                <h5>
+                            <h5>
                    
-                    Start Date:<label id="s1" value="startDate"></label><br/>                    
-                    End Date::<label id="e1" value="endDate"></label><br/>
-
+                    Start Date:<label id="s1" name="s" value="startDate">  @ViewBag.autoStartdate</label><br/>  
                     <input type="hidden" name="startDate" id="startDate" />
-                    <input type="hidden" name="endDate" id="endDate" /> 
-                    <input type="checkbox" name="approveReq" >Approve Requisition<br>
-                    <input type="checkbox" name="changeCP">Change Collection Point<br>
-                    <input type="checkbox" name="viewReq">View Requisiton <br />
-                    <input type="checkbox" name="makeReq">Make Requisition<br>
-                    <input type="checkbox" name="delegateRol">Delegate Role<br />
-                    <input type="checkbox" name="viewColDetl">View Collection Details<br />
+                  
+                                     
+                    End Date::<label id="e1" name="e" value="endDate">@ViewBag.autoEnddate</label><br/>
 
-                    <br />
-                    <br />
+                    <input type="hidden" name="DelegateId" id="d" value="0" />                   
+                   <input type="hidden" name="endDate" id="endDate" /> 
+                 
 
                 </h5>
                 
             <button type="submit" class="btn btn-success btn-lg" name="status" value="Delegate" id="submitButton" >
-                Delegate
-            </button>
-                @if (ViewBag.DelegatedEmployee != null)
-                {
-            <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate" >
-                Terminate
-            </button>
-                }
-        </div>
+                Delegate</button>
+    
+               
+                
     </form>
     </>
 
 
     <script type="text/javascript">
         $(function () {
-            $('#datetimepicker1').datetimepicker({
-                format: 'DD/MM/YYYY HH:mm:ss',
-                inline: true,
-                sideBySide: false
-            });
-            $('#datetimepicker2').datetimepicker({
-                
-                inline: true,
-                sideBySide: false
-            });
 
+            $('#datetimepicker1').datetimepicker({
+                format: 'dd/mm/yy',
+                inline: true,
+                sideBySide: false,
+                minDate: new Date()
+            });
+       
             $("#datetimepicker1").on("dp.change", function (date, e) {
-                console.log($('#datetimepicker1').data("DateTimePicker").date());
-                $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
-                $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                {
+                    $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                    $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+                    $('#datetimepicker2').data("DateTimePicker").minDate(date.date);
+                    
+                    //var da = $('#datetimepicker1').data("DateTimePicker").date().format('YYY-MM-DD').toString();
+                    //String s=(String)da.toString();
+                }
+                
+            });
+           
+            $('#datetimepicker2').datetimepicker({
+                format: 'dd/mm/yy',
+                inline: true,
+                sideBySide: false,
+                minDate: new Date()
             });
 
             $("#datetimepicker2").on("dp.change", function (date, e) {
                 console.log($('#datetimepicker2').data("DateTimePicker").date());
                 $('#endDate').val($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
                 $('#e1').text($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
+
             });
         });
-       
-         //$(document).ready(function(){
-         //    $("#submitButton").on("click",function()
-         //    {
-         //        alert('Your Message');
-         //    });
 
-         //});
+
+       
+        //$(document).ready(function () {
+
+        //    $("#datetimepicker1").on("click", function ()
+        //     {                 
+        //         alert('The start date must be current date or after current date');
+        //     });
+
+        // });
         
 
-        //alert("asdkjfhaksldj");
+       
     </script>
 
 

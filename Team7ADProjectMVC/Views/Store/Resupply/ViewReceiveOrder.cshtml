@@ -1,18 +1,23 @@
-﻿@{
+﻿@model Team7ADProjectMVC.Delivery
+@{
     Layout = "~/_Layout1.cshtml";
-    Page.Title = "Receive & View Order - {PO Number}";
+    Page.Title = "Receive & View Order";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+    PurchaseDetail q = new PurchaseDetail();
 }
 
 
-<h2>Supplier: {Supplier Name}</h2>
-<form role="form">
+<h2>Supplier: @Model.PurchaseOrder.Supplier.SupplierName (@Model.PurchaseOrder.Supplier.SupplierCode ) </h2>
+<form role="form" id="form1" action="../AcceptDelivery">
     <div class="form-group">
         <div class="row">
             <div class="col-lg-1">
                 <label>Delivery Order No.</label>
             </div>
             <div class="col-lg-4">
-                <input type="text" class="form-control" placeholder="Delivery Order No. (Required)" required />
+                <input type="hidden" name="deliveryId" value="@Model.DeliveryId" />
+                <input type="text" class="form-control" name="deliveryRefNo" placeholder="Delivery Order No. (Required)" value="@Model.DeliveryId" required />
             </div>
         </div>
     </div>
@@ -21,31 +26,24 @@
             <label>Delivery Date</label>
         </div>
         <div class="col-lg-3">
-            <div class='input-group date' id='datetimepicker1'>
-                <input type='text' class="form-control" placeholder="Date Delivered" name="dateDelivered" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
+            @DateTime.Today.ToString("dd-MMM-yyyy")
         </div>
-        <div class="col-lg-1">
-            <button class="btn btn-default">Today</button>
-        </div>
+        
     </div>
     <div class="form-group">
         <table class="table">
             <thead>
                 <tr>
-                    <th>
+                    <th class="col-md-1">
                         Item No.
                     </th>
-                    <th>
+                    <th class="col-md-3">
                         Description
                     </th>
-                    <th>
+                    <th class="col-md-1">
                         Ordered Quantity
                     </th>
-                    <th>
+                    <th class="col-md-1">
                         Received Quantity
                     </th>
                     <th>
@@ -54,86 +52,44 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach (var item in Model.DeliveryDetails)
+                {
                 <tr>
                     <td>
-                        P003
+                        @item.ItemNo
                     </td>
                     <td>
-                        Pen, Blue
+                        @item.Inventory.Description
                     </td>
                     <td>
-                        8
+                        @{ q = (from x in item.Delivery.PurchaseOrder.PurchaseDetails
+                                     where x.ItemNo == item.ItemNo
+                                     && x.PurchaseOrderId == item.Delivery.PurchaseOrderId
+                                     select x).FirstOrDefault(); }
+                        @q.Quantity
                     </td>
                     <td>
-                        <input type="number" class="form-control" value="8" />
+                        <input type="hidden" name="deliveryDetailId" value="@item.DeliveryDetailid" />
+                        <input type="hidden" name="itemNo" value="@item.ItemNo"/>
+                        <input type="number" class="form-control" name="quantity" value="@item.Quantity" />
                     </td>
                     <td>
-                        <input type="text" class="form-control" />
+                        <input type="text" name="remarks" class="form-control" />
                     </td>
                 </tr>
-                <tr class="active">
-                    <td>
-                        F001
-                    </td>
-                    <td>
-                        File, Clear
-                    </td>
-                    <td>
-                        9
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" value="9" />
-                    </td>
-                    <td>
-                        <input type="text" class="form-control" />
-                    </td>
-                </tr>
-                <tr class="success">
-                    <td>
-                        T0123
-                    </td>
-                    <td>
-                        Tray, Gray
-                    </td>
-                    <td>
-                        8
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" value="8" />
-                    </td>
-                    <td>
-                        <input type="text" class="form-control" />
-                    </td>
-                </tr>
+                }
             </tbody>
         </table>
     </div>
     <div class="row">
         <div class="col-md-12">
 
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <label for="inputForRepresentative">
-                            Received by:
-                        </label>
-                    </div>
-                    <div class="col-lg-3">
-                        <select id="lecturerId" name="lecturerId"
-                                class="selectpicker show-tick form-control"
-                                data-live-search="true" required>
-                            <option></option>
-                            <option data-subtext="Computer Science Department">Edward Tan Ee Meng</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
 
-            <button class="btn btn-primary">
-                Confirm Received
+            <button class="btn btn-primary" id="submitbutton" type="submit">
+                Confirm Receipt of Goods
             </button>
-            <button class="btn btn-danger">
-                Cancel
+            <button class="btn btn-default" onclick="window.history.back()">
+                Back
             </button>
 
         </div>
@@ -144,4 +100,21 @@
         $(function () {
             $('#datetimepicker1').datetimepicker();
         });
+
+
 </script>
+
+@if (Model.DeliveredDate != null)
+{
+    <script>
+    $('#form1 input[type="number"]').each(function () {
+        $(this).attr('disabled', 'disabled');
+    });
+    $('#form1 input[type="text"]').each(function () {
+        $(this).attr('disabled', 'disabled');
+    });
+
+        $('#submitbutton').attr('disabled', 'disabled');
+
+    </script>
+}

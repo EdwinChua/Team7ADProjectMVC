@@ -5,6 +5,9 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using Team7ADProjectMVC.Models;
+using Team7ADProjectMVC.Models.ListAllRequisitionService;
+using Team7ADProjectMVC.Services;
+using System.Web.Security;
 
 namespace Team7ADProjectMVC
 {
@@ -15,6 +18,10 @@ namespace Team7ADProjectMVC
         ProjectEntities db = new ProjectEntities();
 
         InventoryService invService = new InventoryService();
+        IRequisitionService reqService = new RequisitionService();
+        IDisbursementService disService = new DisbursementService();
+        PushNotification fcm = new PushNotification(); 
+
         public List<WCFMsg> DoWork()
         {
             List<WCFMsg> l = new List<WCFMsg>();
@@ -23,8 +30,8 @@ namespace Team7ADProjectMVC
             l.Add(new WCFMsg("ok3"));
             Console.Write(l.ToString());
             return l;
-
         }
+         
 
         public List<wcfRequisitionList> RequisitionList(string deptid)
         {
@@ -32,15 +39,22 @@ namespace Team7ADProjectMVC
             int departmentId = Convert.ToInt32(deptid);
             var reqList = from req in db.Requisitions
                           where req.DepartmentId == departmentId
-                          orderby req.RequisitionStatus descending
+                          && req.RequisitionStatus != "Completed"
+                          orderby req.RequisitionStatus ascending
                           select req;
-
+            String beforesplit = "";
+            String aftersplit = "";
+            Char delimiter = ' ';
          foreach(Requisition rr in reqList)
          {
              wcfRequisitionList rl = new wcfRequisitionList();
              rl.Employeename = rr.Employee.EmployeeName;
              rl.Status = rr.RequisitionStatus;
              rl.Id = rr.RequisitionId.ToString();
+             beforesplit = rr.OrderedDate.ToString();
+             String[] substrings = beforesplit.Split(delimiter);
+             aftersplit = substrings[0];
+             rl.OrderDate = aftersplit;         
              making.Add(rl);
          }
          return making.ToList();
@@ -54,7 +68,6 @@ namespace Team7ADProjectMVC
             var reqItem= from req in db.RequisitionDetails
                          where req.Requisition.DepartmentId == dId
                         && req.RequisitionId==rId
-                        orderby req.DeliveryStatus ascending
                         select req;
             
             foreach (RequisitionDetail rr in reqItem)
@@ -62,7 +75,7 @@ namespace Team7ADProjectMVC
                 wcfRequisitionItem rl = new wcfRequisitionItem();
                 rl.Itemname = rr.Inventory.Description;
                 rl.Quantity = rr.Quantity.ToString();
-                rl.Uom = rr.OutstandingQuantity.ToString();
+                rl.Uom = rr.Inventory.Measurement.UnitOfMeasurement;
                 making.Add(rl);
             }
             return making;
@@ -84,16 +97,14 @@ namespace Team7ADProjectMVC
                 if(item.DeliveryDate.Equals(DateTime.Today))
                 {
                     wcfTodayCollectionlist itemTemp = new wcfTodayCollectionlist();
-                    itemTemp.Collectionpt = item.CollectionPoint.PlaceName;
-                    itemTemp.Time = item.CollectionPoint.CollectTime.ToString();
+                    itemTemp.Collectionpt = item.Department.CollectionPoint.PlaceName;
+                    itemTemp.Time = item.Department.CollectionPoint.CollectTime.ToString();
                     itemTemp.DisbursementListID = item.DisbursementListId.ToString();
                     making.Add(itemTemp);
                 }
             }
             return making;
-           
         }
-      //  List<wcfTodayCollectionDetail> collectionDetail = new List<wcfTodayCollectionDetail>();
 
         public List<wcfTodayCollectionDetail> getTodayCollectionDetail(String deptid, String disListID)
         {
@@ -125,15 +136,21 @@ namespace Team7ADProjectMVC
 
             var aList = from a in db.Requisitions
                           where a.DepartmentId == did
-                          && a.RequisitionStatus != "Approved"
+                          && a.RequisitionStatus == "Pending Approval"
                           orderby a.OrderedDate
                           select a;
-
+            String beforesplit = "";
+            String aftersplit = "";
+            Char delimiter = ' ';
             foreach (Requisition req in aList)
             {
                 wcfApproveRequisitions cd = new wcfApproveRequisitions();
                 cd.EmpName = req.Employee.EmployeeName.ToString();
-                cd.ReqDate = req.OrderedDate.ToString();
+                beforesplit = req.OrderedDate.ToString();
+                String[] substrings = beforesplit.Split(delimiter);
+                aftersplit = substrings[0];
+                cd.ReqDate = aftersplit ; 
+              
                 cd.ReqID = req.RequisitionId.ToString();
                 approvalList.Add(cd);
             }
@@ -148,8 +165,7 @@ namespace Team7ADProjectMVC
             var aList = from a in db.RequisitionDetails
                         where a.RequisitionId == rId
                         && a.Requisition.DepartmentId == dId
-                        && a.Requisition.RequisitionStatus != "Approved"
-                        && a.DeliveryStatus != "Delivered" 
+                        && a.Requisition.RequisitionStatus == "Pending Approval"
                         orderby a.Inventory.Description ascending
                         select a;
 
@@ -164,22 +180,19 @@ namespace Team7ADProjectMVC
             return approvalList.ToList();
         }
 
-
         public List<String> getCollectionPoint(String deptid)
         {
             List<String> sl = new List<string>();
             int dId = Convert.ToInt32(deptid);
-             var collectionLocation = from c in db.DisbursementLists
-                                    where c.DepartmentId == dId
-                                    orderby c.CollectionPoint.PlaceName ascending
-                                    select c;
+            var collectionLocation = from c in db.DisbursementLists
+                                     where c.DepartmentId == dId
+                                     select c;
             String s;
-             foreach (DisbursementList d in collectionLocation)
+            foreach (DisbursementList d in collectionLocation)
             {
-                s= d.CollectionPoint.PlaceName +" "+ d.CollectionPoint.CollectTime;
+                s = d.Department.CollectionPoint.PlaceName +" "+ d.Department.CollectionPoint.CollectTime;
                sl.Add(s);
             }
-         
             return sl;
         }
 
@@ -187,17 +200,23 @@ namespace Team7ADProjectMVC
         {
             List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
             var disburse = from d in db.DisbursementLists
-                           where d.Status != "Completed"
+                           where d.Status.Equals("Processing")
+                           //where d.Status != "Completed"
+                           
                            orderby d.DeliveryDate ascending
                            select d;
-
+            String beforesplit = "";
+            String aftersplit = "";
+            Char delimiter = ' ';
             foreach (DisbursementList d in disburse)
             {
                 wcfDisbursementList dl = new wcfDisbursementList();
                 dl.DeptName = d.Department.DepartmentName;
-                dl.CollectionPoint = d.CollectionPoint.PlaceName;
-                dl.DeliveryDate = d.DeliveryDate.ToString();
-                dl.DeliveryTime = d.CollectionPoint.CollectTime.ToString();
+                dl.CollectionPoint = d.Department.CollectionPoint.PlaceName;
+                beforesplit = d.DeliveryDate.ToString();
+                String[] substrings = beforesplit.Split(delimiter);
+                aftersplit = substrings[0];
+                dl.DeliveryDatetime = aftersplit + " ( " + d.Department.CollectionPoint.CollectTime.ToString()+" )"; 
                 dl.RepName = d.Department.Employee.EmployeeName.ToString();
                 dl.RepPhone = d.Department.Employee.PhNo.ToString();
                 dl.DisListID = d.DisbursementListId.ToString();
@@ -218,6 +237,8 @@ namespace Team7ADProjectMVC
             foreach (DisbursementDetail d in disDetail)
             {
                 wcfDisbursementListDetail dd = new wcfDisbursementListDetail();
+                dd.Ddid = d.DisbursementDetailId.ToString();
+                dd.Itemid = d.ItemNo;
                 dd.ItemName = d.Inventory.Description;
                 dd.PreQty = d.PreparedQuantity.ToString();
                 dd.DisbQty = d.DeliveredQuantity.ToString();
@@ -238,7 +259,7 @@ namespace Team7ADProjectMVC
             foreach (Inventory i in reOrders)
             {
                 wcfStockReorder inv = new wcfStockReorder();
-                inv.ItemName = i.Description;
+                inv.ItemName = "#" + i.ItemNo+" "+ i.Description;
                 inv.ActualQty = i.Quantity.ToString();
                 inv.ReorderLevel = i.ReorderLevel.ToString();
                 inv.ReorderQty = i.ReorderQuantity.ToString();
@@ -257,25 +278,23 @@ namespace Team7ADProjectMVC
             return soList;
         }
 
-
         public List<wcfRetrivalList> getRetrivalList()
         {
             List<wcfRetrivalList> retrialList = new List<wcfRetrivalList>();
-            
             RetrievalList reList = new RetrievalList();
-            invService.PopulateRetrievalList();
-            invService.PopulateRetrievalListItems();
             reList = invService.GetRetrievalList();
             int? rid =reList.retrievalId;
             List<RetrievalListItems> itemsToR = reList.itemsToRetrieve;
-
+   
             foreach (RetrievalListItems r in itemsToR)
             {
                 wcfRetrivalList rl = new wcfRetrivalList();
                 rl.ItemNo = r.itemNo;
                 rl.ItemName = r.description;
+                rl.BinNo = r.binNo;
                 rl.RequestedQty = r.requiredQuantity.ToString();
                 rl.RetrievedQty = r.collectedQuantity.ToString();
+             
                 String st = "";
                 if(r.collectionStatus.ToString().Equals("False"))
                 {
@@ -288,77 +307,302 @@ namespace Team7ADProjectMVC
                 rl.Status = st;
                 retrialList.Add(rl);
             }
-            //List<Requisition> reqList = retrivallist.requisitionList;
             return retrialList;
         }
 
-
-        public List<wcfallocate> getallocate()
+        public String getallocate()
         {
-
-            // call his method to update and get the list from him and do it here!
-            // this below is just for testing!
-            List<wcfallocate> dDetail = new List<wcfallocate>();
-         
-            var disDetail = from dd in db.DisbursementDetails
-       
-                            orderby dd.Inventory.Description ascending
-                            select dd;
-
-            foreach (DisbursementDetail d in disDetail)
+            String rt = "false";
+            try
             {
-                wcfallocate dd = new wcfallocate();
-                dd.ItemName = d.Inventory.Description;
-                dd.PreQty = d.PreparedQuantity.ToString();
-                dd.DisbQty = d.DeliveredQuantity.ToString();
-                dDetail.Add(dd);
+                invService.AutoAllocateDisbursementsByOrderOfRequisition();
+                rt = "True";
             }
-            return dDetail;
+            catch(Exception e)
+            {
+                rt = "false";
+            }
+            return rt;
         }
 
 
-        public wcflogin getlogin(String userid , String password)
+        public string makePermissionstring(String s)
         {
-            // do the proper login here.. 
-            // test case only.
-
-
-            wcflogin dDetail = new wcflogin();
-            if(userid.Equals("c1"))
+            if(s.Equals("True"))
             {
-                dDetail.Deptid = "0";
-                dDetail.Role = "Clerk";
-                dDetail.Userid = "c1";
-                dDetail.Authenticate = "true";
-            }
-            else   if (userid.Equals("e1"))
-            {
-                dDetail.Deptid = "4";
-                dDetail.Role = "Employee";
-                dDetail.Userid = "e1";
-                dDetail.Authenticate = "true";
-            }
-            else if (userid.Equals("h1"))
-            {
-                dDetail.Deptid = "0";
-                dDetail.Role = "Boss";
-                dDetail.Userid = "h1";
-                dDetail.Authenticate ="true";
-            }
-            else if (userid.Equals("r1"))
-            {
-                dDetail.Deptid = "0";
-                dDetail.Role = "Representative";
-                dDetail.Userid = "r1";
-                dDetail.Authenticate = "true";
+                return "1";
             }
             else
-                dDetail.Authenticate = "false";
-
-                
-
-                return dDetail;
-          
+            {
+                return "0";
+            }
         }
+        public wcflogin getlogin(String userid , String password, String token)
+        {
+            wcflogin dDetail = new wcflogin();
+            try
+            {
+               
+                int empid = Convert.ToInt32(userid);
+                bool result = Membership.ValidateUser(userid, "password!");
+                if (result == true)
+                {
+                    Employee emp = db.Employees.Where(x => x.EmployeeId == empid).First();
+                    dDetail.Role = emp.Role.Name;
+                    dDetail.Deptid = emp.DepartmentId.ToString();
+                    dDetail.Userid = userid;
+                    dDetail.EmpName = emp.EmployeeName;
+                    dDetail.Authenticate = "true";
+                    Permission makePerm = db.Permissions.Where(x => x.PermissionId == emp.PermissionId).First();
+                    dDetail.Permission = makePermissionstring(makePerm.ViewRequisition.ToString()) + "-" + makePermissionstring(makePerm.ApproveRequisition.ToString()) + "-" +
+                        makePermissionstring(makePerm.ChangeCollectionPoint.ToString()) + "-" + makePermissionstring(makePerm.ViewCollectionDetails.ToString());
+                    emp.Token = token;
+                    db.SaveChanges();
+                    PushOldNotification(empid, token);
+                }
+                else
+                {
+                    dDetail.Authenticate = "false";
+
+                }
+                return dDetail;
+            }
+            catch (Exception e)
+            {
+                dDetail.Authenticate = "falseer";
+                return dDetail;
+            }
+        }
+
+        public String updatelocation(String deptid, String collectionptid)
+        {
+            try {
+                int dId = Convert.ToInt32(deptid);
+                int cpoint = Convert.ToInt32(collectionptid);
+                Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
+                wcfItem.CollectionPointId = cpoint;
+                db.SaveChanges();
+                fcm.CollectionPointChanged(dId);
+                return collectionptid;
+            } catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
+        public void updatedqun(wcfDisbursementListDetail c )
+        {
+            int dId = Convert.ToInt32(c.Ddid);
+            int dId1 = Convert.ToInt32(c.DisbQty);
+            int math;
+            
+             DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
+
+             math = dId1-(int)dd.DeliveredQuantity;              
+             dd.DeliveredQuantity = dId1;
+             dd.Remark = c.Remarks;
+             db.SaveChanges();
+             invService.UpdateInventoryQuantity(dd.ItemNo, math);
+        }
+
+        public string approveReq(String reqId)
+        {
+            string result = "False";
+            try {
+                int rId = Convert.ToInt32(reqId);
+                Requisition r = db.Requisitions.Where(p => p.RequisitionId == rId).First();
+                r.RequisitionStatus = "Approved";
+                r.ApprovedDate = DateTime.Today;
+                fcm.NewRequisitonMade(reqId);
+                db.SaveChanges();
+                result = "True";
+            }
+            catch (Exception e)
+            {
+                result = "False";
+            }
+            return result;
+        }
+
+        public string rejectReq(String reqId, String remarks)
+        {
+            string result = "False";
+            try
+            {
+                int rId = Convert.ToInt32(reqId);
+                Requisition r = db.Requisitions.Where(p => p.RequisitionId == rId).First();
+                r.Comment = remarks;
+                r.RequisitionStatus = "Rejected";
+                r.ApprovedDate = DateTime.Today;
+                db.SaveChanges();
+                result = "True";
+            }
+            catch (Exception e)
+            {
+                result = "False";
+            }
+            return result;
+        }
+
+        public List<wcfStoreRequisitions> getStoreRequistions()
+        {
+            List<wcfStoreRequisitions> storeReq = new List<wcfStoreRequisitions>();
+            List<Requisition> reqList = invService.GetOutStandingRequisitions();
+
+            String beforesplit = "";
+            String aftersplit = "";
+            Char delimiter = ' ';
+            foreach (Requisition req in reqList)
+            {
+                wcfStoreRequisitions rl = new wcfStoreRequisitions();
+                beforesplit = req.Employee.Department.DepartmentName;
+                String[] substrings = beforesplit.Split(delimiter);
+                aftersplit = substrings[0];
+                rl.DeptName = aftersplit;
+
+                beforesplit = req.ApprovedDate.ToString();
+                String[] substrings1 = beforesplit.Split(delimiter);
+                aftersplit = substrings1[0];
+                rl.ApprovalDate = aftersplit;
+
+                rl.ReqStatus = req.RequisitionStatus;
+                storeReq.Add(rl);
+            }
+                return storeReq;
+        }
+        public String wcfBtnReqList()
+        {
+            RetrievalList rList = invService.GetRetrievalList();
+              String result="";
+                if(rList.requisitionList == null)
+                {
+                    result= "generate";
+                }
+                else
+                result = "view";
+                return result;
+            }
+
+        public String wcfGenetateBtnOK()
+        {
+            try
+            {
+                invService.PopulateRetrievalList();
+                invService.PopulateRetrievalListItems();
+                return "true";
+            }
+            catch(Exception e)
+            {
+                return "false";
+            }
+           
+        }
+
+
+        public String wcfClearListBtnOK()
+        {
+            try
+            {
+                invService.ClearRetrievalList();
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+        public String wcfAcceptCollection(String DisListId)
+        {
+            try
+            {
+                int disId = Convert.ToInt32(DisListId);
+                disService.ConfirmDisbursement(disId); 
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
+        public String wcfSendForConfirmation(String DisbListId)
+        {
+            try
+            {
+            int dId = Convert.ToInt32(DisbListId);
+
+            DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
+            int deptit= (int)disb.DepartmentId;
+            string deptName = disb.Department.DepartmentName;
+
+            String name =disb.Department.CollectionPoint.PlaceName;
+            List<String> myData = new List<string>();
+            myData.Add("ReceiveRequisition");
+            myData.Add(name);
+            myData.Add(DisbListId);
+            myData.Add(disb.Department.CollectionPoint.CollectTime.ToString());
+
+            fcm.PushNotificationForRep("Accept Delivery", "Please Confirm Delivery", myData,deptit);
+
+
+              
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
+
+        public String wcfLogout(String userID)
+        {
+            try
+            {
+
+                int Uid = Convert.ToInt32(userID);
+                Employee emp = db.Employees.Where(W => W.EmployeeId == Uid).First();
+                emp.Token = null;
+                db.SaveChanges();
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return "false";
+            }
+        }
+
+        public void PushOldNotification(int  EmpID,String token)
+        {
+            var notification= from n in db.Notifications  where n.EmployeeId == EmpID    select n;
+            if (notification != null)
+            {
+                foreach (Notification n in notification)
+                {
+                    List<String> myData = new List<string>();
+                    myData.Add(n.Intent);
+                    myData.Add(n.PageHeader);
+                    myData.Add(n.PageId);
+                    myData.Add(n.ExtraDetail);
+                    fcm.PushFCMNotification(n.Title, n.Body, token, myData);
+                    DeleteOldNotifications(n.NotificationId);
+                    
+                }
+                db.SaveChanges();
+
+              
+            }
+
+        }
+
+        public void DeleteOldNotifications (int notID)
+        {
+            var report = (from d in db.Notifications
+                          where d.NotificationId == notID
+                          select d).Single();
+
+            db.Notifications.Remove(report);
+        }
+
     }
 }

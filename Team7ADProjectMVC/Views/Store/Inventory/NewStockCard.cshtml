@@ -3,6 +3,8 @@
 @{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Create New Stock Card";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 
@@ -14,14 +16,9 @@
     <div class="form-horizontal">
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group row">
-            <div class="col-md-2">
-                @Html.LabelFor(model => model.ItemNo, "Item No.", htmlAttributes: new { @class = "control-label" })
-            </div>
-            <div class="col-md-3">
-                @Html.EditorFor(model => model.ItemNo, new { htmlAttributes = new { @class = "form-control", required="true", title = "A unique item code is required." } })
-                @Html.ValidationMessageFor(model => model.ItemNo, "", new { @class = "text-danger" })
-            </div>
+        <div class="form-group row">       
+                @Html.HiddenFor(model => model.ItemNo, new { htmlAttributes = new { @class = "form-control", required="true", title = "A unique item code is required." } })
+
         </div>
 
         <div class="form-group row">
@@ -162,16 +159,40 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    @if (ViewBag.Error != null)
+    {
+    <!-- Show warning message -->
+        <div id="ErrorMessage" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Failed to create new inventory record</h4>
+                    </div>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+                    <div class="modal-body">
+                        <h5>@ViewBag.Error</h5>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(function ShowModal() {
+                $('#ErrorMessage').modal('toggle');
+            });
+        </script>
+    }
+ </div>

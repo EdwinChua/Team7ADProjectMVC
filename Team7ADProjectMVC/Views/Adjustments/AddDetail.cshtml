@@ -1,0 +1,7 @@
+﻿@model Team7ADProjectMVC.Models.adjustment
+
+@{
+    Layout = null;
+}
+
+@Html.EditorForMany(x => x.AdjustmentDetails, x => x.Index,false)

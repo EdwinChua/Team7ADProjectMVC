@@ -1,124 +1,58 @@
-﻿@{
+﻿@model IEnumerable<Team7ADProjectMVC.Supplier>
+
+@{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "List of Suppliers";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
-
-<div class="row jumbotron">
-
-    <form class="form" role="form">
-        <div class="col-md-2 form-group ">
-            <label for="categoryPicker">
-                Category
-            </label>
-        </div>
-        <div class="col-md-4 form-group">
-            <select id="categoryPicker" name="category"
-                    class="selectpicker show-tick form-control"
-                    data-live-search="true" required>
-                <option></option>
-                <option>Pen</option>
-                <option>Transparency</option>
-                <option>Trays</option>
-
-            </select>
-        </div>
-        <div class="col-md-2 form-group ">
-            <button class="btn btn-default" type="submit">
-                Search
-            </button>
-        </div>
-    </form>
-</div>
+<button class="btn btn-primary" onclick="window.location.href='AddSupplier'">
+    Create
+</button>
+<br />
 <div>
     <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Supp. Code
-                </th>
-                <th>
-                    Supplier Name
-                </th>
-                <th>
-                    Contact Person / Phone
-                </th>
-                <th>
-                    Address
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
+        <tr>
+            <th class="col-md-2">
+                Supplier Name (Supp. Code)
+            </th>
+            <th class="col-md-2">
+                Contact Person / Phone
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayNameFor(model => model.FaxNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="clickable-row" data-href="Supplier/@item.SupplierId">
                 <td>
-                    ALPA
+                    @Html.DisplayFor(modelItem => item.SupplierName) <br />(@Html.DisplayFor(modelItem => item.SupplierCode))
                 </td>
                 <td>
-                    ALPHA Office Supplies
+                    @Html.DisplayFor(modelItem => item.ContactName) <br /> @Html.DisplayFor(modelItem => item.PhNo)
                 </td>
                 <td>
-                    Ms Irene Tan / 6461 9928
+                    @Html.DisplayFor(modelItem => item.FaxNo)
                 </td>
                 <td>
-                    Blk 1128, Ang Mo Kio Industrial Park, #02-1108 Ang Mo Kio Street 62 S(622262)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    CHEP
-                </td>
-                <td>
-                    Cheap Stationery
-                </td>
-                <td>
-                    Mr Randall Vek / 6461 9928
-                </td>
-                <td>
-                    Blk 1, Lim Chu Kang Industrial Park, #02-1108 Ang Mo Kio Street 62 S(622262)
+                    @Html.DisplayFor(modelItem => item.Address)
                 </td>
             </tr>
-            <tr>
-                <td>
-                    BANE
-                </td>
-                <td>
-                    BANES Shop
-                </td>
-                <td>
-                    Ms Emma Wat / 6461 9928
-                </td>
-                <td>
-                    Blk 42, Plaza Singapura, #02-1108, S(622262)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    ALPA
-                </td>
-                <td>
-                    ALPHA Office Supplies
-                </td>
-                <td>
-                    Ms Irene Tan / 6461 9928
-                </td>
-                <td>
-                    Blk 1128, Ang Mo Kio Industrial Park, #02-1108 Ang Mo Kio Street 62 S(622262)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    OMEG
-                </td>
-                <td>
-                    OMEGA Stationery Supplier
-                </td>
-                <td>
-                    Ms Irene Tan / 6461 9928
-                </td>
-                <td>
-                    Blk 1128, Jurong West, #02-1108 Jurong West S(622262)
-                </td>
-            </tr>
-        </tbody>
+        }
+
     </table>
 </div>
+    <script>
+    $(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+    </script>
+

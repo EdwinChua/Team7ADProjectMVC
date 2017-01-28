@@ -3,19 +3,19 @@
 @{
     Layout = "~/_Layout1.cshtml";
     Page.Title = "Disbursement for " + @ViewBag.disbursementListInfo.Department.DepartmentName;
-
-    //TODO: EDWIN - Logic for disbursement
+    int? disbursementListId = null;
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
 
-<h2>Collection Point: @Model.CollectionPoint.PlaceName ( @Model.CollectionPoint.CollectTime ) </h2>
-<form role="form">
+
+
+<h2>Collection Point: @Model.Department.CollectionPoint.PlaceName ( @Model.Department.CollectionPoint.CollectTime ) </h2>
+<form role="form" id="form1" action="../UpdateDisbursement">
     <table class="table">
         <thead>
             <tr>
-                <th>
-                    #
-                </th>
                 <th>
                     Product
                 </th>
@@ -25,56 +25,90 @@
                 <th>
                     Received Quantity
                 </th>
+                <th>
+                    Remarks
+                </th>
             </tr>
         </thead>
         <tbody>
         @foreach (var item in Model.DisbursementDetails)
         {
             <tr>
-                <td>
-                    1
+                <td class="col-md-3">
+                    @item.ItemNo @item.Inventory.Description
+                </td>
+                <td class="col-md-2">
+                    @item.PreparedQuantity
+                </td>
+                <td class="col-md-2">
+                    @{ disbursementListId = item.DisbursementListId;}
+                    <input type="hidden" value="@item.ItemNo" name="itemNo" />
+                    <input type="hidden" value="@item.PreparedQuantity" name="originalPreparedQty" />
+                    <input type="number" class="form-control" name="adjustedQuantity" value="@item.PreparedQuantity" max="@item.PreparedQuantity"/>
                 </td>
                 <td>
-                    @item.RequisitionDetail.ItemNo @item.RequisitionDetail.Inventory.Description
-                </td>
-                <td>
-                    8
-                </td>
-                <td>
-                    <input type="number" class="form-control" value="8" />
+                    <input type="text" class="form-control" name="remarks" />
                 </td>
             </tr>
         }
         </tbody>
     </table>
+    <input type="hidden" value="@disbursementListId" name="disbursementListId" />
     <div class="row">
         <div class="col-md-12">
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label for="inputForRepresentative">
                             Department Representative:
                         </label>
                     </div>
-                    <div class="col-lg-3">
-                        <select id="lecturerId" name="lecturerId"
-                                class="selectpicker show-tick form-control"
-                                data-live-search="true" required>
-                            <option></option>
-                            <option data-subtext="Computer Science Department">Edward Tan Ee Meng</option>
-                        </select>
+                    <div class="col-lg-5">
+                        @ViewBag.Representative.EmployeeName (Tel no: @ViewBag.Representative.PhNo)
                     </div>
                 </div>
+                <br />
+                <br />
             </div>
-
-            <button class="btn btn-primary">
-                Send for Confirmation
+            <div class="print">
+                <label>Signature: ________________________________</label>
+            </div>
+            <button id="submitbutton" class="btn btn-primary noprint" >
+                Update
             </button>
-            <button class="btn btn-danger">
+            
+            <button class="btn btn-danger noprint" onclick="window.history.back()">
                 Cancel
             </button>
-
+            <br />
+            <br />
+            <a href="#" class="btn btn-success noprint dragTxt" onclick="window.print()">
+                <span class="glyphicon glyphicon-print"></span> Print
+            </a>
+            <button class="btn btn-default noprint" type="button" onclick="ClearTB()">Clear Form</button>
         </div>
     </div>
 </form>
+@if (Model.Status == "Complete")
+{
+<script>
+    $('#form1 input[type="number"]').each(function () {
+        $(this).attr('disabled', 'disabled');
+    });
+    $('#form1 input[type="text"]').each(function () {
+        $(this).attr('disabled', 'disabled');
+
+       
+    });
+        
+        $('#submitbutton').attr('disabled', 'disabled');
+    
+</script>
+}
+<script>
+    function ClearTB() {
+        $(document).find('input[type=text]').val('');
+        $(document).find('input[type=number]').val('');
+    }
+</script>

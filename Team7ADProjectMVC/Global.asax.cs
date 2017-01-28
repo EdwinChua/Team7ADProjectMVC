@@ -55,5 +55,9 @@ namespace Team7ADProjectMVC
             //RegisterRoutes(RouteTable.Routes);
             Application["RetrievalList"] = new RetrievalList();
         }
+        protected void Session_Start()
+        {
+            Session["user"] = new Employee(); // To prevent layout page from throwing exception
+        }
     }
 }

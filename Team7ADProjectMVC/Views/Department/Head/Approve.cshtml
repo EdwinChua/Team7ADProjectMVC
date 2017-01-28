@@ -1,94 +1,127 @@
 ﻿@model Team7ADProjectMVC.Requisition
 @{
-    ViewBag.Title = "Approve/Reject Requisition";
-    Layout = "~/Views/Shared/_Layouthead.cshtml";
+    Page.Title = "Approve/Reject Requisition";
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 }
 
-  
-        <div class="container-fluid">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-2">
                     <h5>
-                        Requisition Form#: DDS/111/999
-                        </h5>
-                        <div>
-                            
-                            Dept Name:@Html.DisplayFor(model => model.Employee.Department.DepartmentName)
-                            <div>
-                                <h5>
+                        @{
 
-                                 
-                                    Employee Name:@Html.DisplayFor(model => model.Employee.EmployeeName)
-                                    <br />
-                                    <br />
-                                    Employee Number:@Html.DisplayFor(model => model.Employee.EmployeeId)
-                                    <br />
-                                    <br />
-                                    Employee Email Address:<a href="mailto:Address:Jenny@LogicUniversity">@Html.DisplayFor(model => model.Employee.Email)</a>
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-
-                                </h5>
-                            </div>
-                        </div>
-                        <span class="label label-default"></span>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    
-                                    <th>
-                                        Description
-                                    </th>
-                                    <th>
-                                        Quantity
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                @foreach (var item in Model.RequisitionDetails)
-                                {
-                                    <tr>
-                                        <td>
-                                            @item.Inventory.Description
-                                        </td>
-                                        <td>
-                                            @item.Quantity
-                                        </td>
-                                        
-                                    </tr>
-                                }
-
-                            </tbody>
-                        </table>
-                        <h5>
-                            Comment:
-                        </h5>
-                    <form id="form1" action="../MarkAsCollected">
-                        <p>
-                            &nbsp;<input type="text" id="Text" aria-autocomplete="none" aria-disabled="False" aria-multiline="True" aria-multiselectable="True" aria-orientation="vertical" name="textcomments" rows="3" cols="50"/>
-                        </p>
-
-                        <input type="hidden" value="@Model.RequisitionId" name="rid" />
-                        <input type="submit" class="btn btn-success btn-lg" name="status" value="Approve" />
-                        <input type="submit" class="btn btn-danger btn-lg" name="status" value="Reject" />
-                    </form>
-
-                        @*<a href="/Head/ApproveRequisition/@Model.RequisitionId">
-                <button type="button" class="btn btn-success btn-lg">
-                    Approve
-                </button></a>
-
-            <a href="/Head/RejectRequisition/@Model.RequisitionId">
-                <button type="button" class="btn btn-danger btn-lg">
-                    Reject
-                </button>
-            </a>*@
+                            string[] D = ViewBag.r.OrderedDate.ToString().Split(' ');
+                            string[] sd = D[0].Split('/');
+                            ViewBag.showDate = sd[1] + "/" + sd[0] + "/" + sd[2];
+                        }
+                        Ordered Date:
+                    </h5>
+                </div>
+                <div class="col-md-2">
+                    <h5>
+                        @ViewBag.showDate
+                    </h5>
+                </div>
             </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>
+                        Department Name:
+                    </h5>
+                </div>
+                <div class="col-md-2">
+                    <h5>
+                        @Html.DisplayFor(model => model.Employee.Department.DepartmentName)
+                    </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>
+                        Employee Name:
+                    </h5>
+                </div>
+                <div class="col-md-2">
+                    <h5>
+                        @Html.DisplayFor(model => model.Employee.EmployeeName)
+                    </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>
+                        Employee Email Address:
+                    </h5>
+                </div>
+                <div class="col-md-2">
+                    <h5>
+                        <a href="mailto: @Model.Employee.Email">@Html.DisplayFor(model => model.Employee.Email)</a>
+                        <br />
+                    </h5>
+                </div>
             </div>
 
+
+ <hr />
         </div>
-    
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-8">
+            <span class="label label-default"></span>
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.RequisitionDetails)
+                    {
+                        <tr>
+                            <td>
+                                @item.Inventory.Description
+                            </td>
+                            <td>
+                                @item.Quantity
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <hr />
+            <h5>
+                Comment:
+            </h5>
+            <form id="form1" action="../MarkAsCollected">
+                <p>
+                    &nbsp;
+                    <textarea name="textcomments" form="form1" class="form-control" id="Text" rows="4" cols="100" placeholder="Enter comment here..."></textarea>
+
+
+                </p>
+
+                <input type="hidden" value="@Model.RequisitionId" name="rid" />
+                <input type="submit" class="btn btn-success btn-lg" name="status" value="Approve" />
+                <input type="submit" class="btn btn-danger btn-lg" name="status" value="Reject" />
+            </form>
+        </div>
+    </div>
+
+</div>
+
 

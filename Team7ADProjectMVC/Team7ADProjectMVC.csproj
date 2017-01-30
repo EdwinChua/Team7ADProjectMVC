@@ -79,10 +79,6 @@
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Reports, Version=0.9.2507.38892, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>ExternalLibs\Reports.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
@@ -852,7 +848,6 @@
     <Content Include="crystalreportviewers\urlreporting\activexviewer.js" />
     <Content Include="crystalreportviewers\urlreporting\appletviewer.js" />
     <Content Include="DatabaseTableQueries.sql" />
-    <Content Include="ExternalLibs\Reports.dll" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
@@ -978,6 +973,8 @@
     </Content>
     <Content Include="Resources\dashboard.css" />
     <Content Include="Resources\mystyle.css" />
+    <Content Include="Resources\print.css" />
+    <Content Include="Resources\screen.css" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1243,9 +1240,7 @@
     <Content Include="Views\Shared\_Layouthead.cshtml" />
     <Content Include="Views\Shared\_LayoutD.cshtml" />
     <Content Include="Views\Adjustments\Create.cshtml" />
-    <Content Include="Views\Adjustments\Delete.cshtml" />
-    <Content Include="Views\Adjustments\Details.cshtml" />
-    <Content Include="Views\Adjustments\Index.cshtml" />
+    <Content Include="Views\Adjustments\ViewAdjustment.cshtml" />
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />
     <Content Include="Views\Store\Disbursement\ReallocateDisbursements.cshtml" />
@@ -1258,9 +1253,7 @@
     <Content Include="Views\Suppliers\Index.cshtml" />
     <Content Include="Views\Store\Resupply\PurchaseOrder.cshtml" />
     <Content Include="Views\Store\Resupply\ListDeliveries.cshtml" />
-    <Content Include="Views\Adjustments\create1.cshtml" />
-    <Content Include="Views\Adjustments\ww.cshtml" />
-    <Content Include="Views\Adjustments\Edit1.cshtml" />
+    <Content Include="Views\Adjustments\ViewAdjustmentDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1274,8 +1267,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Auth\" />
     <Folder Include="Views\FCM\" />
-    <Folder Include="Views\StorePO\" />
-    <Folder Include="Views\StoreTest\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

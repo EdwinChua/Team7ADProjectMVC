@@ -65,6 +65,7 @@ namespace Team7ADProjectMVC.Models
                           {
                               title = title,
                               body = message,
+                              //click_action ="gokul" ,
                           },
                          data = new
                           {
@@ -169,8 +170,8 @@ namespace Team7ADProjectMVC.Models
             String deptname = wcfItem.DepartmentName;
             List<String> myData = new List<string>();
             myData.Add("DisbursementList");
-            myData.Add("Disbursement List");
-            myData.Add("0");
+            myData.Add(deptname);
+            myData.Add(cpointName);
             myData.Add("0");
 
             PushFCMNotificationToStoreClerk(deptname + " Collection", "Changed to: " + cpointName, myData);
@@ -183,13 +184,40 @@ namespace Team7ADProjectMVC.Models
             int dlid = Convert.ToInt32(DisListID);
             DisbursementList wcfItem = db.DisbursementLists.Where(p => p.DisbursementListId == dlid).First();
             string deptName = wcfItem.Department.DepartmentName;
+            int retrivedclerk = (int)wcfItem.Retrieval.EmployeeId;
             List<String> myData = new List<string>();
-            myData.Add("UnfulfilledRequisitions");
-            myData.Add("Disbursement List");
+            myData.Add("reqaccepted");
+            myData.Add(deptName);
             myData.Add("0");
             myData.Add("0");
+            String title = deptName;
+            String message = "Accepted Disbursement";
+            Employee sendingnow = db.Employees.Where(x => x.EmployeeId == retrivedclerk).First();
+            if (sendingnow.Token == null)
+            {
 
-            PushFCMNotificationToStoreClerk(deptName, "Accepted Disbursement", myData);
+                Notification n = new Notification();
+                n.EmployeeId = sendingnow.EmployeeId;
+                n.Title = title;
+                n.Body = message;
+                n.Intent = myData[0];
+                n.PageHeader = myData[1];
+                n.PageId = myData[2];
+                n.ExtraDetail = myData[3];
+                db.Notifications.Add(n);
+                db.SaveChanges();
+
+            }
+            else
+            {
+                PushFCMNotification(title, message, sendingnow.Token, myData);
+
+            }
+
+           // PushFCMNotificationToStoreClerk(deptName, "Accepted Disbursement", myData);
+
+
+
         }
 
 

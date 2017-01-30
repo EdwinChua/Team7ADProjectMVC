@@ -12,18 +12,18 @@
 <hr />
 <div class="container-fluid">
     <div class="row jumbotron">
-        <form class="form" role="form" action="SearchAdjustment" method="post">
+        <form class="form" role="form" action="SearchAdjustment" method="get" >
             <div class="form-group">
                 @Html.Label("Raised by", htmlAttributes: new { @class = "control-label col-md-1" })
                 <div class="col-lg-3 ">
-                    @Html.DropDownList("SearchEmployee", null, "-- Please Select --", htmlAttributes: new { @name = "employee",@class = "form-control" })
+                    @Html.DropDownList("employee", null, "-- Please Select --", htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
             @Html.Label("Date Issued", htmlAttributes: new { @class = "control-label col-md-1" })
             <div class="col-lg-3 ">
                 <div class="form-group">
                     <div class='input-group date' id='datetimepicker1'>
-                        <input type='text' class="form-control" placeholder="DD/MM/YYYY" name="date" id="date" />
+                        <input  type='text' class="form-control" placeholder="DD/MM/YYYY" name="date" id="date" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -32,7 +32,7 @@
             </div>
             @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-1" })
             <div class="col-lg-2 ">
-                @Html.DropDownList("SearchStatus", null, "Status", htmlAttributes: new { @name = "status",@class = "form-control" ,})
+                @Html.DropDownList("status", null, "Status", htmlAttributes: new { @class = "form-control" ,})
             </div>
             <div class="col-lg-1">
                 <button class="btn btn-default" type="submit">
@@ -81,7 +81,9 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        $('#datetimepicker1').datetimepicker();
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY',
+        });
 
     });
 </script>

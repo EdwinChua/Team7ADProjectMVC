@@ -955,6 +955,35 @@ function addNewRow() {
 
     ///////////////////////////////////////////////////////////
 
+$(document).on('change', function () {
+//$("input[type=number]").bind('keyup mouseup', function () {
+    // handle event
+
+    alert('changed');
+    TableData = new Array();
+
+    $('#taskTable tr').each(function (row, tr) {
+        TableData[row] = {
+            "Item": $(tr).find('td:eq(0)').text()
+            , "Quantity": $(tr).find('td:eq(1)').children().val()
+
+        }
+    });
+    TableData.shift();
+    TableData = $.toJSON(TableData);
+    TableData = $.makeArray(TableData);
+                });
+                //var n = document.getElementById("numPeople"),
+               
+
+
+
+                //n.addEventListener("change", function (e) {
+                //    r.innerHTML += "change event triggered <br/>";
+                //}, false);
+
+    /////////////////////////////////////////////////////////////
+
 $(document).on('click', 'button.removebutton', function () {
 
     var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id

@@ -260,8 +260,8 @@
           <Property Name="Address" Type="varchar" MaxLength="250" />
           <Property Name="GstRegistrationNo" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Project.dbo.disbAnalysis' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“Project.dbo.disbAnalysis”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="disbAnalysis">
           <Key>
             <PropertyRef Name="ItemNo" />
@@ -273,8 +273,8 @@ warning 6002: The table/view 'Project.dbo.disbAnalysis' does not have a primary 
           <Property Name="CategoryName" Type="varchar" MaxLength="100" />
           <Property Name="DeliveryDate" Type="date" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Project.dbo.PurchaseAnalysis' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <!--生成过程中发现错误:
+警告 6013: 表/视图“Project.dbo.PurchaseAnalysis”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
         <EntityType Name="PurchaseAnalysis">
           <Property Name="SupplierName" Type="varchar" MaxLength="100" />
           <Property Name="AuthorizedDate" Type="date" />
@@ -282,8 +282,8 @@ warning 6013: The table/view 'Project.dbo.PurchaseAnalysis' does not have a prim
           <Property Name="Description" Type="varchar" MaxLength="250" />
           <Property Name="Quantity" Type="int" />
         </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“Project.dbo.StockCard”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="StockCard">
           <Key>
             <PropertyRef Name="Date" />

@@ -129,11 +129,14 @@
                     {
                         <li id="menu7"><a href="/Head/ChangeRepresentive">Change Department Representative</a></li>
                     }
-                    @if (Page.Employee.Role.MakeAdjustment|| Page.Employee.Role.ApproveAdjustment)
+                    @if (Page.Employee.Role.MakeAdjustment)
                     {
-                        <li id="menu7">Adjustments(ComingSoon)</li>
+                        <li id="menu7"><a href="/Adjustments/Create">Create Adjustment</a></li>
                     }
-
+                    @if (Page.Employee.Role.ApproveAdjustment)
+                    {
+                        <li id="menu7"><a href="/Adjustments/ViewAdjustment">Approve Adjustment</a></li>
+                    }
                     <li id="menu1"><a href="/Store/Index">To Check: Main Menu</a></li>                   
                     
                     

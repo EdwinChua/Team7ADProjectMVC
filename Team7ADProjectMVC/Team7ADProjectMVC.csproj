@@ -1170,7 +1170,7 @@
     <Compile Include="TestControllers\FCMController.cs" />
     <Compile Include="Controllers\HeadController.cs" />
     <Compile Include="TestControllers\InventoriesController.cs" />
-    <Compile Include="TestControllers\RepresentativeController.cs" />
+    <Compile Include="Controllers\RepresentativeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\RptController.cs" />
     <Compile Include="TestControllers\SuppliersController.cs" />
@@ -1247,8 +1247,6 @@
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />
     <Content Include="Views\Store\Disbursement\ReallocateDisbursements.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\_Adjustment.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentDetail.cshtml" />
     <Content Include="Views\Suppliers\Create.cshtml" />
     <Content Include="Views\Suppliers\Delete.cshtml" />
     <Content Include="Views\Suppliers\Details.cshtml" />

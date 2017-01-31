@@ -85,6 +85,25 @@
             </div>
         </form>
     }
+    @if (currentEmployee.Role.Name == "Store Manager")
+    {
+        <div class="row">
+            <form class="form" role="form" action="/Store/Search" method="Get">
+                <div class="col-md-offset-3 col-md-3">
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Approved" class="btn btn-default" />
+                    </div>
+                </div>
+            </form>
+            <form class="form" role="form" action="/Store/Search" method="Get">
+                <div class="col-md-3">
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Rejected" class="btn btn-default" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    }
 
 }
 

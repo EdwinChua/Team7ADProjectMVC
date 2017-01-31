@@ -1254,6 +1254,7 @@
     <Content Include="Views\Store\Resupply\PurchaseOrder.cshtml" />
     <Content Include="Views\Store\Resupply\ListDeliveries.cshtml" />
     <Content Include="Views\Adjustments\ViewAdjustmentDetail.cshtml" />
+    <Content Include="Views\Adjustments\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

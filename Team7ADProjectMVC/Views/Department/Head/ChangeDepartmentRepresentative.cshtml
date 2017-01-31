@@ -7,147 +7,62 @@
 
 
 <table class="table">
-    <thead>
+   
         <tr>
             <th>
-               Department: @Html.DisplayFor(model => model.Department.DepartmentName)
+               Department:@currentEmployee.Department.DepartmentName
             </th>
+            </tr>
+        <tr>
             <th>
                 Current Representative:@ViewBag.currentRep.EmployeeName
             </th>
+            </tr>
 
-    </thead>
-    <tbody>
-        <form role="form" action="/Head/ManageCangeRep">
+    
+        
 
-            <select id="empListPicker" name="empId"
-                    class="selectpicker show-tick form-control"
-                    data-live-search="true" title="Select employee to delegate" required>
-                @foreach (var emp in ViewBag.employeeList)
-                {
-                    <option value="@emp.EmployeeId">@emp.EmployeeName </option>
-                }
-
-            </select>
-
-            <button type="submit" class="btn btn-success btn-lg" name="changeRep" value="changeRep" id="changeRepButton">
-                Change
-            </button>
-
-        </form>
-
-    </tbody>
+           
+     
+   
 </table>
-@*<table>
-        <tr>
-            <td>
-                Start Date:
-                <div style="overflow:hidden;">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div id="datetimepicker1"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </td>
-            <td>
-                <br />
-                <br />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <br />
-            </td>
-            <td>
-                End Date:
-                <div style="overflow:hidden;">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div id="datetimepicker2"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </table>*@
-
-
-@*<br />
-    <br />
-
-
-
-    <h5>
-
-        Start Date:<label id="s1" name="s" value="startDate">  @ViewBag.autoStartdate</label><br />
-        <input type="hidden" name="startDate" id="startDate" />
-
-
-        End Date::<label id="e1" name="e" value="endDate">@ViewBag.autoEnddate</label><br />
-
-        <input type="hidden" name="DelegateId" id="d" value="0" />
-        <input type="hidden" name="endDate" id="endDate" />
-
-
-    </h5>*@
-
-        </>
-
-
-@*<script type="text/javascript">
-            $(function () {
-
-                $('#datetimepicker1').datetimepicker({
-                    format: 'dd/mm/yy',
-                    inline: true,
-                    sideBySide: false,
-                    minDate: new Date()
-                });
-
-                $("#datetimepicker1").on("dp.change", function (date, e) {
+<form role="form" action="/Head/ManageCangeRep">
+    <div class="row">
+        <div class="col-lg-4 col-xs-12">
+            Choose Employee:
+            <div>
+                <select id="empPicker" name="empId"
+                        class="selectpicker show-tick form-control"
+                        data-live-search="true" title="Select employee to delegate" required>
+                    @foreach (var emp in ViewBag.employeeList)
                     {
-                        $('#startDate').val($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
-                        $('#s1').text($('#datetimepicker1').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
-                        $('#datetimepicker2').data("DateTimePicker").minDate(date.date);
-
-                        //var da = $('#datetimepicker1').data("DateTimePicker").date().format('YYY-MM-DD').toString();
-                        //String s=(String)da.toString();
+                        <option value="@emp.EmployeeId">@emp.EmployeeName </option>
                     }
 
-                });
+                </select>
 
-                $('#datetimepicker2').datetimepicker({
-                    format: 'dd/mm/yy',
-                    inline: true,
-                    sideBySide: false,
-                    minDate: new Date()
-                });
-
-                $("#datetimepicker2").on("dp.change", function (date, e) {
-                    console.log($('#datetimepicker2').data("DateTimePicker").date());
-                    $('#endDate').val($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
-                    $('#e1').text($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
-
-                });
-            });
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <div>
+        <button type="submit" class="btn btn-success btn-lg" name="changeRep" value="changeRep" id="changeRepButton">
+            Change
+        </button>
+    </div>
+</form>
 
 
 
-            //$(document).ready(function () {
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#changeRepButton').click(function () {
+            alert("Successfully Changed");
+        })
+    });
 
-            //    $("#datetimepicker1").on("click", function ()
-            //     {
-            //         alert('The start date must be current date or after current date');
-            //     });
-
-            // });
-
-
-
-    </script>*@
+    </script>
 
 
 

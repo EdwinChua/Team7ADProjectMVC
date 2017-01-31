@@ -10,5 +10,7 @@ namespace Team7ADProjectMVC.Models.ChangeRepresentativeService
     {
        Employee GetCurrentRep( int? depIdofLoginUser);
         List<Employee> GetAllEmployee(int? depIdofLoginUser, int currentRepId);
+        Employee GetEmpbyId(int? empIdforRep);
+        void ChangeRep(Employee currentRep, Employee newRep);
     }
 }

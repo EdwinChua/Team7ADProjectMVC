@@ -77,20 +77,20 @@ namespace Team7ADProjectMVC.Services
             db.Entry(disbursementList).State = EntityState.Modified;
             db.SaveChanges();
         }
-        public List<DisbursementList> FindDisbursementsBySearch(string date, string status)
+        public List<DisbursementList> FindDisbursementsBySearch(List<DisbursementList> disbursementlist,string date, string status)
         {
 
 
 
             if ((status == null || status == "") && (date == null || date == ""))
             {
-                return (db.DisbursementLists.ToList());
+                return (disbursementlist);
             }
             else if (status == null || status == "")
             {
                 List<String> datesplit = date.Split('/').ToList<String>();
                 DateTime selected = new DateTime(Int32.Parse((datesplit[2])), Int32.Parse((datesplit[1])), Int32.Parse((datesplit[0])));
-                var queryResults = from d in db.DisbursementLists
+                var queryResults = from d in disbursementlist
                                    where d.DeliveryDate == selected
                                    orderby d.Status
                                    select d;
@@ -98,7 +98,7 @@ namespace Team7ADProjectMVC.Services
             }
             else if (date == null || date == "")
             {
-                var queryResults = from d in db.DisbursementLists
+                var queryResults = from d in disbursementlist
                                    where d.Status.Equals(status)
                                    orderby d.DeliveryDate
                                    select d;
@@ -108,7 +108,7 @@ namespace Team7ADProjectMVC.Services
             {
                 List<String> datesplit = date.Split('/').ToList<String>();
                 DateTime selected = new DateTime(Int32.Parse((datesplit[2])), Int32.Parse((datesplit[1])), Int32.Parse((datesplit[0])));
-                var queryResults = from d in db.DisbursementLists
+                var queryResults = from d in disbursementlist
                                    where d.Status.Equals(status)
                                    && d.DeliveryDate == selected
                                    orderby d.DeliveryDate

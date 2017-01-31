@@ -69,18 +69,25 @@ ChangeCollectionPoint BIT,
 ViewRequisition BIT,
 MakeRequisition BIT,
 DelegateRole BIT,
-ViewCollectionDetails BIT
+ViewCollectionDetails BIT,
+Disbursement BIT,                 --storefunctions 7th permission onwards
+MakeAdjustment BIT,
+ApproveAdjustment BIT,
+InventoryManagement BIT,
+ViewReports BIT,
+MakePurchaseOrder BIT,
+ApprovePurchaseOrder BIT 
 )
 
 INSERT INTO Permission
 VALUES 
-(0,0,0,0,0,0), -- CLERK
-(1,1,1,0,1,0), -- HEAD
-(0,0,1,1,0,0), -- EMPLOYEE
-(0,1,1,1,0,1), -- REP
-(0,0,0,0,0,0), -- STORE SUPERVISOR
-(1,1,1,0,0,0); -- DELEGATE
-
+(0,0,1,1,0,0,1,1,0,1,1,1,0), -- STORE CLERK
+(1,1,1,0,1,0,0,0,0,0,0,0,0), -- HEAD
+(0,0,1,1,0,0,0,0,0,0,0,0,0), -- EMPLOYEE
+(0,1,1,1,0,1,0,0,0,0,0,0,0), -- REP
+(0,0,0,0,0,0,1,0,1,1,1,1,0), -- STORE SUPERVISOR
+(1,1,1,0,0,0,0,0,0,0,0,0,0), -- DELEGATE (Set manually)
+(1,1,1,0,1,0,0,0,1,0,1,0,1); -- STORE MANAGER
 
 ----------------------------------------- Collection Points -----------------------------------------
 CREATE TABLE CollectionPoints

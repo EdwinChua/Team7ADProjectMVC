@@ -181,7 +181,7 @@ VALUES
 ('MrMohd. Azman','youngmountain7@gmail.com',3,2,'77777777'), -- commerce 3
 ('Mrs Low Kway Boo','youngmountain7@gmail.com',4,2,'88888888'), -- registrar 4
 ('Mr. Peter Tan Ah Meng','youngmountain7@gmail.com',5,2,'99999999'), -- zoo 5
-('Mr. Sander','youngmountain7@gmail.com',6,2,'10101010'), -- store 6
+('Mr. Sander','youngmountain7@gmail.com',6,6,'10101010'), -- store 6 store manager
 ('Prof Ezra Pound','youngmountain7@gmail.com',1,4,'11111111'), -- eng 1 rep 4
 ('Mr. Ar Phyan Kwee','youngmountain7@gmail.com',2,4,'12121212'), -- com science 2
 ('Dr. Chia Leow Bee','youngmountain7@gmail.com',3,4,'13131313'), -- commerce 3

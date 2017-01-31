@@ -20,7 +20,7 @@ namespace Team7ADProjectMVC.TestControllers
         private IDepartmentService  deptSvc= new DepartmentService();
         // GET: Rpt
 
-        //[AuthorisePermissions(Permission="ChangeCollectionPoint")]
+        [AuthorisePermissions(Permission="ViewReports")]
         public ActionResult Index()
         {
 

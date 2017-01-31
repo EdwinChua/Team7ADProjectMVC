@@ -44,7 +44,7 @@ namespace Team7ADProjectMVC.Services.SupplierService
         public List<Inventory> GetAllItemsToResupply()
         {
             var q = (from x in db.Inventories
-                     where (x.Quantity + x.HoldQuantity) < x.ReorderQuantity
+                     where (x.Quantity + x.HoldQuantity) < x.ReorderLevel
                      select x).ToList();
             return q;
         }

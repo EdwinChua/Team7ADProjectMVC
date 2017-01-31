@@ -39,18 +39,18 @@ namespace Team7ADProjectMVC.TestControllers
             return View("Dashboard");
             //TODO: EDWIN - Create a nice dashboard or delete this
         }
-
-        public ActionResult Inventory()
+        //Seq Diagram Done
+        public ActionResult Inventory() 
         {
             var inventories = inventorySvc.GetAllInventory();
             var categories = inventorySvc.GetAllCategories();
             ViewBag.Cat = categories.ToList();
             return View("ViewInventory",inventories);
         }
-
+        //Seq Diagram Done
         public ActionResult InventoryItem(String id)
         {
-            Inventory inventory = inventorySvc.FindIventoryItemById(id);
+            Inventory inventory = inventorySvc.FindInventoryItemById(id);
             if (inventory == null)
             {
                 return HttpNotFound();
@@ -59,13 +59,14 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.sCard = inventorySvc.GetStockCardFor(id);
             return View("ViewStockCard",inventory);
         }
+        //Seq Diagram Done
         public ActionResult RetrievalList()
         {
             RetrievalList rList = inventorySvc.GetRetrievalList();
             ViewBag.RList = rList;
             return View("ViewRetrievalList");
         }
-
+        //Seq Diagram Done
         public ActionResult MarkAsCollected(int collectedQuantity, string itemNo)
         {
             RetrievalList rList = inventorySvc.GetRetrievalList();
@@ -79,7 +80,7 @@ namespace Team7ADProjectMVC.TestControllers
             }
             return RedirectToAction("RetrievalList");
         }
-
+        //Seq Diagram Done
         public ActionResult New()
         {
             ViewBag.CategoryId = new SelectList(inventorySvc.GetAllCategories(), "CategoryId", "CategoryName");
@@ -89,7 +90,7 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.SupplierId3 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode");
             return View("NewStockCard");
         }
-
+        //Seq Diagram Done
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult New([Bind(Include = "ItemNo,CategoryId,Description,ReorderLevel,ReorderQuantity,MeasurementId,Quantity,HoldQuantity,SupplierId1,Price1,SupplierId2,Price2,SupplierId3,Price3,BinNo")] Inventory inventory)
@@ -119,15 +120,15 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.SupplierId3 = new SelectList(inventorySvc.GetAllSuppliers(), "SupplierId", "SupplierCode", inventory.SupplierId3);
             return View("NewStockCard");
         }
-
+        //Seq Diagram Done
         // GET: Inventories/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id) 
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Inventory inventory = inventorySvc.FindIventoryItemById(id);
+            Inventory inventory = inventorySvc.FindInventoryItemById(id);
             if (inventory == null)
             {
                 return HttpNotFound();
@@ -140,13 +141,13 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.inv = inventory;
             return View("UpdateStockCard",inventory);
         }
-
+        //Seq Diagram Done
         // POST: Inventories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemNo,CategoryId,Description,ReorderLevel,ReorderQuantity,MeasurementId,Quantity,HoldQuantity,SupplierId1,Price1,SupplierId2,Price2,SupplierId3,Price3,BinNo")] Inventory inventory)
+        public ActionResult Edit([Bind(Include = "ItemNo,CategoryId,Description,ReorderLevel,ReorderQuantity,MeasurementId,Quantity,HoldQuantity,SupplierId1,Price1,SupplierId2,Price2,SupplierId3,Price3,BinNo")] Inventory inventory) 
         {
             if (ModelState.IsValid)
             {
@@ -161,8 +162,8 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.inv = inventory;
             return View("UpdateStockCard",inventory);
         }
-
-        public ActionResult Search(int id)
+        //Seq Diagram Done
+        public ActionResult Search(int id) 
         {
             var inventories = inventorySvc.GetInventoryListByCategory(id);
             var categories = inventorySvc.GetAllCategories();
@@ -171,13 +172,13 @@ namespace Team7ADProjectMVC.TestControllers
         }
 
         //************** DISBURSEMENTS **************
-
+        //Seq Diagram Done
         public ActionResult ViewDisbursements()
         {
             ViewBag.Departments = deptSvc.ListAllDepartments();
             return View(disbursementSvc.GetAllDisbursements());
         }
-
+        //Seq Diagram Done
         public ActionResult ViewDisbursement(int id)
         {
             DisbursementList dl = disbursementSvc.GetDisbursementById(id);
@@ -185,41 +186,27 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.Representative = deptSvc.FindEmployeeById((int)dl.Department.RepresentativeId);
             return View(dl);
         }
-
+        //Seq Diagram Done
         public ActionResult SearchDisbursements(int? id, String status)
         { 
             ViewBag.Departments = deptSvc.ListAllDepartments();
 
             return View("ViewDisbursements", disbursementSvc.GetDisbursementsBySearchCriteria(id, status));
         }
-
+        //Seq Diagram Done
         public ActionResult UpdateDisbursement(int disbursementListId, string[] itemNo, int[] originalPreparedQty, int[] adjustedQuantity, string[] remarks)
         {
             inventorySvc.UpdateDisbursementListDetails(disbursementListId, itemNo, originalPreparedQty, adjustedQuantity, remarks);
             return RedirectToAction("ViewDisbursements");
         }
 
-        // ********************* ADJUSTMENTS *******************
-
-        public ActionResult InventoryAdjustment()
-        {
-            //TODO: EDWIN - CX and Seng doing?
-
-            return View();
-        }
-
-        public ActionResult CreateNewAdjustment()
-        {
-            //TODO: EDWIN - CX and Seng doing?
-            return View();
-        }
-
         // ********************* MAINTAIN *******************
+        //Seq Diagram Done
         public ActionResult SupplierList()
         {
             return View(supplierAndPOSvc.GetAllSuppliers());
         }
-
+        //Seq Diagram Done
         public ActionResult Supplier(int? id)
         {
             if (id == null)
@@ -236,7 +223,7 @@ namespace Team7ADProjectMVC.TestControllers
             }
             return View(supplier);
         }
-
+        //Seq Diagram Done
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Supplier([Bind(Include = "SupplierId,SupplierCode,SupplierName,ContactName,PhNo,FaxNo,Address,GstRegistrationNo")] Supplier supplier)
@@ -249,12 +236,12 @@ namespace Team7ADProjectMVC.TestControllers
             }
             return View("Supplier",supplier);
         }
-
+        //Seq Diagram Done
         public ActionResult AddSupplier()
         {
             return View("Supplier");
         }
-
+        //Seq Diagram Done
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddSupplier([Bind(Include = "SupplierId,SupplierCode,SupplierName,ContactName,PhNo,FaxNo,Address,GstRegistrationNo")] Supplier supplier)
@@ -265,32 +252,33 @@ namespace Team7ADProjectMVC.TestControllers
 
 
         //****************** Outstanding Requisitions ***************
-
+        //Seq Diagram Done
         public ActionResult ViewRequisitions()
         {
             RetrievalList rList = inventorySvc.GetRetrievalList();
             ViewBag.rList = rList;
             return View(inventorySvc.GetOutStandingRequisitions());
         }
-
+        //Seq Diagram Done
         public ActionResult GenerateRetrievalList()
         {   
             inventorySvc.PopulateRetrievalList();
             inventorySvc.PopulateRetrievalListItems();
             return RedirectToAction("ViewRequisitions");
         }
-
+        //Seq Diagram Done
         public ActionResult ClearRetrievalList()
         {
             inventorySvc.ClearRetrievalList();
             return RedirectToAction("ViewRequisitions");
         }
-
+        //Seq Diagram Done
         public ActionResult DisburseItems()
         {
             inventorySvc.AutoAllocateDisbursementsByOrderOfRequisition();
             return RedirectToAction("ReallocateDisbursements");
         }
+        //Seq Diagram Done
         public ActionResult ReallocateDisbursements()
         {
             List<DisbursementDetail> reallocationList = inventorySvc.GenerateListForManualAllocation();
@@ -306,17 +294,8 @@ namespace Team7ADProjectMVC.TestControllers
 
             return View(reallocationList);
         }
-
-        // ********************* Other *******************
-
-        public ActionResult GenerateReports()
-        {
-            //Seng has done. To wire up with view
-            return View();
-        }
-
-
-        public ActionResult Test(int[] departmentId, int[] preparedQuantity,int [] disbursementListId, int[] disbursementDetailId, string[] itemNo, int[] adjustedQuantity)
+        //Seq Diagram Done
+        public ActionResult Reallocate(int[] departmentId, int[] preparedQuantity,int [] disbursementListId, int[] disbursementDetailId, string[] itemNo, int[] adjustedQuantity)
         {
             try
             {

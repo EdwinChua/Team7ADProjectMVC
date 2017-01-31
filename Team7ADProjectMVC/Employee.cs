@@ -34,7 +34,6 @@ namespace Team7ADProjectMVC
         public string Email { get; set; }
         public Nullable<int> DepartmentId { get; set; }
         public Nullable<int> RoleId { get; set; }
-        public Nullable<int> PermissionId { get; set; }
         public string PhNo { get; set; }
         public string Token { get; set; }
     
@@ -51,7 +50,6 @@ namespace Team7ADProjectMVC
         public virtual Department Department { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Department> Departments1 { get; set; }
-        public virtual Permission Permission { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

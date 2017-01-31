@@ -8,24 +8,26 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.DelegateRoleService;
+using Team7ADProjectMVC.Models.ChangeRepresentativeService;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 
 using PagedList;
-namespace Team7ADProjectMVC.TestControllers
+namespace Team7ADProjectMVC.Controllers
 {
 
 
     public class HeadController : Controller
     {
-        
+
         private IRequisitionService reqsvc;
         public static int count = 0;
         private IDelegateRoleService depsvc;
+        private IChangeRepresentativeService chrepsvc;
         private ProjectEntities db = new ProjectEntities();
 
 
 
-        Employee user ;
+        Employee user;
         int? depIdofLoginUser;
         int? depHeadId;
 
@@ -34,14 +36,13 @@ namespace Team7ADProjectMVC.TestControllers
         {
             reqsvc = new RequisitionService();
             depsvc = new DelegateRoleService();
-         
-
+            chrepsvc = new ChangeRepresentativeService();
         }
 
         // GET: Head
         public ActionResult Index()
         {
-            
+
             return View();
         }
         public ActionResult Approve()
@@ -52,17 +53,17 @@ namespace Team7ADProjectMVC.TestControllers
         {
             return View();
         }
-//----------------------------View/Approve/Reject Requisition Part----------------------------------------start here
+        //----------------------------View/Approve/Reject Requisition Part----------------------------------------start here
         public ActionResult ListAllEmployees(string currentFilter, string searchString, int? page)
         {
 
             user = (Employee)Session["user"];
-            depIdofLoginUser =user.DepartmentId;
-            depHeadId =user.EmployeeId;
+            depIdofLoginUser = user.DepartmentId;
+            depHeadId = user.EmployeeId;
 
 
             var requisitions = reqsvc.GetAllRequisition(depIdofLoginUser);
-            
+
 
             if (searchString != null)
 
@@ -77,13 +78,13 @@ namespace Team7ADProjectMVC.TestControllers
             ViewBag.CurrentFilter = searchString;
 
             int pageSize = 3;
-            int pageNumber = (page ?? 1);           
+            int pageNumber = (page ?? 1);
 
             if (!String.IsNullOrEmpty(searchString))
             {
 
                 var q = db.Requisitions.Where(s => (s.Employee.EmployeeName.Contains(searchString)
-                                       || s.OrderedDate.ToString().Contains(searchString)) );                                      
+                                       || s.OrderedDate.ToString().Contains(searchString)));
                 requisitions = q.ToList();
             }
 
@@ -92,8 +93,8 @@ namespace Team7ADProjectMVC.TestControllers
             requisitions.RemoveAll(x => x.DepartmentId != userName.DepartmentId);
             requisitions.RemoveAll(x => x.RequisitionStatus != "Pending Approval");
             ViewBag.req = requisitions.ToList();
-          
-            return View("ListAllEmployees", requisitions.ToPagedList(pageNumber, pageSize)); 
+
+            return View("ListAllEmployees", requisitions.ToPagedList(pageNumber, pageSize));
 
 
         }
@@ -113,7 +114,7 @@ namespace Team7ADProjectMVC.TestControllers
 
             return View("Approve", r);
         }
-       
+
         public ActionResult MarkAsCollected(int? rid, string textcomments, string status)
         {
             user = (Employee)Session["user"];
@@ -125,13 +126,13 @@ namespace Team7ADProjectMVC.TestControllers
             if (textcomments == null || textcomments.Length < 1)
             {
                 textcomments = "N/A";
-               
+
             }
             if (status.Equals("Approve"))
             {
-                    reqsvc.UpdateApproveStatus(r, textcomments);
-                    return RedirectToAction("ListAllEmployees");
-               
+                reqsvc.UpdateApproveStatus(r, textcomments);
+                return RedirectToAction("ListAllEmployees");
+
             }
             else
             {
@@ -151,30 +152,30 @@ namespace Team7ADProjectMVC.TestControllers
             depIdofLoginUser = user.DepartmentId;
             depHeadId = user.EmployeeId;
 
-            Delegate delegatedEmployee= depsvc.getDelegatedEmployee(depIdofLoginUser);
+            Delegate delegatedEmployee = depsvc.getDelegatedEmployee(depIdofLoginUser);
 
             if (delegatedEmployee == null)
             {
-                string[] startdate =DateTime.Today.ToString().Split(' ');
-                string[] enddate =DateTime.Today.ToString().Split(' ');
+                string[] startdate = DateTime.Today.ToString().Split(' ');
+                string[] enddate = DateTime.Today.ToString().Split(' ');
                 string[] sd = startdate[0].Split('/');
                 string[] ed = enddate[0].Split('/');
 
-                ViewBag.autoStartdate = sd[1] + "/" + sd[0] + "/" + sd[2];            
+                ViewBag.autoStartdate = sd[1] + "/" + sd[0] + "/" + sd[2];
                 ViewBag.autoEnddate = ed[1] + "/" + ed[0] + "/" + ed[2];
                 ViewBag.empList = depsvc.GetAllEmployeebyDepId(depIdofLoginUser);
 
                 return View("DelegateRole");
 
-            }    
-                return RedirectToAction("fill");          
+            }
+            return RedirectToAction("fill");
 
         }
 
 
-        public ActionResult ManageDelegation(int? empId, string status, string startDate, string endDate, int? DelegateId )
+        public ActionResult ManageDelegation(int? empId, string status, string startDate, string endDate, int? DelegateId)
 
-        { 
+        {
             user = (Employee)Session["user"];
             depIdofLoginUser = user.DepartmentId;
             depHeadId = user.EmployeeId;
@@ -182,11 +183,11 @@ namespace Team7ADProjectMVC.TestControllers
             Employee emp = depsvc.FindById(empId);
             Delegate d = depsvc.FinddelegaterecordById(DelegateId);
 
-        
+
             if (status.Equals("Delegate"))
             {
 
-              
+
                 if (startDate.Equals("") && !(endDate.Equals("")))
                 {
                     String[] e = endDate.Split('/');
@@ -216,12 +217,12 @@ namespace Team7ADProjectMVC.TestControllers
 
                     return RedirectToAction("fill");
                 }
-            
+
             }
- //update-----------------------------------------------------------------------------------------------------------------------  
+            //update-----------------------------------------------------------------------------------------------------------------------  
             else if (status.Equals("Update"))
             {
-               if(startDate.Equals("") && !(endDate.Equals("")))
+                if (startDate.Equals("") && !(endDate.Equals("")))
                 {
                     String[] e = endDate.Split('/');
                     DateTime edate = new DateTime(Int32.Parse(e[2]), Int32.Parse(e[1]), Int32.Parse(e[0]));
@@ -231,10 +232,10 @@ namespace Team7ADProjectMVC.TestControllers
 
                     return RedirectToAction("show");
                 }
-               else if(endDate.Equals("") && !(startDate.Equals("")))
+                else if (endDate.Equals("") && !(startDate.Equals("")))
                 {
                     String[] s = startDate.Split('/');
-                    DateTime sdate = new DateTime(Int32.Parse(s[2]), Int32.Parse(s[1]), Int32.Parse(s[0]));                    
+                    DateTime sdate = new DateTime(Int32.Parse(s[2]), Int32.Parse(s[1]), Int32.Parse(s[0]));
                     ViewBag.e1 = d.EndDate;
 
                     depsvc.updateDelegate(emp, d, sdate, ViewBag.e1, depHeadId);
@@ -261,16 +262,16 @@ namespace Team7ADProjectMVC.TestControllers
                     return RedirectToAction("show");
                 }
             }
- //terminate-----------------------------------------------------------------------------------------------------------
-                   depsvc.TerminateDelegate(emp, d);
-                  return RedirectToAction("show");
+            //terminate-----------------------------------------------------------------------------------------------------------
+            depsvc.TerminateDelegate(emp, d);
+            return RedirectToAction("show");
 
         }
 
         public ActionResult fill()
         {
 
-            
+
             user = (Employee)Session["user"];
             depIdofLoginUser = user.DepartmentId;
             depHeadId = user.EmployeeId;
@@ -281,10 +282,10 @@ namespace Team7ADProjectMVC.TestControllers
             string[] startdate = d.StartDate.ToString().Split(' ');
             string[] enddate = d.EndDate.ToString().Split(' ');
             string[] sd = startdate[0].Split('/');
-            string[] ed = enddate[0].Split('/');         
-            
+            string[] ed = enddate[0].Split('/');
+
             ViewBag.s1 = sd[1] + "/" + sd[0] + "/" + sd[2];
-            ViewBag.s2= d.StartDate;
+            ViewBag.s2 = d.StartDate;
             ViewBag.e1 = ed[1] + "/" + ed[0] + "/" + ed[2];
             ViewBag.e2 = d.EndDate;
 
@@ -295,14 +296,37 @@ namespace Team7ADProjectMVC.TestControllers
         }
 
 
-        //public ActionResult ManageTerminate(int? empId, string status, string startDate, string endDate)
-        //{
-        //    user = (Employee)Session["user"];
-        //    depIdofLoginUser = user.DepartmentId;
-        //    depHeadId = user.EmployeeId;
-        //    return View("DelegateRole");
-        //}
+
         //----------------------------Delegation Part----------------------------------end here
 
+        public ActionResult ChangeRepresentive()
+        {
+
+            user = (Employee)Session["user"];
+            depIdofLoginUser = user.DepartmentId;
+            depHeadId = user.EmployeeId;
+
+
+
+            Employee currentRep = chrepsvc.GetCurrentRep(depIdofLoginUser);
+            ViewBag.currentRep = currentRep;
+            var emplist = chrepsvc.GetAllEmployee(depIdofLoginUser, currentRep.EmployeeId);
+            ViewBag.employeeList = emplist.ToList();
+            return View("ChangeDepartmentRepresentative", emplist);
+
+        }
+        public ActionResult ManageCangeRep(int? empId)
+
+        {
+            user = (Employee)Session["user"];
+            depIdofLoginUser = user.DepartmentId;
+            depHeadId = user.EmployeeId;
+
+            Employee currentRep = chrepsvc.GetCurrentRep(depIdofLoginUser);
+            Employee newRep = chrepsvc.GetEmpbyId(empId);//find new rep
+            chrepsvc.ChangeRep(currentRep, newRep);
+            return RedirectToAction("ListAllEmployees");
+
+        }
     }
 }

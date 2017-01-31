@@ -997,7 +997,9 @@
     <Content Include="Service.svc" />
     <Content Include="Views\Adjustments\EditorTemplates\Adjustment.cshtml" />
     <Content Include="Views\Adjustments\EditorTemplates\AdjustmentDetail.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adjustment.cs">
@@ -1157,13 +1159,13 @@
     <Compile Include="Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="StockCard.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Supplier.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="TestControllers\EmployeesController.cs" />
     <Compile Include="TestControllers\FCMController.cs" />
     <Compile Include="TestControllers\HeadController.cs" />

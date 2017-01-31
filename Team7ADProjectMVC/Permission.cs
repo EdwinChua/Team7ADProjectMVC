@@ -27,6 +27,14 @@ namespace Team7ADProjectMVC
         public Nullable<bool> MakeRequisition { get; set; }
         public Nullable<bool> DelegateRole { get; set; }
         public Nullable<bool> ViewCollectionDetails { get; set; }
+        public Nullable<bool> ConfirmDisbursement { get; set; }
+        public Nullable<bool> Disbursement { get; set; }
+        public Nullable<bool> MakeAdjustment { get; set; }
+        public Nullable<bool> ApproveAdjustment { get; set; }
+        public Nullable<bool> InventoryManagement { get; set; }
+        public Nullable<bool> ViewReports { get; set; }
+        public Nullable<bool> MakePurchaseOrder { get; set; }
+        public Nullable<bool> ApprovePurchaseOrder { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }

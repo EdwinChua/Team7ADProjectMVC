@@ -182,6 +182,14 @@
           <Property Name="MakeRequisition" Type="bit" />
           <Property Name="DelegateRole" Type="bit" />
           <Property Name="ViewCollectionDetails" Type="bit" />
+          <Property Name="ConfirmDisbursement" Type="bit" />
+          <Property Name="Disbursement" Type="bit" />
+          <Property Name="MakeAdjustment" Type="bit" />
+          <Property Name="ApproveAdjustment" Type="bit" />
+          <Property Name="InventoryManagement" Type="bit" />
+          <Property Name="ViewReports" Type="bit" />
+          <Property Name="MakePurchaseOrder" Type="bit" />
+          <Property Name="ApprovePurchaseOrder" Type="bit" />
         </EntityType>
         <EntityType Name="PurchaseDetail">
           <Key>
@@ -271,6 +279,15 @@ warning 6002: The table/view 'Project.dbo.disbAnalysis' does not have a primary 
           <Property Name="CategoryName" Type="varchar" MaxLength="100" />
           <Property Name="DeliveryDate" Type="date" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Project.dbo.PurchaseAnalysis' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="PurchaseAnalysis">
+          <Property Name="SupplierName" Type="varchar" MaxLength="100" />
+          <Property Name="AuthorizedDate" Type="date" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="StockCard">
@@ -1116,6 +1133,14 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="MakeRequisition" Type="Boolean" />
           <Property Name="DelegateRole" Type="Boolean" />
           <Property Name="ViewCollectionDetails" Type="Boolean" />
+          <Property Name="ConfirmDisbursement" Type="Boolean" />
+          <Property Name="Disbursement" Type="Boolean" />
+          <Property Name="MakeAdjustment" Type="Boolean" />
+          <Property Name="ApproveAdjustment" Type="Boolean" />
+          <Property Name="InventoryManagement" Type="Boolean" />
+          <Property Name="ViewReports" Type="Boolean" />
+          <Property Name="MakePurchaseOrder" Type="Boolean" />
+          <Property Name="ApprovePurchaseOrder" Type="Boolean" />
           <NavigationProperty Name="Employees" Relationship="Self.PermissionId" FromRole="Permission" ToRole="Employee" />
         </EntityType>
         <EntityType Name="PurchaseDetail">
@@ -2020,6 +2045,14 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
                 <ScalarProperty Name="MakeRequisition" ColumnName="MakeRequisition" />
                 <ScalarProperty Name="DelegateRole" ColumnName="DelegateRole" />
                 <ScalarProperty Name="ViewCollectionDetails" ColumnName="ViewCollectionDetails" />
+                <ScalarProperty Name="ConfirmDisbursement" ColumnName="ConfirmDisbursement" />
+                <ScalarProperty Name="Disbursement" ColumnName="Disbursement" />
+                <ScalarProperty Name="MakeAdjustment" ColumnName="MakeAdjustment" />
+                <ScalarProperty Name="ApproveAdjustment" ColumnName="ApproveAdjustment" />
+                <ScalarProperty Name="InventoryManagement" ColumnName="InventoryManagement" />
+                <ScalarProperty Name="ViewReports" ColumnName="ViewReports" />
+                <ScalarProperty Name="MakePurchaseOrder" ColumnName="MakePurchaseOrder" />
+                <ScalarProperty Name="ApprovePurchaseOrder" ColumnName="ApprovePurchaseOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

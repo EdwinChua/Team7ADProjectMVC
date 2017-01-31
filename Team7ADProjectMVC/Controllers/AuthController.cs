@@ -4,12 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Team7ADProjectMVC.Models.DelegateRoleService;
 
 namespace Team7ADProjectMVC.Controllers
 {
     public class AuthController : Controller
     {
         ProjectEntities db = new ProjectEntities();
+        IDelegateRoleService delSvc = new DelegateRoleService();
         // GET: Auth
         public ActionResult Index()
         {
@@ -17,8 +19,21 @@ namespace Team7ADProjectMVC.Controllers
             {
                 int userId = Int32.Parse(User.Identity.Name);
                 Employee e= db.Employees.Find(userId);
-                Session["user"] = e;
+                if(e.RoleId!=6&& e.RoleId != 2)
+                {
+                    Delegate approvedRecord=delSvc.getDelegatedEmployee(e.DepartmentId);
+                    if (approvedRecord != null)
+                    {
+                        if (e.EmployeeId == approvedRecord.EmployeeId)
+                        {
+                            e.Role.ApproveRequisition = true;
+                            e.Role.ChangeCollectionPoint = true;
+                            e.Role.MakeRequisition = false;
+                        }
+                    }
+                }
 
+                Session["user"] = e;
                 switch (e.Role.Name)
                 {
                     case "Store Clerk":

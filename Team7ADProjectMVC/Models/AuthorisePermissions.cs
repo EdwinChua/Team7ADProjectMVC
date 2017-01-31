@@ -15,7 +15,7 @@ namespace Team7ADProjectMVC.Models
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             //User isn't logged in
-            filterContext.Result = new RedirectResult("notallowed");
+            filterContext.Result = new RedirectResult("NotAuthorised.html");
         }
 
         //Core authentication, called before each action

@@ -60,7 +60,7 @@
 
                         @if (Page.Employee != null)
                         {
-                            <li><a href="#"><span class="glyphicon glyphicon-log-out"></span>@Page.Employee.EmployeeName</a></li>
+                            <li><a href="/Auth/Logout"><span class="glyphicon glyphicon-log-out"></span>@Page.Employee.EmployeeName</a></li>
                         }
                         else
                         {
@@ -82,7 +82,6 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul id="nav" class="nav nav-sidebar">
-                    STORE
                     @if (Page.Employee.Role.Disbursement)
                     {
                         <li id="menu3"><a href="/Store/ViewRequisitions">Requisitions & Retrievals</a></li>
@@ -98,13 +97,13 @@
                         <li id="menu2"><a href="/Store/Inventory">View Inventory</a></li>
                         <li id="menu6"><a href="/Store/SupplierList">Supplier List</a></li>
                     }
-                    @if (Page.Employee.Role.ViewReports)
-                    {
-                        <li id="menu7"><a href="/Rpt">Generate Reports</a></li>
-                    }
                     @if (Page.Employee.Role.ViewRequisition)
                     {
-                        <li id="menu1"><a href="/Head/ListAllEmployees">View Requisition</a></li>
+                        <li id="menu2"><a href="/Department/Index">View Requisition</a></li>
+                    }
+                    @if (Page.Employee.Role.ApproveRequisition)
+                    {
+                        <li id="menu1"><a href="/Head/ListAllEmployees">Approve Requisition</a></li>
                     }
                     @if (Page.Employee.Role.MakeRequisition)
                     {
@@ -114,24 +113,29 @@
                     {                       
                         <li id="menu2"><a href="/Representative/Edit">Change Collection</a></li>
                     }
+                    @if (Page.Employee.Role.ConfirmDisbursement)
+                    {
+                        <li id="menu1"><a href="/Representative/ViewDisbursements">Confirm Disbursement</a></li>
+                    }
+                    @if (Page.Employee.Role.DelegateRole)
+                    {
+                        <li id="menu2"><a href="/Head/show">Manage Delegation</a></li>
+                    }
+                    @if (Page.Employee.Role.ViewReports)
+                    {
+                        <li id="menu7"><a href="/Rpt">Generate Reports</a></li>
+                    }
+                    @if (Page.Employee.Role.ChangeRepresentative)
+                    {
+                        <li id="menu7">Change Representative(ComingSoon)</li>
+                    }
+                    @if (Page.Employee.Role.MakeAdjustment|| Page.Employee.Role.ApproveAdjustment)
+                    {
+                        <li id="menu7">Adjustments(ComingSoon)</li>
+                    }
 
-                    <li id="menu1"><a href="/Representative/ViewDisbursements">Disbursements</a></li>
-
-                    <li id="menu1"><a href="/Store/Index">Main Menu</a></li>                   
+                    <li id="menu1"><a href="/Store/Index">To Check: Main Menu</a></li>                   
                     
-                    <li id="menu5"><a href="/Store/InventoryAdjustment">Later.Inventory Adjustment</a></li>
-                    
-                    <li id="menu7"><a href="/Store/GenerateReports">Later.Generate Reports</a></li>
-                    
-                    
-       
-                    HEAD
-                    
-                    <li id="menu2"><a href="/Head/show">Manage Delegation</a></li>
-                    DEPARTMENT
-                    <li id="menu1"><a href="/Department/Index">Main Menu</a></li>
-                    
-                    REP
                     
                     
                 </ul>

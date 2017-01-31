@@ -950,6 +950,7 @@
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="NotAuthorised.html" />
     <Content Include="Login.aspx" />
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

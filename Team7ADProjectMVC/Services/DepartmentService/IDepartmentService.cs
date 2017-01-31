@@ -22,6 +22,6 @@ namespace Team7ADProjectMVC.Services.DepartmentService
 
         string FinditemByName(string descibe);
 
-        void UpdateRequi(Requisition requisition, Requisition req, int idd, int eid, int deid);
+        void UpdateRequi(Requisition requisition, Requisition req, int idd, int eid, int? deid);
     }
 }

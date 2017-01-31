@@ -45,7 +45,6 @@ namespace Team7ADProjectMVC
             String beforesplit = "";
             String aftersplit = "";
             Char delimiter = ' ';
-
          foreach(Requisition rr in reqList)
          {
              wcfRequisitionList rl = new wcfRequisitionList();
@@ -92,7 +91,6 @@ namespace Team7ADProjectMVC
                     orderby x.Status
                     select x;
             var list = r.ToList();
-
             List<DisbursementDetail> tempList = new List<DisbursementDetail>();
             foreach (var item in list)
             {
@@ -144,7 +142,6 @@ namespace Team7ADProjectMVC
             String beforesplit = "";
             String aftersplit = "";
             Char delimiter = ' ';
-
             foreach (Requisition req in aList)
             {
                 wcfApproveRequisitions cd = new wcfApproveRequisitions();
@@ -152,7 +149,8 @@ namespace Team7ADProjectMVC
                 beforesplit = req.OrderedDate.ToString();
                 String[] substrings = beforesplit.Split(delimiter);
                 aftersplit = substrings[0];
-                cd.ReqDate = aftersplit ;   
+                cd.ReqDate = aftersplit ; 
+              
                 cd.ReqID = req.RequisitionId.ToString();
                 approvalList.Add(cd);
             }
@@ -192,7 +190,7 @@ namespace Team7ADProjectMVC
             String s;
             foreach (DisbursementList d in collectionLocation)
             {
-               s = d.Department.CollectionPoint.PlaceName +" "+ d.Department.CollectionPoint.CollectTime;
+                s = d.Department.CollectionPoint.PlaceName +" "+ d.Department.CollectionPoint.CollectTime;
                sl.Add(s);
             }
             return sl;
@@ -202,15 +200,14 @@ namespace Team7ADProjectMVC
         {
             List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
             var disburse = from d in db.DisbursementLists
-                           where d.Status != "Completed"
-                           && d.Status != "Pending Approval"
-                           && d.Status != "Rejected"
+                           where d.Status.Equals("Processing")
+                           //where d.Status != "Completed"
+                           
                            orderby d.DeliveryDate ascending
                            select d;
             String beforesplit = "";
             String aftersplit = "";
             Char delimiter = ' ';
-
             foreach (DisbursementList d in disburse)
             {
                 wcfDisbursementList dl = new wcfDisbursementList();
@@ -307,7 +304,6 @@ namespace Team7ADProjectMVC
                 {
                     st = "Collected";
                 }
-
                 rl.Status = st;
                 retrialList.Add(rl);
             }
@@ -329,6 +325,7 @@ namespace Team7ADProjectMVC
             return rt;
         }
 
+
         public string makePermissionstring(String s)
         {
             if(s.Equals("True"))
@@ -340,7 +337,6 @@ namespace Team7ADProjectMVC
                 return "0";
             }
         }
-
         public wcflogin getlogin(String userid , String password, String token)
         {
             wcflogin dDetail = new wcflogin();
@@ -400,13 +396,13 @@ namespace Team7ADProjectMVC
             int dId1 = Convert.ToInt32(c.DisbQty);
             int math;
             
-            DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
+             DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
 
-            math = dId1-(int)dd.DeliveredQuantity;              
-            dd.DeliveredQuantity = dId1;
-            dd.Remark = c.Remarks;
-            db.SaveChanges();
-            invService.UpdateInventoryQuantity(dd.ItemNo, math);
+             math = dId1-(int)dd.DeliveredQuantity;              
+             dd.DeliveredQuantity = dId1;
+             dd.Remark = c.Remarks;
+             db.SaveChanges();
+             invService.UpdateInventoryQuantity(dd.ItemNo, math);
         }
 
         public string approveReq(String reqId)
@@ -417,6 +413,7 @@ namespace Team7ADProjectMVC
                 Requisition r = db.Requisitions.Where(p => p.RequisitionId == rId).First();
                 r.RequisitionStatus = "Approved";
                 r.ApprovedDate = DateTime.Today;
+                fcm.NewRequisitonMade(reqId);
                 db.SaveChanges();
                 result = "True";
             }
@@ -455,7 +452,6 @@ namespace Team7ADProjectMVC
             String beforesplit = "";
             String aftersplit = "";
             Char delimiter = ' ';
-
             foreach (Requisition req in reqList)
             {
                 wcfStoreRequisitions rl = new wcfStoreRequisitions();
@@ -474,7 +470,6 @@ namespace Team7ADProjectMVC
             }
                 return storeReq;
         }
-
         public String wcfBtnReqList()
         {
             RetrievalList rList = invService.GetRetrievalList();
@@ -503,6 +498,7 @@ namespace Team7ADProjectMVC
            
         }
 
+
         public String wcfClearListBtnOK()
         {
             try
@@ -515,7 +511,6 @@ namespace Team7ADProjectMVC
                 return "false";
             }
         }
-
         public String wcfAcceptCollection(String DisListId)
         {
             try
@@ -538,16 +533,19 @@ namespace Team7ADProjectMVC
 
             DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
             int deptit= (int)disb.DepartmentId;
-            string deptName = disb.Department.DepartmentName; 
-            
+            string deptName = disb.Department.DepartmentName;
+
+            String name =disb.Department.CollectionPoint.PlaceName;
             List<String> myData = new List<string>();
             myData.Add("ReceiveRequisition");
-            myData.Add("Stationary Store");
-            myData.Add("4");
-            myData.Add("09:30:00");
+            myData.Add(name);
+            myData.Add(DisbListId);
+            myData.Add(disb.Department.CollectionPoint.CollectTime.ToString());
 
-            fcm.PushNotificationForRep("Accept Delivery", "Delivery for: " + deptName, myData,deptit);
+            fcm.PushNotificationForRep("Accept Delivery", "Please Confirm Delivery", myData,deptit);
 
+
+              
                 return "true";
             }
             catch (Exception e)
@@ -556,10 +554,12 @@ namespace Team7ADProjectMVC
             }
         }
 
+
         public String wcfLogout(String userID)
-        {  
+        {
             try
             {
+
                 int Uid = Convert.ToInt32(userID);
                 Employee emp = db.Employees.Where(W => W.EmployeeId == Uid).First();
                 emp.Token = null;
@@ -589,7 +589,10 @@ namespace Team7ADProjectMVC
                     
                 }
                 db.SaveChanges();
+
+              
             }
+
         }
 
         public void DeleteOldNotifications (int notID)
@@ -600,5 +603,6 @@ namespace Team7ADProjectMVC
 
             db.Notifications.Remove(report);
         }
+
     }
 }

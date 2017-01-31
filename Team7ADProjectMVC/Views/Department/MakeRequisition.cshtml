@@ -1,7 +1,9 @@
 ﻿@model Team7ADProjectMVC.Requisition
 @{
     Page.Title = "Make Requisition";
-    Layout = "~/Views/Shared/_LayoutD.cshtml";
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
 
 }
 
@@ -24,9 +26,10 @@
                             <div class="page-header">
 
 
-                                Department:  @Html.DisplayFor(model => model.Employee.Department.DepartmentName)
+                                Department:  @currentEmployee.Department.DepartmentName
+                               
 
-                                Employee Name:  @Html.DisplayFor(model => model.Employee.EmployeeName)
+                                Employee Name:  @currentEmployee.EmployeeName
 
 
                                 <div>
@@ -851,7 +854,7 @@ $(document).ready(function(){
 
       var value = $('input[type = number]').val();
 
-      alert("please choose a quantity" + value);
+      //alert("please choose a quantity" + value);
       if (value==null||value==0) {
           alert("please choose a quantity" + value);
           return false;
@@ -951,6 +954,35 @@ function addNewRow() {
 }
 
     ///////////////////////////////////////////////////////////
+
+$(document).on('change', function () {
+//$("input[type=number]").bind('keyup mouseup', function () {
+    // handle event
+
+    alert('changed');
+    TableData = new Array();
+
+    $('#taskTable tr').each(function (row, tr) {
+        TableData[row] = {
+            "Item": $(tr).find('td:eq(0)').text()
+            , "Quantity": $(tr).find('td:eq(1)').children().val()
+
+        }
+    });
+    TableData.shift();
+    TableData = $.toJSON(TableData);
+    TableData = $.makeArray(TableData);
+                });
+                //var n = document.getElementById("numPeople"),
+               
+
+
+
+                //n.addEventListener("change", function (e) {
+                //    r.innerHTML += "change event triggered <br/>";
+                //}, false);
+
+    /////////////////////////////////////////////////////////////
 
 $(document).on('click', 'button.removebutton', function () {
 

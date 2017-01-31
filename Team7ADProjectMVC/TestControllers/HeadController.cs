@@ -81,12 +81,16 @@ namespace Team7ADProjectMVC.TestControllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                var q = db.Requisitions.Where(s => s.Employee.EmployeeName.Contains(searchString)
-                                       || s.OrderedDate.ToString().Contains(searchString));                                      
+
+                var q = db.Requisitions.Where(s => (s.Employee.EmployeeName.Contains(searchString)
+                                       || s.OrderedDate.ToString().Contains(searchString)) );                                      
                 requisitions = q.ToList();
             }
-            
 
+            Employee userName = (Employee)Session["User"];
+
+            requisitions.RemoveAll(x => x.DepartmentId != userName.DepartmentId);
+            requisitions.RemoveAll(x => x.RequisitionStatus != "Pending Approval");
             ViewBag.req = requisitions.ToList();
           
             return View("ListAllEmployees", requisitions.ToPagedList(pageNumber, pageSize)); 
@@ -117,28 +121,23 @@ namespace Team7ADProjectMVC.TestControllers
             depHeadId = user.EmployeeId;
 
             Requisition r = reqsvc.FindById(rid);
+
+            if (textcomments == null || textcomments.Length < 1)
+            {
+                textcomments = "N/A";
+               
+            }
             if (status.Equals("Approve"))
             {
-                if(textcomments == null || textcomments.Length < 1)
-                {
-                    textcomments = "N/A";
                     reqsvc.UpdateApproveStatus(r, textcomments);
-                }
-
-                reqsvc.UpdateApproveStatus(r, textcomments);
+                    return RedirectToAction("ListAllEmployees");
+               
+            }
+            else
+            {
+                reqsvc.UpdateRejectStatus(r, textcomments);
                 return RedirectToAction("ListAllEmployees");
             }
-
-
-            if (textcomments.Equals("Enter comment here..."))
-            {
-                textcomments = "No comment";
-                reqsvc.UpdateRejectStatus(r, textcomments);
-            }
-            reqsvc.UpdateRejectStatus(r, textcomments);
-
-            return RedirectToAction("ListAllEmployees");
-
 
         }
 
@@ -271,8 +270,7 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult fill()
         {
 
-
-
+            
             user = (Employee)Session["user"];
             depIdofLoginUser = user.DepartmentId;
             depHeadId = user.EmployeeId;

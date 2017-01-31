@@ -594,5 +594,17 @@ namespace Team7ADProjectMVC.Models
 
             }
         }
+
+        public void UpdateCollectionInfo(RetrievalList rList, int collectedQuantity, string itemNo)
+        {
+            foreach (var item in rList.itemsToRetrieve)
+            {
+                if (item.itemNo.Equals(itemNo))
+                {
+                    item.collectedQuantity = collectedQuantity;
+                    item.collectionStatus = true;
+                }
+            }
+        }
     }
 }

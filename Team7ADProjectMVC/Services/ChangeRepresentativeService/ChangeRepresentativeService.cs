@@ -31,7 +31,7 @@ namespace Team7ADProjectMVC.Models.ChangeRepresentativeService
         public List<Employee> GetAllEmployee(int? depId, int currentRepId)
         {
             var queryBydepId = from t in db.Employees
-                               where t.DepartmentId == depId && t.EmployeeId != currentRepId && (t.EmployeeId != 2 || (t.EmployeeId != 6 && t.EmployeeId != 5))
+                               where t.DepartmentId == depId && t.EmployeeId != currentRepId && (t.RoleId != 2 && (t.RoleId != 6 && t.RoleId != 5))
                                orderby t.EmployeeId ascending
                                select t;
             return (queryBydepId.ToList());

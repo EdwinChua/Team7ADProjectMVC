@@ -44,24 +44,36 @@ CREATE TABLE [Role]
 (
 RoleId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 Name VARCHAR(100),
-[Description] VARCHAR(250)
+[Description] VARCHAR(250),
+ApproveRequisition BIT,
+ChangeCollectionPoint BIT,
+ViewRequisition BIT,
+MakeRequisition BIT,
+DelegateRole BIT,
+ViewCollectionDetails BIT,
+ConfirmDisbursement BIT,
+ChangeRepresentative BIT,
+Disbursement BIT,                 --storefunctions 9th permission onwards
+MakeAdjustment BIT,
+ApproveAdjustment BIT,
+InventoryManagement BIT,
+ViewReports BIT,
+MakePurchaseOrder BIT,
+ApprovePurchaseOrder BIT 
 )
 
 INSERT INTO [Role]
-VALUES ('Store Clerk', 'Store Clerk')
-INSERT INTO [Role]
-VALUES ('Department Head', 'Head')
-INSERT INTO [Role]
-VALUES ('Employee', 'Normal Staff')
-INSERT INTO [Role]
-VALUES ('Representative', 'Department Representative')
-INSERT INTO [Role]
-VALUES ('Store Supervisor', 'Store sup')
-INSERT INTO [Role]
-VALUES ('Store Manager', 'Store Manager')
+VALUES 
+('Store Clerk', 'Store Clerk',0,0,1,1,0,0,0,0,1,1,0,1,1,1,0),
+('Department Head', 'Head',1,1,1,0,1,0,0,1,0,0,0,0,0,0,0),
+('Employee', 'Normal Staff',0,0,1,1,0,0,0,0,0,0,0,0,0,0,0),
+('Representative', 'Department Representative',0,1,1,1,0,1,1,0,0,0,0,0,0,0,0),
+('Store Supervisor', 'Store sup',0,0,1,1,0,0,0,0,1,0,1,1,1,1,0),
+('Store Manager', 'Store Manager',1,1,1,0,1,0,0,1,0,0,1,0,1,0,1),
+('Store Representative','Store rep',0,1,1,1,0,0,1,0,1,1,0,1,1,1,0);
 
 ----------------------------------------- Permission -----------------------------------------
-CREATE TABLE Permission
+/*CREATE TABLE Permission
 (
 PermissionId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 ApproveRequisition BIT,
@@ -89,7 +101,7 @@ VALUES
 (0,0,1,1,0,0,0,1,0,1,1,1,1,0), -- STORE SUPERVISOR
 (1,1,1,0,0,0,0,0,0,0,0,0,0,0), -- DELEGATE (Set manually)
 (1,1,1,0,1,0,0,0,0,1,0,1,0,1), -- STORE MANAGER
-(0,1,1,1,0,0,1,1,1,0,1,1,1,0); -- Store Rep(Only Clerks can be rep)
+(0,1,1,1,0,0,1,1,1,0,1,1,1,0); -- Store Rep(Only Clerks can be rep)*/
 
 ----------------------------------------- Collection Points -----------------------------------------
 CREATE TABLE CollectionPoints
@@ -108,11 +120,9 @@ EmployeeName VARCHAR(100),
 Email VARCHAR(50),
 DepartmentId INT,
 RoleId INT,
-PermissionId INT,
 PhNo VARCHAR(50),
 Token VARCHAR(200)
-CONSTRAINT RoleId FOREIGN KEY(RoleId) REFERENCES [Role](RoleId),
-CONSTRAINT PermissionId FOREIGN KEY(PermissionId) REFERENCES Permission(PermissionId)
+CONSTRAINT RoleId FOREIGN KEY(RoleId) REFERENCES [Role](RoleId)
 )
 
 ----------------------------------------- Department -----------------------------------------
@@ -160,53 +170,29 @@ INSERT INTO Department
 VALUES ('STO','STORE','Jenny Wong Mei Lin','890 6656','891 9912',10,1,1)
 
 ----------------------------------------- Add Employee -----------------------------------------
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Jenny Wong Mei Lin','youngmountain7@gmail.com',6,1,8,'11111111') -- Store Rep
-
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Feng Teng','youngmountain7@gmail.com',6,1,1,'22222222') -- store 6 store clerk 2
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Min Yew','youngmountain7@gmail.com',6,1,1,'33333333')
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Lao Lao','youngmountain7@gmail.com',6,1,1,'44444444')
-
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mrs Pamela Kow','youngmountain7@gmail.com',1,2,2,'55555555') -- english 1 Head 3
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Dr. Soh Kian Wee','youngmountain7@gmail.com',2,2,2,'66666666')-- com science 2 
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('MrMohd. Azman','youngmountain7@gmail.com',3,2,2,'77777777') -- commerce 3
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mrs Low Kway Boo','youngmountain7@gmail.com',4,2,2,'88888888') -- registrar 4
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr. Peter Tan Ah Meng','youngmountain7@gmail.com',5,2,2,'99999999') -- zoo 5
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr. Sander','youngmountain7@gmail.com',6,2,2,'10101010') -- store 6
-
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Prof Ezra Pound','youngmountain7@gmail.com',1,4,4,'11111111') -- eng 1 rep 4
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr. Ar Phyan Kwee','youngmountain7@gmail.com',2,4,4,'12121212') -- com science 2
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Dr. Chia Leow Bee','youngmountain7@gmail.com',3,4,4,'13131313') -- commerce 3
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Prof Tan','youngmountain7@gmail.com',4,4,4,'14141414') -- registrar 4
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr. Tay Shout Pann','youngmountain7@gmail.com',5,4,4,'15151515') -- zoo 5
-
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr Alan','youngmountain7@gmail.com',1,3,3,'55555555') -- english 1 employee 3
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr Bob','youngmountain7@gmail.com',2,3,3,'66666666')-- com science 2 
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr Charlie','youngmountain7@gmail.com',3,3,3,'77777777') -- commerce 3
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Ms Delia','youngmountain7@gmail.com',4,3,3,'88888888') -- registrar 4
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Ms Eve','youngmountain7@gmail.com',5,3,3,'99999999') -- zoo 5
-
-INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Mr Joe Alan','youngmountain7@gmail.com',1,5,5,'55555555') -- english 1 supervisor 5
+INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId,PhNo)
+VALUES 
+('Jenny Wong Mei Lin','youngmountain7@gmail.com',6,7,'11111111'), -- Store Rep
+('Feng Teng','youngmountain7@gmail.com',6,1,'22222222'), -- store 6 store clerk 2
+('Min Yew','youngmountain7@gmail.com',6,1,'33333333'),
+('Lao Lao','youngmountain7@gmail.com',6,1,'44444444'),
+('Mrs Pamela Kow','youngmountain7@gmail.com',1,2,'55555555'), -- english 1 Head 3
+('Dr. Soh Kian Wee','youngmountain7@gmail.com',2,2,'66666666'),-- com science 2 
+('MrMohd. Azman','youngmountain7@gmail.com',3,2,'77777777'), -- commerce 3
+('Mrs Low Kway Boo','youngmountain7@gmail.com',4,2,'88888888'), -- registrar 4
+('Mr. Peter Tan Ah Meng','youngmountain7@gmail.com',5,2,'99999999'), -- zoo 5
+('Mr. Sander','youngmountain7@gmail.com',6,2,'10101010'), -- store 6
+('Prof Ezra Pound','youngmountain7@gmail.com',1,4,'11111111'), -- eng 1 rep 4
+('Mr. Ar Phyan Kwee','youngmountain7@gmail.com',2,4,'12121212'), -- com science 2
+('Dr. Chia Leow Bee','youngmountain7@gmail.com',3,4,'13131313'), -- commerce 3
+('Prof Tan','youngmountain7@gmail.com',4,4,'14141414'), -- registrar 4
+('Mr. Tay Shout Pann','youngmountain7@gmail.com',5,4,'15151515'), -- zoo 5
+('Mr Alan','youngmountain7@gmail.com',1,3,'55555555'), -- english 1 employee 3
+('Mr Bob','youngmountain7@gmail.com',2,3,'66666666'), -- com science 2 
+('Mr Charlie','youngmountain7@gmail.com',3,3,'77777777'), -- commerce 3
+('Ms Delia','youngmountain7@gmail.com',4,3,'88888888'), -- registrar 4
+('Ms Eve','youngmountain7@gmail.com',5,3,'99999999'), -- zoo 5
+('Mr Joe Alan','youngmountain7@gmail.com',1,5,'55555555'); -- english 1 supervisor 5
 
 
 

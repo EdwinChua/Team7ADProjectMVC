@@ -17,7 +17,7 @@ namespace Team7ADProjectMVC.TestControllers
         // GET: Employees
         public ActionResult Index()
         {
-            var employees = db.Employees.Include(e => e.Department).Include(e => e.Permission).Include(e => e.Role);
+            var employees = db.Employees.Include(e => e.Department).Include(e => e.Role);
             return View(employees.ToList());
         }
 
@@ -40,7 +40,6 @@ namespace Team7ADProjectMVC.TestControllers
         public ActionResult Create()
         {
             ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentCode");
-            ViewBag.PermissionId = new SelectList(db.Permissions, "PermissionId", "PermissionId");
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name");
             return View();
         }
@@ -60,7 +59,6 @@ namespace Team7ADProjectMVC.TestControllers
             }
 
             ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentCode", employee.DepartmentId);
-            ViewBag.PermissionId = new SelectList(db.Permissions, "PermissionId", "PermissionId", employee.PermissionId);
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", employee.RoleId);
             return View(employee);
         }
@@ -78,7 +76,6 @@ namespace Team7ADProjectMVC.TestControllers
                 return HttpNotFound();
             }
             ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentCode", employee.DepartmentId);
-            ViewBag.PermissionId = new SelectList(db.Permissions, "PermissionId", "PermissionId", employee.PermissionId);
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", employee.RoleId);
             return View(employee);
         }
@@ -97,7 +94,6 @@ namespace Team7ADProjectMVC.TestControllers
                 return RedirectToAction("Index");
             }
             ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentCode", employee.DepartmentId);
-            ViewBag.PermissionId = new SelectList(db.Permissions, "PermissionId", "PermissionId", employee.PermissionId);
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", employee.RoleId);
             return View(employee);
         }

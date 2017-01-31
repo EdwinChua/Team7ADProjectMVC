@@ -87,10 +87,10 @@
             }
             else
             {*@
-            <button type="submit" class="btn btn-success btn-lg" name="status" value="Update">
+            <button type="submit" class="btn btn-success btn-lg" name="status" value="Update" id="updatebutton">
                 Update
             </button>
-            <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate">
+            <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate" id="terminatebutton">
                 Terminate
             </button>
                 @*}*@
@@ -174,8 +174,19 @@ else
                 $('#e1').text($('#datetimepicker2').data("DateTimePicker").date().format('DD/MM/YYYY').toString());
             });
 
+    });
+        $(document).ready(function () {
+            $('#updatebutton').click(function () {
+                alert("Successfully Updated");
+            })
+        });
+        $(document).ready(function () {
+            $('#terminatebutton').click(function () {
+                alert("Successfully Terminated");
+            })
         });
     </script>
+   
 }
 
 

@@ -229,7 +229,7 @@ namespace Team7ADProjectMVC.TestControllers
 
                     depsvc.updateDelegate(emp, d, ViewBag.s1, edate, depHeadId);
 
-                    return RedirectToAction("ListAllEmployees");
+                    return RedirectToAction("show");
                 }
                else if(endDate.Equals("") && !(startDate.Equals("")))
                 {
@@ -239,7 +239,7 @@ namespace Team7ADProjectMVC.TestControllers
 
                     depsvc.updateDelegate(emp, d, sdate, ViewBag.e1, depHeadId);
 
-                    return RedirectToAction("ListAllEmployees");
+                    return RedirectToAction("show");
                 }
                 else if (endDate.Equals("") && (startDate.Equals("")))
                 {
@@ -248,7 +248,7 @@ namespace Team7ADProjectMVC.TestControllers
 
                     depsvc.updateDelegate(emp, d, ViewBag.s1, ViewBag.e1, depHeadId);
 
-                    return RedirectToAction("ListAllEmployees");
+                    return RedirectToAction("show");
                 }
                 else
                 {
@@ -258,12 +258,12 @@ namespace Team7ADProjectMVC.TestControllers
                     DateTime edate = new DateTime(Int32.Parse(e[2]), Int32.Parse(e[1]), Int32.Parse(e[0]));
                     depsvc.updateDelegate(emp, d, sdate, edate, depHeadId);
 
-                    return RedirectToAction("ListAllEmployees");
+                    return RedirectToAction("show");
                 }
             }
  //terminate-----------------------------------------------------------------------------------------------------------
                    depsvc.TerminateDelegate(emp, d);
-                  return RedirectToAction("ListAllEmployees");
+                  return RedirectToAction("show");
 
         }
 
@@ -295,13 +295,13 @@ namespace Team7ADProjectMVC.TestControllers
         }
 
 
-        public ActionResult ManageTerminate(int? empId, string status, string startDate, string endDate)
-        {
-            user = (Employee)Session["user"];
-            depIdofLoginUser = user.DepartmentId;
-            depHeadId = user.EmployeeId;
-            return View("DelegateRole");
-        }
+        //public ActionResult ManageTerminate(int? empId, string status, string startDate, string endDate)
+        //{
+        //    user = (Employee)Session["user"];
+        //    depIdofLoginUser = user.DepartmentId;
+        //    depHeadId = user.EmployeeId;
+        //    return View("DelegateRole");
+        //}
         //----------------------------Delegation Part----------------------------------end here
 
     }

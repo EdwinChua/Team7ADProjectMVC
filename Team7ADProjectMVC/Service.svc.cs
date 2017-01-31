@@ -31,7 +31,6 @@ namespace Team7ADProjectMVC
             Console.Write(l.ToString());
             return l;
         }
-         
 
         public List<wcfRequisitionList> RequisitionList(string deptid)
         {
@@ -190,7 +189,7 @@ namespace Team7ADProjectMVC
             String s;
             foreach (DisbursementList d in collectionLocation)
             {
-                s = d.Department.CollectionPoint.PlaceName +" "+ d.Department.CollectionPoint.CollectTime;
+               s = d.Department.CollectionPoint.PlaceName +" "+ d.Department.CollectionPoint.CollectTime;
                sl.Add(s);
             }
             return sl;
@@ -200,11 +199,10 @@ namespace Team7ADProjectMVC
         {
             List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
             var disburse = from d in db.DisbursementLists
-                           where d.Status.Equals("Processing")
-                           //where d.Status != "Completed"
-                           
+                           where d.Status.Equals("Processing")                         
                            orderby d.DeliveryDate ascending
                            select d;
+
             String beforesplit = "";
             String aftersplit = "";
             Char delimiter = ' ';
@@ -363,7 +361,6 @@ namespace Team7ADProjectMVC
                 else
                 {
                     dDetail.Authenticate = "false";
-
                 }
                 return dDetail;
             }
@@ -384,7 +381,8 @@ namespace Team7ADProjectMVC
                 db.SaveChanges();
                 fcm.CollectionPointChanged(dId);
                 return collectionptid;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return "false";
             }
@@ -396,13 +394,13 @@ namespace Team7ADProjectMVC
             int dId1 = Convert.ToInt32(c.DisbQty);
             int math;
             
-             DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
+            DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
 
-             math = dId1-(int)dd.DeliveredQuantity;              
-             dd.DeliveredQuantity = dId1;
-             dd.Remark = c.Remarks;
-             db.SaveChanges();
-             invService.UpdateInventoryQuantity(dd.ItemNo, math);
+            math = dId1-(int)dd.DeliveredQuantity;              
+            dd.DeliveredQuantity = dId1;
+            dd.Remark = c.Remarks;
+            db.SaveChanges();
+            invService.UpdateInventoryQuantity(dd.ItemNo, math);
         }
 
         public string approveReq(String reqId)
@@ -470,6 +468,7 @@ namespace Team7ADProjectMVC
             }
                 return storeReq;
         }
+
         public String wcfBtnReqList()
         {
             RetrievalList rList = invService.GetRetrievalList();
@@ -495,9 +494,7 @@ namespace Team7ADProjectMVC
             {
                 return "false";
             }
-           
         }
-
 
         public String wcfClearListBtnOK()
         {
@@ -544,8 +541,6 @@ namespace Team7ADProjectMVC
 
             fcm.PushNotificationForRep("Accept Delivery", "Please Confirm Delivery", myData,deptit);
 
-
-              
                 return "true";
             }
             catch (Exception e)
@@ -554,12 +549,10 @@ namespace Team7ADProjectMVC
             }
         }
 
-
         public String wcfLogout(String userID)
         {
             try
             {
-
                 int Uid = Convert.ToInt32(userID);
                 Employee emp = db.Employees.Where(W => W.EmployeeId == Uid).First();
                 emp.Token = null;
@@ -574,7 +567,7 @@ namespace Team7ADProjectMVC
 
         public void PushOldNotification(int  EmpID,String token)
         {
-            var notification= from n in db.Notifications  where n.EmployeeId == EmpID    select n;
+            var notification= from n in db.Notifications where n.EmployeeId == EmpID select n;
             if (notification != null)
             {
                 foreach (Notification n in notification)
@@ -585,14 +578,10 @@ namespace Team7ADProjectMVC
                     myData.Add(n.PageId);
                     myData.Add(n.ExtraDetail);
                     fcm.PushFCMNotification(n.Title, n.Body, token, myData);
-                    DeleteOldNotifications(n.NotificationId);
-                    
+                    DeleteOldNotifications(n.NotificationId);                    
                 }
                 db.SaveChanges();
-
-              
             }
-
         }
 
         public void DeleteOldNotifications (int notID)
@@ -603,6 +592,5 @@ namespace Team7ADProjectMVC
 
             db.Notifications.Remove(report);
         }
-
     }
 }

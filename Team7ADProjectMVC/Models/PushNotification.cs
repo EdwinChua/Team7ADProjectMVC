@@ -218,7 +218,6 @@ namespace Team7ADProjectMVC.Models
             PushFCMNotification("New Requisition", "From: " + empName, token, myData);
         }
 
-
         public void PushNotificationForRep(string title, string message, List<String> myData,int deptID)
         {
             List<Employee> Allemp = db.Employees.Where(p => p.RoleId == 4).Where(p => p.DepartmentId == deptID).ToList();

@@ -557,7 +557,7 @@ namespace Team7ADProjectMVC
         }
 
         public String wcfLogout(String userID)
-        {
+        {  
             try
             {
                 int Uid = Convert.ToInt32(userID);

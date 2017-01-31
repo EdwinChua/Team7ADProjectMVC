@@ -38,8 +38,8 @@ namespace Team7ADProjectMVC.TestControllers
             List<string> depts = Request.Form["Departments"].Split(',').ToList<string>();
             String categorySelected = Request.Form["Categories"];
             DataView data = rptSvc.GetDataForDisbAnalysis(yrMthList, depts, categorySelected);
-            Session["data"] = data;
-            Session["path"] = "~/Reports/CrystalReport1.rpt";
+            Session["rptData"] = data;
+            Session["rptPath"] = "~/Reports/CrystalReport1.rpt";
             return Redirect("ReportViewer.aspx");
 
         }
@@ -61,8 +61,8 @@ namespace Team7ADProjectMVC.TestControllers
             List<YrMth> yrMthList = rptSvc.GetListOfYrMthFromUI(Request.Form["Year"], Request.Form["Month"], Request.Form["Year2"], Request.Form["Month2"], Request.Form["Year3"], Request.Form["Month3"]);
 
             DataView data = rptSvc.GetDataForSupplierAnalysis(yrMthList, categorySelected);
-            Session["data"] = data;
-            Session["path"] = "~/Reports/CrystalReport2.rpt";
+            Session["rptData"] = data;
+            Session["rptPath"] = "~/Reports/CrystalReport2.rpt";
             return Redirect("/ReportViewer.aspx");
 
         }

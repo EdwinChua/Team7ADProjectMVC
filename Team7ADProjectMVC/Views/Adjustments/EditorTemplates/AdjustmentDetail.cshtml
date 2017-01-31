@@ -1,11 +1,8 @@
-﻿@model Team7ADProjectMVC.Models.adjustmentdetail
+﻿@model Team7ADProjectMVC.AdjustmentDetail
+
 
 <div class="editorRow">
-
-
     <div class="form-inline">
-
-
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <table class="table">
             <tbody>
@@ -13,8 +10,7 @@
                     <td>
                         <div class="form-group">
                             <div class="col-md-3">
-
-                                @Html.DropDownList("Item", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.DropDownList("ItemNo", null, "-- Please Select --", htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ItemNo, "", new { @class = "text-danger" })
                             </div>
                         </div>

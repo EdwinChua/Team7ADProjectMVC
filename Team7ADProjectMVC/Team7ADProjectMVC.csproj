@@ -1170,7 +1170,7 @@
     <Compile Include="TestControllers\FCMController.cs" />
     <Compile Include="Controllers\HeadController.cs" />
     <Compile Include="TestControllers\InventoriesController.cs" />
-    <Compile Include="TestControllers\RepresentativeController.cs" />
+    <Compile Include="Controllers\RepresentativeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\RptController.cs" />
     <Compile Include="TestControllers\SuppliersController.cs" />
@@ -1195,7 +1195,7 @@
     <Content Include="Views\Department\Head\Approve.cshtml" />
     <Content Include="Views\Department\Head\DelegateRole.cshtml" />
     <Content Include="Views\Department\Head\ListAllEmployees.cshtml" />
-    <Content Include="Views\Department\Head\Representative\ChangeCollectionPoint.cshtml" />
+    <Content Include="Views\Department\Representative\ChangeCollectionPoint.cshtml" />
     <Content Include="Views\Department\DepartmentEmployee.cshtml" />
     <Content Include="Views\Department\MakeRequisition.cshtml" />
     <Content Include="Views\Department\ViewRequisitionDetails.cshtml" />
@@ -1224,13 +1224,13 @@
     <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewDisbursement.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewRequisitions.cshtml" />
-    <Content Include="Views\Department\Head\Representative\Viewdisbursements.cshtml" />
+    <Content Include="Views\Department\Representative\Viewdisbursements.cshtml" />
     <Content Include="Views\DisbursementDetails\Create.cshtml" />
     <Content Include="Views\DisbursementDetails\Delete.cshtml" />
     <Content Include="Views\DisbursementDetails\Details.cshtml" />
     <Content Include="Views\DisbursementDetails\Edit.cshtml" />
     <Content Include="Views\DisbursementDetails\Index.cshtml" />
-    <Content Include="Views\Department\Head\Representative\ViewDisbursementDetail.cshtml" />
+    <Content Include="Views\Department\Representative\ViewDisbursementDetail.cshtml" />
     <Content Include="Views\Rpt\ItemDeptRpt.cshtml" />
     <Content Include="Views\Rpt\ItemSupplierRpt.cshtml" />
     <Content Include="Views\Rpt\ReportOptions.cshtml" />
@@ -1247,8 +1247,6 @@
     <Content Include="Views\Adjustments\AddDetail.cshtml" />
     <Content Include="Views\Department\Head\Terminate.cshtml" />
     <Content Include="Views\Store\Disbursement\ReallocateDisbursements.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\_Adjustment.cshtml" />
-    <Content Include="Views\Adjustments\EditorTemplates\_AdjustmentDetail.cshtml" />
     <Content Include="Views\Suppliers\Create.cshtml" />
     <Content Include="Views\Suppliers\Delete.cshtml" />
     <Content Include="Views\Suppliers\Details.cshtml" />

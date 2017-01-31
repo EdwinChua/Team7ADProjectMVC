@@ -11,13 +11,17 @@ namespace Team7ADProjectMVC
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class AdjustmentDetail
     {
         public int AdjustmentDetailId { get; set; }
         public Nullable<int> AdjustmentId { get; set; }
+        [Required]
         public string ItemNo { get; set; }
+        [Required]
         public Nullable<int> Quantity { get; set; }
+        [Required]
         public string Reason { get; set; }
     
         public virtual Adjustment Adjustment { get; set; }

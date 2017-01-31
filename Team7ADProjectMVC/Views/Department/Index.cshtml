@@ -107,6 +107,7 @@
                     <thead>
                     <thead>
                         <tr>
+
                             @*new{id = item.MovieID}*@
                             @*<th>
                     <a href="@Url.Action("Dispatch", "Calls", new { userName = Session["UserName"], new { sortOrder ="Name" })">Department</a>
@@ -163,7 +164,7 @@
 
                         @foreach (var item in @ViewBag.Cat)
                         {
-                                    <tr class="clickable-row" data-href="ViewRequisitionDetails/@item.RequisitionId">
+                                    <tr @*class="clickable-row" data-href="ViewRequisitionDetails/@item.RequisitionId"*@>
 
                                         @*<td>
                                             @item.Employee.Department.DepartmentName

@@ -156,12 +156,17 @@
 
 
 
-                            <button id="cl" type="submit" class="btn btn-default">
+                            <span><button id="cl" type="submit" class="btn btn-default">
                                 Submit
-                            </button>
-                            <div>
-                                @Html.ActionLink("Back to List", "Index")
-                            </div>
+                            </button></span>
+
+                            <span>
+                                <button type="button" class="btn btn-default" id="addNew">
+                                    @*Add items to requistion list>>>*@
+                                    @Html.ActionLink("Back to List>>>", "/Index")
+                                </button>
+                                @*@Html.ActionLink("Back to List", "Index")*@
+                            </span>
                         </div>
                         
 
@@ -856,7 +861,7 @@ $(document).ready(function(){
 
       //alert("please choose a quantity" + value);
       if (value==null||value==0) {
-          alert("please choose a quantity" + value);
+          alert("please choose a quantity");
           return false;
       } else {
           addNewRow();
@@ -959,7 +964,7 @@ $(document).on('change', function () {
 //$("input[type=number]").bind('keyup mouseup', function () {
     // handle event
 
-    alert('changed');
+    //alert('changed');
     TableData = new Array();
 
     $('#taskTable tr').each(function (row, tr) {
@@ -987,7 +992,7 @@ $(document).on('change', function () {
 $(document).on('click', 'button.removebutton', function () {
 
     var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
-    alert('you clicked on button #' + clickedBtnID);
+    //alert('you clicked on button #' + clickedBtnID);
     //var item = { id: 45, option: option, qty: qty };
     //data.items.pop(this.Object);
 
@@ -995,9 +1000,9 @@ $(document).on('click', 'button.removebutton', function () {
 
 
     parseInt("10")
-    alert('you clicked on button #' +  $(this).toArray());
+    //alert('you clicked on button #' +  $(this).toArray());
     var index =parseInt(clickedBtnID)-1 ;
-    alert(index);
+    //alert(index);
     //});
 
 
@@ -1097,7 +1102,8 @@ function submitForm() {
         $('#cl').click(function (e) {
 
             if (TableData.length == 0) {
-                alert("you have not choose any of item"+TableData.length);
+                //alert("you have not chosen any item "+TableData.length);
+                alert("you have not chosen any item ");
                 return false;
             }
             var jsonObject = {

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Team7ADProjectMVC.Employee>
+@{
+    Layout = "~/_Layout1.cshtml";
+    Employee currentEmployee = (Employee)Session["User"];
+    Page.Employee = currentEmployee;
+}
+
+
+<table class="table">
+   
+        <tr>
+            <th>
+               Department:@currentEmployee.Department.DepartmentName
+            </th>
+            </tr>
+        <tr>
+            <th>
+                Current Representative:@ViewBag.currentRep.EmployeeName
+            </th>
+            </tr>
+
+    
+        
+
+           
+     
+   
+</table>
+<form role="form" action="/Head/ManageCangeRep">
+    <div class="row">
+        <div class="col-lg-4 col-xs-12">
+            Choose Employee:
+            <div>
+                <select id="empPicker" name="empId"
+                        class="selectpicker show-tick form-control"
+                        data-live-search="true" title="Select employee to delegate" required>
+                    @foreach (var emp in ViewBag.employeeList)
+                    {
+                        <option value="@emp.EmployeeId">@emp.EmployeeName </option>
+                    }
+
+                </select>
+
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <div>
+        <button type="submit" class="btn btn-success btn-lg" name="changeRep" value="changeRep" id="changeRepButton">
+            Change
+        </button>
+    </div>
+</form>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#changeRepButton').click(function () {
+            alert("Successfully Changed");
+        })
+    });
+
+    </script>
+
+
+

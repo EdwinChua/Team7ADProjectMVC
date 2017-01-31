@@ -31,16 +31,12 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
         public List<Employee> GetAllEmployeebyDepId(int? depId)
         {
             var queryBydepId= from t in db.Employees
-                                where t.DepartmentId == depId
-                                orderby t.EmployeeId ascending
+                                where t.DepartmentId == depId  && (t.RoleId != 2 && (t.RoleId != 6 && t.RoleId != 5))
+                              orderby t.EmployeeId ascending
                                 select t;
             return (queryBydepId.ToList());
         }
         
-        public Permission FindPermissionRecordById(Employee e)
-        {
-            return db.Permissions.Find(e.PermissionId);
-        }
         public Employee FindById(int? empid)
         {
             return db.Employees.Find(empid);
@@ -48,7 +44,6 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
         public  void manageDelegate(Employee e, DateTime startDate, DateTime endDate,int? depHeadId)
         {
               
-            Permission p = new Permission();
             Delegate d = new Delegate();
 
             d.EmployeeId = e.EmployeeId;            
@@ -60,7 +55,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
             db.Delegates.Add(d);
             db.SaveChanges();
             
-            e.RoleId = 3;
+          
 
             db.Entry(e).State = EntityState.Modified;
             db.SaveChanges();

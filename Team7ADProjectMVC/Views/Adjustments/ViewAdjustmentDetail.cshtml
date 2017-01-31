@@ -24,6 +24,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Reason)
         </th>
+        @Html.DisplayNameFor(model => model.Adjustment.AdjustmentId)
 
     </tr>
 
@@ -56,19 +57,19 @@
 <h3>Total Sum: $ @ViewBag.sum.</h3>
 <hr />
 
-@if (currentEmployee.Role.Name == "Store Supervisor")
+@if (currentEmployee.Role.Name == "Store Supervisor"&& @ViewBag.status== "Pending Approval")
 {
     if (@ViewBag.sum < 250)
     {
         <div class="row">
-            <form class="form" role="form" action="/Store/Search" method="Get">
+            <form class="form" role="form" action="/Adjustments/SupervisorApprove/@ViewBag.Adjid" method="post">
                 <div class="col-md-offset-3 col-md-3">
                     <div class="form-actions no-color">
                         <input type="submit" value="Approved" class="btn btn-default" />
                     </div>
                 </div>
             </form>
-            <form class="form" role="form" action="/Store/Search" method="Get">
+            <form class="form" role="form" action="/Adjustments/SupervisorRejecct/@ViewBag.Adjid" method="post" >
                 <div class="col-md-3">
                     <div class="form-actions no-color">
                         <input type="submit" value="Rejected" class="btn btn-default" />
@@ -79,14 +80,34 @@
     }
     else
     {
-        <form class="form" role="form" action="/Store/Search" method="Get">
+        <form class="form" role="form" action="/Adjustments/SupervisorPending/@ViewBag.Adjid" method="post">
             <div class="form-actions no-color">
                 <input type="submit" value="Pending to Manager" class="btn btn-default" />
             </div>
         </form>
     }
-
+}
+@if (currentEmployee.Role.Name == "Store Manager"&&@ViewBag.status == "Pending Final Approval")
+{
+    <div class="row">
+        <form class="form" role="form" action="/Adjustments/ManagerApprove/@ViewBag.Adjid" method="post" >
+            <div class="col-md-offset-3 col-md-3">
+                <div class="form-actions no-color">
+                    <input type="submit" value="Approved" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+        <form class="form" role="form" action="/Adjustments/ManagerRejecct/@ViewBag.Adjid" method="post">
+            <div class="col-md-3">
+                <div class="form-actions no-color">
+                    <input type="submit" value="Rejected" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+    </div>
 }
 
 
-@Html.ActionLink("Back to List", "Index")
+
+
+@Html.ActionLink("Back to List", "ViewAdjustment")

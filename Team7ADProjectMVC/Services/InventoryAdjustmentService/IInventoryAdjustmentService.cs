@@ -15,5 +15,12 @@ namespace Team7ADProjectMVC.Models.InventoryAdjustmentService
         Adjustment findAdjustmentByID(int? id);
         List<AdjustmentDetail> findDetailByAdjustment(Adjustment adjust);
         string findAdjustmentStatus(int? id);
+        decimal? caculateTotal(List<AdjustmentDetail> adjdtlist);
+        void ApproveBySupervisor(int? empid, int? adjid);
+        void RejecteBySupervisor(int? empid, int? adjid);
+        void ApproveByManager(int? empid, int? adjid);
+        void RejectByManager(int? empid, int? adjid);
+        void PendingBySupervisor(int? empid, int? adjid);
+
     }
 }

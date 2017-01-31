@@ -65,7 +65,6 @@ namespace Team7ADProjectMVC.Models
                           {
                               title = title,
                               body = message,
-                              //click_action ="gokul" ,
                           },
                          data = new
                           {
@@ -73,7 +72,6 @@ namespace Team7ADProjectMVC.Models
                               pageHeader = myData[1],
                               id = myData[2],
                               extraDetail = myData[3],
-                              //f4 = myData[4],
                           }
                      };
 
@@ -112,15 +110,12 @@ namespace Team7ADProjectMVC.Models
 
         public void PushFCMNotificationToStoreClerk(string title, string message, List<String> myData)
         {
-
-
             List<Employee> Allemp = db.Employees.Where(p => p.RoleId == 1).ToList();
 
             foreach (Employee e in Allemp)
             {
                 if (e.Token == null)
                 {
-
                     Notification n = new Notification();
                     n.EmployeeId = e.EmployeeId;
                     n.Title = title;
@@ -136,13 +131,8 @@ namespace Team7ADProjectMVC.Models
                 else
                 {
                     PushFCMNotification(title, message, e.Token, myData);
-
                 }
             }
-
-
-
-
         }
 
         public void CheckForStockReorder()
@@ -156,9 +146,10 @@ namespace Team7ADProjectMVC.Models
             myData.Add("StockCard");
             myData.Add("0");
             myData.Add("0");
+
             if (checkForStockReorder != null)
             {
-                PushFCMNotificationToStoreClerk("Low Stock Alert", "Please see here", myData);
+                PushFCMNotificationToStoreClerk("Low Stock Alert", "Please review stock cards.", myData);
             }
         }
 
@@ -175,12 +166,10 @@ namespace Team7ADProjectMVC.Models
             myData.Add("0");
 
             PushFCMNotificationToStoreClerk(deptname + " Collection", "Changed to: " + cpointName, myData);
-
         }
 
         public void RepAcceptRequisition(String DisListID)
         {
-
             int dlid = Convert.ToInt32(DisListID);
             DisbursementList wcfItem = db.DisbursementLists.Where(p => p.DisbursementListId == dlid).First();
             string deptName = wcfItem.Department.DepartmentName;
@@ -190,37 +179,28 @@ namespace Team7ADProjectMVC.Models
             myData.Add(deptName);
             myData.Add("0");
             myData.Add("0");
-           // String title = deptName;
-           // String message = "Accepted Disbursement";
-            //Employee sendingnow = db.Employees.Where(x => x.EmployeeId == retrivedclerk).First();
-            //if (sendingnow.Token == null)
-            //{
+            String title = deptName;
+            String message = "Accepted Disbursement";
+            Employee sendingnow = db.Employees.Where(x => x.EmployeeId == retrivedclerk).First();
 
-            //    Notification n = new Notification();
-            //    n.EmployeeId = sendingnow.EmployeeId;
-            //    n.Title = title;
-            //    n.Body = message;
-            //    n.Intent = myData[0];
-            //    n.PageHeader = myData[1];
-            //    n.PageId = myData[2];
-            //    n.ExtraDetail = myData[3];
-            //    db.Notifications.Add(n);
-            //    db.SaveChanges();
-
-            //}
-            //else
-            //{
-            //    PushFCMNotification(title, message, sendingnow.Token, myData);
-
-            //}
-
-           PushFCMNotificationToStoreClerk(deptName, "Accepted Disbursement", myData);
-
-
-
+            if (sendingnow.Token == null)
+            {
+                Notification n = new Notification();
+                n.EmployeeId = sendingnow.EmployeeId;
+                n.Title = title;
+                n.Body = message;
+                n.Intent = myData[0];
+                n.PageHeader = myData[1];
+                n.PageId = myData[2];
+                n.ExtraDetail = myData[3];
+                db.Notifications.Add(n);
+                db.SaveChanges();
+            }
+            else
+            {
+                PushFCMNotification(title, message, sendingnow.Token, myData);
+            }
         }
-
-
 
         public void NewRequisitonMade(string reqListID)
         {
@@ -251,12 +231,12 @@ namespace Team7ADProjectMVC.Models
             myData.Add("0");
             myData.Add("0");
             String message="From: " + empName;
+
             List<Employee> Allemp = db.Employees.Where(p => p.RoleId == 2).Where(p => p.DepartmentId == deptId).ToList();
             foreach (Employee e in Allemp)
             {
                 if (e.Token == null)
                 {
-
                     Notification n = new Notification();
                     n.EmployeeId = e.EmployeeId;
                     n.Title = title;
@@ -267,17 +247,13 @@ namespace Team7ADProjectMVC.Models
                     n.ExtraDetail = myData[3];
                     db.Notifications.Add(n);
                     db.SaveChanges();
-
                 }
                 else
                 {
                     PushFCMNotification(title, message, e.Token, myData);
-
                 }
-                }
-           
+            }
         }
-
 
         public void PushNotificationForRep(string title, string message, List<String> myData,int deptID)
         {
@@ -286,7 +262,6 @@ namespace Team7ADProjectMVC.Models
             {
                 if (e.Token == null)
                 {
-
                     Notification n = new Notification();
                     n.EmployeeId = e.EmployeeId;
                     n.Title = title;
@@ -297,16 +272,12 @@ namespace Team7ADProjectMVC.Models
                     n.ExtraDetail = myData[3];
                     db.Notifications.Add(n);
                     db.SaveChanges();
-
                 }
                 else
                 {
                     PushFCMNotification(title, message, e.Token, myData);
-
                 }
             }
-
-
         }
     }
 }

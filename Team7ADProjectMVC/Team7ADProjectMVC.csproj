@@ -1170,7 +1170,7 @@
     <Compile Include="TestControllers\InventoriesController.cs" />
     <Compile Include="TestControllers\RepresentativeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
-    <Compile Include="TestControllers\RptController.cs" />
+    <Compile Include="Controllers\RptController.cs" />
     <Compile Include="TestControllers\SuppliersController.cs" />
     <Compile Include="TestControllers\TESTPurchaseOrdersController.cs" />
     <Compile Include="ReportViewer.aspx.cs">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -40,12 +41,23 @@ namespace Team7ADProjectMVC.TestControllers
             //TODO: EDWIN - Create a nice dashboard or delete this
         }
         //Seq Diagram Done + Design Done
-        public ActionResult Inventory() 
+        public ActionResult Inventory(int? page, int? id) 
         {
-            var inventories = inventorySvc.GetAllInventory();
-            var categories = inventorySvc.GetAllCategories();
-            ViewBag.Cat = categories.ToList();
-            return View("ViewInventory",inventories);
+            List<Inventory> inventories;
+            try
+            {
+                inventories = inventorySvc.GetInventoryListByCategory((int)id);
+            }
+            catch (Exception e)
+            {
+                inventories = inventorySvc.GetAllInventory();
+            }
+
+            ViewBag.Cat = inventorySvc.GetAllCategories().ToList();
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            return View("ViewInventory",inventories.ToPagedList(pageNumber,pageSize));
         }
         //Seq Diagram Done  + Design Done
         public ActionResult InventoryItem(String id)
@@ -154,12 +166,14 @@ namespace Team7ADProjectMVC.TestControllers
             return View("UpdateStockCard",inventory);
         }
         //Seq Diagram Done + Design Done
-        public ActionResult Search(int id) 
+        public ActionResult Search(int id, int? page) 
         {
             var inventories = inventorySvc.GetInventoryListByCategory(id);
-            var categories = inventorySvc.GetAllCategories();
-            ViewBag.Cat = categories.ToList();
-            return View("ViewInventory", inventories);
+            ViewBag.Cat = inventorySvc.GetAllCategories().ToList();
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View("ViewInventory", inventories.ToPagedList(pageNumber,pageSize));
         }
 
         //************** DISBURSEMENTS **************

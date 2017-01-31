@@ -1166,7 +1166,7 @@
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="TestControllers\EmployeesController.cs" />
     <Compile Include="TestControllers\FCMController.cs" />
-    <Compile Include="TestControllers\HeadController.cs" />
+    <Compile Include="Controllers\HeadController.cs" />
     <Compile Include="TestControllers\InventoriesController.cs" />
     <Compile Include="TestControllers\RepresentativeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />

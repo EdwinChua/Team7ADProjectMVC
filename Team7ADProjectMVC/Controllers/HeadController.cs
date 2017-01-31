@@ -11,7 +11,7 @@ using Team7ADProjectMVC.Models.DelegateRoleService;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 
 using PagedList;
-namespace Team7ADProjectMVC.TestControllers
+namespace Team7ADProjectMVC.Controllers
 {
 
 

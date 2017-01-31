@@ -22,7 +22,7 @@ namespace Team7ADProjectMVC.Models
             return startingLetter.ToUpper() + ((int)result.itemcount).ToString(fmt);
         }
 
-        public Inventory FindIventoryItemById(string id)
+        public Inventory FindInventoryItemById(string id)
         {
             return db.Inventories.Find(id);
         }

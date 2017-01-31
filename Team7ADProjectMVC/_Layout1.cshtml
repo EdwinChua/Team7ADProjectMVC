@@ -83,24 +83,57 @@
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul id="nav" class="nav nav-sidebar">
                     STORE
-                    <li id="menu1"><a href="/Store/Index">Main Menu</a></li>
-                    <li id="menu2"><a href="/Store/Inventory">View Inventory</a></li>
-                    <li id="menu3"><a href="/Store/ViewRequisitions">Requisitions & Retrievals</a></li>
-                    <li id="menu4"><a href="/Store/ViewDisbursements">View Disbursements</a></li>
-                    <li id="menu5"><a href="/Store/InventoryAdjustment">Inventory Adjustment</a></li>
-                    <li id="menu6"><a href="/Store/SupplierList">Supplier List</a></li>
-                    <li id="menu7"><a href="/Store/GenerateReports">Generate Reports</a></li>
-                    <li id="menu8"><a href="/StorePO/PurchaseOrderSummary">Purchase Orders</a></li>
-                    <li id="menu9"><a href="/StorePO/ListDeliveries">Deliveries</a></li>
+                    @if (Page.Employee.Permission.Disbursement)
+                    {
+                        <li id="menu3"><a href="/Store/ViewRequisitions">Requisitions & Retrievals</a></li>
+                        <li id="menu4"><a href="/Store/ViewDisbursements">View Disbursements</a></li>
+                    }
+                    @if (Page.Employee.Permission.MakePurchaseOrder|| Page.Employee.Permission.ApprovePurchaseOrder)
+                    {
+                        <li id="menu8"><a href="/StorePO/PurchaseOrderSummary">Purchase Orders</a></li>
+                    }
+                    @if (Page.Employee.Permission.InventoryManagement)
+                    {
+                        <li id="menu9"><a href="/StorePO/ListDeliveries">Deliveries</a></li>
+                        <li id="menu2"><a href="/Store/Inventory">View Inventory</a></li>
+                        <li id="menu6"><a href="/Store/SupplierList">Supplier List</a></li>
+                    }
+                    @if (Page.Employee.Permission.ViewReports)
+                    {
+                        <li id="menu7"><a href="/Rpt">Generate Reports</a></li>
+                    }
+                    @if (Page.Employee.Permission.ViewRequisition)
+                    {
+                        <li id="menu1"><a href="/Head/ListAllEmployees">View Requisition</a></li>
+                    }
+                    @if (Page.Employee.Permission.MakeRequisition)
+                    {
+                        <li id="menu2"><a href="/Department/MakeRequisition">Make Requisition</a></li>
+                    }
+                    @if (Page.Employee.Permission.ChangeCollection)
+                    {                       
+                        <li id="menu2"><a href="/Representative/Edit">Change Collection</a></li>
+                    }
+
+                    <li id="menu1"><a href="/Representative/ViewDisbursements">Disbursements</a></li>
+
+                    <li id="menu1"><a href="/Store/Index">Main Menu</a></li>                   
+                    
+                    <li id="menu5"><a href="/Store/InventoryAdjustment">Later.Inventory Adjustment</a></li>
+                    
+                    <li id="menu7"><a href="/Store/GenerateReports">Later.Generate Reports</a></li>
+                    
+                    
+       
                     HEAD
-                    <li id="menu1"><a href="/Head/ListAllEmployees">View Requisition</a></li>
+                    
                     <li id="menu2"><a href="/Head/show">Manage Delegation</a></li>
                     DEPARTMENT
                     <li id="menu1"><a href="/Department/Index">Main Menu</a></li>
-                    <li id="menu2"><a href="/Department/MakeRequisition">Make Requisition</a></li>
+                    
                     REP
-                    <li id="menu1"><a href="/Representative/ViewDisbursements">Disbursements</a></li>
-                    <li id="menu2"><a href="/Representative/Edit/@Page.Employee.DepartmentId">Change Collection</a></li>
+                    
+                    
                 </ul>
 
             </div>

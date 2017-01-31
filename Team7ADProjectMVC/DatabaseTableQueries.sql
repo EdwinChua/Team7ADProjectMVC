@@ -69,18 +69,27 @@ ChangeCollectionPoint BIT,
 ViewRequisition BIT,
 MakeRequisition BIT,
 DelegateRole BIT,
-ViewCollectionDetails BIT
+ViewCollectionDetails BIT,
+ConfirmDisbursement BIT,
+Disbursement BIT,                 --storefunctions 8th permission onwards
+MakeAdjustment BIT,
+ApproveAdjustment BIT,
+InventoryManagement BIT,
+ViewReports BIT,
+MakePurchaseOrder BIT,
+ApprovePurchaseOrder BIT 
 )
 
 INSERT INTO Permission
 VALUES 
-(0,0,0,0,0,0), -- CLERK
-(1,1,1,0,1,0), -- HEAD
-(0,0,1,1,0,0), -- EMPLOYEE
-(0,1,1,1,0,1), -- REP
-(0,0,0,0,0,0), -- STORE SUPERVISOR
-(1,1,1,0,0,0); -- DELEGATE
-
+(0,0,1,1,0,0,0,1,1,0,1,1,1,0), -- STORE CLERK
+(1,1,1,0,1,0,0,0,0,0,0,0,0,0), -- HEAD
+(0,0,1,1,0,0,0,0,0,0,0,0,0,0), -- EMPLOYEE
+(0,1,1,1,0,1,1,0,0,0,0,0,0,0), -- REP
+(0,0,1,1,0,0,0,1,0,1,1,1,1,0), -- STORE SUPERVISOR
+(1,1,1,0,0,0,0,0,0,0,0,0,0,0), -- DELEGATE (Set manually)
+(1,1,1,0,1,0,0,0,0,1,0,1,0,1), -- STORE MANAGER
+(0,1,1,1,0,0,1,1,1,0,1,1,1,0); -- Store Rep(Only Clerks can be rep)
 
 ----------------------------------------- Collection Points -----------------------------------------
 CREATE TABLE CollectionPoints
@@ -152,7 +161,7 @@ VALUES ('STO','STORE','Jenny Wong Mei Lin','890 6656','891 9912',10,1,1)
 
 ----------------------------------------- Add Employee -----------------------------------------
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
-VALUES ('Jenny Wong Mei Lin','youngmountain7@gmail.com',6,3,3,'11111111') -- registrar
+VALUES ('Jenny Wong Mei Lin','youngmountain7@gmail.com',6,1,8,'11111111') -- Store Rep
 
 INSERT INTO Employee (EmployeeName,Email,DepartmentId, RoleId, PermissionId,PhNo)
 VALUES ('Feng Teng','youngmountain7@gmail.com',6,1,1,'22222222') -- store 6 store clerk 2

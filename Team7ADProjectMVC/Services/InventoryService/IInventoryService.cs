@@ -13,7 +13,7 @@ namespace Team7ADProjectMVC.Models
 
         List<Category> GetAllCategories();
 
-        Inventory FindIventoryItemById(String id);
+        Inventory FindInventoryItemById(String id);
 
         List<Measurement> GetAllMeasurements();
 

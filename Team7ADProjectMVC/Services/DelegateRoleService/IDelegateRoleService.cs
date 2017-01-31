@@ -12,7 +12,6 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
         List<Delegate> getDelegate(); 
         List<Employee> GetAllEmployeebyDepId(int? depId);
         Employee FindById(int? empid);
-        Permission FindPermissionRecordById(Employee e);
         void TerminateDelegate(Employee emp, Delegate d);
         Delegate FinddelegaterecordById(int? count);
         Delegate  getDelegatedEmployee(int? depId);

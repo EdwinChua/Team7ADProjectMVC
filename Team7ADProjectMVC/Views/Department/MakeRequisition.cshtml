@@ -163,7 +163,7 @@
                             <span>
                                 <button type="button" class="btn btn-default" id="addNew">
                                     @*Add items to requistion list>>>*@
-                                    @Html.ActionLink("Back to List>>>", "Index")
+                                    @Html.ActionLink("Back to List>>>", "/Index")
                                 </button>
                                 @*@Html.ActionLink("Back to List", "Index")*@
                             </span>
@@ -1102,7 +1102,8 @@ function submitForm() {
         $('#cl').click(function (e) {
 
             if (TableData.length == 0) {
-                alert("you have not chosen any item "+TableData.length);
+                //alert("you have not chosen any item "+TableData.length);
+                alert("you have not chosen any item ");
                 return false;
             }
             var jsonObject = {

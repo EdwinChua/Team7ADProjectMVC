@@ -950,6 +950,7 @@
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="NotAuthorised.html" />
     <Content Include="Login.aspx" />
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -997,7 +998,9 @@
     <Content Include="Service.svc" />
     <Content Include="Views\Adjustments\EditorTemplates\Adjustment.cshtml" />
     <Content Include="Views\Adjustments\EditorTemplates\AdjustmentDetail.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adjustment.cs">
@@ -1101,9 +1104,6 @@
     <Compile Include="Notification.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Permission.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="PurchaseDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -1134,6 +1134,8 @@
     <Compile Include="Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\ChangeRepresentativeService\ChangeRepresentativeService.cs" />
+    <Compile Include="Services\ChangeRepresentativeService\IChangeRepresentativeService.cs" />
     <Compile Include="Services\DelegateRoleService\DelegateRoleService.cs" />
     <Compile Include="Services\DelegateRoleService\IDelegateRoleService.cs" />
     <Compile Include="Services\DepartmentService\DepartmentService.cs" />
@@ -1157,16 +1159,16 @@
     <Compile Include="Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="StockCard.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Supplier.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="TestControllers\EmployeesController.cs" />
     <Compile Include="TestControllers\FCMController.cs" />
-    <Compile Include="TestControllers\HeadController.cs" />
+    <Compile Include="Controllers\HeadController.cs" />
     <Compile Include="TestControllers\InventoriesController.cs" />
     <Compile Include="TestControllers\RepresentativeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
@@ -1193,7 +1195,7 @@
     <Content Include="Views\Department\Head\Approve.cshtml" />
     <Content Include="Views\Department\Head\DelegateRole.cshtml" />
     <Content Include="Views\Department\Head\ListAllEmployees.cshtml" />
-    <Content Include="Views\Department\Representative\ChangeCollectionPoint.cshtml" />
+    <Content Include="Views\Department\Head\Representative\ChangeCollectionPoint.cshtml" />
     <Content Include="Views\Department\DepartmentEmployee.cshtml" />
     <Content Include="Views\Department\MakeRequisition.cshtml" />
     <Content Include="Views\Department\ViewRequisitionDetails.cshtml" />
@@ -1222,13 +1224,13 @@
     <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewDisbursement.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewRequisitions.cshtml" />
-    <Content Include="Views\Department\Representative\Viewdisbursements.cshtml" />
+    <Content Include="Views\Department\Head\Representative\Viewdisbursements.cshtml" />
     <Content Include="Views\DisbursementDetails\Create.cshtml" />
     <Content Include="Views\DisbursementDetails\Delete.cshtml" />
     <Content Include="Views\DisbursementDetails\Details.cshtml" />
     <Content Include="Views\DisbursementDetails\Edit.cshtml" />
     <Content Include="Views\DisbursementDetails\Index.cshtml" />
-    <Content Include="Views\Department\Representative\ViewDisbursementDetail.cshtml" />
+    <Content Include="Views\Department\Head\Representative\ViewDisbursementDetail.cshtml" />
     <Content Include="Views\Rpt\ItemDeptRpt.cshtml" />
     <Content Include="Views\Rpt\ItemSupplierRpt.cshtml" />
     <Content Include="Views\Rpt\ReportOptions.cshtml" />
@@ -1255,6 +1257,7 @@
     <Content Include="Views\Store\Resupply\PurchaseOrder.cshtml" />
     <Content Include="Views\Store\Resupply\ListDeliveries.cshtml" />
     <Content Include="Views\Adjustments\ViewAdjustmentDetail.cshtml" />
+    <Content Include="Views\Department\Head\ChangeDepartmentRepresentative.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

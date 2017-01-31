@@ -37,10 +37,6 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
             return (queryBydepId.ToList());
         }
         
-        public Permission FindPermissionRecordById(Employee e)
-        {
-            return db.Permissions.Find(e.PermissionId);
-        }
         public Employee FindById(int? empid)
         {
             return db.Employees.Find(empid);
@@ -48,7 +44,6 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
         public  void manageDelegate(Employee e, DateTime startDate, DateTime endDate,int? depHeadId)
         {
               
-            Permission p = new Permission();
             Delegate d = new Delegate();
 
             d.EmployeeId = e.EmployeeId;            

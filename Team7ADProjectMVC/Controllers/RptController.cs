@@ -9,21 +9,23 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.ReportService;
+using Team7ADProjectMVC.Services.DepartmentService;
 
 namespace Team7ADProjectMVC.TestControllers
 {
     public class RptController : Controller
     {
-        private ProjectEntities db = new ProjectEntities();
         private IReportService rptSvc = new ReportService();
+        private IInventoryService invSvc = new InventoryService();
+        private IDepartmentService  deptSvc= new DepartmentService();
         // GET: Rpt
 
         //[AuthorisePermissions(Permission="ChangeCollectionPoint")]
         public ActionResult Index()
         {
-            
-            ViewBag.Departments = db.Departments.ToList();
-            ViewBag.Categories = db.Categories.ToList();
+
+            ViewBag.Departments = deptSvc.ListAllDepartments();
+            ViewBag.Categories = invSvc.GetAllCategories();
             ViewBag.Months = rptSvc.GetMonthValues();
             ViewBag.Years = rptSvc.GetYearValues();
 
@@ -47,7 +49,7 @@ namespace Team7ADProjectMVC.TestControllers
         // GET: Rpt/SupplierItem
         public ActionResult ItemSupplier()
         {
-            ViewBag.Categories = db.Categories.ToList();
+            ViewBag.Categories = invSvc.GetAllCategories();
             ViewBag.Months = rptSvc.GetMonthValues();
             ViewBag.Years = rptSvc.GetYearValues();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -80,10 +81,15 @@ namespace Team7ADProjectMVC.Controllers
             return View("ViewReceiveOrder",delivery);
         }
         // seq diagram done
-        public ActionResult PurchaseOrder(int id)
+        public ActionResult PurchaseOrder(int id, int? page)
         {
             PurchaseOrder purchaseOrder = supplierAndPOSvc.FindPOById(id);
-            return View(purchaseOrder);
+            ViewBag.PurchaseOrder = purchaseOrder;
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            return View(purchaseOrder.PurchaseDetails.ToPagedList(pageNumber, pageSize));
         }
         // seq diagram done
         public ActionResult ApprovePO(int poNumber, string approve)

@@ -178,10 +178,22 @@ namespace Team7ADProjectMVC.TestControllers
 
         //************** DISBURSEMENTS **************
         //Seq Diagram Done
-        public ActionResult ViewDisbursements()
+        public ActionResult ViewDisbursements(int? page, int? id, String status)
         {
+            List<DisbursementList> disbursementList;
+            try
+            {
+                disbursementList = disbursementSvc.GetDisbursementsBySearchCriteria(id, status);
+            }
+            catch (Exception e)
+            {
+                disbursementList = disbursementSvc.GetAllDisbursements();
+            }
+
             ViewBag.Departments = deptSvc.ListAllDepartments();
-            return View(disbursementSvc.GetAllDisbursements());
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(disbursementList.ToPagedList(pageNumber, pageSize));
         }
         //Seq Diagram Done
         public ActionResult ViewDisbursement(int id)

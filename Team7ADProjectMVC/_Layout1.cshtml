@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+
+    var baseurl = string.Format("{0}://{1}{2}",
+                    HttpContext.Current.Request.Url.Scheme,
+                    HttpContext.Current.Request.ServerVariables["HTTP_HOST"],
+                    (HttpContext.Current.Request.ApplicationPath.Equals("/")) ? string.Empty : HttpContext.Current.Request.ApplicationPath
+                    );
+}
+
+<!DOCTYPE html>
 <html>
     <head>
     <title>@Page.Title</title>
@@ -20,21 +29,16 @@
 
 
     <!-- for DatePicker bootstrap-->
-    <script type="text/javascript" src="/scripts/moment.min.js"></script>
-    <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.js"></script>
-    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
-    <!-- include your less or built css files  -->
-    <!--
-    bootstrap-datetimepicker-build.less will pull in "../bootstrap/variables.less" and "bootstrap-datetimepicker.less";
-    or
-    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
-    -->
+    <script type="text/javascript" src="@baseurl/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="@baseurl/scripts/bootstrap-datetimepicker.js"></script>
+    <link rel="stylesheet" href="@baseurl/Content/bootstrap-datetimepicker.css" />
+
     <!-- additional custom styles -->
-    <link rel="stylesheet" href="/resources/mystyle.css">
+    <link rel="stylesheet" href="@baseurl/resources/mystyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="/resources/dashboard.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" media="print" href="/resources/print.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="/resources/screen.css">
+    <link href="@baseurl/resources/dashboard.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" media="print" href="@baseurl/resources/print.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="@baseurl/resources/screen.css">
     
 
 </head>
@@ -84,60 +88,62 @@
                 <ul id="nav" class="nav nav-sidebar">
                     @if (Page.Employee.Role.Disbursement)
                     {
-                        <li id="menu3"><a href="/Store/ViewRequisitions">Requisitions & Retrievals</a></li>
-                        <li id="menu4"><a href="/Store/ViewDisbursements">View Disbursements</a></li>
+                        <li id="menu3"><a href="@baseurl/Store/ViewRequisitions">Requisitions & Retrievals</a></li>
+                        <li id="menu4"><a href="@baseurl/Store/ViewDisbursements">View Disbursements</a></li>
                     }
                     @if (Page.Employee.Role.MakePurchaseOrder|| Page.Employee.Role.ApprovePurchaseOrder)
                     {
-                        <li id="menu8"><a href="/StorePO/PurchaseOrderSummary">Purchase Orders</a></li>
+                        <li id="menu8"><a href="@baseurl/StorePO/PurchaseOrderSummary">Purchase Orders</a></li>
                     }
                     @if (Page.Employee.Role.InventoryManagement)
                     {
-                        <li id="menu9"><a href="/StorePO/ListDeliveries">Deliveries</a></li>
-                        <li id="menu2"><a href="/Store/Inventory">View Inventory</a></li>
-                        <li id="menu6"><a href="/Store/SupplierList">Supplier List</a></li>
+                        <li id="menu9"><a href="@baseurl/StorePO/ListDeliveries">Deliveries</a></li>
+                        <li id="menu2"><a href="@baseurl/Store/Inventory">View Inventory</a></li>
+                        <li id="menu6"><a href="@baseurl/Store/SupplierList">Supplier List</a></li>
                     }
+                    <li><hr /></li>
                     @if (Page.Employee.Role.ViewRequisition)
                     {
-                        <li id="menu2"><a href="/Department/Index">View Requisition</a></li>
+                        <li id="menu2"><a href="@baseurl/Department/Index">View Requisition</a></li>
                     }
                     @if (Page.Employee.Role.ApproveRequisition)
                     {
-                        <li id="menu1"><a href="/Head/ListAllEmployees">Approve Requisition</a></li>
+                        <li id="menu1"><a href="@baseurl/Head/ListAllEmployees">Approve Requisition</a></li>
                     }
                     @if (Page.Employee.Role.MakeRequisition)
                     {
-                        <li id="menu2"><a href="/Department/MakeRequisition">Make Requisition</a></li>
+                        <li id="menu2"><a href="@baseurl/Department/MakeRequisition">Make Requisition</a></li>
                     }
                     @if (Page.Employee.Role.ChangeCollectionPoint)
                     {                       
-                        <li id="menu2"><a href="/Representative/Edit">Change Collection</a></li>
+                        <li id="menu2"><a href="@baseurl/Representative/Edit">Change Collection</a></li>
                     }
                     @if (Page.Employee.Role.ConfirmDisbursement)
                     {
-                        <li id="menu1"><a href="/Representative/ViewDisbursements">Confirm Disbursement</a></li>
+                        <li id="menu1"><a href="@baseurl/Representative/ViewDisbursements">Confirm Disbursement</a></li>
                     }
                     @if (Page.Employee.Role.DelegateRole)
                     {
-                        <li id="menu2"><a href="/Head/show">Manage Delegation</a></li>
+                        <li id="menu2"><a href="@baseurl/Head/show">Manage Delegation</a></li>
                     }
+                    <li><hr /></li>
                     @if (Page.Employee.Role.ViewReports)
                     {
-                        <li id="menu7"><a href="/Rpt">Generate Reports</a></li>
+                        <li id="menu7"><a href="@baseurl/Rpt">Generate Reports</a></li>
                     }
                     @if (Page.Employee.Role.ChangeRepresentative)
                     {
-                        <li id="menu7"><a href="/Head/ChangeRepresentive">Change Department Representative</a></li>
+                        <li id="menu7"><a href="@baseurl/Head/ChangeRepresentive">Change Department Representative</a></li>
                     }
                     @if (Page.Employee.Role.MakeAdjustment)
                     {
-                        <li id="menu7"><a href="/Adjustments/Create">Create Adjustment</a></li>
+                        <li id="menu7"><a href="@baseurl/Adjustments/Create">Create Adjustment</a></li>
                     }
                     @if (Page.Employee.Role.ApproveAdjustment)
                     {
-                        <li id="menu7"><a href="/Adjustments/ViewAdjustment">Approve Adjustment</a></li>
+                        <li id="menu7"><a href="@baseurl/Adjustments/ViewAdjustment">Approve Adjustment</a></li>
                     }
-                    <li id="menu1"><a href="/Store/Index">To Check: Main Menu</a></li>                   
+                    <li id="menu1"><a href="@baseurl/Store/Index">To Check: Main Menu</a></li>                   
                     
                     
                     
@@ -169,10 +175,6 @@
             </div>
         </div>
     </div>
-
-    <footer class="container-fluid text-center noprint">
-        <p>Footer</p>
-    </footer>
 
     <script>
         $(function () {

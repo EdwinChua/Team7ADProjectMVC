@@ -1103,9 +1103,6 @@
     <Compile Include="Notification.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Permission.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="PurchaseDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

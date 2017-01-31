@@ -24,7 +24,7 @@ namespace Team7ADProjectMVC.Models
             if (httpContext.Session["User"] != null)
             {
                 Employee e = (Employee)httpContext.Session["User"];
-                bool authorised = (bool)e.Permission.GetType().GetProperty(this.Permission).GetValue(e.Permission);
+                bool authorised = (bool)e.Role.GetType().GetProperty(this.Permission).GetValue(e.Role);
                 return authorised;
             }
             return false;

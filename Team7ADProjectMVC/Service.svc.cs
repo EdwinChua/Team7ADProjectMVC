@@ -351,7 +351,7 @@ namespace Team7ADProjectMVC
                     dDetail.Userid = userid;
                     dDetail.EmpName = emp.EmployeeName;
                     dDetail.Authenticate = "true";
-                    Permission makePerm = db.Permissions.Where(x => x.PermissionId == emp.PermissionId).First();
+                    Role makePerm = db.Roles.Where(x => x.RoleId == emp.RoleId).First();
                     dDetail.Permission = makePermissionstring(makePerm.ViewRequisition.ToString()) + "-" + makePermissionstring(makePerm.ApproveRequisition.ToString()) + "-" +
                         makePermissionstring(makePerm.ChangeCollectionPoint.ToString()) + "-" + makePermissionstring(makePerm.ViewCollectionDetails.ToString());
                     emp.Token = token;

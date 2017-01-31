@@ -120,7 +120,6 @@
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="DepartmentId" Type="int" />
           <Property Name="RoleId" Type="int" />
-          <Property Name="PermissionId" Type="int" />
           <Property Name="PhNo" Type="varchar" MaxLength="50" />
           <Property Name="Token" Type="varchar" MaxLength="200" />
         </EntityType>
@@ -170,26 +169,6 @@
           <Property Name="PageHeader" Type="varchar" MaxLength="50" />
           <Property Name="PageId" Type="varchar" MaxLength="50" />
           <Property Name="ExtraDetail" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Permission">
-          <Key>
-            <PropertyRef Name="PermissionId" />
-          </Key>
-          <Property Name="PermissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ApproveRequisition" Type="bit" />
-          <Property Name="ChangeCollectionPoint" Type="bit" />
-          <Property Name="ViewRequisition" Type="bit" />
-          <Property Name="MakeRequisition" Type="bit" />
-          <Property Name="DelegateRole" Type="bit" />
-          <Property Name="ViewCollectionDetails" Type="bit" />
-          <Property Name="ConfirmDisbursement" Type="bit" />
-          <Property Name="Disbursement" Type="bit" />
-          <Property Name="MakeAdjustment" Type="bit" />
-          <Property Name="ApproveAdjustment" Type="bit" />
-          <Property Name="InventoryManagement" Type="bit" />
-          <Property Name="ViewReports" Type="bit" />
-          <Property Name="MakePurchaseOrder" Type="bit" />
-          <Property Name="ApprovePurchaseOrder" Type="bit" />
         </EntityType>
         <EntityType Name="PurchaseDetail">
           <Key>
@@ -252,6 +231,21 @@
           <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
           <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="ApproveRequisition" Type="bit" />
+          <Property Name="ChangeCollectionPoint" Type="bit" />
+          <Property Name="ViewRequisition" Type="bit" />
+          <Property Name="MakeRequisition" Type="bit" />
+          <Property Name="DelegateRole" Type="bit" />
+          <Property Name="ViewCollectionDetails" Type="bit" />
+          <Property Name="ConfirmDisbursement" Type="bit" />
+          <Property Name="ChangeRepresentative" Type="bit" />
+          <Property Name="Disbursement" Type="bit" />
+          <Property Name="MakeAdjustment" Type="bit" />
+          <Property Name="ApproveAdjustment" Type="bit" />
+          <Property Name="InventoryManagement" Type="bit" />
+          <Property Name="ViewReports" Type="bit" />
+          <Property Name="MakePurchaseOrder" Type="bit" />
+          <Property Name="ApprovePurchaseOrder" Type="bit" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -504,18 +498,6 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PermissionId">
-          <End Role="Permission" Type="Self.Permission" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permission">
-              <PropertyRef Name="PermissionId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="PermissionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="PurchaseDetailItemNo">
           <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
           <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
@@ -736,7 +718,6 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <EntitySet Name="ItemCodeGenerator" EntityType="Self.ItemCodeGenerator" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Measurement" EntityType="Self.Measurement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseDetail" EntityType="Self.PurchaseDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Requisition" EntityType="Self.Requisition" Schema="dbo" store:Type="Tables" />
@@ -830,10 +811,6 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <AssociationSet Name="MeasurementId" Association="Self.MeasurementId">
             <End Role="Measurement" EntitySet="Measurement" />
             <End Role="Inventory" EntitySet="Inventory" />
-          </AssociationSet>
-          <AssociationSet Name="PermissionId" Association="Self.PermissionId">
-            <End Role="Permission" EntitySet="Permission" />
-            <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
           <AssociationSet Name="PurchaseDetailItemNo" Association="Self.PurchaseDetailItemNo">
             <End Role="Inventory" EntitySet="Inventory" />
@@ -1047,7 +1024,6 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DepartmentId" Type="Int32" />
           <Property Name="RoleId" Type="Int32" />
-          <Property Name="PermissionId" Type="Int32" />
           <Property Name="PhNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Token" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Adjustments" Relationship="Self.AdjustmentEmployeeId" FromRole="Employee" ToRole="Adjustment" />
@@ -1057,7 +1033,6 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <NavigationProperty Name="Departments" Relationship="Self.DepartmentHeadId" FromRole="Employee" ToRole="Department" />
           <NavigationProperty Name="Department" Relationship="Self.DepartmentId" FromRole="Employee" ToRole="Department" />
           <NavigationProperty Name="Departments1" Relationship="Self.EmployeeId" FromRole="Employee" ToRole="Department" />
-          <NavigationProperty Name="Permission" Relationship="Self.PermissionId" FromRole="Employee" ToRole="Permission" />
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.PurchaseOrderAuthorizedBy" FromRole="Employee" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseOrders1" Relationship="Self.PurchaseOrderEmployeeId" FromRole="Employee" ToRole="PurchaseOrder" />
           <NavigationProperty Name="Requisitions" Relationship="Self.RequisitionEmployeeId" FromRole="Employee" ToRole="Requisition" />
@@ -1121,27 +1096,6 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="PageHeader" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PageId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ExtraDetail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Permission">
-          <Key>
-            <PropertyRef Name="PermissionId" />
-          </Key>
-          <Property Name="PermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ApproveRequisition" Type="Boolean" />
-          <Property Name="ChangeCollectionPoint" Type="Boolean" />
-          <Property Name="ViewRequisition" Type="Boolean" />
-          <Property Name="MakeRequisition" Type="Boolean" />
-          <Property Name="DelegateRole" Type="Boolean" />
-          <Property Name="ViewCollectionDetails" Type="Boolean" />
-          <Property Name="ConfirmDisbursement" Type="Boolean" />
-          <Property Name="Disbursement" Type="Boolean" />
-          <Property Name="MakeAdjustment" Type="Boolean" />
-          <Property Name="ApproveAdjustment" Type="Boolean" />
-          <Property Name="InventoryManagement" Type="Boolean" />
-          <Property Name="ViewReports" Type="Boolean" />
-          <Property Name="MakePurchaseOrder" Type="Boolean" />
-          <Property Name="ApprovePurchaseOrder" Type="Boolean" />
-          <NavigationProperty Name="Employees" Relationship="Self.PermissionId" FromRole="Permission" ToRole="Employee" />
         </EntityType>
         <EntityType Name="PurchaseDetail">
           <Key>
@@ -1220,6 +1174,21 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ApproveRequisition" Type="Boolean" />
+          <Property Name="ChangeCollectionPoint" Type="Boolean" />
+          <Property Name="ViewRequisition" Type="Boolean" />
+          <Property Name="MakeRequisition" Type="Boolean" />
+          <Property Name="DelegateRole" Type="Boolean" />
+          <Property Name="ViewCollectionDetails" Type="Boolean" />
+          <Property Name="ConfirmDisbursement" Type="Boolean" />
+          <Property Name="ChangeRepresentative" Type="Boolean" />
+          <Property Name="Disbursement" Type="Boolean" />
+          <Property Name="MakeAdjustment" Type="Boolean" />
+          <Property Name="ApproveAdjustment" Type="Boolean" />
+          <Property Name="InventoryManagement" Type="Boolean" />
+          <Property Name="ViewReports" Type="Boolean" />
+          <Property Name="MakePurchaseOrder" Type="Boolean" />
+          <Property Name="ApprovePurchaseOrder" Type="Boolean" />
           <NavigationProperty Name="Employees" Relationship="Self.RoleId" FromRole="Role" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Supplier">
@@ -1477,18 +1446,6 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PermissionId">
-          <End Role="Permission" Type="Self.Permission" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permission">
-              <PropertyRef Name="PermissionId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="PermissionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="PurchaseOrderAuthorizedBy">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
@@ -1697,7 +1654,6 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <EntitySet Name="ItemCodeGenerators" EntityType="Self.ItemCodeGenerator" />
           <EntitySet Name="Measurements" EntityType="Self.Measurement" />
           <EntitySet Name="Notifications" EntityType="Self.Notification" />
-          <EntitySet Name="Permissions" EntityType="Self.Permission" />
           <EntitySet Name="PurchaseDetails" EntityType="Self.PurchaseDetail" />
           <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
           <EntitySet Name="Requisitions" EntityType="Self.Requisition" />
@@ -1778,10 +1734,6 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
           <AssociationSet Name="RetrievalId" Association="Self.RetrievalId">
             <End Role="Retrieval" EntitySet="Retrievals" />
             <End Role="DisbursementList" EntitySet="DisbursementLists" />
-          </AssociationSet>
-          <AssociationSet Name="PermissionId" Association="Self.PermissionId">
-            <End Role="Permission" EntitySet="Permissions" />
-            <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
           <AssociationSet Name="PurchaseOrderAuthorizedBy" Association="Self.PurchaseOrderAuthorizedBy">
             <End Role="Employee" EntitySet="Employees" />
@@ -1978,7 +1930,6 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
                 <ScalarProperty Name="PhNo" ColumnName="PhNo" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
               </MappingFragment>
@@ -2032,27 +1983,6 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
                 <ScalarProperty Name="PageHeader" ColumnName="PageHeader" />
                 <ScalarProperty Name="PageId" ColumnName="PageId" />
                 <ScalarProperty Name="ExtraDetail" ColumnName="ExtraDetail" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Permissions">
-            <EntityTypeMapping TypeName="ProjectModel.Permission">
-              <MappingFragment StoreEntitySet="Permission">
-                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
-                <ScalarProperty Name="ApproveRequisition" ColumnName="ApproveRequisition" />
-                <ScalarProperty Name="ChangeCollectionPoint" ColumnName="ChangeCollectionPoint" />
-                <ScalarProperty Name="ViewRequisition" ColumnName="ViewRequisition" />
-                <ScalarProperty Name="MakeRequisition" ColumnName="MakeRequisition" />
-                <ScalarProperty Name="DelegateRole" ColumnName="DelegateRole" />
-                <ScalarProperty Name="ViewCollectionDetails" ColumnName="ViewCollectionDetails" />
-                <ScalarProperty Name="ConfirmDisbursement" ColumnName="ConfirmDisbursement" />
-                <ScalarProperty Name="Disbursement" ColumnName="Disbursement" />
-                <ScalarProperty Name="MakeAdjustment" ColumnName="MakeAdjustment" />
-                <ScalarProperty Name="ApproveAdjustment" ColumnName="ApproveAdjustment" />
-                <ScalarProperty Name="InventoryManagement" ColumnName="InventoryManagement" />
-                <ScalarProperty Name="ViewReports" ColumnName="ViewReports" />
-                <ScalarProperty Name="MakePurchaseOrder" ColumnName="MakePurchaseOrder" />
-                <ScalarProperty Name="ApprovePurchaseOrder" ColumnName="ApprovePurchaseOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2121,6 +2051,21 @@ warning 6002: The table/view 'Project.dbo.StockCard' does not have a primary key
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ApproveRequisition" ColumnName="ApproveRequisition" />
+                <ScalarProperty Name="ChangeCollectionPoint" ColumnName="ChangeCollectionPoint" />
+                <ScalarProperty Name="ViewRequisition" ColumnName="ViewRequisition" />
+                <ScalarProperty Name="MakeRequisition" ColumnName="MakeRequisition" />
+                <ScalarProperty Name="DelegateRole" ColumnName="DelegateRole" />
+                <ScalarProperty Name="ViewCollectionDetails" ColumnName="ViewCollectionDetails" />
+                <ScalarProperty Name="ConfirmDisbursement" ColumnName="ConfirmDisbursement" />
+                <ScalarProperty Name="ChangeRepresentative" ColumnName="ChangeRepresentative" />
+                <ScalarProperty Name="Disbursement" ColumnName="Disbursement" />
+                <ScalarProperty Name="MakeAdjustment" ColumnName="MakeAdjustment" />
+                <ScalarProperty Name="ApproveAdjustment" ColumnName="ApproveAdjustment" />
+                <ScalarProperty Name="InventoryManagement" ColumnName="InventoryManagement" />
+                <ScalarProperty Name="ViewReports" ColumnName="ViewReports" />
+                <ScalarProperty Name="MakePurchaseOrder" ColumnName="MakePurchaseOrder" />
+                <ScalarProperty Name="ApprovePurchaseOrder" ColumnName="ApprovePurchaseOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

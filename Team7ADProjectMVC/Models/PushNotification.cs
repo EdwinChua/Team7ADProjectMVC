@@ -190,31 +190,31 @@ namespace Team7ADProjectMVC.Models
             myData.Add(deptName);
             myData.Add("0");
             myData.Add("0");
-            String title = deptName;
-            String message = "Accepted Disbursement";
-            Employee sendingnow = db.Employees.Where(x => x.EmployeeId == retrivedclerk).First();
-            if (sendingnow.Token == null)
-            {
+           // String title = deptName;
+           // String message = "Accepted Disbursement";
+            //Employee sendingnow = db.Employees.Where(x => x.EmployeeId == retrivedclerk).First();
+            //if (sendingnow.Token == null)
+            //{
 
-                Notification n = new Notification();
-                n.EmployeeId = sendingnow.EmployeeId;
-                n.Title = title;
-                n.Body = message;
-                n.Intent = myData[0];
-                n.PageHeader = myData[1];
-                n.PageId = myData[2];
-                n.ExtraDetail = myData[3];
-                db.Notifications.Add(n);
-                db.SaveChanges();
+            //    Notification n = new Notification();
+            //    n.EmployeeId = sendingnow.EmployeeId;
+            //    n.Title = title;
+            //    n.Body = message;
+            //    n.Intent = myData[0];
+            //    n.PageHeader = myData[1];
+            //    n.PageId = myData[2];
+            //    n.ExtraDetail = myData[3];
+            //    db.Notifications.Add(n);
+            //    db.SaveChanges();
 
-            }
-            else
-            {
-                PushFCMNotification(title, message, sendingnow.Token, myData);
+            //}
+            //else
+            //{
+            //    PushFCMNotification(title, message, sendingnow.Token, myData);
 
-            }
+            //}
 
-           // PushFCMNotificationToStoreClerk(deptName, "Accepted Disbursement", myData);
+           PushFCMNotificationToStoreClerk(deptName, "Accepted Disbursement", myData);
 
 
 

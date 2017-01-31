@@ -542,10 +542,7 @@ namespace Team7ADProjectMVC
             myData.Add(DisbListId);
             myData.Add(disb.Department.CollectionPoint.CollectTime.ToString());
 
-            fcm.PushNotificationForRep("Accept Delivery", "Please Confirm Delivery", myData,deptit);
-
-
-              
+            fcm.PushNotificationForRep("Accept Delivery", "Please Confirm Delivery", myData,deptit);              
                 return "true";
             }
             catch (Exception e)

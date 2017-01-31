@@ -50,7 +50,7 @@ namespace Team7ADProjectMVC.TestControllers
 
         public ActionResult InventoryItem(String id)
         {
-            Inventory inventory = inventorySvc.FindIventoryItemById(id);
+            Inventory inventory = inventorySvc.FindInventoryItemById(id);
             if (inventory == null)
             {
                 return HttpNotFound();
@@ -127,7 +127,7 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Inventory inventory = inventorySvc.FindIventoryItemById(id);
+            Inventory inventory = inventorySvc.FindInventoryItemById(id);
             if (inventory == null)
             {
                 return HttpNotFound();

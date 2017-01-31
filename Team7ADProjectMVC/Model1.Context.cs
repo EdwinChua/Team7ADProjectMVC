@@ -40,7 +40,6 @@ namespace Team7ADProjectMVC
         public virtual DbSet<ItemCodeGenerator> ItemCodeGenerators { get; set; }
         public virtual DbSet<Measurement> Measurements { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
-        public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<Requisition> Requisitions { get; set; }

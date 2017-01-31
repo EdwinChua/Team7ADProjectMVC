@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.DelegateRoleService;
+using Team7ADProjectMVC.Models.ChangeRepresentativeService;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 
 using PagedList;
@@ -21,6 +22,7 @@ namespace Team7ADProjectMVC.Controllers
         private IRequisitionService reqsvc;
         public static int count = 0;
         private IDelegateRoleService depsvc;
+        private IChangeRepresentativeService chrepsvc;
         private ProjectEntities db = new ProjectEntities();
 
 
@@ -34,9 +36,8 @@ namespace Team7ADProjectMVC.Controllers
         {
             reqsvc = new RequisitionService();
             depsvc = new DelegateRoleService();
-         
-
-        }
+            chrepsvc = new ChangeRepresentativeService();
+                    }
 
         // GET: Head
         public ActionResult Index()
@@ -295,14 +296,27 @@ namespace Team7ADProjectMVC.Controllers
         }
 
 
-        //public ActionResult ManageTerminate(int? empId, string status, string startDate, string endDate)
-        //{
-        //    user = (Employee)Session["user"];
-        //    depIdofLoginUser = user.DepartmentId;
-        //    depHeadId = user.EmployeeId;
-        //    return View("DelegateRole");
-        //}
+        
         //----------------------------Delegation Part----------------------------------end here
+
+        public ActionResult ChangeRepresentive()
+        {
+
+            user = (Employee)Session["user"];
+            depIdofLoginUser = user.DepartmentId;
+            depHeadId = user.EmployeeId;
+
+
+            
+            Employee currentRep = chrepsvc.GetCurrentRep(depIdofLoginUser);
+             ViewBag.currentRep = currentRep;
+             var emplist = chrepsvc.GetAllEmployee(depIdofLoginUser, currentRep.EmployeeId);
+             ViewBag.employeeList = emplist.ToList();
+            return View("ChangeDepartmentRepresentative",emplist);
+
+        }
+
+
 
     }
 }

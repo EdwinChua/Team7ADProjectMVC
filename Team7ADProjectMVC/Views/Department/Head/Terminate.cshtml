@@ -20,29 +20,34 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
-            Start Date:
-            <div style="overflow:hidden;">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div id="datetimepicker1"></div>
+        <div class="col-md-12 col-lg-8">
+            <div class="col-md-4">
+                Start Date:
+                <div style="overflow:hidden;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div id="datetimepicker1"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div>Start Date: <label id="s1" value="startDate">@ViewBag.s1</label></div>
+                
             </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-4">
-            End Date:
-            <div style="overflow:hidden;">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div id="datetimepicker2"></div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+                End Date:
+                <div style="overflow:hidden;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div id="datetimepicker2"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div>End Date: <label id="e1" value="endDate">@ViewBag.e1</label></div>
             </div>
         </div>
     </div>
@@ -52,15 +57,13 @@
 
 
     <div>
-        <h5>
+        
 
-            Start Date:<label id="s1" value="startDate" >@ViewBag.s1</label><br />
-            End Date::<label id="e1" value="endDate">@ViewBag.e1</label><br />
 
             <input type="hidden" name="startDate" id="startDate" />
             <input type="hidden"  name="endDate" id="endDate" /> 
 
-        </h5 >
+        
 
        <input type="hidden" value= "@ViewBag.delegateId"  name="DelegateId" />
         <input type="hidden" value="@ViewBag.empid  " name="empId" />
@@ -76,15 +79,13 @@
             else
             {*@
         <div class="row">
-            <div class="col-md-7"></div>
-            <div class="col-md-1">
-                <button type="submit" class="btn btn-success btn-lg pull-right" name="status" value="Update" id="updatebutton">
+            <div class="col-md-5"></div>
+            <div class="col-lg-3 col-md-6">
+                <button type="submit" class="btn btn-success btn-lg" name="status" value="Update" id="updatebutton">
                     Update
                 </button>
-            </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1">
-                <button type="submit" class="btn btn-danger btn-lg pull-right" name="status" value="Terminate" id="terminatebutton">
+           
+                <button type="submit" class="btn btn-danger btn-lg" name="status" value="Terminate" id="terminatebutton">
                     Terminate
                 </button>
             </div>
@@ -105,7 +106,7 @@
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker1').datetimepicker({
-                format: 'dd/mm/yy',
+                format: 'DD/MM/YYYY',
                 inline: true,
                 sideBySide: false,
                 minDate: '@ViewBag.s2',
@@ -122,7 +123,7 @@
             
             });
             $('#datetimepicker2').datetimepicker({
-                format: 'dd/mm/yy',
+                format: 'DD/MM/YYYY',
                 inline: true,
                 sideBySide: false,
                 minDate:new Date(),

@@ -230,7 +230,7 @@ namespace Team7ADProjectMVC.Controllers
                     DateTime edate = new DateTime(Int32.Parse(e[2]), Int32.Parse(e[1]), Int32.Parse(e[0]));
                     ViewBag.s1 = d.StartDate;
 
-                    depsvc.updateDelegate(emp, d, ViewBag.s1, edate, depHeadId);
+                    depsvc.updateDelegate( d, ViewBag.s1, edate, depHeadId);
 
                     return RedirectToAction("show");
                 }
@@ -240,7 +240,7 @@ namespace Team7ADProjectMVC.Controllers
                     DateTime sdate = new DateTime(Int32.Parse(s[2]), Int32.Parse(s[1]), Int32.Parse(s[0]));
                     ViewBag.e1 = d.EndDate;
 
-                    depsvc.updateDelegate(emp, d, sdate, ViewBag.e1, depHeadId);
+                    depsvc.updateDelegate( d, sdate, ViewBag.e1, depHeadId);
 
                     return RedirectToAction("show");
                 }
@@ -249,7 +249,7 @@ namespace Team7ADProjectMVC.Controllers
                     ViewBag.s1 = d.StartDate;
                     ViewBag.e1 = d.EndDate;
 
-                    depsvc.updateDelegate(emp, d, ViewBag.s1, ViewBag.e1, depHeadId);
+                    depsvc.updateDelegate( d, ViewBag.s1, ViewBag.e1, depHeadId);
 
                     return RedirectToAction("show");
                 }
@@ -259,13 +259,13 @@ namespace Team7ADProjectMVC.Controllers
                     DateTime sdate = new DateTime(Int32.Parse(s[2]), Int32.Parse(s[1]), Int32.Parse(s[0]));
                     String[] e = endDate.Split('/');
                     DateTime edate = new DateTime(Int32.Parse(e[2]), Int32.Parse(e[1]), Int32.Parse(e[0]));
-                    depsvc.updateDelegate(emp, d, sdate, edate, depHeadId);
+                    depsvc.updateDelegate(d, sdate, edate, depHeadId);
 
                     return RedirectToAction("show");
                 }
             }
             //terminate-----------------------------------------------------------------------------------------------------------
-            depsvc.TerminateDelegate(emp, d);
+            depsvc.TerminateDelegate(d);
             return RedirectToAction("show");
 
         }

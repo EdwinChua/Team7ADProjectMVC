@@ -13,7 +13,7 @@
     </script>*@
 
 <div class="row">
-    <div class="col-md-10">
+    <div class="col-lg-8 col-md-12">
         <form role="form" action="/Head/ManageDelegation">
             <div class="row">
                 <div class="col-lg-4 col-xs-12">
@@ -38,30 +38,32 @@
             </div>
 
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     Start Date:
                     <div style="overflow:hidden;">
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-5">
                                     <div id="datetimepicker1"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div> Start Date:<label id="s1" name="s" value="startDate">  @ViewBag.autoStartdate</label></div>
                 </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-5">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
                     End Date:
                     <div style="overflow:hidden;">
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-5">
                                     <div id="datetimepicker2"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div> End Date::<label id="e1" name="e" value="endDate">@ViewBag.autoEnddate</label><br /></div>
                 </div>
             </div>
            
@@ -74,19 +76,15 @@
 
             <h5>
 
-                Start Date:<label id="s1" name="s" value="startDate">  @ViewBag.autoStartdate</label><br />
+               
                 <input type="hidden" name="startDate" id="startDate" />
-
-
-                End Date::<label id="e1" name="e" value="endDate">@ViewBag.autoEnddate</label><br />
-
                 <input type="hidden" name="DelegateId" id="delegateId" value="0" />
                 <input type="hidden" name="endDate" id="endDate" />
 
 
             </h5>
             <div class="row">
-                <div class="col-md-11"></div>
+                <div class="col-md-7"></div>
                 <div class="col-md-1">
                     <button type="submit" class="btn btn-success btn-lg pull-right" name="status" value="Delegate" id="submitButton">
                         Delegate
@@ -105,7 +103,7 @@
     $(function () {
 
         $('#datetimepicker1').datetimepicker({
-            format: 'dd/mm/yy',
+            format: 'DD/MM/YYYY',
             inline: true,
             sideBySide: false,
             minDate: new Date()
@@ -124,7 +122,7 @@
         });
 
         $('#datetimepicker2').datetimepicker({
-            format: 'dd/mm/yy',
+            format: 'DD/MM/YYYY',
             inline: true,
             sideBySide: false,
             minDate: new Date()

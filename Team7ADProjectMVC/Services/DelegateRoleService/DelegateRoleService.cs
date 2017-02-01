@@ -62,7 +62,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
 
 
         }
-        public void updateDelegate(Employee e, Delegate d,DateTime startDate, DateTime endDate,int? depHeadId)
+        public void updateDelegate(Delegate d,DateTime startDate, DateTime endDate,int? depHeadId)
         {
             d.StartDate = startDate.Date;
             d.EndDate = endDate.Date;
@@ -73,7 +73,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
             db.SaveChanges();
         }
 
-        public void TerminateDelegate(Employee emp, Delegate d)
+        public void TerminateDelegate( Delegate d)
         {
             d.ActualEndDate = DateTime.Today.AddDays(-1);
             db.Entry(d).State = EntityState.Modified;

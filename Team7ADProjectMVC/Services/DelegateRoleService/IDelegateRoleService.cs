@@ -12,7 +12,7 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
         List<Delegate> getDelegate(); 
         List<Employee> GetAllEmployeebyDepId(int? depId);
         Employee FindById(int? empid);
-        void TerminateDelegate(Employee emp, Delegate del);
+        void TerminateDelegate(Delegate del);
         Delegate FinddelegaterecordById(int? delegateId);
         Delegate  getDelegatedEmployee(int? depId);
     
@@ -20,6 +20,6 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
 
 
         void manageDelegate(Employee e, DateTime startDate, DateTime endDate,int? depHeadId);
-        void updateDelegate(Employee e, Delegate d, DateTime startDate, DateTime endDate, int? depHeadId);
+        void updateDelegate( Delegate d, DateTime startDate, DateTime endDate, int? depHeadId);
     }
 }

@@ -11,7 +11,14 @@ namespace Team7ADProjectMVC.Models
     {
         ProjectEntities db = new ProjectEntities();
         PushNotification fcm = new PushNotification();
-        
+
+        public string FindItemIdByName(string itemName)
+        {
+
+            string itemid = db.Inventories.Where(x => x.Description == itemName).FirstOrDefault().ItemNo.ToString();
+            return itemid;
+        }
+
         public string GetItemCode(string itemDesc)
         {
             string startingLetter = itemDesc[0].ToString();

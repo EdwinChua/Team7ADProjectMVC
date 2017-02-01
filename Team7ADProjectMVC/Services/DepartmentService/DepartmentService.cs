@@ -14,49 +14,32 @@ namespace Team7ADProjectMVC.Services.DepartmentService
         ProjectEntities db = new ProjectEntities();
         PushNotification notify = new PushNotification();
 
-        public Requisition FindById(string id)
-        {
-            throw new NotImplementedException();
-        }
-        public Department FinddeById(string id)
+        public Department FindDeptById(string id)
         {
             return (db.Departments.Find(id));
         }
+
+        public Department FindDeptById(int id)
+        {
+            return (db.Departments.Find(id));
+        }
+
         public Employee FindEmployeeById(int id)
         {
             return (db.Employees.Find(id));
         }
-        
 
-        public Requisition FindRequisitionById(string id)
+        public List<Employee> GetAllEmployees()
         {
-            throw new NotImplementedException();
+            return (db.Employees.ToList());
         }
 
-        public List<Requisition> GetRequisitionByStatus(string status)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Requisition> ListAllRequisition()
-        {
-           
-             return (db.Requisitions.ToList());
-        }
 
         public List<Department> ListAllDepartments()
         {
             return (db.Departments.ToList());
         }
 
-        public List<Requisition> ListAllDepartment()
-        {
-            throw new NotImplementedException();
-        }
-        public Department findDeptByID(int ? id)
-        {
-            return (db.Departments.Find(id));
-        }
         public void changeDeptCp(Department department,int cpId)
         {
             

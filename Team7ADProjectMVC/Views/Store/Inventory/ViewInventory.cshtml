@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Team7ADProjectMVC.Inventory>
+﻿@model PagedList.IPagedList<Team7ADProjectMVC.Inventory>
 
 @{
     Layout = "~/_Layout1.cshtml";
@@ -6,38 +6,37 @@
     Employee currentEmployee = (Employee)Session["User"];
     Page.Employee = currentEmployee;
 }
-
+@using PagedList.Mvc;
 
 <div class="container-fluid">
-    <div class="row jumbotron">
 
-        <form class="form" role="form" action="/Store/Search" method="Get">
-            <div class="col-md-2 form-group ">
-                <label for="categoryPicker">
-                    Category
-                </label>
-            </div>
-            <div class="col-md-4 form-group">
-                <select id="categoryPicker" name="id"
+    <nav class="navbar navbar-default">
+        <form class="navbar-form row" role="form" action="/Store/Inventory" method="get">
+            <div class="form-group col-md-4">
+
+                <select id="searchByCategory" name="id"
                         class="selectpicker show-tick form-control"
-                        data-live-search="true" required>
+                        data-live-search="true" title="Category">
                     @foreach (Category c in ViewBag.Cat)
                     {
-                    <option value="@c.CategoryId">@c.CategoryName</option>
+                        <option value="@c.CategoryId">@c.CategoryName</option>
                     }
-
                 </select>
+
             </div>
-            <div class="col-md-2 form-group ">
-                <button class="btn btn-default" type="submit">
-                    Search
-                </button>
-                <button class="btn btn-default" type="button" onclick="window.location.href='/Store/New'">
-                    Create
-                </button>
-            </div>
+
+            <button class="btn btn-success" type="submit">
+                Search
+            </button>
+            <button class="btn btn-primary" type="button" onclick="window.location.href='/Store/New'">
+                Create
+            </button>
+            <button class="btn btn-default" type="button" onclick="window.location.href='/Store/Inventory'">
+                Show All
+            </button>
+
         </form>
-    </div>
+    </nav>
     <div>
         <table class="table">
             <thead>
@@ -63,11 +62,26 @@
         </table>
     </div>
 </div>
+<center>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-<script>
-    $(document).ready(function ($) {
-        $(".clickable-row").click(function () {
-            window.document.location = $(this).data("href");
+    @Html.PagedListPager(Model, page => Url.Action("Inventory",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</center>
+
+<script type="text/javascript">
+       $(document).ready(function ($) {
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        $('#searchByCategory').selectpicker('val', getUrlVars()["id"]);
         });
-    });
 </script>

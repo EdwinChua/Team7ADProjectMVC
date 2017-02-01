@@ -31,15 +31,18 @@ namespace Team7ADProjectMVC.TestControllers
         {
 
             var id = ((Employee)Session["user"]).DepartmentId;
-            
-            return View(disbursementSvc.GetDisbursementByDeptId(id));
+            var disbursementlist = disbursementSvc.GetDisbursementByDeptId(id);
+            TempData["list"] = disbursementlist;
+
+            return View(disbursementlist);
 
 
         }
         public ActionResult Searchdisbursements(string date, string status)
         {
 
-            return View("Viewdisbursements", disbursementSvc.FindDisbursementsBySearch(date, status));
+            var disbursementlist = (List<DisbursementList>)TempData.Peek("list");
+            return View("Viewdisbursements", disbursementSvc.FindDisbursementsBySearch(disbursementlist,date, status));
         }
         public ActionResult ViewDisbursementDetail(int? id)
         {

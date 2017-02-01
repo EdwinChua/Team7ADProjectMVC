@@ -20,7 +20,7 @@ namespace Team7ADProjectMVC.Services
         List<DisbursementDetail> GetdisbursementdetailById(int? id);
         string findCpnameByDisburse(int? id);
         string findCptimeByDisburse(int? id);
-        List<DisbursementList> FindDisbursementsBySearch(string date, string status);
+        List<DisbursementList> FindDisbursementsBySearch(List<DisbursementList> disbursementlist,string date, string status);
         string findDisbursenmentStatus(int? id);
         void ConfirmDisbursement(int? id);
 

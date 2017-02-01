@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -31,13 +32,13 @@ namespace Team7ADProjectMVC.Controllers
             supplierAndPOSvc = new SupplierAndPurchaseOrderService();
             utilSvc = new UtilityService();
         }
-
+        // seq diagram done
         public ActionResult GeneratePO()
         {
             List<Inventory> itemsToResupply = supplierAndPOSvc.GetAllItemsToResupply();
             return View(itemsToResupply);
         }
-
+        // seq diagram done
         public ActionResult GeneratePurchaseOrders(string[] itemNo, int[] supplier, int?[] orderQuantity)
         {
             Employee currentEmployee = (Employee)Session["User"];
@@ -45,13 +46,14 @@ namespace Team7ADProjectMVC.Controllers
             List<Inventory> itemsToResupply = supplierAndPOSvc.GetAllItemsToResupply();
             return RedirectToAction("PurchaseOrderSummary");
         }
-
+        // seq diagram done
         public ActionResult PurchaseOrderSummary()
         {
             List<PurchaseOrder> poList = supplierAndPOSvc.GetAllPOOrderByApproval();
             
             return View(poList);
         }
+        // seq diagram done
         public ActionResult SearchPurchaseOrderSummary(string orderStatus, string dateOrderedString, string dateApprovedString)
         {
             DateTime? dateOrdered = null;
@@ -70,7 +72,7 @@ namespace Team7ADProjectMVC.Controllers
             ViewBag.ResultCount = resultCount;
             return View("PurchaseOrderSummary", poList);
         }
-
+        // seq diagram done
         public ActionResult DeliveryDetails(int id)
         {
             List<DeliveryDetail> deliveryDetailsList = supplierAndPOSvc.GetDeliveryDetailsByDeliveryId(id);
@@ -78,13 +80,18 @@ namespace Team7ADProjectMVC.Controllers
             ViewBag.DeliveryDetailsList = deliveryDetailsList;
             return View("ViewReceiveOrder",delivery);
         }
-
-        public ActionResult PurchaseOrder(int id)
+        // seq diagram done
+        public ActionResult PurchaseOrder(int id, int? page)
         {
             PurchaseOrder purchaseOrder = supplierAndPOSvc.FindPOById(id);
-            return View(purchaseOrder);
+            ViewBag.PurchaseOrder = purchaseOrder;
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            return View(purchaseOrder.PurchaseDetails.ToPagedList(pageNumber, pageSize));
         }
-        
+        // seq diagram done
         public ActionResult ApprovePO(int poNumber, string approve)
         {
             if(approve=="Approve")
@@ -98,13 +105,13 @@ namespace Team7ADProjectMVC.Controllers
             supplierAndPOSvc.ApprovePurchaseOrder(currentEmployee, poNumber, approve);
             return RedirectToAction("PurchaseOrderSummary");
         }
-
+        // seq diagram done
         public ActionResult ListDeliveries()
         {
             List<Delivery> allDeliveries = supplierAndPOSvc.GetAllDeliveries();
             return View(allDeliveries);
         }
-
+        // seq diagram done
         public ActionResult AcceptDelivery(int deliveryId, string deliveryRefNo, string dateDelivered, int[] deliveryDetailId, string[] itemNo, int[] quantity, string[] remarks)
         {
             Employee currentEmployee = (Employee)Session["User"];

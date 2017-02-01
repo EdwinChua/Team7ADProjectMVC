@@ -235,7 +235,7 @@ namespace Team7ADProjectMVC.Services.DepartmentService
             return false;
         }
 
-        public Employee GiveDelegatePermissions(Employee e)
+        public Employee SetDelegatePermissions(Employee e)
         {
             e.Role.ApproveRequisition = true;
             e.Role.ChangeCollectionPoint = true;

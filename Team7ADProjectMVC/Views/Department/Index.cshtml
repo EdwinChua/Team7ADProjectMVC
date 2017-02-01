@@ -43,7 +43,7 @@
                                         </div>
                                         <input type="hidden" id="pages" class="form-control"/>
                                         <button type="submit" class="btn btn-default">
-                                            Submit
+                                            search
                                         </button>
                                     </form>
                                     @*<ul class="nav navbar-nav navbar-right">
@@ -107,6 +107,7 @@
                     <thead>
                     <thead>
                         <tr>
+
                             @*new{id = item.MovieID}*@
                             @*<th>
                     <a href="@Url.Action("Dispatch", "Calls", new { userName = Session["UserName"], new { sortOrder ="Name" })">Department</a>
@@ -163,7 +164,7 @@
 
                         @foreach (var item in @ViewBag.Cat)
                         {
-                                    <tr class="clickable-row" data-href="ViewRequisitionDetails/@item.RequisitionId">
+                                    <tr @*class="clickable-row" data-href="ViewRequisitionDetails/@item.RequisitionId"*@>
 
                                         @*<td>
                                             @item.Employee.Department.DepartmentName
@@ -191,7 +192,7 @@
                                             @item.RequisitionStatus
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn btn-primary">@Html.ActionLink("Detail", "ViewRequisitionDetails", new { id = @item.RequisitionId, @class = "btn btn-primary" })</button>
+                                            <button type="button" class="btn btn-primary">@Html.ActionLink("Detail", "ViewRequisitionDetails", new { id = @item.RequisitionId, @class = "btn btn-primary" })</button>
                                            
 
                                             @*<form action="/Department/ViewRequisitionDetails">

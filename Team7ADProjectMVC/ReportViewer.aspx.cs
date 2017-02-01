@@ -22,10 +22,9 @@ namespace Team7ADProjectMVC
             //CrystalReportViewer1.ReportSource = cr;
            
             ReportDocument cr = new ReportDocument();
-            cr.Load(Server.MapPath(Session["Path"].ToString()));
-            cr.SetDataSource(Session["data"]);
+            cr.Load(Server.MapPath(Session["rptPath"].ToString()));
+            cr.SetDataSource(Session["rptData"]);
             CrystalReportViewer1.ReportSource = cr;
-            Session["cr"] = "";
         }
     }
 }

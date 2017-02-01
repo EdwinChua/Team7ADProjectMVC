@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC;
 using Team7ADProjectMVC.Models;
-using Team7ADProjectMVC.Models.DelegateRoleService;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 using Team7ADProjectMVC.Services.DepartmentService;
 
@@ -64,25 +63,22 @@ namespace Team7ADProjectMVC.TestControllers
         private static PersonModel mododo;
         private IRequisitionService listsvc;
         private IDepartmentService depasvc;
-        private IDelegateRoleService delpsvc;
+        private IInventoryService invsvc;
         private static string gsearchString;
-        private ProjectEntities db = new ProjectEntities();
         PushNotification notify = new PushNotification(); 
-        List<String> Roles;
        
         public DepartmentController()
-        {
-            
+        {         
             listsvc = new RequisitionService();
-            delpsvc = new DelegateRoleService();
             depasvc = new DepartmentService();
+            invsvc = new InventoryService();
             gsearchString = "";
             //mododo = new PersonModel();
         }
         
         public ActionResult Index(string sortOrder/*,int pages=4*/)
         {
-            var requisitions = depasvc.ListAllRequisition();
+            var requisitions = listsvc.ListAllRequisition();
 
 
             gsearchString = "";
@@ -124,8 +120,7 @@ namespace Team7ADProjectMVC.TestControllers
 
 
 
-            var re = from s in db.Requisitions
-                     select s;
+            var re = listsvc.ListAllRequisition().AsQueryable();
             if (sortOrder != null)
             {
                 switch (sortOrder)
@@ -196,7 +191,7 @@ namespace Team7ADProjectMVC.TestControllers
         }
         public ActionResult DepartmentEmployee()
         {
-            var requisitions = depasvc.ListAllRequisition();
+            var requisitions = listsvc.ListAllRequisition();
 
             Session["npg"] = 4;
 
@@ -207,7 +202,7 @@ namespace Team7ADProjectMVC.TestControllers
         [HttpPost]
         public ActionResult Index(string searchString, string sortOrder/*, int pages = 4*/)
         {
-            var requisitions = depasvc.ListAllRequisition();
+            var requisitions = listsvc.ListAllRequisition();
 
 
 
@@ -224,7 +219,7 @@ namespace Team7ADProjectMVC.TestControllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                var q = db.Requisitions.Where(s => s.Employee.EmployeeName.Contains(searchString)
+                var q = listsvc.ListAllRequisition().AsQueryable().Where(s => s.Employee.EmployeeName.Contains(searchString)
                                        || s.ApprovedDate.ToString().Contains(searchString)
                                        || s.Employee.Department.DepartmentName.Contains(searchString));
                 requisitions = q.ToList();
@@ -273,8 +268,7 @@ namespace Team7ADProjectMVC.TestControllers
 
             // Convert sort order
             ViewBag.NameSort = sortOrder == "Name" ? "Name_desc" : "Name";
-            var re = from s in db.Requisitions
-                           select s;
+            var re = listsvc.ListAllRequisition().AsQueryable();
             if (sortOrder!=null) {
             switch (sortOrder)
             {
@@ -309,7 +303,7 @@ namespace Team7ADProjectMVC.TestControllers
         [HttpPost]
         public ActionResult DepartmentEmployee(string searchString)
         {
-            var requisitions = depasvc.ListAllRequisition();
+            var requisitions = listsvc.ListAllRequisition();
 
 
 
@@ -322,7 +316,7 @@ namespace Team7ADProjectMVC.TestControllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                var q = db.Requisitions.Where(s => s.Employee.EmployeeName.Contains(searchString)
+                var q = listsvc.ListAllRequisition().AsQueryable().Where(s => s.Employee.EmployeeName.Contains(searchString)
                                        || s.ApprovedDate.ToString().Contains(searchString)
                                        || s.Employee.Department.DepartmentName.Contains(searchString));
                 requisitions = q.ToList();
@@ -365,7 +359,7 @@ namespace Team7ADProjectMVC.TestControllers
             //var inventories = inventorySvc.GetInventoryListByCategory(id);
             //var categories = inventorySvc.GetAllCategories();
             //ViewBag.Cat = categories.ToList();
-            var requisitions = db.Requisitions.ToList();
+            var requisitions = listsvc.ListAllRequisition();
 
             ViewBag.Cat = requisitions;
             return View("Index");
@@ -375,7 +369,7 @@ namespace Team7ADProjectMVC.TestControllers
             //var inventories = inventorySvc.GetInventoryListByCategory(id);
             //var categories = inventorySvc.GetAllCategories();
             //ViewBag.Cat = categories.ToList();
-            var requisitions = db.Requisitions.ToList();
+            var requisitions = listsvc.ListAllRequisition();
 
             ViewBag.Cat = requisitions;
             return View(requisitions);
@@ -384,16 +378,16 @@ namespace Team7ADProjectMVC.TestControllers
         // GET: TESTRequisitions/Create
         public ActionResult MakeRequisition()
         {
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName");
+            ViewBag.EmployeeId = new SelectList(depasvc.GetAllEmployees(), "EmployeeId", "EmployeeName");
 
-            List<RequisitionDetail> relis = db.RequisitionDetails.Take(3).ToList();
+            List<RequisitionDetail> relis = listsvc.GetAllRequisitionDetails().Take(3).ToList();
+
+
+            ViewBag.MembershipList = invsvc.GetAllInventory();
+
             
 
-            ViewBag.MembershipList = db.Inventories.ToList();
-
-            
-
-            ViewBag.clips = db.Inventories.Where(x => x.Category.CategoryName == "Clips").ToList();
+            ViewBag.clips = invsvc.GetAllInventory().Where(x => x.Category.CategoryName == "Clips").ToList();
 
 
 
@@ -413,20 +407,20 @@ namespace Team7ADProjectMVC.TestControllers
         [ValidateAntiForgeryToken]
         public ActionResult MakeRequisition([Bind(Include = "RequisitionId,EmployeeId,DepartmentId,ApprovedBy,ApprovedDate,OrderedDate,RequisitionStatus")] Requisition requisition, PersonModel model)
         {
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", requisition.EmployeeId);
+            ViewBag.EmployeeId = new SelectList(depasvc.GetAllEmployees(), "EmployeeId", "EmployeeName", requisition.EmployeeId);
 
             Employee userName = (Employee)Session["User"];
 
 
             Requisition req = new Requisition();
 
-            var count = depasvc.ListAllRequisition();
+            var count = listsvc.ListAllRequisition();
             //var count = db.Requisitions.ToList();
             int idd = count.Count() + 1;
 
            
 
-            depasvc.UpdateRequi(requisition,req,idd,userName.EmployeeId, userName.DepartmentId);
+           listsvc.UpdateRequisition(requisition,req,idd,userName.EmployeeId, userName.DepartmentId);
 
 
            
@@ -462,9 +456,9 @@ namespace Team7ADProjectMVC.TestControllers
 
                 rd.Quantity = Int32.Parse(i.Quantity);
 
-                string descibe = i.Item;
+                string desc = i.Item;
 
-                string itemno = depasvc.FinditemByName(descibe);
+                string itemno = invsvc.FindItemIdByName(desc);
 
                 //rd.ItemNo = "C002";
 
@@ -491,8 +485,7 @@ namespace Team7ADProjectMVC.TestControllers
             if (ModelState.IsValid)
             {
 
-                db.Requisitions.Add(req);
-                db.SaveChanges();
+                listsvc.CreateRequisition(req);
                 //ViewBag.rel = relis;
                 return RedirectToAction("Index");
             }
@@ -525,7 +518,7 @@ namespace Team7ADProjectMVC.TestControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Requisition requisition = db.Requisitions.Find(id);
+            Requisition requisition = listsvc.FindById(id);
             if (requisition == null)
             {
                 return HttpNotFound();
@@ -560,12 +553,12 @@ namespace Team7ADProjectMVC.TestControllers
         {
             
 
-            Requisition requisition = db.Requisitions.Find(id);
+            Requisition requisition = listsvc.FindById(id);
             ViewBag.re = requisition;
           
 
         
-            List<RequisitionDetail> relis = db.RequisitionDetails.Where(u => u.RequisitionId == id).ToList();
+            List<RequisitionDetail> relis = listsvc.GetAllRequisitionDetails().Where(u => u.RequisitionId == id).ToList();
 
             
 

@@ -12,20 +12,21 @@
 <form role="form" id="form1" action="../AcceptDelivery">
     <div class="form-group">
         <div class="row">
-            <div class="col-lg-1">
+            <div class="col-md-2">
+                <br />
                 <label>Delivery Order No.</label>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4">
                 <input type="hidden" name="deliveryId" value="@Model.DeliveryId" />
                 <input type="text" class="form-control" name="deliveryRefNo" placeholder="Delivery Order No. (Required)" value="@Model.DeliveryId" required />
             </div>
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-lg-1">
+        <div class="col-md-2">
             <label>Delivery Date</label>
         </div>
-        <div class="col-lg-3">
+        <div class="col-md-3">
             @DateTime.Today.ToString("dd-MMM-yyyy")
         </div>
         
@@ -82,7 +83,7 @@
         </table>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4 pull-right">
 
 
             <button class="btn btn-primary" id="submitbutton" type="submit">

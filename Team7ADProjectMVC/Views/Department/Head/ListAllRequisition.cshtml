@@ -1,7 +1,7 @@
 ﻿@*@model IEnumerable<Team7ADProjectMVC.Requisition>*@
 
 @{
-    Page.Title = "View All Employees";
+    Page.Title = "View All Requisitions";
     //Layout = "~/Views/Shared/_Layouthead.cshtml";
     Layout = "~/_Layout1.cshtml";
     Employee currentEmployee = (Employee)Session["User"];
@@ -33,7 +33,7 @@
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav"></ul>
-                        <form class="navbar-form navbar-left" role="form" action="/Head/ListAllEmployees" method="post">
+                        <form class="navbar-form navbar-left" role="form" action="/Head/ApproveRequisition" method="post">
                             <div class="form-group">
                                 <input id="SearchString" type="text" class="form-control" name="SearchString" />
                             </div>
@@ -72,7 +72,12 @@
                         @item.Employee.EmployeeName
                     </td>
                     <td>
-                        @item.OrderedDate
+                     @{
+                         string[] D = item.OrderedDate.ToString().Split(' ');
+                         string[] sd = D[0].Split('/');
+                         ViewBag.showDate = sd[1] + "/" + sd[0] + "/" + sd[2];
+                    }
+                    @ViewBag.showDate
                     </td>
                     <td>
                         @foreach (var item2 in item.RequisitionDetails)
@@ -82,7 +87,7 @@
                     <td>                                   </td>
                     <td>
                         <form id="form1" action="/Head/MarkAsCollected">
-                            <input type="hidden" value="@item.RequisitionId" name="rid" />
+                            <input type="hidden" value="@item.RequisitionId" name="requisitionId" />
                             <input type="hidden" value="" name="textcomments" />
                             <input type="submit" class="btn btn-success btn-lg" name="status" value="Approve" />
                             <input type="submit" class="btn btn-danger btn-lg" name="status" value="Reject" />
@@ -99,7 +104,7 @@
     <center>
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-        @Html.PagedListPager(Model, page => Url.Action("ListAllEmployees",
+        @Html.PagedListPager(Model, page => Url.Action("ApproveRequisition",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
     </center>
 

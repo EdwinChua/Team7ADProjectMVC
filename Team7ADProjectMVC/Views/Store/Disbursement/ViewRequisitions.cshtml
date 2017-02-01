@@ -14,25 +14,37 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
+    
         <br />
-
-        @if (ViewBag.rList.requisitionList == null && Model.Count() > 0)
-        {
-            <button class="btn btn-success" onclick="window.location.href='GenerateRetrievalList'">Generate Retrieval List</button>
-        }
-        else if (ViewBag.rList.requisitionList != null)
-        {
-            <button class="btn btn-success" onclick="window.location.href='RetrievalList'">View Retrieval List</button>
-        }
         @if (ViewBag.rList.requisitionList != null)
         {
-        <button class="btn btn-danger" onclick="window.location.href='ClearRetrievalList'">Clear Retrieval List</button>
+            <div class="col-md-2 pull-right">
+                <button class="btn btn-danger" onclick="window.location.href='ClearRetrievalList'">Clear Retrieval List</button>
+            </div>
         }
         else
         {
-            <h5>There are no active retrievals at this time.</h5>
+            <div class="col-md-4">
+                <h5>There are no active retrievals at this time.</h5>
+            </div>
         }
+
+        @if (ViewBag.rList.requisitionList == null && Model.Count() > 0)
+        {
+            <div class="col-md-2 pull-right">
+                <button class="btn btn-success" onclick="window.location.href='GenerateRetrievalList'">Generate Retrieval List</button>
+            </div>
+        }
+        else if (ViewBag.rList.requisitionList != null)
+        {
+            <div class="col-md-4">
+                <h5>There is an active retrieval list.</h5>
+            </div>
+            <div class="col-md-2 pull-right">
+                <button class="btn btn-success" onclick="window.location.href='RetrievalList'">View Retrieval List</button>
+            </div>
+        }
+       
     </div>
 </div>
 <br />

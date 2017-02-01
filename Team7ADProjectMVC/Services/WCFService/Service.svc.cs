@@ -8,6 +8,8 @@ using Team7ADProjectMVC.Models;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 using Team7ADProjectMVC.Services;
 using System.Web.Security;
+using Team7ADProjectMVC.Services.DepartmentService;
+using Team7ADProjectMVC.Services.SupplierService;
 
 namespace Team7ADProjectMVC
 {
@@ -17,10 +19,12 @@ namespace Team7ADProjectMVC
 	{
         ProjectEntities db = new ProjectEntities();
 
-        InventoryService invService = new InventoryService();
+        IInventoryService invService = new InventoryService();
         IRequisitionService reqService = new RequisitionService();
         IDisbursementService disService = new DisbursementService();
-        PushNotification fcm = new PushNotification(); 
+        PushNotification fcm = new PushNotification();
+        IDepartmentService deptSvc = new DepartmentService();
+        ISupplierAndPurchaseOrderService supplierPOSvc = new SupplierAndPurchaseOrderService();
 
         public List<WCFMsg> DoWork()
         {
@@ -31,17 +35,13 @@ namespace Team7ADProjectMVC
             Console.Write(l.ToString());
             return l;
         }
-         
 
         public List<wcfRequisitionList> RequisitionList(string deptid)
         {
             List<wcfRequisitionList> making = new List<wcfRequisitionList>();
             int departmentId = Convert.ToInt32(deptid);
-            var reqList = from req in db.Requisitions
-                          where req.DepartmentId == departmentId
-                          && req.RequisitionStatus != "Completed"
-                          orderby req.RequisitionStatus ascending
-                          select req;
+            List<Requisition> reqList = invService.GetNotCompletedRequisitions(departmentId);
+            
             String beforesplit = "";
             String aftersplit = "";
             Char delimiter = ' ';
@@ -65,11 +65,8 @@ namespace Team7ADProjectMVC
             List<wcfRequisitionItem> making = new List<wcfRequisitionItem>();
             int dId = Convert.ToInt32(deptId);
             int rId = Convert.ToInt32(reqID);
-            var reqItem= from req in db.RequisitionDetails
-                         where req.Requisition.DepartmentId == dId
-                        && req.RequisitionId==rId
-                        select req;
-            
+            List<RequisitionDetail> reqItem = deptSvc.GetRequisitionDetailByDept(dId, rId);
+
             foreach (RequisitionDetail rr in reqItem)
             {
                 wcfRequisitionItem rl = new wcfRequisitionItem();
@@ -85,12 +82,8 @@ namespace Team7ADProjectMVC
         {
             List<wcfTodayCollectionlist> making = new List<wcfTodayCollectionlist>();
             int dId = Convert.ToInt32(deptid);
-            var r = from x in db.DisbursementLists
-                    where x.DepartmentId == dId
-                    && x.Status != "Completed"
-                    orderby x.Status
-                    select x;
-            var list = r.ToList();
+            List<DisbursementList> list = invService.GetNotCompletedDisbursements(dId);
+
             List<DisbursementDetail> tempList = new List<DisbursementDetail>();
             foreach (var item in list)
             {
@@ -111,12 +104,7 @@ namespace Team7ADProjectMVC
             List<wcfTodayCollectionDetail> collectionDetails = new List<wcfTodayCollectionDetail>();
             int did = Convert.ToInt32(deptid);
             int disbursementListID = Convert.ToInt32(disListID);
-        
-            var dDetail = from r in db.DisbursementDetails
-                          where r.DisbursementList.DepartmentId == did
-                          && r.DisbursementListId== disbursementListID
-                          orderby r.Inventory.Description ascending
-                          select r;
+            List<DisbursementDetail> dDetail = invService.GetNotCompletedDisbursementDetails(did, disbursementListID);
 
             foreach (DisbursementDetail dd in dDetail)
             {
@@ -133,12 +121,8 @@ namespace Team7ADProjectMVC
         {
             List<wcfApproveRequisitions> approvalList = new List<wcfApproveRequisitions>();
             int did = Convert.ToInt32(deptid);
+            List<Requisition> aList = reqService.GetAllRequisition(did);
 
-            var aList = from a in db.Requisitions
-                          where a.DepartmentId == did
-                          && a.RequisitionStatus == "Pending Approval"
-                          orderby a.OrderedDate
-                          select a;
             String beforesplit = "";
             String aftersplit = "";
             Char delimiter = ' ';
@@ -162,12 +146,7 @@ namespace Team7ADProjectMVC
             List<wcfApproveReqDetails> approvalList = new List<wcfApproveReqDetails>();
             int dId = Convert.ToInt32(deptId);
             int rId = Convert.ToInt32(reqId);
-            var aList = from a in db.RequisitionDetails
-                        where a.RequisitionId == rId
-                        && a.Requisition.DepartmentId == dId
-                        && a.Requisition.RequisitionStatus == "Pending Approval"
-                        orderby a.Inventory.Description ascending
-                        select a;
+            List<RequisitionDetail> aList = reqService.GetAllRequisitionDetails(dId, rId);
 
             foreach (RequisitionDetail req in aList)
             {
@@ -184,13 +163,12 @@ namespace Team7ADProjectMVC
         {
             List<String> sl = new List<string>();
             int dId = Convert.ToInt32(deptid);
-            var collectionLocation = from c in db.DisbursementLists
-                                     where c.DepartmentId == dId
-                                     select c;
+            List<DisbursementList> collectionLocation = disService.GetCollectionPointForDept(dId);
+
             String s;
             foreach (DisbursementList d in collectionLocation)
             {
-                s = d.Department.CollectionPoint.PlaceName +" "+ d.Department.CollectionPoint.CollectTime;
+               s = d.Department.CollectionPoint.PlaceName +" "+ d.Department.CollectionPoint.CollectTime;
                sl.Add(s);
             }
             return sl;
@@ -199,12 +177,9 @@ namespace Team7ADProjectMVC
         public List<wcfDisbursementList> getDisbursementList()
         {
             List<wcfDisbursementList> dList = new List<wcfDisbursementList>();
-            var disburse = from d in db.DisbursementLists
-                           where d.Status.Equals("Processing")
-                           //where d.Status != "Completed"
-                           
-                           orderby d.DeliveryDate ascending
-                           select d;
+            List<DisbursementList> disburse = invService.GetProcessingDisbursements();
+
+
             String beforesplit = "";
             String aftersplit = "";
             Char delimiter = ' ';
@@ -229,10 +204,7 @@ namespace Team7ADProjectMVC
         {
             List<wcfDisbursementListDetail> dDetail = new List<wcfDisbursementListDetail>();
             int dId = Convert.ToInt32(disListID);
-            var disDetail = from dd in db.DisbursementDetails
-                            where dd.DisbursementListId == dId
-                            orderby dd.Inventory.Description ascending
-                            select dd;
+            List<DisbursementDetail> disDetail = invService.FindDisbursementDetails(dId);
 
             foreach (DisbursementDetail d in disDetail)
             {
@@ -251,10 +223,7 @@ namespace Team7ADProjectMVC
         public List<wcfStockReorder> getStockReorder()
         {
             List<wcfStockReorder> soList = new List<wcfStockReorder>();
-            var reOrders = from so in db.Inventories
-                           where so.Quantity <= so.ReorderLevel
-                           orderby so.Quantity ascending
-                           select so;
+            List<Inventory> reOrders = supplierPOSvc.GetAllItemsToResupply();
 
             foreach (Inventory i in reOrders)
             {
@@ -347,13 +316,20 @@ namespace Team7ADProjectMVC
                 bool result = Membership.ValidateUser(userid, "password!");
                 if (result == true)
                 {
-                    Employee emp = db.Employees.Where(x => x.EmployeeId == empid).First();
+                    Employee emp = deptSvc.FindEmployeeById(empid);
+
+        
+                    if(deptSvc.IsDelegate(emp))
+                    {
+                        deptSvc.SetDelegatePermissions(emp);
+                    }
+
                     dDetail.Role = emp.Role.Name;
                     dDetail.Deptid = emp.DepartmentId.ToString();
                     dDetail.Userid = userid;
                     dDetail.EmpName = emp.EmployeeName;
                     dDetail.Authenticate = "true";
-                    Permission makePerm = db.Permissions.Where(x => x.PermissionId == emp.PermissionId).First();
+                    Role makePerm = emp.Role;
                     dDetail.Permission = makePermissionstring(makePerm.ViewRequisition.ToString()) + "-" + makePermissionstring(makePerm.ApproveRequisition.ToString()) + "-" +
                         makePermissionstring(makePerm.ChangeCollectionPoint.ToString()) + "-" + makePermissionstring(makePerm.ViewCollectionDetails.ToString());
                     emp.Token = token;
@@ -363,7 +339,6 @@ namespace Team7ADProjectMVC
                 else
                 {
                     dDetail.Authenticate = "false";
-
                 }
                 return dDetail;
             }
@@ -379,12 +354,14 @@ namespace Team7ADProjectMVC
             try {
                 int dId = Convert.ToInt32(deptid);
                 int cpoint = Convert.ToInt32(collectionptid);
-                Department wcfItem = db.Departments.Where(p => p.DepartmentId == dId).First();
-                wcfItem.CollectionPointId = cpoint;
-                db.SaveChanges();
+                Department wcfItem = deptSvc.FindDeptById(dId);
+                deptSvc.changeDeptCp(wcfItem, cpoint);
+                //wcfItem.CollectionPointId = cpoint;
+                //db.SaveChanges();
                 fcm.CollectionPointChanged(dId);
                 return collectionptid;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return "false";
             }
@@ -395,14 +372,10 @@ namespace Team7ADProjectMVC
             int dId = Convert.ToInt32(c.Ddid);
             int dId1 = Convert.ToInt32(c.DisbQty);
             int math;
+            DisbursementDetail dd = disService.UpdateDisbursementStatus(dId, dId1, c.Remarks);
             
-             DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
-
-             math = dId1-(int)dd.DeliveredQuantity;              
-             dd.DeliveredQuantity = dId1;
-             dd.Remark = c.Remarks;
-             db.SaveChanges();
-             invService.UpdateInventoryQuantity(dd.ItemNo, math);
+            math = dId1 - (int)dd.DeliveredQuantity;
+            invService.UpdateInventoryQuantity(dd.ItemNo, math);
         }
 
         public string approveReq(String reqId)
@@ -410,11 +383,8 @@ namespace Team7ADProjectMVC
             string result = "False";
             try {
                 int rId = Convert.ToInt32(reqId);
-                Requisition r = db.Requisitions.Where(p => p.RequisitionId == rId).First();
-                r.RequisitionStatus = "Approved";
-                r.ApprovedDate = DateTime.Today;
-                fcm.NewRequisitonMade(reqId);
-                db.SaveChanges();
+                Requisition r = reqService.FindById(rId);
+                reqService.UpdateApproveStatus(r, null);
                 result = "True";
             }
             catch (Exception e)
@@ -430,11 +400,8 @@ namespace Team7ADProjectMVC
             try
             {
                 int rId = Convert.ToInt32(reqId);
-                Requisition r = db.Requisitions.Where(p => p.RequisitionId == rId).First();
-                r.Comment = remarks;
-                r.RequisitionStatus = "Rejected";
-                r.ApprovedDate = DateTime.Today;
-                db.SaveChanges();
+                Requisition r = reqService.FindById(rId);
+                reqService.UpdateRejectStatus(r, remarks);
                 result = "True";
             }
             catch (Exception e)
@@ -470,6 +437,7 @@ namespace Team7ADProjectMVC
             }
                 return storeReq;
         }
+
         public String wcfBtnReqList()
         {
             RetrievalList rList = invService.GetRetrievalList();
@@ -495,9 +463,7 @@ namespace Team7ADProjectMVC
             {
                 return "false";
             }
-           
         }
-
 
         public String wcfClearListBtnOK()
         {
@@ -531,7 +497,7 @@ namespace Team7ADProjectMVC
             {
             int dId = Convert.ToInt32(DisbListId);
 
-            DisbursementList disb = db.DisbursementLists.Where(p => p.DisbursementListId == dId).First();
+            DisbursementList disb = disService.GetDisbursementById(dId);
             int deptit= (int)disb.DepartmentId;
             string deptName = disb.Department.DepartmentName;
 
@@ -544,8 +510,6 @@ namespace Team7ADProjectMVC
 
             fcm.PushNotificationForRep("Accept Delivery", "Please Confirm Delivery", myData,deptit);
 
-
-              
                 return "true";
             }
             catch (Exception e)
@@ -554,12 +518,10 @@ namespace Team7ADProjectMVC
             }
         }
 
-
         public String wcfLogout(String userID)
         {
             try
             {
-
                 int Uid = Convert.ToInt32(userID);
                 Employee emp = db.Employees.Where(W => W.EmployeeId == Uid).First();
                 emp.Token = null;
@@ -574,7 +536,7 @@ namespace Team7ADProjectMVC
 
         public void PushOldNotification(int  EmpID,String token)
         {
-            var notification= from n in db.Notifications  where n.EmployeeId == EmpID    select n;
+            var notification= from n in db.Notifications where n.EmployeeId == EmpID select n;
             if (notification != null)
             {
                 foreach (Notification n in notification)
@@ -585,14 +547,10 @@ namespace Team7ADProjectMVC
                     myData.Add(n.PageId);
                     myData.Add(n.ExtraDetail);
                     fcm.PushFCMNotification(n.Title, n.Body, token, myData);
-                    DeleteOldNotifications(n.NotificationId);
-                    
+                    DeleteOldNotifications(n.NotificationId);                    
                 }
                 db.SaveChanges();
-
-              
             }
-
         }
 
         public void DeleteOldNotifications (int notID)
@@ -603,6 +561,5 @@ namespace Team7ADProjectMVC
 
             db.Notifications.Remove(report);
         }
-
     }
 }

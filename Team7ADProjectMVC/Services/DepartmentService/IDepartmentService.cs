@@ -10,7 +10,6 @@ namespace Team7ADProjectMVC.Services.DepartmentService
     {
         List<Employee> GetAllEmployees();
         List<Department> ListAllDepartments();
-        Department FindDeptById(string id);
         Department FindDeptById(int id);
         Employee FindEmployeeById(int id);
         void changeDeptCp(Department department, int cpId);

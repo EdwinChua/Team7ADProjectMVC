@@ -19,7 +19,8 @@ namespace Team7ADProjectMVC.Controllers
             {
                 int userId = Int32.Parse(User.Identity.Name);
                 Employee e= db.Employees.Find(userId);
-                if(e.RoleId!=6&& e.RoleId != 2)
+                Session["user"] = e;
+                if (e.RoleId!=6&& e.RoleId != 2)
                 {
                     Delegate approvedRecord=deptSvc.getDelegatedEmployee(e.DepartmentId);
                     if (approvedRecord != null)
@@ -29,11 +30,12 @@ namespace Team7ADProjectMVC.Controllers
                             e.Role.ApproveRequisition = true;
                             e.Role.ChangeCollectionPoint = true;
                             e.Role.MakeRequisition = false;
+                            return Redirect(Url.Content("~/Head/ListAllEmployees")); //If delegated, do not redirect to Make Requisition use case
                         }
                     }
                 }
 
-                Session["user"] = e;
+                
                 switch (e.Role.Name)
                 {
                     case "Store Clerk":

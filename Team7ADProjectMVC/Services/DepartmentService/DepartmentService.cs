@@ -14,11 +14,6 @@ namespace Team7ADProjectMVC.Services.DepartmentService
         ProjectEntities db = new ProjectEntities();
         PushNotification notify = new PushNotification();
 
-        public Department FindDeptById(string id)
-        {
-            return (db.Departments.Find(id));
-        }
-
         public Department FindDeptById(int id)
         {
             return (db.Departments.Find(id));

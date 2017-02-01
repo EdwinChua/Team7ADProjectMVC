@@ -317,12 +317,19 @@ namespace Team7ADProjectMVC
                 if (result == true)
                 {
                     Employee emp = deptSvc.FindEmployeeById(empid);
+
+        
+                    if(deptSvc.IsDelegate(emp))
+                    {
+                        deptSvc.SetDelegatePermissions(emp);
+                    }
+
                     dDetail.Role = emp.Role.Name;
                     dDetail.Deptid = emp.DepartmentId.ToString();
                     dDetail.Userid = userid;
                     dDetail.EmpName = emp.EmployeeName;
                     dDetail.Authenticate = "true";
-                    Role makePerm = db.Roles.Where(x => x.RoleId == emp.RoleId).First();
+                    Role makePerm = emp.Role;
                     dDetail.Permission = makePermissionstring(makePerm.ViewRequisition.ToString()) + "-" + makePermissionstring(makePerm.ApproveRequisition.ToString()) + "-" +
                         makePermissionstring(makePerm.ChangeCollectionPoint.ToString()) + "-" + makePermissionstring(makePerm.ViewCollectionDetails.ToString());
                     emp.Token = token;

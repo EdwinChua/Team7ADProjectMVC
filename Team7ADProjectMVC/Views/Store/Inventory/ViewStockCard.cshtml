@@ -24,10 +24,11 @@
     <div class="row">
         <div class="col-lg-2"><label>Reorder Level</label></div><div class="col-lg-5">@Html.DisplayFor(model => model.ReorderLevel) (Reorder quantity: @Html.DisplayFor(model => model.ReorderQuantity))</div>
     </div>
-
-    <button class="btn btn-info" onclick="window.location.href = '../Edit/@ViewBag.inv.ItemNo'">Edit</button>       
+    <div class="row">
+        <button class="btn-lg btn-info pull-right" onclick="window.location.href = '../Edit/@ViewBag.inv.ItemNo'">Edit</button>
+    </div>
     <hr />
-   
+
 
     <div>
         <h3>Stock Movements</h3>
@@ -51,52 +52,24 @@
             <tbody>
                 @foreach (var item in ViewBag.sCard)
                 {
-                <tr>
-                    <td>
-                        @item.Date
-                    </td>
-                    <td>
-                        @item.Dept_Supplier
-                    </td>
-                    <td>
-                        @item.Description
-                    </td>
-                    <td>
-                        @item.AdjustedQuantity
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            @item.Date
+                        </td>
+                        <td>
+                            @item.Dept_Supplier
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td>
+                            @item.AdjustedQuantity
+                        </td>
+                    </tr>
                 }
 
             </tbody>
         </table>
     </div>
-    <center>
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="pagination">
-                    <li>
-                        <a href="#">Prev</a>
-                    </li>
-                    <li>
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">Next</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </center>
+
 </div>

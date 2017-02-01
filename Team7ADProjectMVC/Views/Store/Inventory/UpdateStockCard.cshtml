@@ -161,13 +161,14 @@
                 @Html.ValidationMessageFor(model => model.Price3, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <br />
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Update" class="btn btn-primary" />
-                <button type="button" class="btn btn-info" onclick="window.location.href='/Store/Inventory'">Back to Inventory</button>
+            <div class="col-md-2 pull-right"></div>
+                <div class="col-md-3 pull-right">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                    <button type="button" class="btn btn-info" onclick="window.location.href='/Store/Inventory'">Back to Inventory</button>
+                </div>
             </div>
-        </div>
     </div>
 }
 

@@ -98,15 +98,16 @@
     @Html.PagedListPager(Model, page => Url.Action("PurchaseOrder",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </center>
-
-@if (@ViewBag.PurchaseOrder.OrderStatus == "Pending" && (currentEmployee.Role.Name == "Store Supervisor" || currentEmployee.Role.Name == "Store Manager"))
-{<form action="../ApprovePO">
+<div class="pull-right">
+    @if (@ViewBag.PurchaseOrder.OrderStatus == "Pending" && (currentEmployee.Role.Name == "Store Supervisor" || currentEmployee.Role.Name == "Store Manager"))
+    {<form action="../ApprovePO">
         <input type="hidden" name="poNumber" value="@ViewBag.PurchaseOrder.PurchaseOrderId" />
         <input type="submit" name="approve" value="Approve" title="Approve" class="btn btn-primary" />
         <input type="submit" name="approve" value="Reject" class="btn btn-danger" />
-     <input type="button" value="Back" class="btn btn-default" onclick="window.history.back()" />
+        <input type="button" value="Back" class="btn btn-default" onclick="window.history.back()" />
     </form>
-}
-else {
-<input type="button" value="Back" class="btn btn-default" onclick="window.history.back()" />
-}
+    }
+    else {
+        <input type="button" value="Back" class="btn btn-default" onclick="window.history.back()" />
+    }
+</div>

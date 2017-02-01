@@ -1205,7 +1205,7 @@
     <Content Include="Views\Store\Inventory\NewStockCard.cshtml" />
     <Content Include="Views\Store\Inventory\UpdateStockCard.cshtml" />
     <Content Include="Views\Store\Inventory\ViewInventory.cshtml" />
-    <Content Include="Views\Store\Inventory\ViewRetrievalList.cshtml" />
+    <Content Include="Views\Store\Disbursement\ViewRetrievalList.cshtml" />
     <Content Include="Views\Store\Inventory\ViewStockCard.cshtml" />
     <Content Include="Views\Store\Maintain\Supplier.cshtml" />
     <Content Include="Views\Store\Maintain\SupplierList.cshtml" />

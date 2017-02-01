@@ -7,11 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
-using Team7ADProjectMVC.Models.DelegateRoleService;
-using Team7ADProjectMVC.Models.ChangeRepresentativeService;
 using Team7ADProjectMVC.Models.ListAllRequisitionService;
 
 using PagedList;
+using Team7ADProjectMVC.Services.DepartmentService;
+
 namespace Team7ADProjectMVC.Controllers
 {
 
@@ -21,11 +21,9 @@ namespace Team7ADProjectMVC.Controllers
 
         private IRequisitionService reqsvc;
         public static int count = 0;
-        private IDelegateRoleService depsvc;
-        private IChangeRepresentativeService chrepsvc;
-   
+        private IDepartmentService depsvc;
 
-
+  
 
         Employee user;
         int? depIdofLoginUser;
@@ -35,8 +33,7 @@ namespace Team7ADProjectMVC.Controllers
         public HeadController()
         {
             reqsvc = new RequisitionService();
-            depsvc = new DelegateRoleService();
-            chrepsvc = new ChangeRepresentativeService();
+            depsvc = new DepartmentService();
         }
 
         // GET: Head
@@ -310,9 +307,9 @@ namespace Team7ADProjectMVC.Controllers
 
 
 
-            Employee currentRep = chrepsvc.GetCurrentRep(depIdofLoginUser);
+            Employee currentRep = depsvc.GetCurrentRep(depIdofLoginUser);
             ViewBag.currentRep = currentRep;
-            var emplist = chrepsvc.GetAllEmployee(depIdofLoginUser, currentRep.EmployeeId);
+            var emplist = depsvc.GetAllEmployee(depIdofLoginUser, currentRep.EmployeeId);
             ViewBag.employeeList = emplist.ToList();
             return View("ChangeDepartmentRepresentative", emplist);
 
@@ -324,9 +321,9 @@ namespace Team7ADProjectMVC.Controllers
             depIdofLoginUser = user.DepartmentId;
             depHeadId = user.EmployeeId;
 
-            Employee currentRep = chrepsvc.GetCurrentRep(depIdofLoginUser);
-            Employee newRep = chrepsvc.GetEmpbyId(empId);//find new rep
-            chrepsvc.ChangeRep(currentRep, newRep);
+            Employee currentRep = depsvc.GetCurrentRep(depIdofLoginUser);
+            Employee newRep = depsvc.GetEmpbyId(empId);//find new rep
+            depsvc.ChangeRep(currentRep, newRep);
             return RedirectToAction("ListAllEmployees");
 
         }

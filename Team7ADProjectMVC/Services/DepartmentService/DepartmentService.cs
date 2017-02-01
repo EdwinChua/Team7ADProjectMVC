@@ -86,5 +86,142 @@ namespace Team7ADProjectMVC.Services.DepartmentService
                           select req;
             return reqItem.ToList();
         }
+
+
+        //Change Rep Methods
+        public Employee GetCurrentRep(int? depId)
+        {
+            var queryBydepId = from t in db.Employees
+                               where t.DepartmentId == depId
+                               select t;
+            var q2 = queryBydepId.ToList();
+            foreach (var emp in q2)
+            {
+                if ((emp.RoleId == 4) || (emp.RoleId == 7))
+                {
+                    return emp;
+                }
+            }
+            return null;
+
+        }
+        public List<Employee> GetAllEmployee(int? depId, int currentRepId)
+        {
+            var queryBydepId = from t in db.Employees
+                               where t.DepartmentId == depId && t.EmployeeId != currentRepId && (t.RoleId != 2 && (t.RoleId != 6 && t.RoleId != 5))
+                               orderby t.EmployeeId ascending
+                               select t;
+            return (queryBydepId.ToList());
+        }
+        public Employee GetEmpbyId(int? empIdforRep)
+        {
+            return db.Employees.Find(empIdforRep);
+        }
+        public void ChangeRep(Employee currentRep, Employee newRep)
+        {
+
+            if (currentRep.RoleId == 7)
+            {
+                currentRep.RoleId = 1;
+                newRep.RoleId = 7;
+                newRep.Department.RepresentativeId = newRep.EmployeeId;
+                db.Entry(currentRep).State = EntityState.Modified;
+                db.Entry(newRep).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                currentRep.RoleId = 3;
+                newRep.RoleId = 4;
+                newRep.Department.RepresentativeId = newRep.EmployeeId;
+                db.Entry(currentRep).State = EntityState.Modified;
+                db.Entry(newRep).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+        //Delegate Methods
+        public Delegate getDelegatedEmployee(int? depId)
+        {
+            var queryBydepId = from t in db.Delegates
+                               where t.Employee.DepartmentId == depId
+                               select t;
+            var q2 = queryBydepId.ToList();
+            foreach (var xyz in q2)
+            {
+                if (xyz.EndDate.Equals(xyz.ActualEndDate) && (xyz.ActualEndDate > DateTime.Today || xyz.ActualEndDate.Equals(DateTime.Today)))
+                {
+                    return xyz;
+                }
+            }
+            return null;
+        }
+
+        public List<Employee> GetAllEmployeebyDepId(int? depId)
+        {
+            var queryBydepId = from t in db.Employees
+                               where t.DepartmentId == depId && (t.RoleId != 2 && (t.RoleId != 6 && t.RoleId != 5))
+                               orderby t.EmployeeId ascending
+                               select t;
+            return (queryBydepId.ToList());
+        }
+
+        public Employee FindById(int? empid)
+        {
+            return db.Employees.Find(empid);
+        }
+        public void manageDelegate(Employee e, DateTime startDate, DateTime endDate, int? depHeadId)
+        {
+
+            Delegate d = new Delegate();
+
+            d.EmployeeId = e.EmployeeId;
+            d.StartDate = startDate.Date;
+            d.EndDate = endDate.Date;
+            d.ActualEndDate = endDate.Date;
+            d.ApprovedBy = depHeadId;//default dep head id
+            d.ApprovedDate = DateTime.Today;
+            db.Delegates.Add(d);
+            db.SaveChanges();
+
+
+
+            db.Entry(e).State = EntityState.Modified;
+            db.SaveChanges();
+
+
+        }
+        public void updateDelegate(Delegate d, DateTime startDate, DateTime endDate, int? depHeadId)
+        {
+            d.StartDate = startDate.Date;
+            d.EndDate = endDate.Date;
+            d.ActualEndDate = endDate.Date;
+            d.ApprovedBy = depHeadId;//default dep head id
+            d.ApprovedDate = DateTime.Today.Date;
+            db.Entry(d).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public void TerminateDelegate(Delegate d)
+        {
+            d.ActualEndDate = DateTime.Today.AddDays(-1);
+            db.Entry(d).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public List<Delegate> getDelegate()
+        {
+
+            var query = from t in db.Delegates
+                        orderby t.DelegateId ascending
+                        select t;
+
+
+            return (query.ToList());
+        }
+        public Delegate FinddelegaterecordById(int? delegateId)
+        {
+
+            return db.Delegates.Find(delegateId);
+        }
     }
 }

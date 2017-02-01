@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProjectMVC.Models;
-using Team7ADProjectMVC.Models.DelegateRoleService;
 using Team7ADProjectMVC.Models.UtilityService;
 using Team7ADProjectMVC.Services;
 using Team7ADProjectMVC.Services.DepartmentService;
@@ -19,7 +18,6 @@ namespace Team7ADProjectMVC.Controllers
         private IInventoryService inventorySvc;
         private IDisbursementService disbursementSvc;
         private IDepartmentService deptSvc;
-        private IDelegateRoleService delegateSvc;
         private ISupplierAndPurchaseOrderService supplierAndPOSvc;
         private IUtilityService utilSvc;
         
@@ -28,7 +26,6 @@ namespace Team7ADProjectMVC.Controllers
             inventorySvc = new InventoryService();
             disbursementSvc = new DisbursementService();
             deptSvc = new DepartmentService();
-            delegateSvc = new DelegateRoleService();
             supplierAndPOSvc = new SupplierAndPurchaseOrderService();
             utilSvc = new UtilityService();
         }

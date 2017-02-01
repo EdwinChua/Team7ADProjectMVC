@@ -1134,10 +1134,6 @@
     <Compile Include="Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Services\ChangeRepresentativeService\ChangeRepresentativeService.cs" />
-    <Compile Include="Services\ChangeRepresentativeService\IChangeRepresentativeService.cs" />
-    <Compile Include="Services\DelegateRoleService\DelegateRoleService.cs" />
-    <Compile Include="Services\DelegateRoleService\IDelegateRoleService.cs" />
     <Compile Include="Services\DepartmentService\DepartmentService.cs" />
     <Compile Include="Services\DepartmentService\IDepartmentService.cs" />
     <Compile Include="Services\DisbursementService\DisbursementService.cs" />

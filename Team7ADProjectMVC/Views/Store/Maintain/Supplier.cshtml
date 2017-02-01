@@ -27,7 +27,7 @@
                             </label>
                         </div>
                         <div class="col-lg-6">
-                            @Html.EditorFor(model => model.SupplierCode, new { htmlAttributes = new { @class = "form-control", @required=true } })
+                            @Html.EditorFor(model => model.SupplierCode, new { htmlAttributes = new { @class = "form-control", @required = true } })
                             @Html.ValidationMessageFor(model => model.SupplierCode, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <label for="inputForContactName">
-                                Contact Name:
+                                Contact Name
                             </label>
                         </div>
                         <div class="col-lg-6">
@@ -68,7 +68,7 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <label for="inputForGSTReg">
-                                GST Registration
+                                GST Reg.
                             </label>
                         </div>
                         <div class="col-lg-6">
@@ -125,22 +125,26 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-2">
+            @if(Model != null)
+            {
+            <button class="btn btn-primary pull-right">
+                Update
+            </button>
+            }
+            else
+            {
+            <button class="btn btn-primary pull-right">
+                Create
+            </button>
+            }
 
-    if(Model != null)
-    {
-    <button class="btn btn-primary">
-        Update
-    </button>
-    }
-    else
-    {
-        <button class="btn btn-primary">
-            Create
-        </button>
-    }
-
+            
+        </div>
+    </div>
 }
-
 
 <div><br /></div>
 @if (ViewBag.SupplierId != null)

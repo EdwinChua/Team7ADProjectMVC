@@ -49,6 +49,11 @@ namespace Team7ADProjectMVC.Models
         void ManuallyAllocateDisbursements(int[] departmentId, int[] preparedQuantity, int[] adjustedQuantity, int[] disbursementListId, int[] disbursementDetailId, string[] itemNo);
         void UpdateDisbursementListDetails(int disbursementListId, string[] itemNo, int[] originalPreparedQty, int[] adjustedQuantity, string[] remarks);
         void UpdateInventoryQuantity(string itemNo, int collectedQuantity);
+        List<Requisition> GetNotCompletedRequisitions(int departmentId);
         void UpdateCollectionInfo(RetrievalList rList, int collectedQuantity, string itemNo);
+        List<DisbursementList> GetNotCompletedDisbursements(int dId);
+        List<DisbursementDetail> GetNotCompletedDisbursementDetails(int did, int disbursementListID);
+        List<DisbursementList> GetProcessingDisbursements();
+        List<DisbursementDetail> FindDisbursementDetails(int dId);
     }
 }

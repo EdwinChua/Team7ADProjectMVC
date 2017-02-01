@@ -56,6 +56,16 @@ namespace Team7ADProjectMVC.Models
             return (suppliers.ToList());
         }
 
+        public List<Requisition> GetNotCompletedRequisitions(int departmentId)
+        {
+            var reqList = from req in db.Requisitions
+                          where req.DepartmentId == departmentId
+                          && req.RequisitionStatus != "Completed"
+                          orderby req.RequisitionStatus ascending
+                          select req;
+            return reqList.ToList();
+        }
+
         public void UpdateInventory(Inventory inventory)
         {
             db.Entry(inventory).State = EntityState.Modified;
@@ -605,6 +615,44 @@ namespace Team7ADProjectMVC.Models
                     item.collectionStatus = true;
                 }
             }
+        }
+
+        public List<DisbursementList> GetNotCompletedDisbursements(int dId)
+        {
+            var r = from x in db.DisbursementLists
+                    where x.DepartmentId == dId
+                    && x.Status != "Completed"
+                    orderby x.Status
+                    select x;
+            return r.ToList();
+        }
+
+        public List<DisbursementDetail> GetNotCompletedDisbursementDetails(int did, int disbursementListID)
+        {
+            var dDetail = from r in db.DisbursementDetails
+                          where r.DisbursementList.DepartmentId == did
+                          && r.DisbursementListId == disbursementListID
+                          orderby r.Inventory.Description ascending
+                          select r;
+            return dDetail.ToList();
+        }
+
+        public List<DisbursementList> GetProcessingDisbursements()
+        {
+            var disburse = from d in db.DisbursementLists
+                           where d.Status.Equals("Processing")
+                           orderby d.DeliveryDate ascending
+                           select d;
+            return disburse.ToList();
+        }
+
+        public List<DisbursementDetail> FindDisbursementDetails(int dId)
+        {
+            var disDetail = from dd in db.DisbursementDetails
+                            where dd.DisbursementListId == dId
+                            orderby dd.Inventory.Description ascending
+                            select dd;
+            return disDetail.ToList();
         }
     }
 }

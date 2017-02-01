@@ -23,6 +23,7 @@ namespace Team7ADProjectMVC.Services
         List<DisbursementList> FindDisbursementsBySearch(List<DisbursementList> disbursementlist,string date, string status);
         string findDisbursenmentStatus(int? id);
         void ConfirmDisbursement(int? id);
-
+        List<DisbursementList> GetCollectionPointForDept(int dId);
+        DisbursementDetail UpdateDisbursementStatus(int dId, int dId1, string remarks);
     }
 }

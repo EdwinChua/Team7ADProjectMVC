@@ -20,7 +20,7 @@ namespace Team7ADProjectMVC.Services.DepartmentService
         }
         public Department FinddeById(string id)
         {
-            throw new NotImplementedException();
+            return (db.Departments.Find(id));
         }
         public Employee FindEmployeeById(int id)
         {
@@ -95,5 +95,13 @@ namespace Team7ADProjectMVC.Services.DepartmentService
             return itemid;
         }
 
+        public List<RequisitionDetail> GetRequisitionDetailByDept(int dId, int rId)
+        {
+            var reqItem = from req in db.RequisitionDetails
+                          where req.Requisition.DepartmentId == dId
+                         && req.RequisitionId == rId
+                          select req;
+            return reqItem.ToList();
+        }
     }
 }

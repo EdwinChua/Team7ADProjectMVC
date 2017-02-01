@@ -13,5 +13,6 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
         void UpdateApproveStatus(Requisition requisition,string comments);
         void UpdateRejectStatus(Requisition requisition, string comments);
         List<Requisition> getDataForPagination(string searchString);
+        List<RequisitionDetail> GetAllRequisitionDetails(int dId, int rId);
     }
 }

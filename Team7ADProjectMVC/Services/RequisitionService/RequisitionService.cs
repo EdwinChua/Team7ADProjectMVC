@@ -55,5 +55,15 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
             return (queryByStatus.ToList());
         }
 
+        public List<RequisitionDetail> GetAllRequisitionDetails(int dId, int rId)
+        {
+            var aList = from a in db.RequisitionDetails
+                        where a.RequisitionId == rId
+                        && a.Requisition.DepartmentId == dId
+                        && a.Requisition.RequisitionStatus == "Pending Approval"
+                        orderby a.Inventory.Description ascending
+                        select a;
+            return aList.ToList();
+        }
     }
 }

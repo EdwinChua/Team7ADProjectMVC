@@ -59,6 +59,7 @@ namespace Team7ADProjectMVC
         {
             Session["user"] = new Employee(); // To prevent layout page from throwing exception
             Session["adjustment"] = new Adjustment();
+            Session["requisition"] = new Requisition();
         }
     }
 }

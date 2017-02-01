@@ -1019,6 +1019,7 @@
     <Compile Include="Controllers\AdjustmentsController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\StationeryController.cs" />
     <Compile Include="Controllers\StorePOController.cs" />
     <Compile Include="CreateUserWizard.aspx.cs">
       <DependentUpon>CreateUserWizard.aspx</DependentUpon>
@@ -1051,6 +1052,7 @@
     <Compile Include="Employee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\RequisitionCreationException.cs" />
     <Compile Include="Exceptions\QuantityMismatchException.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="DataSet1.Designer.cs">
@@ -1252,6 +1254,12 @@
     <Content Include="Views\Store\Resupply\ListDeliveries.cshtml" />
     <Content Include="Views\Adjustments\ViewAdjustmentDetail.cshtml" />
     <Content Include="Views\Department\Head\ChangeDepartmentRepresentative.cshtml" />
+    <Content Include="Views\Stationery\EmployeeRequisition.cshtml" />
+    <Content Include="Views\Stationery\AddDetail.cshtml" />
+    <Content Include="Views\Stationery\EditorTemplates\Requisition.cshtml" />
+    <Content Include="Views\Stationery\EditorTemplates\RequisitionDetail.cshtml" />
+    <Content Include="Views\Stationery\DepartmentRequisitions.cshtml" />
+    <Content Include="Views\Stationery\Requisition.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

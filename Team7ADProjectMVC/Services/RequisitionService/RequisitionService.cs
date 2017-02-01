@@ -9,8 +9,14 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
     public class RequisitionService : IRequisitionService
     {
         ProjectEntities db = new ProjectEntities();
-        PushNotification notify = new PushNotification(); 
+        PushNotification notify = new PushNotification();
 
+
+        public List<Requisition> ListAllRequisition()
+        {
+
+            return (db.Requisitions.ToList());
+        }
         public List<Requisition> GetAllRequisition(int? depId)
         {
             var queryByStatus = from t in db.Requisitions 
@@ -53,6 +59,38 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
             var queryByStatus= db.Requisitions.Where(s => (s.Employee.EmployeeName.Contains(searchString)
                                        || s.OrderedDate.ToString().Contains(searchString)));
             return (queryByStatus.ToList());
+        }
+
+        public List<RequisitionDetail> GetAllRequisitionDetails(int dId, int rId)
+        {
+            var aList = from a in db.RequisitionDetails
+                        where a.RequisitionId == rId
+                        && a.Requisition.DepartmentId == dId
+                        && a.Requisition.RequisitionStatus == "Pending Approval"
+                        orderby a.Inventory.Description ascending
+                        select a;
+            return aList.ToList();
+        }
+        public List<RequisitionDetail> GetAllRequisitionDetails()
+        {
+            return db.RequisitionDetails.ToList();
+        }
+
+        public void CreateRequisition(Requisition r)
+        {
+            db.Requisitions.Add(r);
+            db.SaveChanges();
+        }
+
+        public void UpdateRequisition(Requisition requisition, Requisition req, int idd, int eid, int? deid)
+        {
+
+            requisition.RequisitionId = idd;
+            req.RequisitionStatus = "Pending Approval";
+            req.EmployeeId = eid;
+            req.DepartmentId = deid;
+            req.OrderedDate = DateTime.Today;
+
         }
 
     }

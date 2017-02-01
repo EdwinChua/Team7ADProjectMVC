@@ -244,5 +244,21 @@ namespace Team7ADProjectMVC.Services
             notify.RepAcceptRequisition(disbID);
         }
 
+        public List<DisbursementList> GetCollectionPointForDept(int dId)
+        {
+            var collectionLocation = from c in db.DisbursementLists
+                                     where c.DepartmentId == dId
+                                     select c;
+            return collectionLocation.ToList();
+        }
+
+        public DisbursementDetail UpdateDisbursementStatus(int dId, int dId1, string remarks)
+        {
+            DisbursementDetail dd = db.DisbursementDetails.Where(p => p.DisbursementDetailId == dId).First();
+            dd.DeliveredQuantity = dId1;
+            dd.Remark = remarks;
+            db.SaveChanges();
+            return dd;
+        }
     }
 }

@@ -76,7 +76,7 @@ namespace Team7ADProjectMVC.TestControllers
         {
 
             var id = ((Employee)Session["user"]).DepartmentId;
-            Department department = departmentSvc.findDeptByID(id);
+            Department department = departmentSvc.FindDeptById(id.ToString());
             ViewBag.Message = db.CollectionPoints.ToList();
             return View("ChangeCollectionPoint", department);
 

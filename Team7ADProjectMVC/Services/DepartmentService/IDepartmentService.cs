@@ -8,20 +8,12 @@ namespace Team7ADProjectMVC.Services.DepartmentService
 {
     interface IDepartmentService
     {
+        List<Employee> GetAllEmployees();
         List<Department> ListAllDepartments();
-        Requisition FindById(string id);
-        Requisition FindRequisitionById(string id);
-        List<Requisition> GetRequisitionByStatus(string status);
-        List<Requisition> ListAllDepartment();
-        List<Requisition> ListAllRequisition();
-        Department FinddeById(string id);
+        Department FindDeptById(string id);
+        Department FindDeptById(int id);
         Employee FindEmployeeById(int id);
-        Department findDeptByID(int? id);
         void changeDeptCp(Department department, int cpId);
-
-
-        string FinditemByName(string descibe);
-
-        void UpdateRequi(Requisition requisition, Requisition req, int idd, int eid, int? deid);
+        List<RequisitionDetail> GetRequisitionDetailByDept(int dId, int rId);
     }
 }

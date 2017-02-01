@@ -30,7 +30,7 @@ namespace Team7ADProjectMVC.Controllers
                             e.Role.ApproveRequisition = true;
                             e.Role.ChangeCollectionPoint = true;
                             e.Role.MakeRequisition = false;
-                            return Redirect(Url.Content("~/Head/ListAllEmployees")); //If delegated, do not redirect to Make Requisition use case
+                            return Redirect(Url.Content("~/Head/ApproveRequisition")); //If delegated, do not redirect to Make Requisition use case
                         }
                     }
                 }
@@ -44,7 +44,7 @@ namespace Team7ADProjectMVC.Controllers
                         return Redirect(Url.Content("~/Store/ViewRequisitions"));
                     case "Department Head":
                     case "Store Manager":
-                        return Redirect(Url.Content("~/Head/ListAllEmployees"));
+                        return Redirect(Url.Content("~/Head/ApproveRequisition"));
                     case "Employee":
                     case "Representative":
                         return Redirect(Url.Content("~/Department/MakeRequisition"));

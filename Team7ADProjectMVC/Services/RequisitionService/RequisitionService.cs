@@ -15,38 +15,44 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
         {
             var queryByStatus = from t in db.Requisitions 
                                   where t.RequisitionStatus == "Pending Approval" && t.DepartmentId == depId
-                                orderby t.RequisitionId ascending
+                                 orderby t.RequisitionId ascending
                                   select t;
             return (queryByStatus.ToList());
  
         }
       
-        public Requisition FindById(int? id)
+        public Requisition FindById(int? requisitionId)
         {
-            return db.Requisitions.Find(id);
+            return db.Requisitions.Find(requisitionId);
         }
         
-        public void  UpdateApproveStatus(Requisition r,String c)
+        public void  UpdateApproveStatus(Requisition requisition, string comments)
         {
+
+            requisition.RequisitionStatus = "Approved";
+            requisition.Comment = comments;
+            requisition.ApprovedDate = DateTime.Today.Date;
             
-            r.RequisitionStatus = "Approved";
-            r.Comment = c;
-            r.ApprovedDate = DateTime.Today.Date;
-            
-            db.Entry(r).State = EntityState.Modified;
+            db.Entry(requisition).State = EntityState.Modified;
             db.SaveChanges();
 
-            string reqListId = r.RequisitionId.ToString();
+            string reqListId = requisition.RequisitionId.ToString();
             notify.NewRequisitonMade(reqListId);
         }
-        public void UpdateRejectStatus(Requisition r,String c)
+        public void UpdateRejectStatus(Requisition requisition, string comments)
         {
-           
-            r.Comment = c;
-            r.ApprovedDate = DateTime.Today.Date;
-            r.RequisitionStatus = "Rejected";
-            db.Entry(r).State = EntityState.Modified;
+
+            requisition.Comment = comments;
+            requisition.ApprovedDate = DateTime.Today.Date;
+            requisition.RequisitionStatus = "Rejected";
+            db.Entry(requisition).State = EntityState.Modified;
             db.SaveChanges();
+        }
+         public List<Requisition> getDataForPagination(string searchString)
+        {
+            var queryByStatus= db.Requisitions.Where(s => (s.Employee.EmployeeName.Contains(searchString)
+                                       || s.OrderedDate.ToString().Contains(searchString)));
+            return (queryByStatus.ToList());
         }
 
     }

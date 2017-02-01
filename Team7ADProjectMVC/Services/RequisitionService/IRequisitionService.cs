@@ -8,9 +8,10 @@ namespace Team7ADProjectMVC.Models.ListAllRequisitionService
     public interface IRequisitionService
     {
         List<Requisition> GetAllRequisition(int? depId);       
-        Requisition FindById(int? id);
+        Requisition FindById(int? requisitionId);
       
-        void UpdateApproveStatus(Requisition r,String c);
-        void UpdateRejectStatus(Requisition r,String c);
+        void UpdateApproveStatus(Requisition requisition,string comments);
+        void UpdateRejectStatus(Requisition requisition, string comments);
+        List<Requisition> getDataForPagination(string searchString);
     }
 }

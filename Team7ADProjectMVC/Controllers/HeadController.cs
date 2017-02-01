@@ -23,7 +23,7 @@ namespace Team7ADProjectMVC.Controllers
         public static int count = 0;
         private IDelegateRoleService depsvc;
         private IChangeRepresentativeService chrepsvc;
-        private ProjectEntities db = new ProjectEntities();
+   
 
 
 
@@ -82,9 +82,8 @@ namespace Team7ADProjectMVC.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-
-                var q = db.Requisitions.Where(s => (s.Employee.EmployeeName.Contains(searchString)
-                                       || s.OrderedDate.ToString().Contains(searchString)));
+              
+                var q = reqsvc.getDataForPagination (searchString);
                 requisitions = q.ToList();
             }
 
@@ -98,6 +97,9 @@ namespace Team7ADProjectMVC.Controllers
 
 
         }
+
+
+
 
         public ActionResult EmployeeRequisition(int? id)
         {

@@ -90,10 +90,10 @@ namespace Team7ADProjectMVC.Models.DelegateRoleService
 
             return (query.ToList());
         }
-        public Delegate FinddelegaterecordById(int? count)
+        public Delegate FinddelegaterecordById(int? delegateId)
         {
 
-            return db.Delegates.Find(count);
+            return db.Delegates.Find(delegateId);
         }
         public List<Department> ListAllDepartments()
         {

@@ -19,45 +19,33 @@
         </div>
     </div>
 
-
-
-    <table>
-        <tr>
-            <td>
-                Start Date:
-                <div style="overflow:hidden;">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div id="datetimepicker1"></div>
-                            </div>
+    <div class="row">
+        <div class="col-md-4">
+            Start Date:
+            <div style="overflow:hidden;">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div id="datetimepicker1"></div>
                         </div>
                     </div>
                 </div>
-
-            </td>
-            <td>
-                <br />
-                <br />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <br />
-            </td>
-            <td>
-                End Date:
-                <div style="overflow:hidden;">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div id="datetimepicker2"></div>
-                            </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            End Date:
+            <div style="overflow:hidden;">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div id="datetimepicker2"></div>
                         </div>
                     </div>
                 </div>
-            </td>
-        </tr>
-    </table>
-
-
+            </div>
+        </div>
+    </div>
     <br />
     <br />
 
@@ -87,12 +75,22 @@
             }
             else
             {*@
-            <button type="submit" class="btn btn-success btn-lg pull-right" name="status" value="Update" id="updatebutton">
-                Update
-            </button>
-            <button type="submit" class="btn btn-danger btn-lg pull-right" name="status" value="Terminate" id="terminatebutton">
-                Terminate
-            </button>
+        <div class="row">
+            <div class="col-md-7"></div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-success btn-lg pull-right" name="status" value="Update" id="updatebutton">
+                    Update
+                </button>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-danger btn-lg pull-right" name="status" value="Terminate" id="terminatebutton">
+                    Terminate
+                </button>
+            </div>
+        </div>
+          
+          
                 @*}*@
            
 

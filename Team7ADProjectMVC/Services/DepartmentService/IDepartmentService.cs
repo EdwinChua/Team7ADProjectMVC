@@ -30,5 +30,7 @@ namespace Team7ADProjectMVC.Services.DepartmentService
         Delegate getDelegatedEmployee(int? depId);
         void manageDelegate(Employee e, DateTime startDate, DateTime endDate, int? depHeadId);
         void updateDelegate(Delegate d, DateTime startDate, DateTime endDate, int? depHeadId);
+        bool IsDelegate(Employee e);
+        Employee SetDelegatePermissions(Employee e);
     }
 }

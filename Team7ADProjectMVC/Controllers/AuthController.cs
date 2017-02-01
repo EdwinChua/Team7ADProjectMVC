@@ -20,22 +20,16 @@ namespace Team7ADProjectMVC.Controllers
                 int userId = Int32.Parse(User.Identity.Name);
                 Employee e= db.Employees.Find(userId);
                 Session["user"] = e;
-                if (e.RoleId!=6&& e.RoleId != 2)
+                if (deptSvc.IsDelegate(e))
                 {
-                    Delegate approvedRecord=deptSvc.getDelegatedEmployee(e.DepartmentId);
-                    if (approvedRecord != null)
-                    {
-                        if (e.EmployeeId == approvedRecord.EmployeeId)
-                        {
-                            e.Role.ApproveRequisition = true;
-                            e.Role.ChangeCollectionPoint = true;
-                            e.Role.MakeRequisition = false;
-                            return Redirect(Url.Content("~/Head/ListAllEmployees")); //If delegated, do not redirect to Make Requisition use case
-                        }
-                    }
+                    deptSvc.SetDelegatePermissions(e);
+                    Session["user"] = e;
+                    return Redirect(Url.Content("~/Head/ApproveRequisition")); //If delegated, do not redirect to Make Requisition use case
                 }
 
                 
+
+
                 switch (e.Role.Name)
                 {
                     case "Store Clerk":

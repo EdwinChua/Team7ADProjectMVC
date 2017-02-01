@@ -218,5 +218,29 @@ namespace Team7ADProjectMVC.Services.DepartmentService
 
             return db.Delegates.Find(delegateId);
         }
+
+        public bool IsDelegate(Employee e)
+        {
+            if (e.RoleId != 6 && e.RoleId != 2)
+            {
+                Delegate approvedRecord = getDelegatedEmployee(e.DepartmentId);
+                if (approvedRecord != null)
+                {
+                    if (e.EmployeeId == approvedRecord.EmployeeId)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public Employee SetDelegatePermissions(Employee e)
+        {
+            e.Role.ApproveRequisition = true;
+            e.Role.ChangeCollectionPoint = true;
+            e.Role.MakeRequisition = false;
+            return e;
+        }
     }
 }

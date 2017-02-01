@@ -51,7 +51,7 @@ namespace Team7ADProjectMVC.Controllers
             return View();
         }
         //----------------------------View/Approve/Reject Requisition Part----------------------------------------start here
-        public ActionResult ListAllEmployees(string currentFilter, string searchString, int? page)
+        public ActionResult ApproveRequisition(string currentFilter, string searchString, int? page)
         {
 
             user = (Employee)Session["user"];
@@ -90,7 +90,7 @@ namespace Team7ADProjectMVC.Controllers
             requisitions.RemoveAll(x => x.RequisitionStatus != "Pending Approval");
             ViewBag.req = requisitions.ToList();
 
-            return View("ListAllEmployees", requisitions.ToPagedList(pageNumber, pageSize));
+            return View("ListAllRequisition", requisitions.ToPagedList(pageNumber, pageSize));
 
 
         }
@@ -130,13 +130,13 @@ namespace Team7ADProjectMVC.Controllers
             if (status.Equals("Approve"))
             {
                 reqsvc.UpdateApproveStatus(r, textcomments);
-                return RedirectToAction("ListAllEmployees");
+                return RedirectToAction("ApproveRequisition");
 
             }
             else
             {
                 reqsvc.UpdateRejectStatus(r, textcomments);
-                return RedirectToAction("ListAllEmployees");
+                return RedirectToAction("ApproveRequisition");
             }
 
         }
@@ -324,7 +324,7 @@ namespace Team7ADProjectMVC.Controllers
             Employee currentRep = depsvc.GetCurrentRep(depIdofLoginUser);
             Employee newRep = depsvc.GetEmpbyId(empId);//find new rep
             depsvc.ChangeRep(currentRep, newRep);
-            return RedirectToAction("ListAllEmployees");
+            return RedirectToAction("ApproveRequisition");
 
         }
     }

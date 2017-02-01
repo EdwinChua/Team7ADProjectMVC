@@ -1190,7 +1190,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Department\Head\Approve.cshtml" />
     <Content Include="Views\Department\Head\DelegateRole.cshtml" />
-    <Content Include="Views\Department\Head\ListAllEmployees.cshtml" />
+    <Content Include="Views\Department\Head\ListAllRequisition.cshtml" />
     <Content Include="Views\Department\Representative\ChangeCollectionPoint.cshtml" />
     <Content Include="Views\Department\DepartmentEmployee.cshtml" />
     <Content Include="Views\Department\MakeRequisition.cshtml" />

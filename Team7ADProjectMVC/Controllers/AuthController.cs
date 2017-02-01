@@ -4,14 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using Team7ADProjectMVC.Models.DelegateRoleService;
+using Team7ADProjectMVC.Services.DepartmentService;
 
 namespace Team7ADProjectMVC.Controllers
 {
     public class AuthController : Controller
     {
         ProjectEntities db = new ProjectEntities();
-        IDelegateRoleService delSvc = new DelegateRoleService();
+        IDepartmentService deptSvc = new DepartmentService();
         // GET: Auth
         public ActionResult Index()
         {
@@ -21,7 +21,7 @@ namespace Team7ADProjectMVC.Controllers
                 Employee e= db.Employees.Find(userId);
                 if(e.RoleId!=6&& e.RoleId != 2)
                 {
-                    Delegate approvedRecord=delSvc.getDelegatedEmployee(e.DepartmentId);
+                    Delegate approvedRecord=deptSvc.getDelegatedEmployee(e.DepartmentId);
                     if (approvedRecord != null)
                     {
                         if (e.EmployeeId == approvedRecord.EmployeeId)

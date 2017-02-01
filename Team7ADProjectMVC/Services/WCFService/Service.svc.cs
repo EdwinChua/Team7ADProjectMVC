@@ -347,9 +347,10 @@ namespace Team7ADProjectMVC
             try {
                 int dId = Convert.ToInt32(deptid);
                 int cpoint = Convert.ToInt32(collectionptid);
-                Department wcfItem = deptSvc.FinddeById(deptid);
-                wcfItem.CollectionPointId = cpoint;
-                db.SaveChanges();
+                Department wcfItem = deptSvc.FindDeptById(dId);
+                deptSvc.changeDeptCp(wcfItem, cpoint);
+                //wcfItem.CollectionPointId = cpoint;
+                //db.SaveChanges();
                 fcm.CollectionPointChanged(dId);
                 return collectionptid;
             }

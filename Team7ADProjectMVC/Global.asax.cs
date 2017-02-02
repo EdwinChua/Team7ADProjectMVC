@@ -21,22 +21,6 @@ namespace Team7ADProjectMVC
 
             ExtendedRazorViewEngine engine = new ExtendedRazorViewEngine();
             engine.AddViewLocationFormat("~/Views/Department/{0}.cshtml");
-            engine.AddViewLocationFormat("~/Views/Department/{1}/{0}.cshtml");
-
-            engine.AddViewLocationFormat("~/Views/Store/{0}.cshtml");
-            engine.AddViewLocationFormat("~/Views/Store/{1}/{0}.cshtml");
-            engine.AddViewLocationFormat("~/Views/Store/Adjustment/{0}.cshtml");
-            engine.AddViewLocationFormat("~/Views/Store/Disbursement/{0}.cshtml");
-            engine.AddViewLocationFormat("~/Views/Store/Inventory/{0}.cshtml");
-            engine.AddViewLocationFormat("~/Views/Store/Maintain/{0}.cshtml");
-            engine.AddViewLocationFormat("~/Views/Store/Resupply/{0}.cshtml");
-
-            engine.AddViewLocationFormat("~/Views/TestViews/{0}.cshtml");
-            engine.AddViewLocationFormat("~/Views/TestViews/{1}/{0}.cshtml");
-
-            // Add a shared location too, as the lines above are controller specific
-            engine.AddPartialViewLocationFormat("~/Views/Department/{0}.cshtml");
-            engine.AddPartialViewLocationFormat("~/Views/Department/{1}/{0}.cshtml");
 
             engine.AddPartialViewLocationFormat("~/Views/Store/{0}.cshtml");
             engine.AddPartialViewLocationFormat("~/Views/Store/{1}/{0}.cshtml");

@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace Team7ADProjectMVC {
+namespace Team7ADProjectMVC.Views.TESTDisbursementLists {
     
     
     /// <summary>
@@ -1325,7 +1325,7 @@ namespace Team7ADProjectMVC {
         }
     }
 }
-namespace Team7ADProjectMVC.DataSet1TableAdapters {
+namespace Team7ADProjectMVC.Views.TESTDisbursementLists.DataSet1TableAdapters {
     
     
     /// <summary>

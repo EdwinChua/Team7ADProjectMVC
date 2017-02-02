@@ -133,7 +133,6 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="CreateUserWizard.aspx" />
     <Content Include="crystalreportviewers\ActiveXControls\CRViewer.dll" />
     <Content Include="crystalreportviewers\ActiveXControls\CRViewer_res_cs.dll" />
     <Content Include="crystalreportviewers\ActiveXControls\CRViewer_res_da.dll" />
@@ -932,23 +931,20 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="DataSet1.xsc">
+    <Content Include="Views\TESTDisbursementLists\DataSet1.xsc">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="aspnetdb.bak" />
+    <Content Include="Views\Store\Resupply\aspnetdb.bak" />
     <Content Include="crystalreportviewers\ActiveXControls\crviewer.dep" />
     <Content Include="crystalreportviewers\crsmarttag.jsp" />
     <Content Include="crystalreportviewers\preview.jsp" />
-    <None Include="DataSet1.xsd">
+    <None Include="Views\TESTDisbursementLists\DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="DataSet1.xss">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="NotAuthorised.html" />
     <Content Include="Login.aspx" />
@@ -977,25 +973,19 @@
     <Content Include="Resources\print.css" />
     <Content Include="Resources\screen.css" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
-    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.simpleWeather.min.js" />
     <Content Include="Scripts\jquery.twbsPagination.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment-with-locales.js" />
-    <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
-    <Content Include="Services\WCFService\Service.svc" />
     <Content Include="Views\Adjustments\EditorTemplates\Adjustment.cshtml" />
     <Content Include="Views\Adjustments\EditorTemplates\AdjustmentDetail.cshtml" />
     <Content Include="Web.config">
@@ -1021,13 +1011,6 @@
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\StationeryController.cs" />
     <Compile Include="Controllers\StorePOController.cs" />
-    <Compile Include="CreateUserWizard.aspx.cs">
-      <DependentUpon>CreateUserWizard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CreateUserWizard.aspx.designer.cs">
-      <DependentUpon>CreateUserWizard.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Delegate.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -1055,11 +1038,6 @@
     <Compile Include="Exceptions\RequisitionCreationException.cs" />
     <Compile Include="Exceptions\QuantityMismatchException.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
-    <Compile Include="DataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </Compile>
     <Compile Include="ExtendedRazorViewEngine.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1067,13 +1045,11 @@
     <Compile Include="Inventory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Services\WCFService\IService.cs" />
     <Compile Include="ItemCodeGenerator.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -1136,27 +1112,8 @@
     <Compile Include="Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Services\DepartmentService\DepartmentService.cs" />
-    <Compile Include="Services\DepartmentService\IDepartmentService.cs" />
-    <Compile Include="Services\DisbursementService\DisbursementService.cs" />
-    <Compile Include="Services\DisbursementService\IDisbursementService.cs" />
-    <Compile Include="Services\InventoryAdjustmentService\IInventoryAdjustmentService.cs" />
-    <Compile Include="Services\InventoryAdjustmentService\InventoryAdjustmentService.cs" />
-    <Compile Include="Services\InventoryService\IInventoryService.cs" />
-    <Compile Include="Services\InventoryService\InventoryService.cs" />
-    <Compile Include="Services\ReportService\IReportService.cs" />
-    <Compile Include="Services\ReportService\ReportService.cs" />
-    <Compile Include="Services\RequisitionService\IRequisitionService.cs" />
-    <Compile Include="Services\RequisitionService\RequisitionService.cs" />
     <Compile Include="Models\RetrievalList.cs" />
-    <Compile Include="Services\SupplierAndPOService\ISupplierAndPurchaseOrderService.cs" />
-    <Compile Include="Services\SupplierAndPOService\SupplierAndPurchaseOrderService.cs" />
-    <Compile Include="Services\UtilityService\IUtilityService.cs" />
-    <Compile Include="Services\UtilityService\UtilityService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\WCFService\Service.svc.cs">
-      <DependentUpon>Service.svc</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="StockCard.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -1180,19 +1137,20 @@
     <Compile Include="ReportViewer.aspx.designer.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\TESTDisbursementLists\DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Views\TestViews\Inventories\Create.cshtml" />
     <Content Include="Views\TestViews\Inventories\Delete.cshtml" />
-    <Content Include="Views\TestViews\Inventories\Details.cshtml" />
-    <Content Include="Views\TestViews\Inventories\Edit.cshtml" />
+    <Content Include="Views\Suppliers\Details.cshtml" />
     <Content Include="Views\TestViews\Inventories\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Department\Head\Approve.cshtml" />
-    <Content Include="Views\Department\Head\DelegateRole.cshtml" />
-    <Content Include="Views\Department\Head\ListAllRequisition.cshtml" />
     <Content Include="Views\Department\Representative\ChangeCollectionPoint.cshtml" />
     <Content Include="Views\Department\DepartmentEmployee.cshtml" />
     <Content Include="Views\Department\MakeRequisition.cshtml" />
@@ -1201,25 +1159,20 @@
     <Content Include="Views\Store\Adjustment\InventoryAdjustment.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewDisbursements.cshtml" />
     <Content Include="Views\Store\Inventory\NewStockCard.cshtml" />
-    <Content Include="Views\Store\Inventory\UpdateStockCard.cshtml" />
     <Content Include="Views\Store\Inventory\ViewInventory.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewRetrievalList.cshtml" />
-    <Content Include="Views\Store\Inventory\ViewStockCard.cshtml" />
     <Content Include="Views\Store\Maintain\Supplier.cshtml" />
     <Content Include="Views\Store\Maintain\SupplierList.cshtml" />
     <Content Include="Views\Store\Resupply\GeneratePO.cshtml" />
     <Content Include="Views\Store\Resupply\PurchaseOrderSummary.cshtml" />
-    <Content Include="Views\Store\Resupply\ViewReceiveOrder.cshtml" />
     <Content Include="Views\Store\Dashboard.cshtml" />
     <Content Include="Views\Store\GenerateReports.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Department\Index.cshtml" />
-    <Content Include="Views\TESTDisbursementLists\Create.cshtml" />
     <Content Include="Views\TESTDisbursementLists\Delete.cshtml" />
     <Content Include="Views\TESTDisbursementLists\Details.cshtml" />
-    <Content Include="Views\TESTDisbursementLists\Edit.cshtml" />
-    <Content Include="Views\TESTDisbursementLists\Index.cshtml" />
+    <Content Include="Views\Store\Index.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewDisbursement.cshtml" />
     <Content Include="Views\Store\Disbursement\ViewRequisitions.cshtml" />
     <Content Include="Views\Department\Representative\Viewdisbursements.cshtml" />
@@ -1233,26 +1186,14 @@
     <Content Include="Views\Rpt\ItemSupplierRpt.cshtml" />
     <Content Include="Views\Rpt\ReportOptions.cshtml" />
     <Content Include="Views\Inventory\Create.cshtml" />
-    <Content Include="Views\Inventory\Delete.cshtml" />
-    <Content Include="Views\Inventory\Details.cshtml" />
-    <Content Include="Views\Inventory\Edit.cshtml" />
-    <Content Include="Views\Inventory\Index.cshtml" />
-    <Content Include="Views\Shared\_LayoutD.cshtml" />
-    <Content Include="Views\Shared\_Layouthead.cshtml" />
+    <Content Include="Views\Store\Disbursement\Details.cshtml" />
     <Content Include="Views\Shared\_LayoutD.cshtml" />
     <Content Include="Views\Adjustments\Create.cshtml" />
-    <Content Include="Views\Adjustments\ViewAdjustment.cshtml" />
-    <Content Include="Views\Adjustments\AddDetail.cshtml" />
-    <Content Include="Views\Department\Head\Terminate.cshtml" />
     <Content Include="Views\Store\Disbursement\ReallocateDisbursements.cshtml" />
-    <Content Include="Views\Suppliers\Create.cshtml" />
     <Content Include="Views\Suppliers\Delete.cshtml" />
-    <Content Include="Views\Suppliers\Details.cshtml" />
     <Content Include="Views\Suppliers\Edit.cshtml" />
     <Content Include="Views\Suppliers\Index.cshtml" />
-    <Content Include="Views\Store\Resupply\PurchaseOrder.cshtml" />
-    <Content Include="Views\Store\Resupply\ListDeliveries.cshtml" />
-    <Content Include="Views\Adjustments\ViewAdjustmentDetail.cshtml" />
+    <Content Include="Views\TestViews\ListDeliveries.cshtml" />
     <Content Include="Views\Department\Head\ChangeDepartmentRepresentative.cshtml" />
     <Content Include="Views\Stationery\EmployeeRequisition.cshtml" />
     <Content Include="Views\Stationery\AddDetail.cshtml" />

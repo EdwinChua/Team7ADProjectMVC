@@ -9,31 +9,7 @@ CREATE DATABASE Project
 -------------------------------------- Tne run this till the end to create tables -----------------------------------------
 USE Project
 
---------------------------------------- Supplier -----------------------------------------
-CREATE TABLE Supplier
-(
-SupplierId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-SupplierCode VARCHAR(30),
-SupplierName VARCHAR(100),
-ContactName VARCHAR(100),
-PhNo VARCHAR(50),
-FaxNo VARCHAR(50),
-[Address] VARCHAR(250),
-GstRegistrationNo VARCHAR(100)
-)
-
-INSERT INTO Supplier
-VALUES ('AlPA','ALPHA Office Supplies', 'Ms Irene Tan', '461 9928', '461 2238', 
-		'Blk 1128, Ang Mo Kio Industrial Park, #02-1108 Ang Mo Kio Street 62, Singapore 622262',
-		'MR-8500440-2')
-INSERT INTO Supplier
-VALUES ('CHEP','Cheap Stationery', 'Mr Soh Kway Koh', '354 3234', '474 2434', 
-		'Blk 34, Blk 34, Clementi road, #02-70 Ban Ban Soh Building, Singapore 110525',
-		'Nil')
-INSERT INTO Supplier
-VALUES ('BANE','BANES Shop', 'Mr Loh Ah Pek', '478 1234', '479 2434', 
-		'Blk 124, Alexandra Road, #03-04 Banes Building, Singapore 550315',
-		'MR-8200420-2')
+------------------------------------
 INSERT INTO Supplier
 VALUES ('OMEG','OMEGA Stationery Supplier', 'Mr Ronnie ho', '767 1233', '767 1234', 
 		'Blk 11 Hillview Avenue, #03-04, Singapore 679036',
